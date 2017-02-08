@@ -2,16 +2,18 @@
   "name": "ui-api-proxy",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {
     "@angular/core": "^2.4.6",
     "@angular/http": "^2.4.6",
     "rxjs": "^5.1.0",
     "tslib": "^1.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^2.1.5"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "tsc -p src"
   },
   "author": "Apaleo GmbH",
   "private": true
