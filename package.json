@@ -16,5 +16,6 @@
     "postinstall": "tsc -p src"
   },
   "author": "Apaleo GmbH",
-  "private": true
+  "private": true,
+  "typings": "index.d.ts"
 }
