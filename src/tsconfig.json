@@ -27,5 +27,8 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true
+  },
+  "angularCompilerOptions": {
+    "genDir": ".."
   }
 }
