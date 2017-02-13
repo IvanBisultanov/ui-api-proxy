@@ -17,24 +17,14 @@ import * as models from './models';
  */
 export interface PostAccountRequest {
     /**
-     * The code for the account that can be shown in reports and table views
+     * The admin user for this account
      */
-    code: string;
+    adminUser: models.User;
 
     /**
-     * The name for the account, which usually should be the company name
+     * The country of the address for the account
      */
-    name: string;
-
-    /**
-     * The street of the address for the account
-     */
-    street: string;
-
-    /**
-     * The postal code of the address for the account
-     */
-    postalCode: string;
+    countryCode: string;
 
     /**
      * The city of the address for the account
@@ -42,13 +32,28 @@ export interface PostAccountRequest {
     city: string;
 
     /**
-     * The country of the address for the account
+     * The postal code of the address for the account
      */
-    country: string;
+    postalCode: string;
 
     /**
-     * The admin user for this account
+     * The street of the address for the account
      */
-    adminUser: models.User;
+    street: string;
+
+    /**
+     * The description for the account
+     */
+    description: string;
+
+    /**
+     * The name for the account, which usually should be the company name
+     */
+    name: string;
+
+    /**
+     * The code for the account that can be shown in reports and table views
+     */
+    code: string;
 
 }
