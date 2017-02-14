@@ -19,7 +19,7 @@
     "typescript": "^2.1.5"
   },
   "scripts": {
-    "postinstall": "ngc -p src"
+    "postinstall": "ngc"
   },
   "author": "Apaleo GmbH",
   "private": true,
