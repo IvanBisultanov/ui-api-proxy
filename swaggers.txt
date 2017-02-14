@@ -1,0 +1,1 @@
+all|swagger/v1/swagger.json

@@ -1,14 +1,30 @@
 #!/bin/bash
 
-curl https://ui-api.apaleo-staging.com/swagger/v1/swagger.json | \
-jq -c '{spec: .}' | \
-curl -H "Content-Type: application/json" -X POST -d @- https://generator.swagger.io/api/gen/clients/typescript-angular2 | \
-jq '.link' | \
-xargs curl > generated.zip
+cd "$(dirname "$0")"
+rm -rf src/*
 
-unzip generated.zip
+dos2unix swaggers.txt
+gitBranch=$(basename $(git symbolic-ref HEAD))
+baseUrl="http://localhost:50000/"
 
-rm -rf src
-mv typescript-angular2-client src
+if [ "$gitBranch" == "master" ]; then
+    baseUrl="https://ui-api.apaleo-staging.com/"
+fi
 
-rm -f generated.zip
+IFS='|'
+while read -r name url
+do
+    curl -k "$baseUrl$url" | \
+    jq -c '{spec: .}' | \
+    curl -k -H "Content-Type: application/json" -X POST -d @- https://generator.swagger.io/api/gen/clients/typescript-angular2 | \
+    jq '.link' | \
+    xargs curl -k > generated.zip
+
+    unzip generated.zip
+
+    rm -rf "src/$name"
+    mv typescript-angular2-client "src/$name"
+    echo "export * from './$name';" >> src/index.ts
+
+    rm -f generated.zip
+done < swaggers.txt
