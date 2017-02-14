@@ -24,7 +24,8 @@ do
 
     rm -rf "src/$name"
     mv typescript-angular2-client "src/$name"
-    echo "export * from './$name';" >> src/index.ts
+    echo "import * as _$name from './$name';" >> src/index.ts
+    echo "export const $name = _$name;" >> src/index.ts
 
     rm -f generated.zip
 done < swaggers.txt
