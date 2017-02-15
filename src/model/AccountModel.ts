@@ -13,14 +13,9 @@
 import * as models from './models';
 
 /**
- * With this request you can setup a new account with an admin user
+ * With this request you can create a new account
  */
-export interface PostAccountRequest {
-    /**
-     * The admin user for this account
-     */
-    adminUser: models.User;
-
+export interface AccountModel {
     /**
      * The country of the address for the account
      */

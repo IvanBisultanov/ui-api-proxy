@@ -57,10 +57,10 @@ export class AccountApi {
 
     /**
      * Get an account
-     * Get an account by id.
+     * Get an account by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeGet(code: string, extraHttpRequestParams?: any): Observable<models.GetAccountResponse> {
+    public accountV1AccountsByCodeGet(code: string, extraHttpRequestParams?: any): Observable<models.AccountModel> {
         return this.accountV1AccountsByCodeGetWithHttpInfo(code, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -72,11 +72,44 @@ export class AccountApi {
     }
 
     /**
-     * Creates an account with an admin user
-     * Use this call to create a new account with one admin user setup.
-     * @param requestBody The definition of the account and user data.
+     * Check if an account exists
+     * Check if an account exists by code.
+     * @param code The code of the account.
      */
-    public accountV1AccountsPost(requestBody: models.PostAccountRequest, extraHttpRequestParams?: any): Observable<models.GetAccountResponse> {
+    public accountV1AccountsByCodeHead(code: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.accountV1AccountsByCodeHeadWithHttpInfo(code, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Replaces an account
+     * Use this call to modify an account.
+     * @param code The code of the account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsByCodePut(code: string, requestBody: models.UpdateAccountModel, extraHttpRequestParams?: any): Observable<{}> {
+        return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Creates an account with an admin user
+     * Use this call to create a new account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsPost(requestBody: models.AccountModel, extraHttpRequestParams?: any): Observable<{}> {
         return this.accountV1AccountsPostWithHttpInfo(requestBody, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -90,7 +123,7 @@ export class AccountApi {
 
     /**
      * Get an account
-     * Get an account by id.
+     * Get an account by code.
      * @param code The code of the account.
      */
     public accountV1AccountsByCodeGetWithHttpInfo(code: string, extraHttpRequestParams?: any): Observable<Response> {
@@ -143,11 +176,126 @@ export class AccountApi {
     }
 
     /**
-     * Creates an account with an admin user
-     * Use this call to create a new account with one admin user setup.
-     * @param requestBody The definition of the account and user data.
+     * Check if an account exists
+     * Check if an account exists by code.
+     * @param code The code of the account.
      */
-    public accountV1AccountsPostWithHttpInfo(requestBody: models.PostAccountRequest, extraHttpRequestParams?: any): Observable<Response> {
+    public accountV1AccountsByCodeHeadWithHttpInfo(code: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/account/v1/accounts/${code}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'code' is not null or undefined
+        if (code === null || code === undefined) {
+            throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeHead.');
+        }
+
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+        
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken)
+        {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+            
+
+
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Head,
+            headers: headers,
+            search: queryParameters
+        });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Replaces an account
+     * Use this call to modify an account.
+     * @param code The code of the account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.UpdateAccountModel, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/account/v1/accounts/${code}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'code' is not null or undefined
+        if (code === null || code === undefined) {
+            throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodePut.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (requestBody === null || requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling accountV1AccountsByCodePut.');
+        }
+
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+        
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken)
+        {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+            
+
+        headers.set('Content-Type', 'application/json');
+
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Put,
+            headers: headers,
+            body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Creates an account with an admin user
+     * Use this call to create a new account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsPostWithHttpInfo(requestBody: models.AccountModel, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/account/v1/accounts`;
 
         let queryParameters = new URLSearchParams();

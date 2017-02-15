@@ -13,42 +13,37 @@
 import * as models from './models';
 
 /**
- * With this request you can setup a new account with an admin user
+ * With this request you can modify an account
  */
-export interface GetAccountResponse {
+export interface UpdateAccountModel {
     /**
      * The country of the address for the account
      */
-    countryCode?: string;
+    countryCode: string;
 
     /**
      * The city of the address for the account
      */
-    city?: string;
+    city: string;
 
     /**
      * The postal code of the address for the account
      */
-    postalCode?: string;
+    postalCode: string;
 
     /**
      * The street of the address for the account
      */
-    street?: string;
+    street: string;
 
     /**
      * The description for the account
      */
-    description?: string;
+    description: string;
 
     /**
      * The name for the account, which usually should be the company name
      */
-    name?: string;
-
-    /**
-     * The code for the account that can be shown in reports and table views
-     */
-    code?: string;
+    name: string;
 
 }

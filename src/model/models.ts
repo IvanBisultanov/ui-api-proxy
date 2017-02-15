@@ -1,4 +1,3 @@
-export * from './GetAccountResponse';
+export * from './AccountModel';
 export * from './MessageItemCollection';
-export * from './PostAccountRequest';
-export * from './User';
+export * from './UpdateAccountModel';
