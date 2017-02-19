@@ -46,8 +46,27 @@ export class RateplanApi {
      * @param code The code of the rateplan.
      * @param languages &#39;all&#39; or array of language codes
      */
+<<<<<<< HEAD:src/rates/api/RateplanApi.ts
     public ratesV1RateplansByCodeGet(code: string, languages?: Array<string>, extraHttpRequestParams?: any): Observable<models.GetRateplanResponse> {
         return this.ratesV1RateplansByCodeGetWithHttpInfo(code, languages, extraHttpRequestParams)
+=======
+    private extendObj<T1,T2>(objA: T1, objB: T2) {
+        for(let key in objB){
+            if(objB.hasOwnProperty(key)){
+                (objA as any)[key] = (objB as any)[key];
+            }
+        }
+        return <T1&T2>objA;
+    }
+
+    /**
+     * Get an account
+     * Get an account by code.
+     * @param code The code of the account.
+     */
+    public accountV1AccountsByCodeGet(code: string, extraHttpRequestParams?: any): Observable<models.AccountModel> {
+        return this.accountV1AccountsByCodeGetWithHttpInfo(code, extraHttpRequestParams)
+>>>>>>> refs/remotes/origin/master:src/api/AccountApi.ts
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -58,12 +77,54 @@ export class RateplanApi {
     }
 
     /**
+<<<<<<< HEAD:src/rates/api/RateplanApi.ts
      * Creates a rateplan
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
     public ratesV1RateplansPost(requestBody: models.PostRateplanRequest, extraHttpRequestParams?: any): Observable<{}> {
         return this.ratesV1RateplansPostWithHttpInfo(requestBody, extraHttpRequestParams)
+=======
+     * Check if an account exists
+     * Check if an account exists by code.
+     * @param code The code of the account.
+     */
+    public accountV1AccountsByCodeHead(code: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.accountV1AccountsByCodeHeadWithHttpInfo(code, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Replaces an account
+     * Use this call to modify an account.
+     * @param code The code of the account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsByCodePut(code: string, requestBody: models.UpdateAccountModel, extraHttpRequestParams?: any): Observable<{}> {
+        return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Creates an account with an admin user
+     * Use this call to create a new account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsPost(requestBody: models.AccountModel, extraHttpRequestParams?: any): Observable<{}> {
+        return this.accountV1AccountsPostWithHttpInfo(requestBody, extraHttpRequestParams)
+>>>>>>> refs/remotes/origin/master:src/api/AccountApi.ts
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -75,10 +136,16 @@ export class RateplanApi {
 
 
     /**
+<<<<<<< HEAD:src/rates/api/RateplanApi.ts
      * Get a rateplan
      * Get a rateplan by code.
      * @param code The code of the rateplan.
      * @param languages &#39;all&#39; or array of language codes
+=======
+     * Get an account
+     * Get an account by code.
+     * @param code The code of the account.
+>>>>>>> refs/remotes/origin/master:src/api/AccountApi.ts
      */
     public ratesV1RateplansByCodeGetWithHttpInfo(code: string, languages?: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/rates/v1/rateplans/${code}`;
@@ -130,12 +197,136 @@ export class RateplanApi {
     }
 
     /**
+<<<<<<< HEAD:src/rates/api/RateplanApi.ts
      * Creates a rateplan
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
     public ratesV1RateplansPostWithHttpInfo(requestBody: models.PostRateplanRequest, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/rates/v1/rateplans`;
+=======
+     * Check if an account exists
+     * Check if an account exists by code.
+     * @param code The code of the account.
+     */
+    public accountV1AccountsByCodeHeadWithHttpInfo(code: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/account/v1/accounts/${code}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'code' is not null or undefined
+        if (code === null || code === undefined) {
+            throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeHead.');
+        }
+
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+        
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken)
+        {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+            
+
+
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Head,
+            headers: headers,
+            search: queryParameters
+        });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Replaces an account
+     * Use this call to modify an account.
+     * @param code The code of the account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.UpdateAccountModel, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/account/v1/accounts/${code}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'code' is not null or undefined
+        if (code === null || code === undefined) {
+            throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodePut.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (requestBody === null || requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling accountV1AccountsByCodePut.');
+        }
+
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+        
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken)
+        {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+            
+
+        headers.set('Content-Type', 'application/json');
+
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Put,
+            headers: headers,
+            body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Creates an account with an admin user
+     * Use this call to create a new account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsPostWithHttpInfo(requestBody: models.AccountModel, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/account/v1/accounts`;
+>>>>>>> refs/remotes/origin/master:src/api/AccountApi.ts
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
