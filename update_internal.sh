@@ -25,4 +25,7 @@ do
 
 done < swaggers.txt
 
+echo "export * from './configuration';" >> src/index.ts
+echo "export * from './variables';" >> src/index.ts
+
 cp -rf templates/* src
