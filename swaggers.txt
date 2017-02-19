@@ -1,1 +1,2 @@
-all|swagger/v1/swagger.json
+account|swagger/account/swagger.json
+rates|https://ui-api.apaleo-staging.com/swagger/rates/swagger.json
