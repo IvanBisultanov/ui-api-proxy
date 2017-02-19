@@ -14,10 +14,10 @@ baseUrl="http://localhost:50000/"
 IFS='|'
 while read -r name url
 do
-    exec java -jar $GEN_DIR/modules/wagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+    exec java -jar $GEN_DIR/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
         -i "$baseUrl$url" \
-        -t $GEN_DIR/modules/swagger-codegen/src/main/resources/typescript-angular2
-        -l typescript-angular2
+        -t $GEN_DIR/modules/swagger-codegen/src/main/resources/typescript-angular2 \
+        -l typescript-angular2 \
         -o ./src/$name
 
     # curl -k "$baseUrl$url" | \
