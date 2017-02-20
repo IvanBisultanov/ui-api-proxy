@@ -12,6 +12,9 @@
 
 import * as models from './models';
 
+import { Validators } from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+
 export interface GetRateplanResponse {
     /**
      * The code for the rateplan that can be shown in reports and table views
@@ -29,3 +32,50 @@ export interface GetRateplanResponse {
     defaultPrice?: number;
 
 }
+
+export interface GetRateplanResponse$Form<T> {
+    code: T;
+    name: T;
+    defaultPrice: T;
+}
+
+export interface GetRateplanResponse$ValidatorFactories extends GetRateplanResponse$Form<ValidatorsFactory> {}
+export interface GetRateplanResponse$ControlFactories extends GetRateplanResponse$Form<ControlFactory> {}
+export interface GetRateplanResponse$FormBuiler extends GetRateplanResponse$Form<Control> {}
+
+const $validators: GetRateplanResponse$ValidatorFactories = {
+    code: (() => [
+        
+        
+        
+    ]),
+    name: (() => [
+        
+        
+        
+    ]),
+    defaultPrice: (() => [
+        
+        
+        
+    ]),
+}
+
+const $controls: GetRateplanResponse$ControlFactories = {
+    code: (() => [null, Validators.compose($validators.code())]),
+    name: (() => [null, Validators.compose($validators.name())]),
+    defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
+}
+
+export const GetRateplanResponse = {
+    $validators: $validators,
+    $controls: $controls,
+    $formGroup: (() => {
+        return {
+            code: $controls.code(),
+            name: $controls.name(),
+            defaultPrice: $controls.defaultPrice(),
+        };
+    }) as (() => GetRateplanResponse$FormBuiler),
+}
+

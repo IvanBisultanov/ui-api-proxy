@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
+import { Inject, Injectable, Optional, LOCALE_ID }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Response, ResponseContentType }                     from '@angular/http';
@@ -27,26 +27,24 @@ import { Configuration }                                     from '../../configu
 
 @Injectable()
 export class AccountApi {
-    protected basePath = 'https://localhost/';
     public defaultHeaders: Headers = new Headers();
-    public configuration: Configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-        if (basePath) {
-            this.basePath = basePath;
-        }
-        if (configuration) {
-            this.configuration = configuration;
-        }
+    constructor(
+        protected readonly http: Http, 
+        protected readonly configuration: Configuration,
+        @Inject(LOCALE_ID) protected readonly locale: string, 
+        @Inject(BASE_PATH) protected readonly basePath: string) {
+
+        this.defaultHeaders.append('Accept-Language', locale);
     }
 
     /**
      * Get an account
      * Get an account by code.
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or array of language codes
+     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeGet(code: string, languages?: Array<string>, extraHttpRequestParams?: any): Observable<models.AccountModel> {
+    public accountV1AccountsByCodeGet(code: string, languages?: string, extraHttpRequestParams?: any): Observable<models.AccountModel> {
         return this.accountV1AccountsByCodeGetWithHttpInfo(code, languages, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -111,9 +109,9 @@ export class AccountApi {
      * Get an account
      * Get an account by code.
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or array of language codes
+     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeGetWithHttpInfo(code: string, languages?: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
+    public accountV1AccountsByCodeGetWithHttpInfo(code: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/account/v1/accounts/${code}`;
 
         let queryParameters = new URLSearchParams();
@@ -122,10 +120,12 @@ export class AccountApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeGet.');
         }
-        if (languages) {
-            languages.forEach((element) => {
-                queryParameters.append('languages', <any>element);
-            })
+        if (languages !== undefined) {
+            if(<any>languages instanceof Date) {
+                queryParameters.set('languages', (<Date><any>languages).toISOString());
+            } else {
+                queryParameters.set('languages', <any>languages);
+            }
         }
 
         // to determine the Content-Type header

@@ -15,6 +15,9 @@ import * as models from './models';
 /**
  * With this request you can create a new account
  */
+import { Validators } from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+
 export interface AccountModel {
     /**
      * The code for the account that can be shown in reports and table views
@@ -52,3 +55,82 @@ export interface AccountModel {
     countryCode: string;
 
 }
+
+export interface AccountModel$Form<T> {
+    code: T;
+    name: T;
+    description: T;
+    street: T;
+    postalCode: T;
+    city: T;
+    countryCode: T;
+}
+
+export interface AccountModel$ValidatorFactories extends AccountModel$Form<ValidatorsFactory> {}
+export interface AccountModel$ControlFactories extends AccountModel$Form<ControlFactory> {}
+export interface AccountModel$FormBuiler extends AccountModel$Form<Control> {}
+
+const $validators: AccountModel$ValidatorFactories = {
+    code: (() => [
+        Validators.required,
+        
+        Validators.maxLength(10),
+    ]),
+    name: (() => [
+        Validators.required,
+        
+        Validators.maxLength(40),
+    ]),
+    description: (() => [
+        Validators.required,
+        
+        
+    ]),
+    street: (() => [
+        Validators.required,
+        
+        
+    ]),
+    postalCode: (() => [
+        Validators.required,
+        
+        
+    ]),
+    city: (() => [
+        Validators.required,
+        
+        
+    ]),
+    countryCode: (() => [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(2),
+    ]),
+}
+
+const $controls: AccountModel$ControlFactories = {
+    code: (() => [null, Validators.compose($validators.code())]),
+    name: (() => [null, Validators.compose($validators.name())]),
+    description: (() => [null, Validators.compose($validators.description())]),
+    street: (() => [null, Validators.compose($validators.street())]),
+    postalCode: (() => [null, Validators.compose($validators.postalCode())]),
+    city: (() => [null, Validators.compose($validators.city())]),
+    countryCode: (() => [null, Validators.compose($validators.countryCode())]),
+}
+
+export const AccountModel = {
+    $validators: $validators,
+    $controls: $controls,
+    $formGroup: (() => {
+        return {
+            code: $controls.code(),
+            name: $controls.name(),
+            description: $controls.description(),
+            street: $controls.street(),
+            postalCode: $controls.postalCode(),
+            city: $controls.city(),
+            countryCode: $controls.countryCode(),
+        };
+    }) as (() => AccountModel$FormBuiler),
+}
+

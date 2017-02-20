@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
+import { Inject, Injectable, Optional, LOCALE_ID }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Response, ResponseContentType }                     from '@angular/http';
@@ -27,27 +27,26 @@ import { Configuration }                                     from '../../configu
 
 @Injectable()
 export class RateplanApi {
-    protected basePath = 'https://localhost/';
     public defaultHeaders: Headers = new Headers();
-    public configuration: Configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-        if (basePath) {
-            this.basePath = basePath;
-        }
-        if (configuration) {
-            this.configuration = configuration;
-        }
+    constructor(
+        protected readonly http: Http, 
+        protected readonly configuration: Configuration,
+        @Inject(LOCALE_ID) protected readonly locale: string, 
+        @Inject(BASE_PATH) protected readonly basePath: string) {
+
+        this.defaultHeaders.append('Accept-Language', locale);
     }
 
     /**
      * Get a rateplan
      * Get a rateplan by code.
      * @param code The code of the rateplan.
-     * @param languages &#39;all&#39; or array of language codes
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByCodeGet(code: string, languages?: Array<string>, extraHttpRequestParams?: any): Observable<models.GetRateplanResponse> {
-        return this.ratesV1RateplansByCodeGetWithHttpInfo(code, languages, extraHttpRequestParams)
+    public ratesV1RateplansByCodeGet(code: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.GetRateplanResponse> {
+        return this.ratesV1RateplansByCodeGetWithHttpInfo(code, apaleoAccount, languages, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -61,9 +60,10 @@ export class RateplanApi {
      * Creates a rateplan
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
+     * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansPost(requestBody: models.PostRateplanRequest, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ratesV1RateplansPostWithHttpInfo(requestBody, extraHttpRequestParams)
+    public ratesV1RateplansPost(requestBody: models.PostRateplanRequest, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ratesV1RateplansPostWithHttpInfo(requestBody, apaleoAccount, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -78,9 +78,10 @@ export class RateplanApi {
      * Get a rateplan
      * Get a rateplan by code.
      * @param code The code of the rateplan.
-     * @param languages &#39;all&#39; or array of language codes
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByCodeGetWithHttpInfo(code: string, languages?: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
+    public ratesV1RateplansByCodeGetWithHttpInfo(code: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/rates/v1/rateplans/${code}`;
 
         let queryParameters = new URLSearchParams();
@@ -89,11 +90,19 @@ export class RateplanApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling ratesV1RateplansByCodeGet.');
         }
-        if (languages) {
-            languages.forEach((element) => {
-                queryParameters.append('languages', <any>element);
-            })
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByCodeGet.');
         }
+        if (languages !== undefined) {
+            if(<any>languages instanceof Date) {
+                queryParameters.set('languages', (<Date><any>languages).toISOString());
+            } else {
+                queryParameters.set('languages', <any>languages);
+            }
+        }
+
+        headers.set('Apaleo-Account', String(apaleoAccount));
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -133,8 +142,9 @@ export class RateplanApi {
      * Creates a rateplan
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
+     * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansPostWithHttpInfo(requestBody: models.PostRateplanRequest, extraHttpRequestParams?: any): Observable<Response> {
+    public ratesV1RateplansPostWithHttpInfo(requestBody: models.PostRateplanRequest, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/rates/v1/rateplans`;
 
         let queryParameters = new URLSearchParams();
@@ -143,6 +153,12 @@ export class RateplanApi {
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RateplansPost.');
         }
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansPost.');
+        }
+        headers.set('Apaleo-Account', String(apaleoAccount));
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json', 

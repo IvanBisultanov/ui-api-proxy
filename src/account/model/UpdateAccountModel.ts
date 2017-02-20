@@ -15,6 +15,9 @@ import * as models from './models';
 /**
  * With this request you can modify an account
  */
+import { Validators } from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+
 export interface UpdateAccountModel {
     /**
      * The name for the account, which usually should be the company name
@@ -47,3 +50,74 @@ export interface UpdateAccountModel {
     countryCode: string;
 
 }
+
+export interface UpdateAccountModel$Form<T> {
+    name: T;
+    description: T;
+    street: T;
+    postalCode: T;
+    city: T;
+    countryCode: T;
+}
+
+export interface UpdateAccountModel$ValidatorFactories extends UpdateAccountModel$Form<ValidatorsFactory> {}
+export interface UpdateAccountModel$ControlFactories extends UpdateAccountModel$Form<ControlFactory> {}
+export interface UpdateAccountModel$FormBuiler extends UpdateAccountModel$Form<Control> {}
+
+const $validators: UpdateAccountModel$ValidatorFactories = {
+    name: (() => [
+        Validators.required,
+        
+        Validators.maxLength(40),
+    ]),
+    description: (() => [
+        Validators.required,
+        
+        
+    ]),
+    street: (() => [
+        Validators.required,
+        
+        
+    ]),
+    postalCode: (() => [
+        Validators.required,
+        
+        
+    ]),
+    city: (() => [
+        Validators.required,
+        
+        
+    ]),
+    countryCode: (() => [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(2),
+    ]),
+}
+
+const $controls: UpdateAccountModel$ControlFactories = {
+    name: (() => [null, Validators.compose($validators.name())]),
+    description: (() => [null, Validators.compose($validators.description())]),
+    street: (() => [null, Validators.compose($validators.street())]),
+    postalCode: (() => [null, Validators.compose($validators.postalCode())]),
+    city: (() => [null, Validators.compose($validators.city())]),
+    countryCode: (() => [null, Validators.compose($validators.countryCode())]),
+}
+
+export const UpdateAccountModel = {
+    $validators: $validators,
+    $controls: $controls,
+    $formGroup: (() => {
+        return {
+            name: $controls.name(),
+            description: $controls.description(),
+            street: $controls.street(),
+            postalCode: $controls.postalCode(),
+            city: $controls.city(),
+            countryCode: $controls.countryCode(),
+        };
+    }) as (() => UpdateAccountModel$FormBuiler),
+}
+
