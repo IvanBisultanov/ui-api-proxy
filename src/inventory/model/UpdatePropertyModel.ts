@@ -77,7 +77,7 @@ export const UpdatePropertyModel = {
         return {
             name: $controls.name(),
             description: $controls.description(),
-            location: $controls.location(),
+            location: models.Location.$formGroup(),
         };
     }) as (() => UpdatePropertyModel$FormBuiler),
 }

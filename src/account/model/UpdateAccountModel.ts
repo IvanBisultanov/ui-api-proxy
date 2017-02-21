@@ -90,7 +90,7 @@ export const UpdateAccountModel = {
             name: $controls.name(),
             description: $controls.description(),
             logoUrl: $controls.logoUrl(),
-            location: $controls.location(),
+            location: models.Location.$formGroup(),
         };
     }) as (() => UpdateAccountModel$FormBuiler),
 }

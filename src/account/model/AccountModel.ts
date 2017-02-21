@@ -103,7 +103,7 @@ export const AccountModel = {
             name: $controls.name(),
             description: $controls.description(),
             logoUrl: $controls.logoUrl(),
-            location: $controls.location(),
+            location: models.Location.$formGroup(),
         };
     }) as (() => AccountModel$FormBuiler),
 }

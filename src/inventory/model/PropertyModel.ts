@@ -90,7 +90,7 @@ export const PropertyModel = {
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
-            location: $controls.location(),
+            location: models.Location.$formGroup(),
         };
     }) as (() => PropertyModel$FormBuiler),
 }
