@@ -51,7 +51,7 @@ export interface UpdateAccountModel$Form<T> {
 export interface UpdateAccountModel$ValidatorFactories extends UpdateAccountModel$Form<ValidatorsFactory> {}
 export interface UpdateAccountModel$ControlFactories extends UpdateAccountModel$Form<ControlFactory> {}
 
-export interface UpdateAccountModel$FormBuiler {
+export interface UpdateAccountModel$FormBuilder {
     name: Control;
     description: Control;
     logoUrl: Control;
@@ -98,6 +98,6 @@ export const UpdateAccountModel = {
             logoUrl: $controls.logoUrl(),
             location: models.Location.$formGroup(),
         };
-    }) as (() => UpdateAccountModel$FormBuiler),
+    }) as (() => UpdateAccountModel$FormBuilder),
 }
 

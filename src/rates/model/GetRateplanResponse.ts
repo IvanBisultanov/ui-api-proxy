@@ -42,7 +42,7 @@ export interface GetRateplanResponse$Form<T> {
 export interface GetRateplanResponse$ValidatorFactories extends GetRateplanResponse$Form<ValidatorsFactory> {}
 export interface GetRateplanResponse$ControlFactories extends GetRateplanResponse$Form<ControlFactory> {}
 
-export interface GetRateplanResponse$FormBuiler {
+export interface GetRateplanResponse$FormBuilder {
     code: Control;
     name: Control;
     defaultPrice: Control;
@@ -81,6 +81,6 @@ export const GetRateplanResponse = {
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
         };
-    }) as (() => GetRateplanResponse$FormBuiler),
+    }) as (() => GetRateplanResponse$FormBuilder),
 }
 

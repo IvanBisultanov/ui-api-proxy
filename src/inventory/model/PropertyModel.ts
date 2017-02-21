@@ -51,7 +51,7 @@ export interface PropertyModel$Form<T> {
 export interface PropertyModel$ValidatorFactories extends PropertyModel$Form<ValidatorsFactory> {}
 export interface PropertyModel$ControlFactories extends PropertyModel$Form<ControlFactory> {}
 
-export interface PropertyModel$FormBuiler {
+export interface PropertyModel$FormBuilder {
     code: Control;
     name: Control;
     description: Control;
@@ -98,6 +98,6 @@ export const PropertyModel = {
             description: $controls.description(),
             location: models.Location.$formGroup(),
         };
-    }) as (() => PropertyModel$FormBuiler),
+    }) as (() => PropertyModel$FormBuilder),
 }
 
