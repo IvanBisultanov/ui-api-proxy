@@ -44,7 +44,12 @@ export interface UpdatePropertyModel$Form<T> {
 
 export interface UpdatePropertyModel$ValidatorFactories extends UpdatePropertyModel$Form<ValidatorsFactory> {}
 export interface UpdatePropertyModel$ControlFactories extends UpdatePropertyModel$Form<ControlFactory> {}
-export interface UpdatePropertyModel$FormBuiler extends UpdatePropertyModel$Form<Control> {}
+
+export interface UpdatePropertyModel$FormBuiler {
+    name: Control;
+    description: Control;
+    location: models.Location$FormBuilder;
+}
 
 const $validators: UpdatePropertyModel$ValidatorFactories = {
     name: (() => [

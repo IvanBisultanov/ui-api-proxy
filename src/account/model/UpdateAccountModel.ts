@@ -50,7 +50,13 @@ export interface UpdateAccountModel$Form<T> {
 
 export interface UpdateAccountModel$ValidatorFactories extends UpdateAccountModel$Form<ValidatorsFactory> {}
 export interface UpdateAccountModel$ControlFactories extends UpdateAccountModel$Form<ControlFactory> {}
-export interface UpdateAccountModel$FormBuiler extends UpdateAccountModel$Form<Control> {}
+
+export interface UpdateAccountModel$FormBuiler {
+    name: Control;
+    description: Control;
+    logoUrl: Control;
+    location: models.Location$FormBuilder;
+}
 
 const $validators: UpdateAccountModel$ValidatorFactories = {
     name: (() => [

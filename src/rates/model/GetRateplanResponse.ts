@@ -41,7 +41,12 @@ export interface GetRateplanResponse$Form<T> {
 
 export interface GetRateplanResponse$ValidatorFactories extends GetRateplanResponse$Form<ValidatorsFactory> {}
 export interface GetRateplanResponse$ControlFactories extends GetRateplanResponse$Form<ControlFactory> {}
-export interface GetRateplanResponse$FormBuiler extends GetRateplanResponse$Form<Control> {}
+
+export interface GetRateplanResponse$FormBuiler {
+    code: Control;
+    name: Control;
+    defaultPrice: Control;
+}
 
 const $validators: GetRateplanResponse$ValidatorFactories = {
     code: (() => [

@@ -50,7 +50,13 @@ export interface PropertyModel$Form<T> {
 
 export interface PropertyModel$ValidatorFactories extends PropertyModel$Form<ValidatorsFactory> {}
 export interface PropertyModel$ControlFactories extends PropertyModel$Form<ControlFactory> {}
-export interface PropertyModel$FormBuiler extends PropertyModel$Form<Control> {}
+
+export interface PropertyModel$FormBuiler {
+    code: Control;
+    name: Control;
+    description: Control;
+    location: models.Location$FormBuilder;
+}
 
 const $validators: PropertyModel$ValidatorFactories = {
     code: (() => [

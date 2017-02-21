@@ -35,7 +35,13 @@ export interface Location$Form<T> {
 
 export interface Location$ValidatorFactories extends Location$Form<ValidatorsFactory> {}
 export interface Location$ControlFactories extends Location$Form<ControlFactory> {}
-export interface Location$FormBuiler extends Location$Form<Control> {}
+
+export interface Location$FormBuiler {
+    street: Control;
+    postalCode: Control;
+    city: Control;
+    countryCode: Control;
+}
 
 const $validators: Location$ValidatorFactories = {
     street: (() => [
