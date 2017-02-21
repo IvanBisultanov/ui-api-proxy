@@ -16,14 +16,6 @@ node('nodejs') {
 
     def version = sh (returnStdout: true, script: "git rev-parse --short HEAD | tr -d '\n'")
 
-    stage ('update docker image') {
-      sh 'docker pull apaleo/swagger-codegen'
-    }
-
-    stage ('Generate proxy') {
-      sh "chmod +x update.sh && ./update.sh"
-    }
-
     stage ('Build proxy (to test if it compiles)') {
       sh 'npm install'
     }
@@ -54,8 +46,4 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   slackSend (color: colorCode, message: summary, channel: '#ci')
-}
-
-def getListOfCompressedFormats(String arguments) {
-  return "${arguments} '*.png' ${arguments} '*.jpeg' ${arguments} '*.jpg' ${arguments} '*.ico'"
 }
