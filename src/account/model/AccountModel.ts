@@ -35,24 +35,14 @@ export interface AccountModel {
     description: string;
 
     /**
-     * The street of the address for the account
+     * The URL of the account logo
      */
-    street: string;
+    logoUrl?: string;
 
     /**
-     * The postal code of the address for the account
+     * The location of the account
      */
-    postalCode: string;
-
-    /**
-     * The city of the address for the account
-     */
-    city: string;
-
-    /**
-     * The country of the address for the account
-     */
-    countryCode: string;
+    location: models.Location;
 
 }
 
@@ -60,10 +50,8 @@ export interface AccountModel$Form<T> {
     code: T;
     name: T;
     description: T;
-    street: T;
-    postalCode: T;
-    city: T;
-    countryCode: T;
+    logoUrl: T;
+    location: T;
 }
 
 export interface AccountModel$ValidatorFactories extends AccountModel$Form<ValidatorsFactory> {}
@@ -86,25 +74,15 @@ const $validators: AccountModel$ValidatorFactories = {
         
         
     ]),
-    street: (() => [
-        Validators.required,
+    logoUrl: (() => [
         
-        
-    ]),
-    postalCode: (() => [
-        Validators.required,
         
         
     ]),
-    city: (() => [
+    location: (() => [
         Validators.required,
         
         
-    ]),
-    countryCode: (() => [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(2),
     ]),
 }
 
@@ -112,10 +90,8 @@ const $controls: AccountModel$ControlFactories = {
     code: (() => [null, Validators.compose($validators.code())]),
     name: (() => [null, Validators.compose($validators.name())]),
     description: (() => [null, Validators.compose($validators.description())]),
-    street: (() => [null, Validators.compose($validators.street())]),
-    postalCode: (() => [null, Validators.compose($validators.postalCode())]),
-    city: (() => [null, Validators.compose($validators.city())]),
-    countryCode: (() => [null, Validators.compose($validators.countryCode())]),
+    logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
+    location: (() => [null, Validators.compose($validators.location())]),
 }
 
 export const AccountModel = {
@@ -126,10 +102,8 @@ export const AccountModel = {
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
-            street: $controls.street(),
-            postalCode: $controls.postalCode(),
-            city: $controls.city(),
-            countryCode: $controls.countryCode(),
+            logoUrl: $controls.logoUrl(),
+            location: $controls.location(),
         };
     }) as (() => AccountModel$FormBuiler),
 }

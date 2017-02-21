@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Inject, Injectable, Optional, LOCALE_ID }                      from '@angular/core';
+import { Inject, Injectable, Optional, LOCALE_ID }           from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Response, ResponseContentType }                     from '@angular/http';
@@ -235,9 +235,6 @@ export class AccountApi {
 
         // to determine the Accept header
         let produces: string[] = [
-            'text/plain', 
-            'application/json', 
-            'text/json'
         ];
 
         // authentication (oauth2) required
@@ -289,9 +286,6 @@ export class AccountApi {
 
         // to determine the Accept header
         let produces: string[] = [
-            'text/plain', 
-            'application/json', 
-            'text/json'
         ];
 
         // authentication (oauth2) required
