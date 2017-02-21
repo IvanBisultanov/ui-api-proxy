@@ -5,10 +5,13 @@ rm -rf src/*
 
 dos2unix swaggers.txt
 gitBranch=$(basename $(git symbolic-ref HEAD))
-baseUrl="http://localhost:50000/"
+baseUrl="https://ui-api.apaleo-staging.com/"
 
-if [ "$gitBranch" == "master" ]; then
-    baseUrl="https://ui-api.apaleo-staging.com/"
+if [[ ! -z "$1" ]]; then
+    baseUrl="$1"
+fi
+if [ "$1" == "localhost" ]; then
+    baseUrl="http://localhost:50000/"
 fi
 
 IFS='|'
