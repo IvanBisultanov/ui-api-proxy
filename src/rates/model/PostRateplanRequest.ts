@@ -41,7 +41,12 @@ export interface PostRateplanRequest$Form<T> {
 
 export interface PostRateplanRequest$ValidatorFactories extends PostRateplanRequest$Form<ValidatorsFactory> {}
 export interface PostRateplanRequest$ControlFactories extends PostRateplanRequest$Form<ControlFactory> {}
-export interface PostRateplanRequest$FormBuiler extends PostRateplanRequest$Form<Control> {}
+
+export interface PostRateplanRequest$FormBuilder {
+    code: Control;
+    name: Control;
+    defaultPrice: Control;
+}
 
 const $validators: PostRateplanRequest$ValidatorFactories = {
     code: (() => [
@@ -76,6 +81,6 @@ export const PostRateplanRequest = {
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
         };
-    }) as (() => PostRateplanRequest$FormBuiler),
+    }) as (() => PostRateplanRequest$FormBuilder),
 }
 

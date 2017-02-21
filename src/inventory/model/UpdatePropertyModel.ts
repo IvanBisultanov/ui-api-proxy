@@ -44,7 +44,12 @@ export interface UpdatePropertyModel$Form<T> {
 
 export interface UpdatePropertyModel$ValidatorFactories extends UpdatePropertyModel$Form<ValidatorsFactory> {}
 export interface UpdatePropertyModel$ControlFactories extends UpdatePropertyModel$Form<ControlFactory> {}
-export interface UpdatePropertyModel$FormBuiler extends UpdatePropertyModel$Form<Control> {}
+
+export interface UpdatePropertyModel$FormBuilder {
+    name: Control;
+    description: Control;
+    location: models.Location$FormBuilder;
+}
 
 const $validators: UpdatePropertyModel$ValidatorFactories = {
     name: (() => [
@@ -77,8 +82,8 @@ export const UpdatePropertyModel = {
         return {
             name: $controls.name(),
             description: $controls.description(),
-            location: $controls.location(),
+            location: models.Location.$formGroup(),
         };
-    }) as (() => UpdatePropertyModel$FormBuiler),
+    }) as (() => UpdatePropertyModel$FormBuilder),
 }
 

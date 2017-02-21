@@ -26,7 +26,10 @@ export interface MessageItemCollection$Form<T> {
 
 export interface MessageItemCollection$ValidatorFactories extends MessageItemCollection$Form<ValidatorsFactory> {}
 export interface MessageItemCollection$ControlFactories extends MessageItemCollection$Form<ControlFactory> {}
-export interface MessageItemCollection$FormBuiler extends MessageItemCollection$Form<Control> {}
+
+export interface MessageItemCollection$FormBuilder {
+    messages: Control;
+}
 
 const $validators: MessageItemCollection$ValidatorFactories = {
     messages: (() => [
@@ -47,6 +50,6 @@ export const MessageItemCollection = {
         return {
             messages: $controls.messages(),
         };
-    }) as (() => MessageItemCollection$FormBuiler),
+    }) as (() => MessageItemCollection$FormBuilder),
 }
 
