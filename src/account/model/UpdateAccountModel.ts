@@ -15,7 +15,7 @@ import * as models from './models';
 /**
  * With this request you can modify an account
  */
-import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface UpdateAccountModel {
@@ -84,13 +84,12 @@ const $controls: UpdateAccountModel$ControlFactories = {
 export const UpdateAccountModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        return {
+    $buildForm: ((fb: FormBuilder) =>
+        fb.group({
             name: $controls.name(),
             description: $controls.description(),
             logoUrl: $controls.logoUrl(),
             location: models.Location.$buildForm(fb),
-        };
-    }),
+        })),
 }
 

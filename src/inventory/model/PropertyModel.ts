@@ -15,7 +15,7 @@ import * as models from './models';
 /**
  * With this request you can create a new property
  */
-import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface PropertyModel {
@@ -84,13 +84,12 @@ const $controls: PropertyModel$ControlFactories = {
 export const PropertyModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        return {
+    $buildForm: ((fb: FormBuilder) =>
+        fb.group({
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
             location: models.Location.$buildForm(fb),
-        };
-    }),
+        })),
 }
 

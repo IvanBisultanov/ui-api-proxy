@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface MessageItemCollection {
@@ -42,10 +42,9 @@ const $controls: MessageItemCollection$ControlFactories = {
 export const MessageItemCollection = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        return {
+    $buildForm: ((fb: FormBuilder) =>
+        fb.group({
             messages: $controls.messages(),
-        };
-    }),
+        })),
 }
 
