@@ -57,6 +57,23 @@ export class PropertyApi {
     }
 
     /**
+     * Check if a property exists
+     * Check if a property exists by code.
+     * @param code The code of the property.
+     * @param apaleoAccount Account Code
+     */
+    public inventoryV1PropertiesByCodeHead(code: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, apaleoAccount, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
      * Replaces a property
      * Use this call to modify a property.
      * @param code The code of the property.
@@ -144,6 +161,58 @@ export class PropertyApi {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Check if a property exists
+     * Check if a property exists by code.
+     * @param code The code of the property.
+     * @param apaleoAccount Account Code
+     */
+    public inventoryV1PropertiesByCodeHeadWithHttpInfo(code: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/inventory/v1/properties/${code}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'code' is not null or undefined
+        if (code === null || code === undefined) {
+            throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeHead.');
+        }
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesByCodeHead.');
+        }
+        headers.set('Apaleo-Account', String(apaleoAccount));
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Head,
             headers: headers,
             search: queryParameters
         });

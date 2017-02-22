@@ -15,7 +15,7 @@ import * as models from './models';
 /**
  * With this request you can create a new account
  */
-import { Validators } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface AccountModel {
@@ -57,14 +57,6 @@ export interface AccountModel$Form<T> {
 export interface AccountModel$ValidatorFactories extends AccountModel$Form<ValidatorsFactory> {}
 export interface AccountModel$ControlFactories extends AccountModel$Form<ControlFactory> {}
 
-export interface AccountModel$FormBuilder {
-    code: Control;
-    name: Control;
-    description: Control;
-    logoUrl: Control;
-    location: models.Location$FormBuilder;
-}
-
 const $validators: AccountModel$ValidatorFactories = {
     code: (() => [
         Validators.required,
@@ -104,14 +96,14 @@ const $controls: AccountModel$ControlFactories = {
 export const AccountModel = {
     $validators: $validators,
     $controls: $controls,
-    $formGroup: (() => {
+    $buildForm: ((fb: FormBuilder) => {
         return {
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
             logoUrl: $controls.logoUrl(),
-            location: models.Location.$formGroup(),
+            location: models.Location.$buildForm(fb),
         };
-    }) as (() => AccountModel$FormBuilder),
+    }),
 }
 

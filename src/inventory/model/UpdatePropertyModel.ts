@@ -15,7 +15,7 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { Validators } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface UpdatePropertyModel {
@@ -45,12 +45,6 @@ export interface UpdatePropertyModel$Form<T> {
 export interface UpdatePropertyModel$ValidatorFactories extends UpdatePropertyModel$Form<ValidatorsFactory> {}
 export interface UpdatePropertyModel$ControlFactories extends UpdatePropertyModel$Form<ControlFactory> {}
 
-export interface UpdatePropertyModel$FormBuilder {
-    name: Control;
-    description: Control;
-    location: models.Location$FormBuilder;
-}
-
 const $validators: UpdatePropertyModel$ValidatorFactories = {
     name: (() => [
         Validators.required,
@@ -78,12 +72,12 @@ const $controls: UpdatePropertyModel$ControlFactories = {
 export const UpdatePropertyModel = {
     $validators: $validators,
     $controls: $controls,
-    $formGroup: (() => {
+    $buildForm: ((fb: FormBuilder) => {
         return {
             name: $controls.name(),
             description: $controls.description(),
-            location: models.Location.$formGroup(),
+            location: models.Location.$buildForm(fb),
         };
-    }) as (() => UpdatePropertyModel$FormBuilder),
+    }),
 }
 

@@ -15,7 +15,7 @@ import * as models from './models';
 /**
  * With this request you can create a new property
  */
-import { Validators } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface PropertyModel {
@@ -51,13 +51,6 @@ export interface PropertyModel$Form<T> {
 export interface PropertyModel$ValidatorFactories extends PropertyModel$Form<ValidatorsFactory> {}
 export interface PropertyModel$ControlFactories extends PropertyModel$Form<ControlFactory> {}
 
-export interface PropertyModel$FormBuilder {
-    code: Control;
-    name: Control;
-    description: Control;
-    location: models.Location$FormBuilder;
-}
-
 const $validators: PropertyModel$ValidatorFactories = {
     code: (() => [
         Validators.required,
@@ -91,13 +84,13 @@ const $controls: PropertyModel$ControlFactories = {
 export const PropertyModel = {
     $validators: $validators,
     $controls: $controls,
-    $formGroup: (() => {
+    $buildForm: ((fb: FormBuilder) => {
         return {
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
-            location: models.Location.$formGroup(),
+            location: models.Location.$buildForm(fb),
         };
-    }) as (() => PropertyModel$FormBuilder),
+    }),
 }
 
