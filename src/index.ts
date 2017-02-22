@@ -4,5 +4,7 @@ import * as _inventory from './inventory';
 export const inventory = _inventory;
 import * as _rates from './rates';
 export const rates = _rates;
+import * as _bookings from './bookings';
+export const bookings = _bookings;
 export * from './configuration';
 export * from './variables';
