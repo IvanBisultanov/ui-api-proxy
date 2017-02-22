@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-import { Validators } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface GetRateplanResponse {
@@ -42,12 +42,6 @@ export interface GetRateplanResponse$Form<T> {
 export interface GetRateplanResponse$ValidatorFactories extends GetRateplanResponse$Form<ValidatorsFactory> {}
 export interface GetRateplanResponse$ControlFactories extends GetRateplanResponse$Form<ControlFactory> {}
 
-export interface GetRateplanResponse$FormBuilder {
-    code: Control;
-    name: Control;
-    defaultPrice: Control;
-}
-
 const $validators: GetRateplanResponse$ValidatorFactories = {
     code: (() => [
         
@@ -75,12 +69,12 @@ const $controls: GetRateplanResponse$ControlFactories = {
 export const GetRateplanResponse = {
     $validators: $validators,
     $controls: $controls,
-    $formGroup: (() => {
+    $buildForm: ((fb: FormBuilder) => {
         return {
             code: $controls.code(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
         };
-    }) as (() => GetRateplanResponse$FormBuilder),
+    }),
 }
 

@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-import { Validators } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface Location {
@@ -35,13 +35,6 @@ export interface Location$Form<T> {
 
 export interface Location$ValidatorFactories extends Location$Form<ValidatorsFactory> {}
 export interface Location$ControlFactories extends Location$Form<ControlFactory> {}
-
-export interface Location$FormBuilder {
-    street: Control;
-    postalCode: Control;
-    city: Control;
-    countryCode: Control;
-}
 
 const $validators: Location$ValidatorFactories = {
     street: (() => [
@@ -76,13 +69,13 @@ const $controls: Location$ControlFactories = {
 export const Location = {
     $validators: $validators,
     $controls: $controls,
-    $formGroup: (() => {
+    $buildForm: ((fb: FormBuilder) => {
         return {
             street: $controls.street(),
             postalCode: $controls.postalCode(),
             city: $controls.city(),
             countryCode: $controls.countryCode(),
         };
-    }) as (() => Location$FormBuilder),
+    }),
 }
 
