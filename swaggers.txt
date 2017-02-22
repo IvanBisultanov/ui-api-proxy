@@ -1,3 +1,4 @@
 account|swagger/account/swagger.json
 inventory|swagger/inventory/swagger.json
 rates|swagger/rates/swagger.json
+bookings|swagger/bookings/swagger.json
