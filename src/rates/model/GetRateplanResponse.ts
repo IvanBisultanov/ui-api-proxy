@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn } from '@angular/forms';
+import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface GetRateplanResponse {
@@ -69,12 +69,11 @@ const $controls: GetRateplanResponse$ControlFactories = {
 export const GetRateplanResponse = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        return {
+    $buildForm: ((fb: FormBuilder) =>
+        fb.group({
             code: $controls.code(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-        };
-    }),
+        })),
 }
 
