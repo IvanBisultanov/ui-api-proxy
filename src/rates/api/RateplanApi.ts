@@ -41,12 +41,12 @@ export class RateplanApi {
     /**
      * Get a rateplan
      * Get a rateplan by code.
-     * @param code The code of the rateplan.
+     * @param id The id of the rateplan.
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByCodeGet(code: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.GetRateplanResponse> {
-        return this.ratesV1RateplansByCodeGetWithHttpInfo(code, apaleoAccount, languages, extraHttpRequestParams)
+    public ratesV1RateplansByIdGet(id: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.RateplanModel> {
+        return this.ratesV1RateplansByIdGetWithHttpInfo(id, apaleoAccount, languages, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -57,12 +57,64 @@ export class RateplanApi {
     }
 
     /**
-     * Creates a rateplan
+     * Check if a rateplan exists
+     * Check if a rateplan exists by id.
+     * @param id The id of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansByIdHead(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ratesV1RateplansByIdHeadWithHttpInfo(id, apaleoAccount, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Replace a rateplan
+     * Use this call to modify a rateplan.
+     * @param id The id of the rateplan.
+     * @param requestBody The definition of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansByIdPut(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, apaleoAccount, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Get a rateplan list
+     * Get the list of rateplans.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public ratesV1RateplansGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.RateplanListModel> {
+        return this.ratesV1RateplansGetWithHttpInfo(apaleoAccount, languages, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * Create a rateplan
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansPost(requestBody: models.PostRateplanRequest, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
+    public ratesV1RateplansPost(requestBody: models.CreateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
         return this.ratesV1RateplansPostWithHttpInfo(requestBody, apaleoAccount, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -77,22 +129,22 @@ export class RateplanApi {
     /**
      * Get a rateplan
      * Get a rateplan by code.
-     * @param code The code of the rateplan.
+     * @param id The id of the rateplan.
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByCodeGetWithHttpInfo(code: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans/${code}`;
+    public ratesV1RateplansByIdGetWithHttpInfo(id: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/rates/v1/rateplans/${id}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling ratesV1RateplansByCodeGet.');
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdGet.');
         }
         // verify required parameter 'apaleoAccount' is not null or undefined
         if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByCodeGet.');
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByIdGet.');
         }
         if (languages !== undefined) {
             if(<any>languages instanceof Date) {
@@ -139,12 +191,186 @@ export class RateplanApi {
     }
 
     /**
-     * Creates a rateplan
+     * Check if a rateplan exists
+     * Check if a rateplan exists by id.
+     * @param id The id of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansByIdHeadWithHttpInfo(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/rates/v1/rateplans/${id}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdHead.');
+        }
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByIdHead.');
+        }
+        headers.set('Apaleo-Account', String(apaleoAccount));
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Head,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Replace a rateplan
+     * Use this call to modify a rateplan.
+     * @param id The id of the rateplan.
+     * @param requestBody The definition of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansByIdPutWithHttpInfo(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/rates/v1/rateplans/${id}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdPut.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (requestBody === null || requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RateplansByIdPut.');
+        }
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByIdPut.');
+        }
+        headers.set('Apaleo-Account', String(apaleoAccount));
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Put,
+            headers: headers,
+            body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Get a rateplan list
+     * Get the list of rateplans.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public ratesV1RateplansGetWithHttpInfo(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/rates/v1/rateplans`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansGet.');
+        }
+        if (languages !== undefined) {
+            if(<any>languages instanceof Date) {
+                queryParameters.set('languages', (<Date><any>languages).toISOString());
+            } else {
+                queryParameters.set('languages', <any>languages);
+            }
+        }
+
+        headers.set('Apaleo-Account', String(apaleoAccount));
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Create a rateplan
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansPostWithHttpInfo(requestBody: models.PostRateplanRequest, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
+    public ratesV1RateplansPostWithHttpInfo(requestBody: models.CreateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/rates/v1/rateplans`;
 
         let queryParameters = new URLSearchParams();

@@ -15,12 +15,7 @@ import * as models from './models';
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
-export interface PostRateplanRequest {
-    /**
-     * The code for the rateplan that can be shown in reports and table views
-     */
-    code: string;
-
+export interface UpdateRateplanModel {
     /**
      * The name for the rateplan
      */
@@ -33,21 +28,15 @@ export interface PostRateplanRequest {
 
 }
 
-export interface PostRateplanRequest$Form<T> {
-    code: T;
+export interface UpdateRateplanModel$Form<T> {
     name: T;
     defaultPrice: T;
 }
 
-export interface PostRateplanRequest$ValidatorFactories extends PostRateplanRequest$Form<ValidatorsFactory> {}
-export interface PostRateplanRequest$ControlFactories extends PostRateplanRequest$Form<ControlFactory> {}
+export interface UpdateRateplanModel$ValidatorFactories extends UpdateRateplanModel$Form<ValidatorsFactory> {}
+export interface UpdateRateplanModel$ControlFactories extends UpdateRateplanModel$Form<ControlFactory> {}
 
-const $validators: PostRateplanRequest$ValidatorFactories = {
-    code: (() => [
-        Validators.required,
-        
-        Validators.maxLength(10),
-    ]),
+const $validators: UpdateRateplanModel$ValidatorFactories = {
     name: (() => [
         Validators.required,
         
@@ -60,18 +49,16 @@ const $validators: PostRateplanRequest$ValidatorFactories = {
     ]),
 }
 
-const $controls: PostRateplanRequest$ControlFactories = {
-    code: (() => [null, Validators.compose($validators.code())]),
+const $controls: UpdateRateplanModel$ControlFactories = {
     name: (() => [null, Validators.compose($validators.name())]),
     defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
 }
 
-export const PostRateplanRequest = {
+export const UpdateRateplanModel = {
     $validators: $validators,
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) =>
         fb.group({
-            code: $controls.code(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
         })),

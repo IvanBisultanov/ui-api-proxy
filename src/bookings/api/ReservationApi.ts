@@ -62,7 +62,7 @@ export class ReservationApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public bookingsV1ReservationsGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.GetReservationResponse> {
+    public bookingsV1ReservationsGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.GetReservationListResponse> {
         return this.bookingsV1ReservationsGetWithHttpInfo(apaleoAccount, languages, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {

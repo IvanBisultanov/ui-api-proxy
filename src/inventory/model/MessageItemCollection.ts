@@ -44,7 +44,6 @@ export const MessageItemCollection = {
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) =>
         fb.group({
-            messages: $controls.messages(),
         })),
 }
 
