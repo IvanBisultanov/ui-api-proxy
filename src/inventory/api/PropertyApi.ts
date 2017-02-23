@@ -92,6 +92,23 @@ export class PropertyApi {
     }
 
     /**
+     * Get a properties list
+     * Get the list of properties.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public inventoryV1PropertiesGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.PropertyListModel> {
+        return this.inventoryV1PropertiesGetWithHttpInfo(apaleoAccount, languages, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
      * Creates a property
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
@@ -277,6 +294,65 @@ export class PropertyApi {
             method: RequestMethod.Put,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * Get a properties list
+     * Get the list of properties.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public inventoryV1PropertiesGetWithHttpInfo(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/inventory/v1/properties`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'apaleoAccount' is not null or undefined
+        if (apaleoAccount === null || apaleoAccount === undefined) {
+            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesGet.');
+        }
+        if (languages !== undefined) {
+            if(<any>languages instanceof Date) {
+                queryParameters.set('languages', (<Date><any>languages).toISOString());
+            } else {
+                queryParameters.set('languages', <any>languages);
+            }
+        }
+
+        headers.set('Apaleo-Account', String(apaleoAccount));
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
             search: queryParameters
         });
 
