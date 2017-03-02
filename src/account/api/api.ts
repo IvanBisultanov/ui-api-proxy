@@ -1,3 +1,5 @@
 export * from './AccountApi';
 import { AccountApi }  from './AccountApi';
-export const APIS = [ AccountApi, ];
+export * from './LanguagesApi';
+import { LanguagesApi }  from './LanguagesApi';
+export const APIS = [ AccountApi, LanguagesApi, ];
