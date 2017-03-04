@@ -22,6 +22,11 @@ export interface CreateRateplanModel {
     code: string;
 
     /**
+     * The code of the property where rateplan will be created
+     */
+    propertyCode?: string;
+
+    /**
      * The name for the rateplan
      */
     name: { [key: string]: string; };
@@ -31,18 +36,13 @@ export interface CreateRateplanModel {
      */
     defaultPrice: number;
 
-    /**
-     * The code of the property where rateplan will be created
-     */
-    propertyCode: string;
-
 }
 
 export interface CreateRateplanModel$Form<T> {
     code: T;
+    propertyCode: T;
     name: T;
     defaultPrice: T;
-    propertyCode: T;
 }
 
 export interface CreateRateplanModel$ValidatorFactories extends CreateRateplanModel$Form<ValidatorsFactory> {}
@@ -54,6 +54,11 @@ const $validators: CreateRateplanModel$ValidatorFactories = {
         
         Validators.maxLength(10),
     ]),
+    propertyCode: (() => [
+        
+        
+        
+    ]),
     name: (() => [
         Validators.required,
         
@@ -64,18 +69,13 @@ const $validators: CreateRateplanModel$ValidatorFactories = {
         
         
     ]),
-    propertyCode: (() => [
-        Validators.required,
-        
-        
-    ]),
 }
 
 const $controls: CreateRateplanModel$ControlFactories = {
     code: (() => [null, Validators.compose($validators.code())]),
+    propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
     name: (() => [null, Validators.compose($validators.name())]),
     defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
-    propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
 }
 
 export const CreateRateplanModel = {
@@ -84,9 +84,9 @@ export const CreateRateplanModel = {
     $buildForm: ((fb: FormBuilder) =>
         fb.group({
             code: $controls.code(),
+            propertyCode: $controls.propertyCode(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-            propertyCode: $controls.propertyCode(),
         })),
 }
 

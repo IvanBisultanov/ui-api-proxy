@@ -24,23 +24,23 @@ export interface GetReservationResponse {
     /**
      * The PropertyId for the reservation
      */
-    propertyId?: number;
+    propertyId: number;
 
-    checkInTime?: string;
+    checkInTime: string;
 
-    checkOutTime?: string;
+    checkOutTime: string;
 
-    adults?: number;
+    adults: number;
 
-    children?: number;
+    children: number;
 
-    guestTitle?: string;
+    guestTitle: string;
 
-    firstName?: string;
+    firstName: string;
 
     middleInitial?: string;
 
-    lastName?: string;
+    lastName: string;
 
     email?: string;
 
@@ -50,13 +50,13 @@ export interface GetReservationResponse {
 
     number?: string;
 
-    city?: string;
+    city: string;
 
-    zipCode?: string;
+    zipCode: string;
 
-    countryCode?: string;
+    countryCode: string;
 
-    ratePlanId?: number;
+    ratePlanId: number;
 
 }
 
@@ -91,49 +91,49 @@ const $validators: GetReservationResponse$ValidatorFactories = {
         
     ]),
     propertyId: (() => [
-        
+        Validators.required,
         
         
     ]),
     checkInTime: (() => [
-        
+        Validators.required,
         
         
     ]),
     checkOutTime: (() => [
-        
+        Validators.required,
         
         
     ]),
     adults: (() => [
-        
+        Validators.required,
         
         
     ]),
     children: (() => [
-        
+        Validators.required,
         
         
     ]),
     guestTitle: (() => [
-        
+        Validators.required,
         
         
     ]),
     firstName: (() => [
+        Validators.required,
         
-        
-        
+        Validators.maxLength(25),
     ]),
     middleInitial: (() => [
         
         
-        
+        Validators.maxLength(5),
     ]),
     lastName: (() => [
+        Validators.required,
         
-        
-        
+        Validators.maxLength(40),
     ]),
     email: (() => [
         
@@ -148,7 +148,7 @@ const $validators: GetReservationResponse$ValidatorFactories = {
     street: (() => [
         
         
-        
+        Validators.maxLength(40),
     ]),
     number: (() => [
         
@@ -156,22 +156,22 @@ const $validators: GetReservationResponse$ValidatorFactories = {
         
     ]),
     city: (() => [
+        Validators.required,
         
-        
-        
+        Validators.maxLength(25),
     ]),
     zipCode: (() => [
+        Validators.required,
         
-        
-        
+        Validators.maxLength(10),
     ]),
     countryCode: (() => [
+        Validators.required,
         
-        
-        
+        Validators.maxLength(2),
     ]),
     ratePlanId: (() => [
-        
+        Validators.required,
         
         
     ]),

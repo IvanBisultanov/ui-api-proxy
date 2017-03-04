@@ -17,9 +17,9 @@ import { ValidatorsFactory, ControlFactory, Control } from '../../types';
 
 export interface GetReservationListResponse {
     /**
-     * List of rateplans
+     * List of reservations
      */
-    reservations?: Array<models.ReservationDto>;
+    reservations?: Array<models.GetReservationResponse>;
 
 }
 
