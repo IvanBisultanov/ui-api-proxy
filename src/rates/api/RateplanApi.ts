@@ -39,23 +39,6 @@ export class RateplanApi {
     }
 
     /**
-     * Archive a rateplan
-     * Use this call to archive a rateplan.
-     * @param id The id of the rateplan.
-     * @param apaleoAccount Account Code
-     */
-    public ratesV1RateplansByIdArchivePost(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ratesV1RateplansByIdArchivePostWithHttpInfo(id, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
-    }
-
-    /**
      * Delete a rateplan
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
@@ -129,11 +112,10 @@ export class RateplanApi {
      * Get a rateplan list
      * Get the list of rateplans.
      * @param apaleoAccount Account Code
-     * @param archived Return only rateplans that have the given archived status
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGet(apaleoAccount: string, archived?: boolean, languages?: string, extraHttpRequestParams?: any): Observable<models.RateplanListModel> {
-        return this.ratesV1RateplansGetWithHttpInfo(apaleoAccount, archived, languages, extraHttpRequestParams)
+    public ratesV1RateplansGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.RateplanListModel> {
+        return this.ratesV1RateplansGetWithHttpInfo(apaleoAccount, languages, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -160,58 +142,6 @@ export class RateplanApi {
             });
     }
 
-
-    /**
-     * Archive a rateplan
-     * Use this call to archive a rateplan.
-     * @param id The id of the rateplan.
-     * @param apaleoAccount Account Code
-     */
-    public ratesV1RateplansByIdArchivePostWithHttpInfo(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans/${id}/archive`;
-
-        let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdArchivePost.');
-        }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByIdArchivePost.');
-        }
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
-
-        // to determine the Accept header
-        let produces: string[] = [
-        ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            search: queryParameters
-        });
-
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
-    }
 
     /**
      * Delete a rateplan
@@ -448,10 +378,9 @@ export class RateplanApi {
      * Get a rateplan list
      * Get the list of rateplans.
      * @param apaleoAccount Account Code
-     * @param archived Return only rateplans that have the given archived status
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGetWithHttpInfo(apaleoAccount: string, archived?: boolean, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
+    public ratesV1RateplansGetWithHttpInfo(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/rates/v1/rateplans`;
 
         let queryParameters = new URLSearchParams();
@@ -460,14 +389,6 @@ export class RateplanApi {
         if (apaleoAccount === null || apaleoAccount === undefined) {
             throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansGet.');
         }
-        if (archived !== undefined) {
-            if(<any>archived instanceof Date) {
-                queryParameters.set('archived', (<Date><any>archived).toISOString());
-            } else {
-                queryParameters.set('archived', <any>archived);
-            }
-        }
-
         if (languages !== undefined) {
             if(<any>languages instanceof Date) {
                 queryParameters.set('languages', (<Date><any>languages).toISOString());

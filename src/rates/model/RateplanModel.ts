@@ -22,11 +22,6 @@ export interface RateplanModel {
     id?: string;
 
     /**
-     * Indicates whether the rateplan is archived
-     */
-    archived?: boolean;
-
-    /**
      * The code for the rateplan that can be shown in reports and table views
      */
     code: string;
@@ -50,7 +45,6 @@ export interface RateplanModel {
 
 export interface RateplanModel$Form<T> {
     id: T;
-    archived: T;
     code: T;
     propertyCode: T;
     name: T;
@@ -62,11 +56,6 @@ export interface RateplanModel$ControlFactories extends RateplanModel$Form<Contr
 
 const $validators: RateplanModel$ValidatorFactories = {
     id: (() => [
-        
-        
-        
-    ]),
-    archived: (() => [
         
         
         
@@ -95,7 +84,6 @@ const $validators: RateplanModel$ValidatorFactories = {
 
 const $controls: RateplanModel$ControlFactories = {
     id: (() => [null, Validators.compose($validators.id())]),
-    archived: (() => [null, Validators.compose($validators.archived())]),
     code: (() => [null, Validators.compose($validators.code())]),
     propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
     name: (() => [null, Validators.compose($validators.name())]),
@@ -108,7 +96,6 @@ export const RateplanModel = {
     $buildForm: ((fb: FormBuilder) =>
         fb.group({
             id: $controls.id(),
-            archived: $controls.archived(),
             code: $controls.code(),
             propertyCode: $controls.propertyCode(),
             name: $controls.name(),
