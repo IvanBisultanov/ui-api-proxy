@@ -16,10 +16,15 @@ import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http
 import { Response, ResponseContentType }                     from '@angular/http';
 
 import { Observable }                                        from 'rxjs/Observable';
+import * as Rx                                               from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/catch';
 
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../variables';
+import { IRequestOptions, ResponseModel, ResponseHeaders }   from '../../models';
 import { Configuration }                                     from '../../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -44,15 +49,10 @@ export class AccountApi {
      * @param code The code of the account.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeGet(code: string, languages?: string, extraHttpRequestParams?: any): Observable<models.AccountModel> {
-        return this.accountV1AccountsByCodeGetWithHttpInfo(code, languages, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public accountV1AccountsByCodeGet(code: string, languages?: string, $options?: IRequestOptions)
+        : Observable<models.AccountModel | undefined> {
+        return this.accountV1AccountsByCodeGetWithRawHttp(code, languages, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -60,15 +60,10 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeHead(code: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.accountV1AccountsByCodeHeadWithHttpInfo(code, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public accountV1AccountsByCodeHead(code: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.accountV1AccountsByCodeHeadWithRawHttp(code, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -77,15 +72,10 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsByCodePut(code: string, requestBody: models.UpdateAccountModel, extraHttpRequestParams?: any): Observable<{}> {
-        return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public accountV1AccountsByCodePut(code: string, requestBody: models.UpdateAccountModel, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.accountV1AccountsByCodePutWithRawHttp(code, requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -93,15 +83,10 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsPost(requestBody: models.AccountModel, extraHttpRequestParams?: any): Observable<{}> {
-        return this.accountV1AccountsPostWithHttpInfo(requestBody, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public accountV1AccountsPost(requestBody: models.AccountModel, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.accountV1AccountsPostWithRawHttp(requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
 
@@ -111,8 +96,56 @@ export class AccountApi {
      * @param code The code of the account.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeGetWithHttpInfo(code: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/account/v1/accounts/${code}`;
+    public accountV1AccountsByCodeGetWithRawHttp(code: string, languages?: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.AccountModel>> {
+        return this.accountV1AccountsByCodeGetWithHttpInfo(code, languages, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Check if an account exists
+     * Check if an account exists by code.
+     * @param code The code of the account.
+     */
+    public accountV1AccountsByCodeHeadWithRawHttp(code: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.accountV1AccountsByCodeHeadWithHttpInfo(code, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Replaces an account
+     * Use this call to modify an account.
+     * @param code The code of the account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsByCodePutWithRawHttp(code: string, requestBody: models.UpdateAccountModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Creates an account with an admin user
+     * Use this call to create a new account.
+     * @param requestBody The definition of the account.
+     */
+    public accountV1AccountsPostWithRawHttp(requestBody: models.AccountModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.accountV1AccountsPostWithHttpInfo(requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+
+    /**
+     * Get an account
+     * Get an account by code.
+     * @param code The code of the account.
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    private accountV1AccountsByCodeGetWithHttpInfo(code: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/account/v1/accounts/${code}'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -121,11 +154,7 @@ export class AccountApi {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeGet.');
         }
         if (languages !== undefined) {
-            if(<any>languages instanceof Date) {
-                queryParameters.set('languages', (<Date><any>languages).toISOString());
-            } else {
-                queryParameters.set('languages', <any>languages);
-            }
+                    queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -148,18 +177,65 @@ export class AccountApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.accountV1AccountsByCodeGetWithHttpInfo(code, languages, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -167,8 +243,9 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeHeadWithHttpInfo(code: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/account/v1/accounts/${code}`;
+    private accountV1AccountsByCodeHeadWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/account/v1/accounts/${code}'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -193,18 +270,65 @@ export class AccountApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Head,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.accountV1AccountsByCodeHeadWithHttpInfo(code, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -213,8 +337,9 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.UpdateAccountModel, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/account/v1/accounts/${code}`;
+    private accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.UpdateAccountModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/account/v1/accounts/${code}'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -248,19 +373,66 @@ export class AccountApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Put,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -268,8 +440,8 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsPostWithHttpInfo(requestBody: models.AccountModel, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/account/v1/accounts`;
+    private accountV1AccountsPostWithHttpInfo(requestBody: models.AccountModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/account/v1/accounts';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -299,19 +471,66 @@ export class AccountApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Post,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.accountV1AccountsPostWithHttpInfo(requestBody, $options));
+                }
+            }
+            throw err;
+        });
     }
 
 }

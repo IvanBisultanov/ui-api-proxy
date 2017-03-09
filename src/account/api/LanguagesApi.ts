@@ -16,10 +16,15 @@ import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http
 import { Response, ResponseContentType }                     from '@angular/http';
 
 import { Observable }                                        from 'rxjs/Observable';
+import * as Rx                                               from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/catch';
 
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../variables';
+import { IRequestOptions, ResponseModel, ResponseHeaders }   from '../../models';
 import { Configuration }                                     from '../../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -44,15 +49,10 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeLanguagesGet(code: string, languages?: string, extraHttpRequestParams?: any): Observable<models.LanguagesModel> {
-        return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, languages, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public accountV1AccountsByCodeLanguagesGet(code: string, languages?: string, $options?: IRequestOptions)
+        : Observable<models.LanguagesModel | undefined> {
+        return this.accountV1AccountsByCodeLanguagesGetWithRawHttp(code, languages, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -61,15 +61,10 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public accountV1AccountsByCodeLanguagesPut(code: string, requestBody: models.LanguagesModel, extraHttpRequestParams?: any): Observable<{}> {
-        return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(code, requestBody, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public accountV1AccountsByCodeLanguagesPut(code: string, requestBody: models.LanguagesModel, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.accountV1AccountsByCodeLanguagesPutWithRawHttp(code, requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
 
@@ -79,8 +74,34 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeLanguagesGetWithHttpInfo(code: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/account/v1/accounts/${code}/languages`;
+    public accountV1AccountsByCodeLanguagesGetWithRawHttp(code: string, languages?: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.LanguagesModel>> {
+        return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, languages, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Replaces the language settings for the account
+     * Use this call to modify the language settings of the account.
+     * @param code The code of the account.
+     * @param requestBody The definition of the language settings.
+     */
+    public accountV1AccountsByCodeLanguagesPutWithRawHttp(code: string, requestBody: models.LanguagesModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(code, requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+
+    /**
+     * Get the language settings for the account
+     * Get the language settings
+     * @param code The code of the account.
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    private accountV1AccountsByCodeLanguagesGetWithHttpInfo(code: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/account/v1/accounts/${code}/languages'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -89,11 +110,7 @@ export class LanguagesApi {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeLanguagesGet.');
         }
         if (languages !== undefined) {
-            if(<any>languages instanceof Date) {
-                queryParameters.set('languages', (<Date><any>languages).toISOString());
-            } else {
-                queryParameters.set('languages', <any>languages);
-            }
+                    queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -116,18 +133,65 @@ export class LanguagesApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, languages, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -136,8 +200,9 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public accountV1AccountsByCodeLanguagesPutWithHttpInfo(code: string, requestBody: models.LanguagesModel, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/account/v1/accounts/${code}/languages`;
+    private accountV1AccountsByCodeLanguagesPutWithHttpInfo(code: string, requestBody: models.LanguagesModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/account/v1/accounts/${code}/languages'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -171,19 +236,66 @@ export class LanguagesApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Put,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(code, requestBody, $options));
+                }
+            }
+            throw err;
+        });
     }
 
 }

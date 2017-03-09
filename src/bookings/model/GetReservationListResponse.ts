@@ -13,7 +13,8 @@
 import * as models from './models';
 
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface GetReservationListResponse {
     /**
@@ -22,6 +23,8 @@ export interface GetReservationListResponse {
     reservations?: Array<models.GetReservationResponse>;
 
 }
+
+export type GetReservationListResponseWithRawHttp = GetReservationListResponse & ResponseModel<GetReservationListResponse>;
 
 export interface GetReservationListResponse$Form<T> {
     reservations: T;

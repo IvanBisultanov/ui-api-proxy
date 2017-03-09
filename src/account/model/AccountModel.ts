@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can create a new account
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface AccountModel {
     /**
@@ -45,6 +46,8 @@ export interface AccountModel {
     location: models.Location;
 
 }
+
+export type AccountModelWithRawHttp = AccountModel & ResponseModel<AccountModel>;
 
 export interface AccountModel$Form<T> {
     code: T;

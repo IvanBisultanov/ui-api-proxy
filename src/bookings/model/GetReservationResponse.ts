@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can setup a new account with an admin user
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface GetReservationResponse {
     id?: number;
@@ -59,6 +60,8 @@ export interface GetReservationResponse {
     ratePlanId: number;
 
 }
+
+export type GetReservationResponseWithRawHttp = GetReservationResponse & ResponseModel<GetReservationResponse>;
 
 export interface GetReservationResponse$Form<T> {
     id: T;

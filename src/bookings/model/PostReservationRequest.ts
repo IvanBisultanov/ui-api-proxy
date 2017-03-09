@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can create a reservation
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface PostReservationRequest {
     /**
@@ -57,6 +58,8 @@ export interface PostReservationRequest {
     ratePlanId: number;
 
 }
+
+export type PostReservationRequestWithRawHttp = PostReservationRequest & ResponseModel<PostReservationRequest>;
 
 export interface PostReservationRequest$Form<T> {
     propertyId: T;

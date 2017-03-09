@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can modify the language settings for the account
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface LanguagesModel {
     /**
@@ -25,6 +26,8 @@ export interface LanguagesModel {
     languages: Array<models.LanguageModel>;
 
 }
+
+export type LanguagesModelWithRawHttp = LanguagesModel & ResponseModel<LanguagesModel>;
 
 export interface LanguagesModel$Form<T> {
     languages: T;

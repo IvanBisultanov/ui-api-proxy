@@ -16,10 +16,15 @@ import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http
 import { Response, ResponseContentType }                     from '@angular/http';
 
 import { Observable }                                        from 'rxjs/Observable';
+import * as Rx                                               from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/catch';
 
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../variables';
+import { IRequestOptions, ResponseModel, ResponseHeaders }   from '../../models';
 import { Configuration }                                     from '../../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -44,15 +49,10 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansByIdDelete(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ratesV1RateplansByIdDeleteWithHttpInfo(id, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public ratesV1RateplansByIdDelete(id: string, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.ratesV1RateplansByIdDeleteWithRawHttp(id, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -62,15 +62,10 @@ export class RateplanApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByIdGet(id: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.RateplanModel> {
-        return this.ratesV1RateplansByIdGetWithHttpInfo(id, apaleoAccount, languages, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public ratesV1RateplansByIdGet(id: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<models.RateplanModel | undefined> {
+        return this.ratesV1RateplansByIdGetWithRawHttp(id, apaleoAccount, languages, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -79,15 +74,10 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansByIdHead(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ratesV1RateplansByIdHeadWithHttpInfo(id, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public ratesV1RateplansByIdHead(id: string, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.ratesV1RateplansByIdHeadWithRawHttp(id, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -97,15 +87,10 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansByIdPut(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public ratesV1RateplansByIdPut(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.ratesV1RateplansByIdPutWithRawHttp(id, requestBody, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -114,15 +99,10 @@ export class RateplanApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.RateplanListModel> {
-        return this.ratesV1RateplansGetWithHttpInfo(apaleoAccount, languages, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public ratesV1RateplansGet(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<models.RateplanListModel | undefined> {
+        return this.ratesV1RateplansGetWithRawHttp(apaleoAccount, languages, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -131,15 +111,10 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansPost(requestBody: models.CreateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ratesV1RateplansPostWithHttpInfo(requestBody, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public ratesV1RateplansPost(requestBody: models.CreateRateplanModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.ratesV1RateplansPostWithRawHttp(requestBody, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
 
@@ -149,8 +124,84 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansByIdDeleteWithHttpInfo(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans/${id}`;
+    public ratesV1RateplansByIdDeleteWithRawHttp(id: string, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.ratesV1RateplansByIdDeleteWithHttpInfo(id, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Get a rateplan
+     * Get a rateplan by code.
+     * @param id The id of the rateplan.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public ratesV1RateplansByIdGetWithRawHttp(id: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.RateplanModel>> {
+        return this.ratesV1RateplansByIdGetWithHttpInfo(id, apaleoAccount, languages, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Check if a rateplan exists
+     * Check if a rateplan exists by id.
+     * @param id The id of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansByIdHeadWithRawHttp(id: string, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.ratesV1RateplansByIdHeadWithHttpInfo(id, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Replace a rateplan
+     * Use this call to modify a rateplan.
+     * @param id The id of the rateplan.
+     * @param requestBody The definition of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansByIdPutWithRawHttp(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Get a rateplan list
+     * Get the list of rateplans.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public ratesV1RateplansGetWithRawHttp(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.RateplanListModel>> {
+        return this.ratesV1RateplansGetWithHttpInfo(apaleoAccount, languages, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Create a rateplan
+     * Use this call to create a new rateplan.
+     * @param requestBody The definition of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    public ratesV1RateplansPostWithRawHttp(requestBody: models.CreateRateplanModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.ratesV1RateplansPostWithHttpInfo(requestBody, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+
+    /**
+     * Delete a rateplan
+     * Use this call to delete a rateplan.
+     * @param id The id of the rateplan.
+     * @param apaleoAccount Account Code
+     */
+    private ratesV1RateplansByIdDeleteWithHttpInfo(id: string, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rateplans/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -181,18 +232,65 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Delete,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.ratesV1RateplansByIdDeleteWithHttpInfo(id, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -202,8 +300,9 @@ export class RateplanApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByIdGetWithHttpInfo(id: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans/${id}`;
+    private ratesV1RateplansByIdGetWithHttpInfo(id: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rateplans/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -216,11 +315,7 @@ export class RateplanApi {
             throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansByIdGet.');
         }
         if (languages !== undefined) {
-            if(<any>languages instanceof Date) {
-                queryParameters.set('languages', (<Date><any>languages).toISOString());
-            } else {
-                queryParameters.set('languages', <any>languages);
-            }
+                    queryParameters.set('languages', <any>languages);
         }
 
         headers.set('Apaleo-Account', String(apaleoAccount));
@@ -245,18 +340,65 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.ratesV1RateplansByIdGetWithHttpInfo(id, apaleoAccount, languages, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -265,8 +407,9 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansByIdHeadWithHttpInfo(id: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans/${id}`;
+    private ratesV1RateplansByIdHeadWithHttpInfo(id: string, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rateplans/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -297,18 +440,65 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Head,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.ratesV1RateplansByIdHeadWithHttpInfo(id, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -318,8 +508,9 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansByIdPutWithHttpInfo(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans/${id}`;
+    private ratesV1RateplansByIdPutWithHttpInfo(id: string, requestBody: models.UpdateRateplanModel, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rateplans/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -359,19 +550,66 @@ export class RateplanApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Put,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -380,8 +618,8 @@ export class RateplanApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGetWithHttpInfo(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans`;
+    private ratesV1RateplansGetWithHttpInfo(apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rateplans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -390,11 +628,7 @@ export class RateplanApi {
             throw new Error('Required parameter apaleoAccount was null or undefined when calling ratesV1RateplansGet.');
         }
         if (languages !== undefined) {
-            if(<any>languages instanceof Date) {
-                queryParameters.set('languages', (<Date><any>languages).toISOString());
-            } else {
-                queryParameters.set('languages', <any>languages);
-            }
+                    queryParameters.set('languages', <any>languages);
         }
 
         headers.set('Apaleo-Account', String(apaleoAccount));
@@ -419,18 +653,65 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.ratesV1RateplansGetWithHttpInfo(apaleoAccount, languages, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -439,8 +720,8 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      * @param apaleoAccount Account Code
      */
-    public ratesV1RateplansPostWithHttpInfo(requestBody: models.CreateRateplanModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/rates/v1/rateplans`;
+    private ratesV1RateplansPostWithHttpInfo(requestBody: models.CreateRateplanModel, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rateplans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -476,19 +757,66 @@ export class RateplanApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Post,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.ratesV1RateplansPostWithHttpInfo(requestBody, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
 }

@@ -13,7 +13,8 @@
 import * as models from './models';
 
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface Location {
     street: string;
@@ -25,6 +26,8 @@ export interface Location {
     countryCode: string;
 
 }
+
+export type LocationWithRawHttp = Location & ResponseModel<Location>;
 
 export interface Location$Form<T> {
     street: T;

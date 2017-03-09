@@ -13,7 +13,8 @@
 import * as models from './models';
 
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface LanguageModel {
     code: string;
@@ -23,6 +24,8 @@ export interface LanguageModel {
     mandatory: boolean;
 
 }
+
+export type LanguageModelWithRawHttp = LanguageModel & ResponseModel<LanguageModel>;
 
 export interface LanguageModel$Form<T> {
     code: T;

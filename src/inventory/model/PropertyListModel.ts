@@ -13,7 +13,8 @@
 import * as models from './models';
 
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface PropertyListModel {
     /**
@@ -22,6 +23,8 @@ export interface PropertyListModel {
     properties?: Array<models.PropertyModel>;
 
 }
+
+export type PropertyListModelWithRawHttp = PropertyListModel & ResponseModel<PropertyListModel>;
 
 export interface PropertyListModel$Form<T> {
     properties: T;

@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can create a new property
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface PropertyModel {
     /**
@@ -40,6 +41,8 @@ export interface PropertyModel {
     location: models.Location;
 
 }
+
+export type PropertyModelWithRawHttp = PropertyModel & ResponseModel<PropertyModel>;
 
 export interface PropertyModel$Form<T> {
     code: T;

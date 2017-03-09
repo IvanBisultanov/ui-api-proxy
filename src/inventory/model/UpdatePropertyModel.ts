@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can modify a property
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface UpdatePropertyModel {
     /**
@@ -35,6 +36,8 @@ export interface UpdatePropertyModel {
     location: models.Location;
 
 }
+
+export type UpdatePropertyModelWithRawHttp = UpdatePropertyModel & ResponseModel<UpdatePropertyModel>;
 
 export interface UpdatePropertyModel$Form<T> {
     name: T;

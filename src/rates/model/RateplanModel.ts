@@ -13,7 +13,8 @@
 import * as models from './models';
 
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface RateplanModel {
     /**
@@ -42,6 +43,8 @@ export interface RateplanModel {
     defaultPrice: number;
 
 }
+
+export type RateplanModelWithRawHttp = RateplanModel & ResponseModel<RateplanModel>;
 
 export interface RateplanModel$Form<T> {
     id: T;

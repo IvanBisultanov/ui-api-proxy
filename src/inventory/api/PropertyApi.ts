@@ -16,10 +16,15 @@ import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http
 import { Response, ResponseContentType }                     from '@angular/http';
 
 import { Observable }                                        from 'rxjs/Observable';
+import * as Rx                                               from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/catch';
 
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../variables';
+import { IRequestOptions, ResponseModel, ResponseHeaders }   from '../../models';
 import { Configuration }                                     from '../../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -45,15 +50,10 @@ export class PropertyApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGet(code: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.PropertyModel> {
-        return this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, apaleoAccount, languages, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public inventoryV1PropertiesByCodeGet(code: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<models.PropertyModel | undefined> {
+        return this.inventoryV1PropertiesByCodeGetWithRawHttp(code, apaleoAccount, languages, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -62,15 +62,10 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodeHead(code: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public inventoryV1PropertiesByCodeHead(code: string, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.inventoryV1PropertiesByCodeHeadWithRawHttp(code, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -80,15 +75,10 @@ export class PropertyApi {
      * @param requestBody The definition of the property.
      * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.inventoryV1PropertiesByCodePutWithRawHttp(code, requestBody, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -97,15 +87,10 @@ export class PropertyApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGet(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<models.PropertyListModel> {
-        return this.inventoryV1PropertiesGetWithHttpInfo(apaleoAccount, languages, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public inventoryV1PropertiesGet(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<models.PropertyListModel | undefined> {
+        return this.inventoryV1PropertiesGetWithRawHttp(apaleoAccount, languages, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
@@ -114,15 +99,10 @@ export class PropertyApi {
      * @param requestBody The definition of the property.
      * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesPost(requestBody: models.PropertyModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, apaleoAccount, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+    public inventoryV1PropertiesPost(requestBody: models.PropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.inventoryV1PropertiesPostWithRawHttp(requestBody, apaleoAccount, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
     }
 
 
@@ -133,8 +113,72 @@ export class PropertyApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/inventory/v1/properties/${code}`;
+    public inventoryV1PropertiesByCodeGetWithRawHttp(code: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.PropertyModel>> {
+        return this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, apaleoAccount, languages, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Check if a property exists
+     * Check if a property exists by code.
+     * @param code The code of the property.
+     * @param apaleoAccount Account Code
+     */
+    public inventoryV1PropertiesByCodeHeadWithRawHttp(code: string, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Replaces a property
+     * Use this call to modify a property.
+     * @param code The code of the property.
+     * @param requestBody The definition of the property.
+     * @param apaleoAccount Account Code
+     */
+    public inventoryV1PropertiesByCodePutWithRawHttp(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Get a properties list
+     * Get the list of properties.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    public inventoryV1PropertiesGetWithRawHttp(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.PropertyListModel>> {
+        return this.inventoryV1PropertiesGetWithHttpInfo(apaleoAccount, languages, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Creates a property
+     * Use this call to create a new property.
+     * @param requestBody The definition of the property.
+     * @param apaleoAccount Account Code
+     */
+    public inventoryV1PropertiesPostWithRawHttp(requestBody: models.PropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, apaleoAccount, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+
+    /**
+     * Get a property
+     * Get a property by code.
+     * @param code The code of the property.
+     * @param apaleoAccount Account Code
+     * @param languages &#39;all&#39; or comma separated list of language codes
+     */
+    private inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/${code}'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -147,11 +191,7 @@ export class PropertyApi {
             throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesByCodeGet.');
         }
         if (languages !== undefined) {
-            if(<any>languages instanceof Date) {
-                queryParameters.set('languages', (<Date><any>languages).toISOString());
-            } else {
-                queryParameters.set('languages', <any>languages);
-            }
+                    queryParameters.set('languages', <any>languages);
         }
 
         headers.set('Apaleo-Account', String(apaleoAccount));
@@ -176,18 +216,65 @@ export class PropertyApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, apaleoAccount, languages, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -196,8 +283,9 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodeHeadWithHttpInfo(code: string, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/inventory/v1/properties/${code}`;
+    private inventoryV1PropertiesByCodeHeadWithHttpInfo(code: string, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/${code}'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -228,18 +316,65 @@ export class PropertyApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Head,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -249,8 +384,9 @@ export class PropertyApi {
      * @param requestBody The definition of the property.
      * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/inventory/v1/properties/${code}`;
+    private inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/${code}'
+                    .replace('${' + 'code' + '}', String(code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -290,19 +426,66 @@ export class PropertyApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Put,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -311,8 +494,8 @@ export class PropertyApi {
      * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGetWithHttpInfo(apaleoAccount: string, languages?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/inventory/v1/properties`;
+    private inventoryV1PropertiesGetWithHttpInfo(apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -321,11 +504,7 @@ export class PropertyApi {
             throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesGet.');
         }
         if (languages !== undefined) {
-            if(<any>languages instanceof Date) {
-                queryParameters.set('languages', (<Date><any>languages).toISOString());
-            } else {
-                queryParameters.set('languages', <any>languages);
-            }
+                    queryParameters.set('languages', <any>languages);
         }
 
         headers.set('Apaleo-Account', String(apaleoAccount));
@@ -350,18 +529,65 @@ export class PropertyApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.inventoryV1PropertiesGetWithHttpInfo(apaleoAccount, languages, $options));
+                }
+            }
+            throw err;
+        });
     }
 
     /**
@@ -370,8 +596,8 @@ export class PropertyApi {
      * @param requestBody The definition of the property.
      * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesPostWithHttpInfo(requestBody: models.PropertyModel, apaleoAccount: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/inventory/v1/properties`;
+    private inventoryV1PropertiesPostWithHttpInfo(requestBody: models.PropertyModel, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -407,19 +633,66 @@ export class PropertyApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
+        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
+        let isResponseCodeAllowed: (code: number) => boolean = () => false;
+        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+        if ($options) {
+            if ($options.retryTimes !== undefined) {
+                retryTimes = $options.retryTimes;
+            }
+            
+            if ($options.allowResponseCodes) {
+                if (typeof $options.allowResponseCodes === 'function') {
+                    isResponseCodeAllowed = $options.allowResponseCodes;
+                } else {
+                    const allowedResponseCodes = $options.allowResponseCodes;
+                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
+                }
+            }
+            
+            if ($options.ifMatch && $options.ifNoneMatch) {
+                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
+            } else if ($options.ifMatch) {
+                headers.set('If-Match', $options.ifMatch);
+            } else if ($options.ifNoneMatch) {
+                headers.set('If-None-Match', $options.ifNoneMatch);
+            }
+
+            if ($options.additionalHeaders) {
+                for (const key in $options.additionalHeaders) {
+                    if ($options.additionalHeaders.hasOwnProperty(key)) {
+                        headers.set(key, $options.additionalHeaders[key]);
+                    }
+                }
+            }
+
+            if ($options.customInterceptor) {
+                requestOptionsInterceptor = $options.customInterceptor;
+            }
+        }
+
+        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
             method: RequestMethod.Post,
             headers: headers,
             body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        return this.http.request(path, requestOptions).catch(err => {
+            if (err instanceof Response) {
+                if (isResponseCodeAllowed(err.status)) {
+                    return Rx.Observable.of(err);
+                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    $options = $options || {};
+                    $options.retryTimes = retryTimes - 1;
 
-        return this.http.request(path, requestOptions);
+                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                        this.inventoryV1PropertiesPostWithHttpInfo(requestBody, apaleoAccount, $options));
+                }
+            }
+            throw err;
+        });
     }
 
 }

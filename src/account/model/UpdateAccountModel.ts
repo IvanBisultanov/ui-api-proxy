@@ -16,7 +16,8 @@ import * as models from './models';
  * With this request you can modify an account
  */
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface UpdateAccountModel {
     /**
@@ -40,6 +41,8 @@ export interface UpdateAccountModel {
     location: models.Location;
 
 }
+
+export type UpdateAccountModelWithRawHttp = UpdateAccountModel & ResponseModel<UpdateAccountModel>;
 
 export interface UpdateAccountModel$Form<T> {
     name: T;

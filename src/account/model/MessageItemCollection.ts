@@ -13,12 +13,15 @@
 import * as models from './models';
 
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control } from '../../types';
+import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
+import { ResponseModel }                                   from '../../models';
 
 export interface MessageItemCollection {
     messages?: Array<string>;
 
 }
+
+export type MessageItemCollectionWithRawHttp = MessageItemCollection & ResponseModel<MessageItemCollection>;
 
 export interface MessageItemCollection$Form<T> {
     messages: T;
