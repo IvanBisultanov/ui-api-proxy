@@ -9,15 +9,17 @@ export interface IRequestOptions {
     customInterceptor?: (requestOptions: RequestOptionsArgs) => RequestOptionsArgs;
 }
 
+const regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
+
 export class ResponseModel<T> {
     public readonly $headers: ResponseHeaders;
     public readonly $isEmpty: boolean;
 
-    constructor(private readonly response: Response) { 
+    constructor(private readonly response: Response) {
         this.$headers = new ResponseHeaders(response);
-        
+
         if (this.$headers.isJson) {
-            Object.assign(this, response.json());
+            Object.assign(this, this.parseDateInJson(response.json()));
             this.$isEmpty = false;
         } else {
             this.$isEmpty = true;
@@ -30,6 +32,28 @@ export class ResponseModel<T> {
 
     public $hasValue(me: (ResponseModel<T> & T) | ResponseModel<T>): me is (ResponseModel<T> & T) {
         return !me.$isEmpty;
+    }
+
+    private parseDateInJson(input: any) {
+        if (typeof input !== "object") return input;
+
+        for (const key in input) {
+            if (!input.hasOwnProperty(key)) continue;
+
+            const value = input[key];
+            let match: RegExpMatchArray | null;
+            // Check for string properties which look like dates.
+            if (typeof value === "string" && (match = value.match(regexIso8601))) {
+                const milliseconds = Date.parse(match[0])
+                if (!isNaN(milliseconds)) {
+                    input[key] = new Date(milliseconds);
+                }
+            } else if (typeof value === "object") {
+                // Recurse into object
+                this.parseDateInJson(value);
+            }
+        }
+        return input;
     }
 }
 

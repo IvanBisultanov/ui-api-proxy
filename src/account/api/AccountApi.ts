@@ -47,11 +47,10 @@ export class AccountApi {
      * Get an account
      * Get an account by code.
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeGet(code: string, languages?: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeGet(code: string, $options?: IRequestOptions)
         : Observable<models.AccountModel | undefined> {
-        return this.accountV1AccountsByCodeGetWithRawHttp(code, languages, $options)
+        return this.accountV1AccountsByCodeGetWithRawHttp(code, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -94,11 +93,10 @@ export class AccountApi {
      * Get an account
      * Get an account by code.
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeGetWithRawHttp(code: string, languages?: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeGetWithRawHttp(code: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.AccountModel>> {
-        return this.accountV1AccountsByCodeGetWithHttpInfo(code, languages, $options)
+        return this.accountV1AccountsByCodeGetWithHttpInfo(code, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -141,9 +139,8 @@ export class AccountApi {
      * Get an account
      * Get an account by code.
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private accountV1AccountsByCodeGetWithHttpInfo(code: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeGetWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/account/v1/accounts/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -153,10 +150,6 @@ export class AccountApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeGet.');
         }
-        if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
-        }
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -167,15 +160,6 @@ export class AccountApi {
             'application/json', 
             'text/json'
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -231,7 +215,7 @@ export class AccountApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.accountV1AccountsByCodeGetWithHttpInfo(code, languages, $options));
+                        this.accountV1AccountsByCodeGetWithHttpInfo(code, $options));
                 }
             }
             throw err;
@@ -260,15 +244,6 @@ export class AccountApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -362,15 +337,6 @@ export class AccountApi {
         let produces: string[] = [
         ];
 
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
         headers.set('Content-Type', 'application/json');
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
@@ -459,15 +425,6 @@ export class AccountApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         headers.set('Content-Type', 'application/json');
 

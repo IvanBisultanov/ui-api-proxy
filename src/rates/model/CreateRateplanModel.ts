@@ -54,7 +54,7 @@ export interface CreateRateplanModel$ControlFactories extends CreateRateplanMode
 const $validators: CreateRateplanModel$ValidatorFactories = {
     code: (() => [
         Validators.required,
-        
+        Validators.minLength(3),
         Validators.maxLength(10),
     ]),
     propertyCode: (() => [

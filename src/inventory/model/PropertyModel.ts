@@ -57,7 +57,7 @@ export interface PropertyModel$ControlFactories extends PropertyModel$Form<Contr
 const $validators: PropertyModel$ValidatorFactories = {
     code: (() => [
         Validators.required,
-        
+        Validators.minLength(3),
         Validators.maxLength(10),
     ]),
     name: (() => [

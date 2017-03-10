@@ -47,12 +47,11 @@ export class PropertyApi {
      * Get a property
      * Get a property by code.
      * @param code The code of the property.
-     * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGet(code: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodeGet(code: string, languages?: Array<string>, $options?: IRequestOptions)
         : Observable<models.PropertyModel | undefined> {
-        return this.inventoryV1PropertiesByCodeGetWithRawHttp(code, apaleoAccount, languages, $options)
+        return this.inventoryV1PropertiesByCodeGetWithRawHttp(code, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -60,11 +59,10 @@ export class PropertyApi {
      * Check if a property exists
      * Check if a property exists by code.
      * @param code The code of the property.
-     * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodeHead(code: string, apaleoAccount: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodeHead(code: string, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByCodeHeadWithRawHttp(code, apaleoAccount, $options)
+        return this.inventoryV1PropertiesByCodeHeadWithRawHttp(code, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -73,23 +71,21 @@ export class PropertyApi {
      * Use this call to modify a property.
      * @param code The code of the property.
      * @param requestBody The definition of the property.
-     * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.UpdatePropertyModel, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByCodePutWithRawHttp(code, requestBody, apaleoAccount, $options)
+        return this.inventoryV1PropertiesByCodePutWithRawHttp(code, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Get a properties list
      * Get the list of properties.
-     * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGet(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesGet(languages?: Array<string>, $options?: IRequestOptions)
         : Observable<models.PropertyListModel | undefined> {
-        return this.inventoryV1PropertiesGetWithRawHttp(apaleoAccount, languages, $options)
+        return this.inventoryV1PropertiesGetWithRawHttp(languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -97,11 +93,10 @@ export class PropertyApi {
      * Creates a property
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
-     * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesPost(requestBody: models.PropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesPost(requestBody: models.PropertyModel, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesPostWithRawHttp(requestBody, apaleoAccount, $options)
+        return this.inventoryV1PropertiesPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -110,12 +105,11 @@ export class PropertyApi {
      * Get a property
      * Get a property by code.
      * @param code The code of the property.
-     * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGetWithRawHttp(code: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodeGetWithRawHttp(code: string, languages?: Array<string>, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyModel>> {
-        return this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, apaleoAccount, languages, $options)
+        return this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, languages, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -123,11 +117,10 @@ export class PropertyApi {
      * Check if a property exists
      * Check if a property exists by code.
      * @param code The code of the property.
-     * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodeHeadWithRawHttp(code: string, apaleoAccount: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodeHeadWithRawHttp(code: string, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, apaleoAccount, $options)
+        return this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -136,23 +129,21 @@ export class PropertyApi {
      * Use this call to modify a property.
      * @param code The code of the property.
      * @param requestBody The definition of the property.
-     * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesByCodePutWithRawHttp(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodePutWithRawHttp(code: string, requestBody: models.UpdatePropertyModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, apaleoAccount, $options)
+        return this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Get a properties list
      * Get the list of properties.
-     * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGetWithRawHttp(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesGetWithRawHttp(languages?: Array<string>, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyListModel>> {
-        return this.inventoryV1PropertiesGetWithHttpInfo(apaleoAccount, languages, $options)
+        return this.inventoryV1PropertiesGetWithHttpInfo(languages, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -160,11 +151,10 @@ export class PropertyApi {
      * Creates a property
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
-     * @param apaleoAccount Account Code
      */
-    public inventoryV1PropertiesPostWithRawHttp(requestBody: models.PropertyModel, apaleoAccount: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesPostWithRawHttp(requestBody: models.PropertyModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, apaleoAccount, $options)
+        return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -173,10 +163,9 @@ export class PropertyApi {
      * Get a property
      * Get a property by code.
      * @param code The code of the property.
-     * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -186,15 +175,11 @@ export class PropertyApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeGet.');
         }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesByCodeGet.');
+        if (languages) {
+            languages.forEach((element) => {
+                queryParameters.append('languages', <any>element);
+            })
         }
-        if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
-        }
-
-        headers.set('Apaleo-Account', String(apaleoAccount));
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -206,15 +191,6 @@ export class PropertyApi {
             'application/json', 
             'text/json'
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -270,7 +246,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, apaleoAccount, languages, $options));
+                        this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, languages, $options));
                 }
             }
             throw err;
@@ -281,9 +257,8 @@ export class PropertyApi {
      * Check if a property exists
      * Check if a property exists by code.
      * @param code The code of the property.
-     * @param apaleoAccount Account Code
      */
-    private inventoryV1PropertiesByCodeHeadWithHttpInfo(code: string, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByCodeHeadWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -293,12 +268,6 @@ export class PropertyApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeHead.');
         }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesByCodeHead.');
-        }
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -306,15 +275,6 @@ export class PropertyApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -370,7 +330,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, apaleoAccount, $options));
+                        this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, $options));
                 }
             }
             throw err;
@@ -382,9 +342,8 @@ export class PropertyApi {
      * Use this call to modify a property.
      * @param code The code of the property.
      * @param requestBody The definition of the property.
-     * @param apaleoAccount Account Code
      */
-    private inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.UpdatePropertyModel, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.UpdatePropertyModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -398,12 +357,6 @@ export class PropertyApi {
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesByCodePut.');
         }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesByCodePut.');
-        }
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json', 
@@ -414,15 +367,6 @@ export class PropertyApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         headers.set('Content-Type', 'application/json');
 
@@ -481,7 +425,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, apaleoAccount, $options));
+                        this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, $options));
                 }
             }
             throw err;
@@ -491,23 +435,18 @@ export class PropertyApi {
     /**
      * Get a properties list
      * Get the list of properties.
-     * @param apaleoAccount Account Code
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesGetWithHttpInfo(apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesGetWithHttpInfo(languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesGet.');
+        if (languages) {
+            languages.forEach((element) => {
+                queryParameters.append('languages', <any>element);
+            })
         }
-        if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
-        }
-
-        headers.set('Apaleo-Account', String(apaleoAccount));
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -519,15 +458,6 @@ export class PropertyApi {
             'application/json', 
             'text/json'
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -583,7 +513,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesGetWithHttpInfo(apaleoAccount, languages, $options));
+                        this.inventoryV1PropertiesGetWithHttpInfo(languages, $options));
                 }
             }
             throw err;
@@ -594,9 +524,8 @@ export class PropertyApi {
      * Creates a property
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
-     * @param apaleoAccount Account Code
      */
-    private inventoryV1PropertiesPostWithHttpInfo(requestBody: models.PropertyModel, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesPostWithHttpInfo(requestBody: models.PropertyModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
@@ -605,12 +534,6 @@ export class PropertyApi {
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesPost.');
         }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling inventoryV1PropertiesPost.');
-        }
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json', 
@@ -621,15 +544,6 @@ export class PropertyApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         headers.set('Content-Type', 'application/json');
 
@@ -688,7 +602,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesPostWithHttpInfo(requestBody, apaleoAccount, $options));
+                        this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options));
                 }
             }
             throw err;

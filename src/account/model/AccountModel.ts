@@ -63,7 +63,7 @@ export interface AccountModel$ControlFactories extends AccountModel$Form<Control
 const $validators: AccountModel$ValidatorFactories = {
     code: (() => [
         Validators.required,
-        
+        Validators.minLength(3),
         Validators.maxLength(10),
     ]),
     name: (() => [

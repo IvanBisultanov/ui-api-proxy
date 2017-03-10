@@ -47,24 +47,20 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param apaleoAccount Account Code
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public bookingsV1ReservationsByIdGet(id: number, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdGet(id: number, $options?: IRequestOptions)
         : Observable<models.GetReservationResponse | undefined> {
-        return this.bookingsV1ReservationsByIdGetWithRawHttp(id, apaleoAccount, languages, $options)
+        return this.bookingsV1ReservationsByIdGetWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Get all reservations
      * Use this tp get all reservations.
-     * @param apaleoAccount Account Code
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public bookingsV1ReservationsGet(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsGet($options?: IRequestOptions)
         : Observable<models.GetReservationListResponse | undefined> {
-        return this.bookingsV1ReservationsGetWithRawHttp(apaleoAccount, languages, $options)
+        return this.bookingsV1ReservationsGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -72,11 +68,10 @@ export class ReservationApi {
      * Creates a reservation
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
-     * @param apaleoAccount Account Code
      */
-    public bookingsV1ReservationsPost(requestBody: models.PostReservationRequest, apaleoAccount: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsPost(requestBody: models.PostReservationRequest, $options?: IRequestOptions)
         : Observable<void> {
-        return this.bookingsV1ReservationsPostWithRawHttp(requestBody, apaleoAccount, $options)
+        return this.bookingsV1ReservationsPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -85,24 +80,20 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param apaleoAccount Account Code
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public bookingsV1ReservationsByIdGetWithRawHttp(id: number, apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdGetWithRawHttp(id: number, $options?: IRequestOptions)
         : Observable<ResponseModel<models.GetReservationResponse>> {
-        return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, apaleoAccount, languages, $options)
+        return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Get all reservations
      * Use this tp get all reservations.
-     * @param apaleoAccount Account Code
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public bookingsV1ReservationsGetWithRawHttp(apaleoAccount: string, languages?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsGetWithRawHttp($options?: IRequestOptions)
         : Observable<ResponseModel<models.GetReservationListResponse>> {
-        return this.bookingsV1ReservationsGetWithHttpInfo(apaleoAccount, languages, $options)
+        return this.bookingsV1ReservationsGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -110,11 +101,10 @@ export class ReservationApi {
      * Creates a reservation
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
-     * @param apaleoAccount Account Code
      */
-    public bookingsV1ReservationsPostWithRawHttp(requestBody: models.PostReservationRequest, apaleoAccount: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsPostWithRawHttp(requestBody: models.PostReservationRequest, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.bookingsV1ReservationsPostWithHttpInfo(requestBody, apaleoAccount, $options)
+        return this.bookingsV1ReservationsPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -123,10 +113,8 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param apaleoAccount Account Code
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private bookingsV1ReservationsByIdGetWithHttpInfo(id: number, apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdGetWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -136,16 +124,6 @@ export class ReservationApi {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdGet.');
         }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling bookingsV1ReservationsByIdGet.');
-        }
-        if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
-        }
-
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -156,15 +134,6 @@ export class ReservationApi {
             'application/json', 
             'text/json'
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -220,7 +189,7 @@ export class ReservationApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.bookingsV1ReservationsByIdGetWithHttpInfo(id, apaleoAccount, languages, $options));
+                        this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options));
                 }
             }
             throw err;
@@ -230,24 +199,12 @@ export class ReservationApi {
     /**
      * Get all reservations
      * Use this tp get all reservations.
-     * @param apaleoAccount Account Code
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private bookingsV1ReservationsGetWithHttpInfo(apaleoAccount: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling bookingsV1ReservationsGet.');
-        }
-        if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
-        }
-
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -258,15 +215,6 @@ export class ReservationApi {
             'application/json', 
             'text/json'
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -322,7 +270,7 @@ export class ReservationApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.bookingsV1ReservationsGetWithHttpInfo(apaleoAccount, languages, $options));
+                        this.bookingsV1ReservationsGetWithHttpInfo($options));
                 }
             }
             throw err;
@@ -333,9 +281,8 @@ export class ReservationApi {
      * Creates a reservation
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
-     * @param apaleoAccount Account Code
      */
-    private bookingsV1ReservationsPostWithHttpInfo(requestBody: models.PostReservationRequest, apaleoAccount: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsPostWithHttpInfo(requestBody: models.PostReservationRequest, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations';
 
         let queryParameters = new URLSearchParams();
@@ -344,12 +291,6 @@ export class ReservationApi {
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsPost.');
         }
-        // verify required parameter 'apaleoAccount' is not null or undefined
-        if (apaleoAccount === null || apaleoAccount === undefined) {
-            throw new Error('Required parameter apaleoAccount was null or undefined when calling bookingsV1ReservationsPost.');
-        }
-        headers.set('Apaleo-Account', String(apaleoAccount));
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json', 
@@ -360,15 +301,6 @@ export class ReservationApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         headers.set('Content-Type', 'application/json');
 
@@ -427,7 +359,7 @@ export class ReservationApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.bookingsV1ReservationsPostWithHttpInfo(requestBody, apaleoAccount, $options));
+                        this.bookingsV1ReservationsPostWithHttpInfo(requestBody, $options));
                 }
             }
             throw err;

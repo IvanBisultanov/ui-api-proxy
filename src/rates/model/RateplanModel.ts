@@ -65,7 +65,7 @@ const $validators: RateplanModel$ValidatorFactories = {
     ]),
     code: (() => [
         Validators.required,
-        
+        Validators.minLength(3),
         Validators.maxLength(10),
     ]),
     propertyCode: (() => [

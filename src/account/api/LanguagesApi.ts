@@ -47,11 +47,10 @@ export class LanguagesApi {
      * Get the language settings for the account
      * Get the language settings
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeLanguagesGet(code: string, languages?: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesGet(code: string, $options?: IRequestOptions)
         : Observable<models.LanguagesModel | undefined> {
-        return this.accountV1AccountsByCodeLanguagesGetWithRawHttp(code, languages, $options)
+        return this.accountV1AccountsByCodeLanguagesGetWithRawHttp(code, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -72,11 +71,10 @@ export class LanguagesApi {
      * Get the language settings for the account
      * Get the language settings
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public accountV1AccountsByCodeLanguagesGetWithRawHttp(code: string, languages?: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesGetWithRawHttp(code: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.LanguagesModel>> {
-        return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, languages, $options)
+        return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -97,9 +95,8 @@ export class LanguagesApi {
      * Get the language settings for the account
      * Get the language settings
      * @param code The code of the account.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private accountV1AccountsByCodeLanguagesGetWithHttpInfo(code: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeLanguagesGetWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/account/v1/accounts/${code}/languages'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -109,10 +106,6 @@ export class LanguagesApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeLanguagesGet.');
         }
-        if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
-        }
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -123,15 +116,6 @@ export class LanguagesApi {
             'application/json', 
             'text/json'
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
         let isResponseCodeAllowed: (code: number) => boolean = () => false;
@@ -187,7 +171,7 @@ export class LanguagesApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, languages, $options));
+                        this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, $options));
                 }
             }
             throw err;
@@ -224,15 +208,6 @@ export class LanguagesApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
 
         headers.set('Content-Type', 'application/json');
 
