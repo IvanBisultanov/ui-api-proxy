@@ -49,7 +49,7 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGet(code: string, languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodeGet(code: string, languages?: string, $options?: IRequestOptions)
         : Observable<models.PropertyModel | undefined> {
         return this.inventoryV1PropertiesByCodeGetWithRawHttp(code, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -83,7 +83,7 @@ export class PropertyApi {
      * Get the list of properties.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGet(languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1PropertiesGet(languages?: string, $options?: IRequestOptions)
         : Observable<models.PropertyListModel | undefined> {
         return this.inventoryV1PropertiesGetWithRawHttp(languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -107,7 +107,7 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGetWithRawHttp(code: string, languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodeGetWithRawHttp(code: string, languages?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyModel>> {
         return this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, languages, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -141,7 +141,7 @@ export class PropertyApi {
      * Get the list of properties.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGetWithRawHttp(languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1PropertiesGetWithRawHttp(languages?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyListModel>> {
         return this.inventoryV1PropertiesGetWithHttpInfo(languages, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -165,7 +165,7 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -175,10 +175,8 @@ export class PropertyApi {
         if (code === null || code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeGet.');
         }
-        if (languages) {
-            languages.forEach((element) => {
-                queryParameters.append('languages', <any>element);
-            })
+        if (languages !== undefined) {
+                    queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -464,15 +462,13 @@ export class PropertyApi {
      * Get the list of properties.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesGetWithHttpInfo(languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesGetWithHttpInfo(languages?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (languages) {
-            languages.forEach((element) => {
-                queryParameters.append('languages', <any>element);
-            })
+        if (languages !== undefined) {
+                    queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header

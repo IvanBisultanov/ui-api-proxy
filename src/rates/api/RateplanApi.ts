@@ -60,7 +60,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public ratesV1RateplansByIdGet(id: string, languages?: string, $options?: IRequestOptions)
         : Observable<models.RateplanModel | undefined> {
         return this.ratesV1RateplansByIdGetWithRawHttp(id, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -94,7 +94,7 @@ export class RateplanApi {
      * Get the list of rateplans.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGet(languages?: Array<string>, $options?: IRequestOptions)
+    public ratesV1RateplansGet(languages?: string, $options?: IRequestOptions)
         : Observable<models.RateplanListModel | undefined> {
         return this.ratesV1RateplansGetWithRawHttp(languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -129,7 +129,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public ratesV1RateplansByIdGetWithRawHttp(id: string, languages?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RateplanModel>> {
         return this.ratesV1RateplansByIdGetWithHttpInfo(id, languages, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -163,7 +163,7 @@ export class RateplanApi {
      * Get the list of rateplans.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGetWithRawHttp(languages?: Array<string>, $options?: IRequestOptions)
+    public ratesV1RateplansGetWithRawHttp(languages?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RateplanListModel>> {
         return this.ratesV1RateplansGetWithHttpInfo(languages, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -280,7 +280,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private ratesV1RateplansByIdGetWithHttpInfo(id: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RateplansByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rateplans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -290,10 +290,8 @@ export class RateplanApi {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdGet.');
         }
-        if (languages) {
-            languages.forEach((element) => {
-                queryParameters.append('languages', <any>element);
-            })
+        if (languages !== undefined) {
+                    queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -579,15 +577,13 @@ export class RateplanApi {
      * Get the list of rateplans.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private ratesV1RateplansGetWithHttpInfo(languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RateplansGetWithHttpInfo(languages?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rateplans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (languages) {
-            languages.forEach((element) => {
-                queryParameters.append('languages', <any>element);
-            })
+        if (languages !== undefined) {
+                    queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
