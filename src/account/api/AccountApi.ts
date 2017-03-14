@@ -71,7 +71,7 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsByCodePut(code: string, requestBody: models.UpdateAccountModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodePut(code: string, requestBody: models.ReplaceAccountModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.accountV1AccountsByCodePutWithRawHttp(code, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -82,7 +82,7 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsPost(requestBody: models.AccountModel, $options?: IRequestOptions)
+    public accountV1AccountsPost(requestBody: models.CreateAccountModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.accountV1AccountsPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -117,7 +117,7 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsByCodePutWithRawHttp(code: string, requestBody: models.UpdateAccountModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodePutWithRawHttp(code: string, requestBody: models.ReplaceAccountModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -128,7 +128,7 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsPostWithRawHttp(requestBody: models.AccountModel, $options?: IRequestOptions)
+    public accountV1AccountsPostWithRawHttp(requestBody: models.CreateAccountModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.accountV1AccountsPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -330,7 +330,7 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    private accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.UpdateAccountModel, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.ReplaceAccountModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/account/v1/accounts/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -433,7 +433,7 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    private accountV1AccountsPostWithHttpInfo(requestBody: models.AccountModel, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsPostWithHttpInfo(requestBody: models.CreateAccountModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/account/v1/accounts';
 
         let queryParameters = new URLSearchParams();

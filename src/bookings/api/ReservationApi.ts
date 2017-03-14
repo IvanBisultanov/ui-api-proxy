@@ -49,7 +49,7 @@ export class ReservationApi {
      * @param id The id of the reservation.
      */
     public bookingsV1ReservationsByIdGet(id: number, $options?: IRequestOptions)
-        : Observable<models.GetReservationResponse | undefined> {
+        : Observable<models.ReservationModel | undefined> {
         return this.bookingsV1ReservationsByIdGetWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -59,7 +59,7 @@ export class ReservationApi {
      * Use this tp get all reservations.
      */
     public bookingsV1ReservationsGet($options?: IRequestOptions)
-        : Observable<models.GetReservationListResponse | undefined> {
+        : Observable<models.ReservationListModel | undefined> {
         return this.bookingsV1ReservationsGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -69,7 +69,7 @@ export class ReservationApi {
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsPost(requestBody: models.PostReservationRequest, $options?: IRequestOptions)
+    public bookingsV1ReservationsPost(requestBody: models.CreateReservationModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.bookingsV1ReservationsPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -82,7 +82,7 @@ export class ReservationApi {
      * @param id The id of the reservation.
      */
     public bookingsV1ReservationsByIdGetWithRawHttp(id: number, $options?: IRequestOptions)
-        : Observable<ResponseModel<models.GetReservationResponse>> {
+        : Observable<ResponseModel<models.ReservationModel>> {
         return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -92,7 +92,7 @@ export class ReservationApi {
      * Use this tp get all reservations.
      */
     public bookingsV1ReservationsGetWithRawHttp($options?: IRequestOptions)
-        : Observable<ResponseModel<models.GetReservationListResponse>> {
+        : Observable<ResponseModel<models.ReservationListModel>> {
         return this.bookingsV1ReservationsGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -102,7 +102,7 @@ export class ReservationApi {
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsPostWithRawHttp(requestBody: models.PostReservationRequest, $options?: IRequestOptions)
+    public bookingsV1ReservationsPostWithRawHttp(requestBody: models.CreateReservationModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingsV1ReservationsPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -300,7 +300,7 @@ export class ReservationApi {
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
      */
-    private bookingsV1ReservationsPostWithHttpInfo(requestBody: models.PostReservationRequest, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsPostWithHttpInfo(requestBody: models.CreateReservationModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations';
 
         let queryParameters = new URLSearchParams();

@@ -1,4 +1,4 @@
-export * from './GetReservationListResponse';
-export * from './GetReservationResponse';
+export * from './CreateReservationModel';
 export * from './MessageItemCollection';
-export * from './PostReservationRequest';
+export * from './ReservationListModel';
+export * from './ReservationModel';

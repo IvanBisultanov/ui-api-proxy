@@ -16,33 +16,36 @@ import { Validators, FormBuilder, ValidatorFn, FormGroup }                      
 import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
 import { ResponseModel }                                                        from '../../models';
 
-export interface MessageItemCollection {
-    messages?: Array<string>;
+export interface ReservationListModel {
+    /**
+     * List of reservations
+     */
+    reservations?: Array<models.ReservationModel>;
 
 }
 
-export type MessageItemCollectionWithRawHttp = MessageItemCollection & ResponseModel<MessageItemCollection>;
+export type ReservationListModelWithRawHttp = ReservationListModel & ResponseModel<ReservationListModel>;
 
-export interface MessageItemCollection$Form<T> {
-    messages: T;
+export interface ReservationListModel$Form<T> {
+    reservations: T;
 }
 
-export interface MessageItemCollection$ValidatorFactories extends MessageItemCollection$Form<ValidatorsFactory> {}
-export interface MessageItemCollection$ControlFactories extends MessageItemCollection$Form<ControlFactory> {}
+export interface ReservationListModel$ValidatorFactories extends ReservationListModel$Form<ValidatorsFactory> {}
+export interface ReservationListModel$ControlFactories extends ReservationListModel$Form<ControlFactory> {}
 
-const $validators: MessageItemCollection$ValidatorFactories = {
-    messages: (() => [
+const $validators: ReservationListModel$ValidatorFactories = {
+    reservations: (() => [
         
         
         
     ]),
 }
 
-const $controls: MessageItemCollection$ControlFactories = {
-    messages: (() => [null, Validators.compose($validators.messages())]),
+const $controls: ReservationListModel$ControlFactories = {
+    reservations: (() => [null, Validators.compose($validators.reservations())]),
 }
 
-export const MessageItemCollection = {
+export const ReservationListModel = {
     $validators: $validators,
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) => {

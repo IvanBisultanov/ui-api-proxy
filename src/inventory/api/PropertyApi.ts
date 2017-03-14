@@ -72,7 +72,7 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.UpdatePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.inventoryV1PropertiesByCodePutWithRawHttp(code, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -94,7 +94,7 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesPost(requestBody: models.PropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesPost(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.inventoryV1PropertiesPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -130,7 +130,7 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesByCodePutWithRawHttp(code: string, requestBody: models.UpdatePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByCodePutWithRawHttp(code: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -152,7 +152,7 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesPostWithRawHttp(requestBody: models.PropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesPostWithRawHttp(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -176,7 +176,7 @@ export class PropertyApi {
             throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeGet.');
         }
         if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
+            queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -359,7 +359,7 @@ export class PropertyApi {
      * @param code The code of the property.
      * @param requestBody The definition of the property.
      */
-    private inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.UpdatePropertyModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties/${code}'
                     .replace('${' + 'code' + '}', String(code));
 
@@ -468,7 +468,7 @@ export class PropertyApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
+            queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -557,7 +557,7 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    private inventoryV1PropertiesPostWithHttpInfo(requestBody: models.PropertyModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesPostWithHttpInfo(requestBody: models.CreatePropertyModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();

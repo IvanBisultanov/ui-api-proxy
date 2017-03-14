@@ -15,11 +15,11 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
-export interface UpdatePropertyModel {
+export interface ReplacePropertyModel {
     /**
      * The name for the property
      */
@@ -37,18 +37,18 @@ export interface UpdatePropertyModel {
 
 }
 
-export type UpdatePropertyModelWithRawHttp = UpdatePropertyModel & ResponseModel<UpdatePropertyModel>;
+export type ReplacePropertyModelWithRawHttp = ReplacePropertyModel & ResponseModel<ReplacePropertyModel>;
 
-export interface UpdatePropertyModel$Form<T> {
+export interface ReplacePropertyModel$Form<T> {
     name: T;
     description: T;
     location: T;
 }
 
-export interface UpdatePropertyModel$ValidatorFactories extends UpdatePropertyModel$Form<ValidatorsFactory> {}
-export interface UpdatePropertyModel$ControlFactories extends UpdatePropertyModel$Form<ControlFactory> {}
+export interface ReplacePropertyModel$ValidatorFactories extends ReplacePropertyModel$Form<ValidatorsFactory> {}
+export interface ReplacePropertyModel$ControlFactories extends ReplacePropertyModel$Form<ControlFactory> {}
 
-const $validators: UpdatePropertyModel$ValidatorFactories = {
+const $validators: ReplacePropertyModel$ValidatorFactories = {
     name: (() => [
         Validators.required,
         
@@ -66,20 +66,27 @@ const $validators: UpdatePropertyModel$ValidatorFactories = {
     ]),
 }
 
-const $controls: UpdatePropertyModel$ControlFactories = {
+const $controls: ReplacePropertyModel$ControlFactories = {
     name: (() => [null, Validators.compose($validators.name())]),
     description: (() => [null, Validators.compose($validators.description())]),
     location: (() => [null, Validators.compose($validators.location())]),
 }
 
-export const UpdatePropertyModel = {
+export const ReplacePropertyModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             name: $controls.name(),
             description: $controls.description(),
             location: models.Location.$buildForm(fb),
-        })),
+        });
+
+    
+    
+    
+
+        return group;
+    })
 }
 

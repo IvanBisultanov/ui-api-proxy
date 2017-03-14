@@ -12,28 +12,25 @@
 
 import * as models from './models';
 
-/**
- * With this request you can create a new account
- */
 import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
 import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
 import { ResponseModel }                                                        from '../../models';
 
-export interface AccountModel {
+export interface CreateAccountModel {
     /**
      * The code for the account that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the account, which usually should be the company name
      */
-    name?: string;
+    name: string;
 
     /**
      * The description for the account
      */
-    description?: string;
+    description: string;
 
     /**
      * The URL of the account logo
@@ -43,13 +40,13 @@ export interface AccountModel {
     /**
      * The location of the account
      */
-    location?: models.Location;
+    location: models.Location;
 
 }
 
-export type AccountModelWithRawHttp = AccountModel & ResponseModel<AccountModel>;
+export type CreateAccountModelWithRawHttp = CreateAccountModel & ResponseModel<CreateAccountModel>;
 
-export interface AccountModel$Form<T> {
+export interface CreateAccountModel$Form<T> {
     code: T;
     name: T;
     description: T;
@@ -57,22 +54,22 @@ export interface AccountModel$Form<T> {
     location: T;
 }
 
-export interface AccountModel$ValidatorFactories extends AccountModel$Form<ValidatorsFactory> {}
-export interface AccountModel$ControlFactories extends AccountModel$Form<ControlFactory> {}
+export interface CreateAccountModel$ValidatorFactories extends CreateAccountModel$Form<ValidatorsFactory> {}
+export interface CreateAccountModel$ControlFactories extends CreateAccountModel$Form<ControlFactory> {}
 
-const $validators: AccountModel$ValidatorFactories = {
+const $validators: CreateAccountModel$ValidatorFactories = {
     code: (() => [
-        
-        
-        
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(10),
     ]),
     name: (() => [
+        Validators.required,
         
-        
-        
+        Validators.maxLength(40),
     ]),
     description: (() => [
-        
+        Validators.required,
         
         
     ]),
@@ -82,13 +79,13 @@ const $validators: AccountModel$ValidatorFactories = {
         
     ]),
     location: (() => [
-        
+        Validators.required,
         
         
     ]),
 }
 
-const $controls: AccountModel$ControlFactories = {
+const $controls: CreateAccountModel$ControlFactories = {
     code: (() => [null, Validators.compose($validators.code())]),
     name: (() => [null, Validators.compose($validators.name())]),
     description: (() => [null, Validators.compose($validators.description())]),
@@ -96,7 +93,7 @@ const $controls: AccountModel$ControlFactories = {
     location: (() => [null, Validators.compose($validators.location())]),
 }
 
-export const AccountModel = {
+export const CreateAccountModel = {
     $validators: $validators,
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) => {
@@ -109,6 +106,12 @@ export const AccountModel = {
         });
 
     
+        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
+        codeCtrl.apaleoMetaData = { maxLength: 10 };
+    
+    
+        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
+        nameCtrl.apaleoMetaData = { maxLength: 40 };
     
     
     

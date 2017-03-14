@@ -15,33 +15,33 @@ import * as models from './models';
 /**
  * With this request you can setup a new account with an admin user
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
-export interface GetReservationResponse {
+export interface ReservationModel {
     id?: number;
 
     /**
      * The PropertyId for the reservation
      */
-    propertyId: number;
+    propertyId?: number;
 
-    checkInTime: string;
+    checkInTime?: string;
 
-    checkOutTime: string;
+    checkOutTime?: string;
 
-    adults: number;
+    adults?: number;
 
-    children: number;
+    children?: number;
 
-    guestTitle: string;
+    guestTitle?: string;
 
-    firstName: string;
+    firstName?: string;
 
     middleInitial?: string;
 
-    lastName: string;
+    lastName?: string;
 
     email?: string;
 
@@ -51,19 +51,19 @@ export interface GetReservationResponse {
 
     number?: string;
 
-    city: string;
+    city?: string;
 
-    zipCode: string;
+    zipCode?: string;
 
-    countryCode: string;
+    countryCode?: string;
 
-    ratePlanId: number;
+    ratePlanId?: number;
 
 }
 
-export type GetReservationResponseWithRawHttp = GetReservationResponse & ResponseModel<GetReservationResponse>;
+export type ReservationModelWithRawHttp = ReservationModel & ResponseModel<ReservationModel>;
 
-export interface GetReservationResponse$Form<T> {
+export interface ReservationModel$Form<T> {
     id: T;
     propertyId: T;
     checkInTime: T;
@@ -84,59 +84,59 @@ export interface GetReservationResponse$Form<T> {
     ratePlanId: T;
 }
 
-export interface GetReservationResponse$ValidatorFactories extends GetReservationResponse$Form<ValidatorsFactory> {}
-export interface GetReservationResponse$ControlFactories extends GetReservationResponse$Form<ControlFactory> {}
+export interface ReservationModel$ValidatorFactories extends ReservationModel$Form<ValidatorsFactory> {}
+export interface ReservationModel$ControlFactories extends ReservationModel$Form<ControlFactory> {}
 
-const $validators: GetReservationResponse$ValidatorFactories = {
+const $validators: ReservationModel$ValidatorFactories = {
     id: (() => [
         
         
         
     ]),
     propertyId: (() => [
-        Validators.required,
+        
         
         
     ]),
     checkInTime: (() => [
-        Validators.required,
+        
         
         
     ]),
     checkOutTime: (() => [
-        Validators.required,
+        
         
         
     ]),
     adults: (() => [
-        Validators.required,
+        
         
         
     ]),
     children: (() => [
-        Validators.required,
+        
         
         
     ]),
     guestTitle: (() => [
-        Validators.required,
+        
         
         
     ]),
     firstName: (() => [
-        Validators.required,
         
-        Validators.maxLength(25),
+        
+        
     ]),
     middleInitial: (() => [
         
         
-        Validators.maxLength(5),
+        
     ]),
     lastName: (() => [
-        Validators.required,
         
-        Validators.maxLength(40),
+        
+        
     ]),
     email: (() => [
         
@@ -151,7 +151,7 @@ const $validators: GetReservationResponse$ValidatorFactories = {
     street: (() => [
         
         
-        Validators.maxLength(40),
+        
     ]),
     number: (() => [
         
@@ -159,28 +159,28 @@ const $validators: GetReservationResponse$ValidatorFactories = {
         
     ]),
     city: (() => [
-        Validators.required,
         
-        Validators.maxLength(25),
+        
+        
     ]),
     zipCode: (() => [
-        Validators.required,
         
-        Validators.maxLength(10),
+        
+        
     ]),
     countryCode: (() => [
-        Validators.required,
         
-        Validators.maxLength(2),
+        
+        
     ]),
     ratePlanId: (() => [
-        Validators.required,
+        
         
         
     ]),
 }
 
-const $controls: GetReservationResponse$ControlFactories = {
+const $controls: ReservationModel$ControlFactories = {
     id: (() => [null, Validators.compose($validators.id())]),
     propertyId: (() => [null, Validators.compose($validators.propertyId())]),
     checkInTime: (() => [null, Validators.compose($validators.checkInTime())]),
@@ -201,11 +201,11 @@ const $controls: GetReservationResponse$ControlFactories = {
     ratePlanId: (() => [null, Validators.compose($validators.ratePlanId())]),
 }
 
-export const GetReservationResponse = {
+export const ReservationModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             id: $controls.id(),
             propertyId: $controls.propertyId(),
             checkInTime: $controls.checkInTime(),
@@ -224,6 +224,28 @@ export const GetReservationResponse = {
             zipCode: $controls.zipCode(),
             countryCode: $controls.countryCode(),
             ratePlanId: $controls.ratePlanId(),
-        })),
+        });
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+        return group;
+    })
 }
 

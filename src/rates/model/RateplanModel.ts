@@ -12,9 +12,9 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
 export interface RateplanModel {
     /**
@@ -25,22 +25,22 @@ export interface RateplanModel {
     /**
      * The code for the rateplan that can be shown in reports and table views
      */
-    code: string;
+    code?: string;
 
     /**
-     * The code of the property where rateplan will be created
+     * The property to which the rateplan belongs to
      */
     propertyCode?: string;
 
     /**
      * The name for the rateplan
      */
-    name: { [key: string]: string; };
+    name?: { [key: string]: string; };
 
     /**
      * The default price for the rateplan
      */
-    defaultPrice: number;
+    defaultPrice?: number;
 
 }
 
@@ -64,9 +64,9 @@ const $validators: RateplanModel$ValidatorFactories = {
         
     ]),
     code: (() => [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
+        
+        
+        
     ]),
     propertyCode: (() => [
         
@@ -74,12 +74,12 @@ const $validators: RateplanModel$ValidatorFactories = {
         
     ]),
     name: (() => [
-        Validators.required,
+        
         
         
     ]),
     defaultPrice: (() => [
-        Validators.required,
+        
         
         
     ]),
@@ -96,13 +96,22 @@ const $controls: RateplanModel$ControlFactories = {
 export const RateplanModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             id: $controls.id(),
             code: $controls.code(),
             propertyCode: $controls.propertyCode(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-        })),
+        });
+
+    
+    
+    
+    
+    
+
+        return group;
+    })
 }
 

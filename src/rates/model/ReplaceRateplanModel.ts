@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
-export interface UpdateRateplanModel {
+export interface ReplaceRateplanModel {
     /**
      * The name for the rateplan
      */
@@ -29,17 +29,17 @@ export interface UpdateRateplanModel {
 
 }
 
-export type UpdateRateplanModelWithRawHttp = UpdateRateplanModel & ResponseModel<UpdateRateplanModel>;
+export type ReplaceRateplanModelWithRawHttp = ReplaceRateplanModel & ResponseModel<ReplaceRateplanModel>;
 
-export interface UpdateRateplanModel$Form<T> {
+export interface ReplaceRateplanModel$Form<T> {
     name: T;
     defaultPrice: T;
 }
 
-export interface UpdateRateplanModel$ValidatorFactories extends UpdateRateplanModel$Form<ValidatorsFactory> {}
-export interface UpdateRateplanModel$ControlFactories extends UpdateRateplanModel$Form<ControlFactory> {}
+export interface ReplaceRateplanModel$ValidatorFactories extends ReplaceRateplanModel$Form<ValidatorsFactory> {}
+export interface ReplaceRateplanModel$ControlFactories extends ReplaceRateplanModel$Form<ControlFactory> {}
 
-const $validators: UpdateRateplanModel$ValidatorFactories = {
+const $validators: ReplaceRateplanModel$ValidatorFactories = {
     name: (() => [
         Validators.required,
         
@@ -52,18 +52,24 @@ const $validators: UpdateRateplanModel$ValidatorFactories = {
     ]),
 }
 
-const $controls: UpdateRateplanModel$ControlFactories = {
+const $controls: ReplaceRateplanModel$ControlFactories = {
     name: (() => [null, Validators.compose($validators.name())]),
     defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
 }
 
-export const UpdateRateplanModel = {
+export const ReplaceRateplanModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-        })),
+        });
+
+    
+    
+
+        return group;
+    })
 }
 

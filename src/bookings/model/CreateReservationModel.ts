@@ -15,11 +15,11 @@ import * as models from './models';
 /**
  * With this request you can create a reservation
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
-export interface PostReservationRequest {
+export interface CreateReservationModel {
     /**
      * The PropertyId for the reservation
      */
@@ -59,9 +59,9 @@ export interface PostReservationRequest {
 
 }
 
-export type PostReservationRequestWithRawHttp = PostReservationRequest & ResponseModel<PostReservationRequest>;
+export type CreateReservationModelWithRawHttp = CreateReservationModel & ResponseModel<CreateReservationModel>;
 
-export interface PostReservationRequest$Form<T> {
+export interface CreateReservationModel$Form<T> {
     propertyId: T;
     checkInTime: T;
     checkOutTime: T;
@@ -81,10 +81,10 @@ export interface PostReservationRequest$Form<T> {
     ratePlanId: T;
 }
 
-export interface PostReservationRequest$ValidatorFactories extends PostReservationRequest$Form<ValidatorsFactory> {}
-export interface PostReservationRequest$ControlFactories extends PostReservationRequest$Form<ControlFactory> {}
+export interface CreateReservationModel$ValidatorFactories extends CreateReservationModel$Form<ValidatorsFactory> {}
+export interface CreateReservationModel$ControlFactories extends CreateReservationModel$Form<ControlFactory> {}
 
-const $validators: PostReservationRequest$ValidatorFactories = {
+const $validators: CreateReservationModel$ValidatorFactories = {
     propertyId: (() => [
         Validators.required,
         
@@ -172,7 +172,7 @@ const $validators: PostReservationRequest$ValidatorFactories = {
     ]),
 }
 
-const $controls: PostReservationRequest$ControlFactories = {
+const $controls: CreateReservationModel$ControlFactories = {
     propertyId: (() => [null, Validators.compose($validators.propertyId())]),
     checkInTime: (() => [null, Validators.compose($validators.checkInTime())]),
     checkOutTime: (() => [null, Validators.compose($validators.checkOutTime())]),
@@ -192,11 +192,11 @@ const $controls: PostReservationRequest$ControlFactories = {
     ratePlanId: (() => [null, Validators.compose($validators.ratePlanId())]),
 }
 
-export const PostReservationRequest = {
+export const CreateReservationModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             propertyId: $controls.propertyId(),
             checkInTime: $controls.checkInTime(),
             checkOutTime: $controls.checkOutTime(),
@@ -214,6 +214,48 @@ export const PostReservationRequest = {
             zipCode: $controls.zipCode(),
             countryCode: $controls.countryCode(),
             ratePlanId: $controls.ratePlanId(),
-        })),
+        });
+
+    
+    
+    
+    
+    
+    
+    
+        const firstNameCtrl: IApaleoAbstractControl = <any>group.controls['firstName'];
+        firstNameCtrl.apaleoMetaData = { maxLength: 25 };
+    
+    
+        const middleInitialCtrl: IApaleoAbstractControl = <any>group.controls['middleInitial'];
+        middleInitialCtrl.apaleoMetaData = { maxLength: 5 };
+    
+    
+        const lastNameCtrl: IApaleoAbstractControl = <any>group.controls['lastName'];
+        lastNameCtrl.apaleoMetaData = { maxLength: 40 };
+    
+    
+    
+    
+        const streetCtrl: IApaleoAbstractControl = <any>group.controls['street'];
+        streetCtrl.apaleoMetaData = { maxLength: 40 };
+    
+    
+    
+        const cityCtrl: IApaleoAbstractControl = <any>group.controls['city'];
+        cityCtrl.apaleoMetaData = { maxLength: 25 };
+    
+    
+        const zipCodeCtrl: IApaleoAbstractControl = <any>group.controls['zipCode'];
+        zipCodeCtrl.apaleoMetaData = { maxLength: 10 };
+    
+    
+        const countryCodeCtrl: IApaleoAbstractControl = <any>group.controls['countryCode'];
+        countryCodeCtrl.apaleoMetaData = { maxLength: 2 };
+    
+    
+
+        return group;
+    })
 }
 

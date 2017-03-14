@@ -12,9 +12,9 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
 export interface LanguageModel {
     code: string;
@@ -63,11 +63,21 @@ const $controls: LanguageModel$ControlFactories = {
 export const LanguageModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             code: $controls.code(),
             default: $controls.default(),
             mandatory: $controls.mandatory(),
-        })),
+        });
+
+    
+        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
+        codeCtrl.apaleoMetaData = { maxLength: 2 };
+    
+    
+    
+
+        return group;
+    })
 }
 

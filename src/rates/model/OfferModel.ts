@@ -16,42 +16,57 @@ import { Validators, FormBuilder, ValidatorFn, FormGroup }                      
 import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
 import { ResponseModel }                                                        from '../../models';
 
-export interface RateplanListModel {
+export interface OfferModel {
     /**
-     * List of rateplans
+     * The rate plan for this offer
      */
-    rateplans?: Array<models.RateplanModel>;
+    rateplan?: string;
+
+    /**
+     * The price for the whole stay
+     */
+    price?: number;
 
 }
 
-export type RateplanListModelWithRawHttp = RateplanListModel & ResponseModel<RateplanListModel>;
+export type OfferModelWithRawHttp = OfferModel & ResponseModel<OfferModel>;
 
-export interface RateplanListModel$Form<T> {
-    rateplans: T;
+export interface OfferModel$Form<T> {
+    rateplan: T;
+    price: T;
 }
 
-export interface RateplanListModel$ValidatorFactories extends RateplanListModel$Form<ValidatorsFactory> {}
-export interface RateplanListModel$ControlFactories extends RateplanListModel$Form<ControlFactory> {}
+export interface OfferModel$ValidatorFactories extends OfferModel$Form<ValidatorsFactory> {}
+export interface OfferModel$ControlFactories extends OfferModel$Form<ControlFactory> {}
 
-const $validators: RateplanListModel$ValidatorFactories = {
-    rateplans: (() => [
+const $validators: OfferModel$ValidatorFactories = {
+    rateplan: (() => [
+        
+        
+        
+    ]),
+    price: (() => [
         
         
         
     ]),
 }
 
-const $controls: RateplanListModel$ControlFactories = {
-    rateplans: (() => [null, Validators.compose($validators.rateplans())]),
+const $controls: OfferModel$ControlFactories = {
+    rateplan: (() => [null, Validators.compose($validators.rateplan())]),
+    price: (() => [null, Validators.compose($validators.price())]),
 }
 
-export const RateplanListModel = {
+export const OfferModel = {
     $validators: $validators,
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) => {
         const group = fb.group({
+            rateplan: $controls.rateplan(),
+            price: $controls.price(),
         });
 
+    
     
 
         return group;

@@ -15,11 +15,11 @@ import * as models from './models';
 /**
  * With this request you can modify an account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
-export interface UpdateAccountModel {
+export interface ReplaceAccountModel {
     /**
      * The name for the account, which usually should be the company name
      */
@@ -42,19 +42,19 @@ export interface UpdateAccountModel {
 
 }
 
-export type UpdateAccountModelWithRawHttp = UpdateAccountModel & ResponseModel<UpdateAccountModel>;
+export type ReplaceAccountModelWithRawHttp = ReplaceAccountModel & ResponseModel<ReplaceAccountModel>;
 
-export interface UpdateAccountModel$Form<T> {
+export interface ReplaceAccountModel$Form<T> {
     name: T;
     description: T;
     logoUrl: T;
     location: T;
 }
 
-export interface UpdateAccountModel$ValidatorFactories extends UpdateAccountModel$Form<ValidatorsFactory> {}
-export interface UpdateAccountModel$ControlFactories extends UpdateAccountModel$Form<ControlFactory> {}
+export interface ReplaceAccountModel$ValidatorFactories extends ReplaceAccountModel$Form<ValidatorsFactory> {}
+export interface ReplaceAccountModel$ControlFactories extends ReplaceAccountModel$Form<ControlFactory> {}
 
-const $validators: UpdateAccountModel$ValidatorFactories = {
+const $validators: ReplaceAccountModel$ValidatorFactories = {
     name: (() => [
         Validators.required,
         
@@ -77,22 +77,33 @@ const $validators: UpdateAccountModel$ValidatorFactories = {
     ]),
 }
 
-const $controls: UpdateAccountModel$ControlFactories = {
+const $controls: ReplaceAccountModel$ControlFactories = {
     name: (() => [null, Validators.compose($validators.name())]),
     description: (() => [null, Validators.compose($validators.description())]),
     logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
     location: (() => [null, Validators.compose($validators.location())]),
 }
 
-export const UpdateAccountModel = {
+export const ReplaceAccountModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             name: $controls.name(),
             description: $controls.description(),
             logoUrl: $controls.logoUrl(),
             location: models.Location.$buildForm(fb),
-        })),
+        });
+
+    
+        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
+        nameCtrl.apaleoMetaData = { maxLength: 40 };
+    
+    
+    
+    
+
+        return group;
+    })
 }
 

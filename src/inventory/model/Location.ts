@@ -12,9 +12,9 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
 export interface Location {
     street: string;
@@ -72,12 +72,23 @@ const $controls: Location$ControlFactories = {
 export const Location = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             street: $controls.street(),
             postalCode: $controls.postalCode(),
             city: $controls.city(),
             countryCode: $controls.countryCode(),
-        })),
+        });
+
+    
+    
+    
+    
+        const countryCodeCtrl: IApaleoAbstractControl = <any>group.controls['countryCode'];
+        countryCodeCtrl.apaleoMetaData = { maxLength: 2 };
+    
+
+        return group;
+    })
 }
 

@@ -83,7 +83,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RateplansByIdPut(id: string, requestBody: models.UpdateRateplanModel, $options?: IRequestOptions)
+    public ratesV1RateplansByIdPut(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.ratesV1RateplansByIdPutWithRawHttp(id, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -152,7 +152,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RateplansByIdPutWithRawHttp(id: string, requestBody: models.UpdateRateplanModel, $options?: IRequestOptions)
+    public ratesV1RateplansByIdPutWithRawHttp(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -291,7 +291,7 @@ export class RateplanApi {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdGet.');
         }
         if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
+            queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header
@@ -474,7 +474,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RateplansByIdPutWithHttpInfo(id: string, requestBody: models.UpdateRateplanModel, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RateplansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rateplans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -583,7 +583,7 @@ export class RateplanApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (languages !== undefined) {
-                    queryParameters.set('languages', <any>languages);
+            queryParameters.set('languages', <any>languages);
         }
 
         // to determine the Content-Type header

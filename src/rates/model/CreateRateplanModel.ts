@@ -12,9 +12,9 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }      from '../../types';
-import { ResponseModel }                                   from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
+import { ResponseModel }                                                        from '../../models';
 
 export interface CreateRateplanModel {
     /**
@@ -84,12 +84,23 @@ const $controls: CreateRateplanModel$ControlFactories = {
 export const CreateRateplanModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) =>
-        fb.group({
+    $buildForm: ((fb: FormBuilder) => {
+        const group = fb.group({
             code: $controls.code(),
             propertyCode: $controls.propertyCode(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-        })),
+        });
+
+    
+        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
+        codeCtrl.apaleoMetaData = { maxLength: 10 };
+    
+    
+    
+    
+
+        return group;
+    })
 }
 
