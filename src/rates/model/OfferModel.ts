@@ -18,9 +18,14 @@ import { ResponseModel }                                                        
 
 export interface OfferModel {
     /**
+     * The unit type for which the following offers apply
+     */
+    unitTypeCode?: string;
+
+    /**
      * The rate plan for this offer
      */
-    rateplan?: string;
+    rateplanCode?: string;
 
     /**
      * The price for the whole stay
@@ -32,7 +37,8 @@ export interface OfferModel {
 export type OfferModelWithRawHttp = OfferModel & ResponseModel<OfferModel>;
 
 export interface OfferModel$Form<T> {
-    rateplan: T;
+    unitTypeCode: T;
+    rateplanCode: T;
     price: T;
 }
 
@@ -40,7 +46,12 @@ export interface OfferModel$ValidatorFactories extends OfferModel$Form<Validator
 export interface OfferModel$ControlFactories extends OfferModel$Form<ControlFactory> {}
 
 const $validators: OfferModel$ValidatorFactories = {
-    rateplan: (() => [
+    unitTypeCode: (() => [
+        
+        
+        
+    ]),
+    rateplanCode: (() => [
         
         
         
@@ -53,7 +64,8 @@ const $validators: OfferModel$ValidatorFactories = {
 }
 
 const $controls: OfferModel$ControlFactories = {
-    rateplan: (() => [null, Validators.compose($validators.rateplan())]),
+    unitTypeCode: (() => [null, Validators.compose($validators.unitTypeCode())]),
+    rateplanCode: (() => [null, Validators.compose($validators.rateplanCode())]),
     price: (() => [null, Validators.compose($validators.price())]),
 }
 
@@ -62,10 +74,12 @@ export const OfferModel = {
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) => {
         const group = fb.group({
-            rateplan: $controls.rateplan(),
+            unitTypeCode: $controls.unitTypeCode(),
+            rateplanCode: $controls.rateplanCode(),
             price: $controls.price(),
         });
 
+    
     
     
 

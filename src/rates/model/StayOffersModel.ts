@@ -20,7 +20,7 @@ export interface StayOffersModel {
     /**
      * The property code
      */
-    property?: string;
+    propertyCode?: string;
 
     /**
      * The arrival date
@@ -35,24 +35,24 @@ export interface StayOffersModel {
     /**
      * List of offered unit types with rates
      */
-    unitTypes?: Array<models.UnitTypeOfferModel>;
+    offers?: Array<models.OfferModel>;
 
 }
 
 export type StayOffersModelWithRawHttp = StayOffersModel & ResponseModel<StayOffersModel>;
 
 export interface StayOffersModel$Form<T> {
-    property: T;
+    propertyCode: T;
     arrival: T;
     departure: T;
-    unitTypes: T;
+    offers: T;
 }
 
 export interface StayOffersModel$ValidatorFactories extends StayOffersModel$Form<ValidatorsFactory> {}
 export interface StayOffersModel$ControlFactories extends StayOffersModel$Form<ControlFactory> {}
 
 const $validators: StayOffersModel$ValidatorFactories = {
-    property: (() => [
+    propertyCode: (() => [
         
         
         
@@ -67,7 +67,7 @@ const $validators: StayOffersModel$ValidatorFactories = {
         
         
     ]),
-    unitTypes: (() => [
+    offers: (() => [
         
         
         
@@ -75,10 +75,10 @@ const $validators: StayOffersModel$ValidatorFactories = {
 }
 
 const $controls: StayOffersModel$ControlFactories = {
-    property: (() => [null, Validators.compose($validators.property())]),
+    propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
     arrival: (() => [null, Validators.compose($validators.arrival())]),
     departure: (() => [null, Validators.compose($validators.departure())]),
-    unitTypes: (() => [null, Validators.compose($validators.unitTypes())]),
+    offers: (() => [null, Validators.compose($validators.offers())]),
 }
 
 export const StayOffersModel = {
@@ -86,7 +86,7 @@ export const StayOffersModel = {
     $controls: $controls,
     $buildForm: ((fb: FormBuilder) => {
         const group = fb.group({
-            property: $controls.property(),
+            propertyCode: $controls.propertyCode(),
             arrival: $controls.arrival(),
             departure: $controls.departure(),
         });
