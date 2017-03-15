@@ -19,6 +19,24 @@ node('nodejs') {
     stage ('Build proxy (to test if it compiles)') {
       sh 'npm install'
     }
+
+    if (branch.startsWith('auto-update-')) {
+      stage ('Try create PR') {
+        try {
+          sh "git checkout ${branch}"
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '64022ff7-f3aa-4b9f-9b59-80753deac696', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN']]) {
+            def prUrl = sh (
+              returnStdout: true,
+              script: "hub pull-request -m '${branch}'").trim()
+
+            slackSend (color: '#b3d4fc', message: "Maybe merge? - ${prUrl}", channel: '#dev-tech')
+          }
+        }
+        catch (e) {
+          // Catch everything, PR doesn't need to pass
+        }
+      }
+    }
   }
   catch(e) {
     currentBuild.result = "FAILED"
