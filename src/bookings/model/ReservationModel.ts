@@ -15,9 +15,10 @@ import * as models from './models';
 /**
  * With this request you can setup a new account with an admin user
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface ReservationModel {
     id?: number;
@@ -86,6 +87,8 @@ export interface ReservationModel$Form<T> {
 
 export interface ReservationModel$ValidatorFactories extends ReservationModel$Form<ValidatorsFactory> {}
 export interface ReservationModel$ControlFactories extends ReservationModel$Form<ControlFactory> {}
+export interface ReservationModel$Control extends ReservationModel$Form<Control | FormGroup> {}
+export interface ReservationModel$ControlMetaData extends ReservationModel$Form<IApaleoControlMetaData> {}
 
 const $validators: ReservationModel$ValidatorFactories = {
     id: (() => [
@@ -201,11 +204,123 @@ const $controls: ReservationModel$ControlFactories = {
     ratePlanId: (() => [null, Validators.compose($validators.ratePlanId())]),
 }
 
+const $metaData: ReservationModel$ControlMetaData = {
+    id: {
+        
+        
+        type: 'number',
+        
+    },
+    propertyId: {
+        
+        
+        type: 'number',
+        
+    },
+    checkInTime: {
+        
+        
+        type: 'string',
+        
+    },
+    checkOutTime: {
+        
+        
+        type: 'string',
+        
+    },
+    adults: {
+        
+        
+        type: 'number',
+        
+    },
+    children: {
+        
+        
+        type: 'number',
+        
+    },
+    guestTitle: {
+        
+        
+        type: 'string',
+        
+    },
+    firstName: {
+        
+        
+        type: 'string',
+        
+    },
+    middleInitial: {
+        
+        
+        type: 'string',
+        
+    },
+    lastName: {
+        
+        
+        type: 'string',
+        
+    },
+    email: {
+        
+        
+        type: 'string',
+        
+    },
+    phone: {
+        
+        
+        type: 'string',
+        
+    },
+    street: {
+        
+        
+        type: 'string',
+        
+    },
+    number: {
+        
+        
+        type: 'string',
+        
+    },
+    city: {
+        
+        
+        type: 'string',
+        
+    },
+    zipCode: {
+        
+        
+        type: 'string',
+        
+    },
+    countryCode: {
+        
+        
+        type: 'string',
+        
+    },
+    ratePlanId: {
+        
+        
+        type: 'number',
+        
+    },
+}
+
 export const ReservationModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReservationModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             id: $controls.id(),
             propertyId: $controls.propertyId(),
             checkInTime: $controls.checkInTime(),
@@ -224,25 +339,81 @@ export const ReservationModel = {
             zipCode: $controls.zipCode(),
             countryCode: $controls.countryCode(),
             ratePlanId: $controls.ratePlanId(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
+        const idCtrl: IApaleoAbstractControl = <any>group.controls['id'];
+        idCtrl.apaleoMetaData = $metaData.id;
     
     
+        const propertyIdCtrl: IApaleoAbstractControl = <any>group.controls['propertyId'];
+        propertyIdCtrl.apaleoMetaData = $metaData.propertyId;
     
     
+        const checkInTimeCtrl: IApaleoAbstractControl = <any>group.controls['checkInTime'];
+        checkInTimeCtrl.apaleoMetaData = $metaData.checkInTime;
     
     
+        const checkOutTimeCtrl: IApaleoAbstractControl = <any>group.controls['checkOutTime'];
+        checkOutTimeCtrl.apaleoMetaData = $metaData.checkOutTime;
     
     
+        const adultsCtrl: IApaleoAbstractControl = <any>group.controls['adults'];
+        adultsCtrl.apaleoMetaData = $metaData.adults;
     
     
+        const childrenCtrl: IApaleoAbstractControl = <any>group.controls['children'];
+        childrenCtrl.apaleoMetaData = $metaData.children;
     
     
+        const guestTitleCtrl: IApaleoAbstractControl = <any>group.controls['guestTitle'];
+        guestTitleCtrl.apaleoMetaData = $metaData.guestTitle;
     
     
+        const firstNameCtrl: IApaleoAbstractControl = <any>group.controls['firstName'];
+        firstNameCtrl.apaleoMetaData = $metaData.firstName;
     
     
+        const middleInitialCtrl: IApaleoAbstractControl = <any>group.controls['middleInitial'];
+        middleInitialCtrl.apaleoMetaData = $metaData.middleInitial;
+    
+    
+        const lastNameCtrl: IApaleoAbstractControl = <any>group.controls['lastName'];
+        lastNameCtrl.apaleoMetaData = $metaData.lastName;
+    
+    
+        const emailCtrl: IApaleoAbstractControl = <any>group.controls['email'];
+        emailCtrl.apaleoMetaData = $metaData.email;
+    
+    
+        const phoneCtrl: IApaleoAbstractControl = <any>group.controls['phone'];
+        phoneCtrl.apaleoMetaData = $metaData.phone;
+    
+    
+        const streetCtrl: IApaleoAbstractControl = <any>group.controls['street'];
+        streetCtrl.apaleoMetaData = $metaData.street;
+    
+    
+        const numberCtrl: IApaleoAbstractControl = <any>group.controls['number'];
+        numberCtrl.apaleoMetaData = $metaData.number;
+    
+    
+        const cityCtrl: IApaleoAbstractControl = <any>group.controls['city'];
+        cityCtrl.apaleoMetaData = $metaData.city;
+    
+    
+        const zipCodeCtrl: IApaleoAbstractControl = <any>group.controls['zipCode'];
+        zipCodeCtrl.apaleoMetaData = $metaData.zipCode;
+    
+    
+        const countryCodeCtrl: IApaleoAbstractControl = <any>group.controls['countryCode'];
+        countryCodeCtrl.apaleoMetaData = $metaData.countryCode;
+    
+    
+        const ratePlanIdCtrl: IApaleoAbstractControl = <any>group.controls['ratePlanId'];
+        ratePlanIdCtrl.apaleoMetaData = $metaData.ratePlanId;
     
 
         return group;

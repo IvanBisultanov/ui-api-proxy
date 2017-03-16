@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface MessageItemCollection {
     messages?: Array<string>;
@@ -29,6 +30,8 @@ export interface MessageItemCollection$Form<T> {
 
 export interface MessageItemCollection$ValidatorFactories extends MessageItemCollection$Form<ValidatorsFactory> {}
 export interface MessageItemCollection$ControlFactories extends MessageItemCollection$Form<ControlFactory> {}
+export interface MessageItemCollection$Control extends MessageItemCollection$Form<Control | FormGroup> {}
+export interface MessageItemCollection$ControlMetaData extends MessageItemCollection$Form<IApaleoControlMetaData> {}
 
 const $validators: MessageItemCollection$ValidatorFactories = {
     messages: (() => [
@@ -42,12 +45,21 @@ const $controls: MessageItemCollection$ControlFactories = {
     messages: (() => [null, Validators.compose($validators.messages())]),
 }
 
+const $metaData: MessageItemCollection$ControlMetaData = {
+    messages: {
+        
+    },
+}
+
 export const MessageItemCollection = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
-        });
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<MessageItemCollection$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
 

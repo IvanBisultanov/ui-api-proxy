@@ -9,5 +9,10 @@ export interface IApaleoAbstractControl {
 }
 
 export interface IApaleoControlMetaData {
-    maxLength: number;
+    maxLength?: number;
+    type?: string;
 }
+
+export type Optional<T> = {
+  [P in keyof T]?: T[P];
+};

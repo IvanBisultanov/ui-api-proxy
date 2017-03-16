@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface PropertyListModel {
     /**
@@ -32,6 +33,8 @@ export interface PropertyListModel$Form<T> {
 
 export interface PropertyListModel$ValidatorFactories extends PropertyListModel$Form<ValidatorsFactory> {}
 export interface PropertyListModel$ControlFactories extends PropertyListModel$Form<ControlFactory> {}
+export interface PropertyListModel$Control extends PropertyListModel$Form<Control | FormGroup> {}
+export interface PropertyListModel$ControlMetaData extends PropertyListModel$Form<IApaleoControlMetaData> {}
 
 const $validators: PropertyListModel$ValidatorFactories = {
     properties: (() => [
@@ -45,12 +48,21 @@ const $controls: PropertyListModel$ControlFactories = {
     properties: (() => [null, Validators.compose($validators.properties())]),
 }
 
+const $metaData: PropertyListModel$ControlMetaData = {
+    properties: {
+        
+    },
+}
+
 export const PropertyListModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
-        });
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<PropertyListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
 

@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface RateplanListModel {
     /**
@@ -32,6 +33,8 @@ export interface RateplanListModel$Form<T> {
 
 export interface RateplanListModel$ValidatorFactories extends RateplanListModel$Form<ValidatorsFactory> {}
 export interface RateplanListModel$ControlFactories extends RateplanListModel$Form<ControlFactory> {}
+export interface RateplanListModel$Control extends RateplanListModel$Form<Control | FormGroup> {}
+export interface RateplanListModel$ControlMetaData extends RateplanListModel$Form<IApaleoControlMetaData> {}
 
 const $validators: RateplanListModel$ValidatorFactories = {
     rateplans: (() => [
@@ -45,12 +48,21 @@ const $controls: RateplanListModel$ControlFactories = {
     rateplans: (() => [null, Validators.compose($validators.rateplans())]),
 }
 
+const $metaData: RateplanListModel$ControlMetaData = {
+    rateplans: {
+        
+    },
+}
+
 export const RateplanListModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
-        });
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<RateplanListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
 

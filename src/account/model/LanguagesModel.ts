@@ -15,9 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify the language settings for the account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface LanguagesModel {
     /**
@@ -35,6 +36,8 @@ export interface LanguagesModel$Form<T> {
 
 export interface LanguagesModel$ValidatorFactories extends LanguagesModel$Form<ValidatorsFactory> {}
 export interface LanguagesModel$ControlFactories extends LanguagesModel$Form<ControlFactory> {}
+export interface LanguagesModel$Control extends LanguagesModel$Form<Control | FormGroup> {}
+export interface LanguagesModel$ControlMetaData extends LanguagesModel$Form<IApaleoControlMetaData> {}
 
 const $validators: LanguagesModel$ValidatorFactories = {
     languages: (() => [
@@ -48,12 +51,21 @@ const $controls: LanguagesModel$ControlFactories = {
     languages: (() => [null, Validators.compose($validators.languages())]),
 }
 
+const $metaData: LanguagesModel$ControlMetaData = {
+    languages: {
+        
+    },
+}
+
 export const LanguagesModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
-        });
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<LanguagesModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
 

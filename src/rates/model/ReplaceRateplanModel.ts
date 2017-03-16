@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface ReplaceRateplanModel {
     /**
@@ -38,6 +39,8 @@ export interface ReplaceRateplanModel$Form<T> {
 
 export interface ReplaceRateplanModel$ValidatorFactories extends ReplaceRateplanModel$Form<ValidatorsFactory> {}
 export interface ReplaceRateplanModel$ControlFactories extends ReplaceRateplanModel$Form<ControlFactory> {}
+export interface ReplaceRateplanModel$Control extends ReplaceRateplanModel$Form<Control | FormGroup> {}
+export interface ReplaceRateplanModel$ControlMetaData extends ReplaceRateplanModel$Form<IApaleoControlMetaData> {}
 
 const $validators: ReplaceRateplanModel$ValidatorFactories = {
     name: (() => [
@@ -57,16 +60,40 @@ const $controls: ReplaceRateplanModel$ControlFactories = {
     defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
 }
 
+const $metaData: ReplaceRateplanModel$ControlMetaData = {
+    name: {
+        
+        
+        type: '{ [key: string]: string; }',
+        
+    },
+    defaultPrice: {
+        
+        
+        type: 'number',
+        
+    },
+}
+
 export const ReplaceRateplanModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReplaceRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
+        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
+        nameCtrl.apaleoMetaData = $metaData.name;
+    
+    
+        const defaultPriceCtrl: IApaleoAbstractControl = <any>group.controls['defaultPrice'];
+        defaultPriceCtrl.apaleoMetaData = $metaData.defaultPrice;
     
 
         return group;

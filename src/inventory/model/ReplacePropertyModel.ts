@@ -15,9 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface ReplacePropertyModel {
     /**
@@ -47,6 +48,8 @@ export interface ReplacePropertyModel$Form<T> {
 
 export interface ReplacePropertyModel$ValidatorFactories extends ReplacePropertyModel$Form<ValidatorsFactory> {}
 export interface ReplacePropertyModel$ControlFactories extends ReplacePropertyModel$Form<ControlFactory> {}
+export interface ReplacePropertyModel$Control extends ReplacePropertyModel$Form<Control | FormGroup> {}
+export interface ReplacePropertyModel$ControlMetaData extends ReplacePropertyModel$Form<IApaleoControlMetaData> {}
 
 const $validators: ReplacePropertyModel$ValidatorFactories = {
     name: (() => [
@@ -72,17 +75,44 @@ const $controls: ReplacePropertyModel$ControlFactories = {
     location: (() => [null, Validators.compose($validators.location())]),
 }
 
+const $metaData: ReplacePropertyModel$ControlMetaData = {
+    name: {
+        
+        
+        type: '{ [key: string]: string; }',
+        
+    },
+    description: {
+        
+        
+        type: '{ [key: string]: string; }',
+        
+    },
+    location: {
+        
+    },
+}
+
 export const ReplacePropertyModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReplacePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             name: $controls.name(),
             description: $controls.description(),
             location: models.Location.$buildForm(fb),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
+        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
+        nameCtrl.apaleoMetaData = $metaData.name;
+    
+    
+        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
+        descriptionCtrl.apaleoMetaData = $metaData.description;
     
     
 

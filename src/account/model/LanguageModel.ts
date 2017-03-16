@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface LanguageModel {
     code: string;
@@ -35,6 +36,8 @@ export interface LanguageModel$Form<T> {
 
 export interface LanguageModel$ValidatorFactories extends LanguageModel$Form<ValidatorsFactory> {}
 export interface LanguageModel$ControlFactories extends LanguageModel$Form<ControlFactory> {}
+export interface LanguageModel$Control extends LanguageModel$Form<Control | FormGroup> {}
+export interface LanguageModel$ControlMetaData extends LanguageModel$Form<IApaleoControlMetaData> {}
 
 const $validators: LanguageModel$ValidatorFactories = {
     code: (() => [
@@ -60,21 +63,51 @@ const $controls: LanguageModel$ControlFactories = {
     mandatory: (() => [null, Validators.compose($validators.mandatory())]),
 }
 
+const $metaData: LanguageModel$ControlMetaData = {
+    code: {
+        
+        maxLength: 2,
+        type: 'string',
+        
+    },
+    default: {
+        
+        
+        type: 'boolean',
+        
+    },
+    mandatory: {
+        
+        
+        type: 'boolean',
+        
+    },
+}
+
 export const LanguageModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<LanguageModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             code: $controls.code(),
             default: $controls.default(),
             mandatory: $controls.mandatory(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
         const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = { maxLength: 2 };
+        codeCtrl.apaleoMetaData = $metaData.code;
     
     
+        const defaultCtrl: IApaleoAbstractControl = <any>group.controls['default'];
+        defaultCtrl.apaleoMetaData = $metaData.default;
+    
+    
+        const mandatoryCtrl: IApaleoAbstractControl = <any>group.controls['mandatory'];
+        mandatoryCtrl.apaleoMetaData = $metaData.mandatory;
     
 
         return group;

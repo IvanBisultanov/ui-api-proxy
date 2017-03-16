@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface Location {
     street: string;
@@ -38,6 +39,8 @@ export interface Location$Form<T> {
 
 export interface Location$ValidatorFactories extends Location$Form<ValidatorsFactory> {}
 export interface Location$ControlFactories extends Location$Form<ControlFactory> {}
+export interface Location$Control extends Location$Form<Control | FormGroup> {}
+export interface Location$ControlMetaData extends Location$Form<IApaleoControlMetaData> {}
 
 const $validators: Location$ValidatorFactories = {
     street: (() => [
@@ -69,23 +72,62 @@ const $controls: Location$ControlFactories = {
     countryCode: (() => [null, Validators.compose($validators.countryCode())]),
 }
 
+const $metaData: Location$ControlMetaData = {
+    street: {
+        
+        
+        type: 'string',
+        
+    },
+    postalCode: {
+        
+        
+        type: 'string',
+        
+    },
+    city: {
+        
+        
+        type: 'string',
+        
+    },
+    countryCode: {
+        
+        maxLength: 2,
+        type: 'string',
+        
+    },
+}
+
 export const Location = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<Location$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             street: $controls.street(),
             postalCode: $controls.postalCode(),
             city: $controls.city(),
             countryCode: $controls.countryCode(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
+        const streetCtrl: IApaleoAbstractControl = <any>group.controls['street'];
+        streetCtrl.apaleoMetaData = $metaData.street;
     
+    
+        const postalCodeCtrl: IApaleoAbstractControl = <any>group.controls['postalCode'];
+        postalCodeCtrl.apaleoMetaData = $metaData.postalCode;
+    
+    
+        const cityCtrl: IApaleoAbstractControl = <any>group.controls['city'];
+        cityCtrl.apaleoMetaData = $metaData.city;
     
     
         const countryCodeCtrl: IApaleoAbstractControl = <any>group.controls['countryCode'];
-        countryCodeCtrl.apaleoMetaData = { maxLength: 2 };
+        countryCodeCtrl.apaleoMetaData = $metaData.countryCode;
     
 
         return group;

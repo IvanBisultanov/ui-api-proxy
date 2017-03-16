@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface CreatePropertyModel {
     /**
@@ -50,6 +51,8 @@ export interface CreatePropertyModel$Form<T> {
 
 export interface CreatePropertyModel$ValidatorFactories extends CreatePropertyModel$Form<ValidatorsFactory> {}
 export interface CreatePropertyModel$ControlFactories extends CreatePropertyModel$Form<ControlFactory> {}
+export interface CreatePropertyModel$Control extends CreatePropertyModel$Form<Control | FormGroup> {}
+export interface CreatePropertyModel$ControlMetaData extends CreatePropertyModel$Form<IApaleoControlMetaData> {}
 
 const $validators: CreatePropertyModel$ValidatorFactories = {
     code: (() => [
@@ -81,22 +84,55 @@ const $controls: CreatePropertyModel$ControlFactories = {
     location: (() => [null, Validators.compose($validators.location())]),
 }
 
+const $metaData: CreatePropertyModel$ControlMetaData = {
+    code: {
+        
+        maxLength: 10,
+        type: 'string',
+        
+    },
+    name: {
+        
+        
+        type: '{ [key: string]: string; }',
+        
+    },
+    description: {
+        
+        
+        type: '{ [key: string]: string; }',
+        
+    },
+    location: {
+        
+    },
+}
+
 export const CreatePropertyModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<CreatePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
             location: models.Location.$buildForm(fb),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
         const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = { maxLength: 10 };
+        codeCtrl.apaleoMetaData = $metaData.code;
     
     
+        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
+        nameCtrl.apaleoMetaData = $metaData.name;
+    
+    
+        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
+        descriptionCtrl.apaleoMetaData = $metaData.description;
     
     
 

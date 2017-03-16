@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface CreateAccountModel {
     /**
@@ -56,6 +57,8 @@ export interface CreateAccountModel$Form<T> {
 
 export interface CreateAccountModel$ValidatorFactories extends CreateAccountModel$Form<ValidatorsFactory> {}
 export interface CreateAccountModel$ControlFactories extends CreateAccountModel$Form<ControlFactory> {}
+export interface CreateAccountModel$Control extends CreateAccountModel$Form<Control | FormGroup> {}
+export interface CreateAccountModel$ControlMetaData extends CreateAccountModel$Form<IApaleoControlMetaData> {}
 
 const $validators: CreateAccountModel$ValidatorFactories = {
     code: (() => [
@@ -93,27 +96,66 @@ const $controls: CreateAccountModel$ControlFactories = {
     location: (() => [null, Validators.compose($validators.location())]),
 }
 
+const $metaData: CreateAccountModel$ControlMetaData = {
+    code: {
+        
+        maxLength: 10,
+        type: 'string',
+        
+    },
+    name: {
+        
+        maxLength: 40,
+        type: 'string',
+        
+    },
+    description: {
+        
+        
+        type: 'string',
+        
+    },
+    logoUrl: {
+        
+        
+        type: 'string',
+        
+    },
+    location: {
+        
+    },
+}
+
 export const CreateAccountModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<CreateAccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             code: $controls.code(),
             name: $controls.name(),
             description: $controls.description(),
             logoUrl: $controls.logoUrl(),
             location: models.Location.$buildForm(fb),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
         const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = { maxLength: 10 };
+        codeCtrl.apaleoMetaData = $metaData.code;
     
     
         const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = { maxLength: 40 };
+        nameCtrl.apaleoMetaData = $metaData.name;
     
     
+        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
+        descriptionCtrl.apaleoMetaData = $metaData.description;
+    
+    
+        const logoUrlCtrl: IApaleoAbstractControl = <any>group.controls['logoUrl'];
+        logoUrlCtrl.apaleoMetaData = $metaData.logoUrl;
     
     
 

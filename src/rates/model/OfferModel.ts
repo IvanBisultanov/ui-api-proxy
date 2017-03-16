@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface OfferModel {
     /**
@@ -44,6 +45,8 @@ export interface OfferModel$Form<T> {
 
 export interface OfferModel$ValidatorFactories extends OfferModel$Form<ValidatorsFactory> {}
 export interface OfferModel$ControlFactories extends OfferModel$Form<ControlFactory> {}
+export interface OfferModel$Control extends OfferModel$Form<Control | FormGroup> {}
+export interface OfferModel$ControlMetaData extends OfferModel$Form<IApaleoControlMetaData> {}
 
 const $validators: OfferModel$ValidatorFactories = {
     unitTypeCode: (() => [
@@ -69,18 +72,51 @@ const $controls: OfferModel$ControlFactories = {
     price: (() => [null, Validators.compose($validators.price())]),
 }
 
+const $metaData: OfferModel$ControlMetaData = {
+    unitTypeCode: {
+        
+        
+        type: 'string',
+        
+    },
+    rateplanCode: {
+        
+        
+        type: 'string',
+        
+    },
+    price: {
+        
+        
+        type: 'number',
+        
+    },
+}
+
 export const OfferModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<OfferModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             unitTypeCode: $controls.unitTypeCode(),
             rateplanCode: $controls.rateplanCode(),
             price: $controls.price(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
+        const unitTypeCodeCtrl: IApaleoAbstractControl = <any>group.controls['unitTypeCode'];
+        unitTypeCodeCtrl.apaleoMetaData = $metaData.unitTypeCode;
     
+    
+        const rateplanCodeCtrl: IApaleoAbstractControl = <any>group.controls['rateplanCode'];
+        rateplanCodeCtrl.apaleoMetaData = $metaData.rateplanCode;
+    
+    
+        const priceCtrl: IApaleoAbstractControl = <any>group.controls['price'];
+        priceCtrl.apaleoMetaData = $metaData.price;
     
 
         return group;

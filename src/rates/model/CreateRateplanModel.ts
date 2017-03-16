@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface CreateRateplanModel {
     /**
@@ -50,6 +51,8 @@ export interface CreateRateplanModel$Form<T> {
 
 export interface CreateRateplanModel$ValidatorFactories extends CreateRateplanModel$Form<ValidatorsFactory> {}
 export interface CreateRateplanModel$ControlFactories extends CreateRateplanModel$Form<ControlFactory> {}
+export interface CreateRateplanModel$Control extends CreateRateplanModel$Form<Control | FormGroup> {}
+export interface CreateRateplanModel$ControlMetaData extends CreateRateplanModel$Form<IApaleoControlMetaData> {}
 
 const $validators: CreateRateplanModel$ValidatorFactories = {
     code: (() => [
@@ -81,23 +84,62 @@ const $controls: CreateRateplanModel$ControlFactories = {
     defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
 }
 
+const $metaData: CreateRateplanModel$ControlMetaData = {
+    code: {
+        
+        maxLength: 10,
+        type: 'string',
+        
+    },
+    propertyCode: {
+        
+        
+        type: 'string',
+        
+    },
+    name: {
+        
+        
+        type: '{ [key: string]: string; }',
+        
+    },
+    defaultPrice: {
+        
+        
+        type: 'number',
+        
+    },
+}
+
 export const CreateRateplanModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<CreateRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             code: $controls.code(),
             propertyCode: $controls.propertyCode(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
         const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = { maxLength: 10 };
+        codeCtrl.apaleoMetaData = $metaData.code;
     
     
+        const propertyCodeCtrl: IApaleoAbstractControl = <any>group.controls['propertyCode'];
+        propertyCodeCtrl.apaleoMetaData = $metaData.propertyCode;
     
+    
+        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
+        nameCtrl.apaleoMetaData = $metaData.name;
+    
+    
+        const defaultPriceCtrl: IApaleoAbstractControl = <any>group.controls['defaultPrice'];
+        defaultPriceCtrl.apaleoMetaData = $metaData.defaultPrice;
     
 
         return group;

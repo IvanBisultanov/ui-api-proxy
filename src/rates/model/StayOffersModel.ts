@@ -12,9 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }                      from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control, IApaleoAbstractControl }   from '../../types';
-import { ResponseModel }                                                        from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
+import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
+import { ResponseModel }                                            from '../../models';
 
 export interface StayOffersModel {
     /**
@@ -50,6 +51,8 @@ export interface StayOffersModel$Form<T> {
 
 export interface StayOffersModel$ValidatorFactories extends StayOffersModel$Form<ValidatorsFactory> {}
 export interface StayOffersModel$ControlFactories extends StayOffersModel$Form<ControlFactory> {}
+export interface StayOffersModel$Control extends StayOffersModel$Form<Control | FormGroup> {}
+export interface StayOffersModel$ControlMetaData extends StayOffersModel$Form<IApaleoControlMetaData> {}
 
 const $validators: StayOffersModel$ValidatorFactories = {
     propertyCode: (() => [
@@ -81,18 +84,54 @@ const $controls: StayOffersModel$ControlFactories = {
     offers: (() => [null, Validators.compose($validators.offers())]),
 }
 
+const $metaData: StayOffersModel$ControlMetaData = {
+    propertyCode: {
+        
+        
+        type: 'string',
+        
+    },
+    arrival: {
+        
+        
+        type: 'Date',
+        
+    },
+    departure: {
+        
+        
+        type: 'Date',
+        
+    },
+    offers: {
+        
+    },
+}
+
 export const StayOffersModel = {
     $validators: $validators,
     $controls: $controls,
-    $buildForm: ((fb: FormBuilder) => {
-        const group = fb.group({
+    $metaData: $metaData,
+    $buildForm: ((fb: FormBuilder, specificControls?: Optional<StayOffersModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+        const defaultControls = {
             propertyCode: $controls.propertyCode(),
             arrival: $controls.arrival(),
             departure: $controls.departure(),
-        });
+        };
+
+        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
 
     
+        const propertyCodeCtrl: IApaleoAbstractControl = <any>group.controls['propertyCode'];
+        propertyCodeCtrl.apaleoMetaData = $metaData.propertyCode;
     
+    
+        const arrivalCtrl: IApaleoAbstractControl = <any>group.controls['arrival'];
+        arrivalCtrl.apaleoMetaData = $metaData.arrival;
+    
+    
+        const departureCtrl: IApaleoAbstractControl = <any>group.controls['departure'];
+        departureCtrl.apaleoMetaData = $metaData.departure;
     
     
 
