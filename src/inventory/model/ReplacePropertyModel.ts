@@ -51,53 +51,50 @@ export interface ReplacePropertyModel$ControlFactories extends ReplacePropertyMo
 export interface ReplacePropertyModel$Control extends ReplacePropertyModel$Form<Control | FormGroup> {}
 export interface ReplacePropertyModel$ControlMetaData extends ReplacePropertyModel$Form<IApaleoControlMetaData> {}
 
-const $validators: ReplacePropertyModel$ValidatorFactories = {
-    name: (() => [
-        Validators.required,
-        
-        
-    ]),
-    description: (() => [
-        Validators.required,
-        
-        
-    ]),
-    location: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace ReplacePropertyModel {
+    export const $validators: ReplacePropertyModel$ValidatorFactories = {
+        name: (() => [
+            Validators.required,
+            
+            
+        ]),
+        description: (() => [
+            Validators.required,
+            
+            
+        ]),
+        location: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: ReplacePropertyModel$ControlFactories = {
-    name: (() => [null, Validators.compose($validators.name())]),
-    description: (() => [null, Validators.compose($validators.description())]),
-    location: (() => [null, Validators.compose($validators.location())]),
-}
+    export const $controls: ReplacePropertyModel$ControlFactories = {
+        name: (() => [null, Validators.compose($validators.name())]),
+        description: (() => [null, Validators.compose($validators.description())]),
+        location: (() => [null, Validators.compose($validators.location())]),
+    };
 
-const $metaData: ReplacePropertyModel$ControlMetaData = {
-    name: {
-        
-        
-        type: '{ [key: string]: string; }',
-        
-    },
-    description: {
-        
-        
-        type: '{ [key: string]: string; }',
-        
-    },
-    location: {
-        
-    },
-}
+    export const $metaData: ReplacePropertyModel$ControlMetaData = {
+        name: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        description: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        location: {
+            
+        },
+    };
 
-export const ReplacePropertyModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReplacePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReplacePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             name: $controls.name(),
             description: $controls.description(),
@@ -117,6 +114,6 @@ export const ReplacePropertyModel = {
     
 
         return group;
-    })
+    }
 }
 

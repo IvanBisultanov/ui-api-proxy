@@ -39,29 +39,26 @@ export interface LanguagesModel$ControlFactories extends LanguagesModel$Form<Con
 export interface LanguagesModel$Control extends LanguagesModel$Form<Control | FormGroup> {}
 export interface LanguagesModel$ControlMetaData extends LanguagesModel$Form<IApaleoControlMetaData> {}
 
-const $validators: LanguagesModel$ValidatorFactories = {
-    languages: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace LanguagesModel {
+    export const $validators: LanguagesModel$ValidatorFactories = {
+        languages: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: LanguagesModel$ControlFactories = {
-    languages: (() => [null, Validators.compose($validators.languages())]),
-}
+    export const $controls: LanguagesModel$ControlFactories = {
+        languages: (() => [null, Validators.compose($validators.languages())]),
+    };
 
-const $metaData: LanguagesModel$ControlMetaData = {
-    languages: {
-        
-    },
-}
+    export const $metaData: LanguagesModel$ControlMetaData = {
+        languages: {
+            
+        },
+    };
 
-export const LanguagesModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<LanguagesModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<LanguagesModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
         };
 
@@ -70,6 +67,6 @@ export const LanguagesModel = {
     
 
         return group;
-    })
+    }
 }
 

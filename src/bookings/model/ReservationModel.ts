@@ -90,236 +90,233 @@ export interface ReservationModel$ControlFactories extends ReservationModel$Form
 export interface ReservationModel$Control extends ReservationModel$Form<Control | FormGroup> {}
 export interface ReservationModel$ControlMetaData extends ReservationModel$Form<IApaleoControlMetaData> {}
 
-const $validators: ReservationModel$ValidatorFactories = {
-    id: (() => [
-        
-        
-        
-    ]),
-    propertyId: (() => [
-        
-        
-        
-    ]),
-    checkInTime: (() => [
-        
-        
-        
-    ]),
-    checkOutTime: (() => [
-        
-        
-        
-    ]),
-    adults: (() => [
-        
-        
-        
-    ]),
-    children: (() => [
-        
-        
-        
-    ]),
-    guestTitle: (() => [
-        
-        
-        
-    ]),
-    firstName: (() => [
-        
-        
-        
-    ]),
-    middleInitial: (() => [
-        
-        
-        
-    ]),
-    lastName: (() => [
-        
-        
-        
-    ]),
-    email: (() => [
-        
-        
-        
-    ]),
-    phone: (() => [
-        
-        
-        
-    ]),
-    street: (() => [
-        
-        
-        
-    ]),
-    number: (() => [
-        
-        
-        
-    ]),
-    city: (() => [
-        
-        
-        
-    ]),
-    zipCode: (() => [
-        
-        
-        
-    ]),
-    countryCode: (() => [
-        
-        
-        
-    ]),
-    ratePlanId: (() => [
-        
-        
-        
-    ]),
-}
+export namespace ReservationModel {
+    export const $validators: ReservationModel$ValidatorFactories = {
+        id: (() => [
+            
+            
+            
+        ]),
+        propertyId: (() => [
+            
+            
+            
+        ]),
+        checkInTime: (() => [
+            
+            
+            
+        ]),
+        checkOutTime: (() => [
+            
+            
+            
+        ]),
+        adults: (() => [
+            
+            
+            
+        ]),
+        children: (() => [
+            
+            
+            
+        ]),
+        guestTitle: (() => [
+            
+            
+            
+        ]),
+        firstName: (() => [
+            
+            
+            
+        ]),
+        middleInitial: (() => [
+            
+            
+            
+        ]),
+        lastName: (() => [
+            
+            
+            
+        ]),
+        email: (() => [
+            
+            
+            
+        ]),
+        phone: (() => [
+            
+            
+            
+        ]),
+        street: (() => [
+            
+            
+            
+        ]),
+        number: (() => [
+            
+            
+            
+        ]),
+        city: (() => [
+            
+            
+            
+        ]),
+        zipCode: (() => [
+            
+            
+            
+        ]),
+        countryCode: (() => [
+            
+            
+            
+        ]),
+        ratePlanId: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: ReservationModel$ControlFactories = {
-    id: (() => [null, Validators.compose($validators.id())]),
-    propertyId: (() => [null, Validators.compose($validators.propertyId())]),
-    checkInTime: (() => [null, Validators.compose($validators.checkInTime())]),
-    checkOutTime: (() => [null, Validators.compose($validators.checkOutTime())]),
-    adults: (() => [null, Validators.compose($validators.adults())]),
-    children: (() => [null, Validators.compose($validators.children())]),
-    guestTitle: (() => [null, Validators.compose($validators.guestTitle())]),
-    firstName: (() => [null, Validators.compose($validators.firstName())]),
-    middleInitial: (() => [null, Validators.compose($validators.middleInitial())]),
-    lastName: (() => [null, Validators.compose($validators.lastName())]),
-    email: (() => [null, Validators.compose($validators.email())]),
-    phone: (() => [null, Validators.compose($validators.phone())]),
-    street: (() => [null, Validators.compose($validators.street())]),
-    number: (() => [null, Validators.compose($validators.number())]),
-    city: (() => [null, Validators.compose($validators.city())]),
-    zipCode: (() => [null, Validators.compose($validators.zipCode())]),
-    countryCode: (() => [null, Validators.compose($validators.countryCode())]),
-    ratePlanId: (() => [null, Validators.compose($validators.ratePlanId())]),
-}
+    export const $controls: ReservationModel$ControlFactories = {
+        id: (() => [null, Validators.compose($validators.id())]),
+        propertyId: (() => [null, Validators.compose($validators.propertyId())]),
+        checkInTime: (() => [null, Validators.compose($validators.checkInTime())]),
+        checkOutTime: (() => [null, Validators.compose($validators.checkOutTime())]),
+        adults: (() => [null, Validators.compose($validators.adults())]),
+        children: (() => [null, Validators.compose($validators.children())]),
+        guestTitle: (() => [null, Validators.compose($validators.guestTitle())]),
+        firstName: (() => [null, Validators.compose($validators.firstName())]),
+        middleInitial: (() => [null, Validators.compose($validators.middleInitial())]),
+        lastName: (() => [null, Validators.compose($validators.lastName())]),
+        email: (() => [null, Validators.compose($validators.email())]),
+        phone: (() => [null, Validators.compose($validators.phone())]),
+        street: (() => [null, Validators.compose($validators.street())]),
+        number: (() => [null, Validators.compose($validators.number())]),
+        city: (() => [null, Validators.compose($validators.city())]),
+        zipCode: (() => [null, Validators.compose($validators.zipCode())]),
+        countryCode: (() => [null, Validators.compose($validators.countryCode())]),
+        ratePlanId: (() => [null, Validators.compose($validators.ratePlanId())]),
+    };
 
-const $metaData: ReservationModel$ControlMetaData = {
-    id: {
-        
-        
-        type: 'number',
-        
-    },
-    propertyId: {
-        
-        
-        type: 'number',
-        
-    },
-    checkInTime: {
-        
-        
-        type: 'string',
-        
-    },
-    checkOutTime: {
-        
-        
-        type: 'string',
-        
-    },
-    adults: {
-        
-        
-        type: 'number',
-        
-    },
-    children: {
-        
-        
-        type: 'number',
-        
-    },
-    guestTitle: {
-        
-        
-        type: 'string',
-        
-    },
-    firstName: {
-        
-        
-        type: 'string',
-        
-    },
-    middleInitial: {
-        
-        
-        type: 'string',
-        
-    },
-    lastName: {
-        
-        
-        type: 'string',
-        
-    },
-    email: {
-        
-        
-        type: 'string',
-        
-    },
-    phone: {
-        
-        
-        type: 'string',
-        
-    },
-    street: {
-        
-        
-        type: 'string',
-        
-    },
-    number: {
-        
-        
-        type: 'string',
-        
-    },
-    city: {
-        
-        
-        type: 'string',
-        
-    },
-    zipCode: {
-        
-        
-        type: 'string',
-        
-    },
-    countryCode: {
-        
-        
-        type: 'string',
-        
-    },
-    ratePlanId: {
-        
-        
-        type: 'number',
-        
-    },
-}
+    export const $metaData: ReservationModel$ControlMetaData = {
+        id: {
+            
+            
+            type: 'number',
+            
+        },
+        propertyId: {
+            
+            
+            type: 'number',
+            
+        },
+        checkInTime: {
+            
+            
+            type: 'string',
+            
+        },
+        checkOutTime: {
+            
+            
+            type: 'string',
+            
+        },
+        adults: {
+            
+            
+            type: 'number',
+            
+        },
+        children: {
+            
+            
+            type: 'number',
+            
+        },
+        guestTitle: {
+            
+            
+            type: 'string',
+            
+        },
+        firstName: {
+            
+            
+            type: 'string',
+            
+        },
+        middleInitial: {
+            
+            
+            type: 'string',
+            
+        },
+        lastName: {
+            
+            
+            type: 'string',
+            
+        },
+        email: {
+            
+            
+            type: 'string',
+            
+        },
+        phone: {
+            
+            
+            type: 'string',
+            
+        },
+        street: {
+            
+            
+            type: 'string',
+            
+        },
+        number: {
+            
+            
+            type: 'string',
+            
+        },
+        city: {
+            
+            
+            type: 'string',
+            
+        },
+        zipCode: {
+            
+            
+            type: 'string',
+            
+        },
+        countryCode: {
+            
+            
+            type: 'string',
+            
+        },
+        ratePlanId: {
+            
+            
+            type: 'number',
+            
+        },
+    };
 
-export const ReservationModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReservationModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReservationModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             id: $controls.id(),
             propertyId: $controls.propertyId(),
@@ -417,6 +414,6 @@ export const ReservationModel = {
     
 
         return group;
-    })
+    }
 }
 

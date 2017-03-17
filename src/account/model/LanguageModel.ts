@@ -39,56 +39,53 @@ export interface LanguageModel$ControlFactories extends LanguageModel$Form<Contr
 export interface LanguageModel$Control extends LanguageModel$Form<Control | FormGroup> {}
 export interface LanguageModel$ControlMetaData extends LanguageModel$Form<IApaleoControlMetaData> {}
 
-const $validators: LanguageModel$ValidatorFactories = {
-    code: (() => [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(2),
-    ]),
-    default: (() => [
-        Validators.required,
-        
-        
-    ]),
-    mandatory: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace LanguageModel {
+    export const $validators: LanguageModel$ValidatorFactories = {
+        code: (() => [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(2),
+        ]),
+        default: (() => [
+            Validators.required,
+            
+            
+        ]),
+        mandatory: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: LanguageModel$ControlFactories = {
-    code: (() => [null, Validators.compose($validators.code())]),
-    default: (() => [null, Validators.compose($validators.default())]),
-    mandatory: (() => [null, Validators.compose($validators.mandatory())]),
-}
+    export const $controls: LanguageModel$ControlFactories = {
+        code: (() => [null, Validators.compose($validators.code())]),
+        default: (() => [null, Validators.compose($validators.default())]),
+        mandatory: (() => [null, Validators.compose($validators.mandatory())]),
+    };
 
-const $metaData: LanguageModel$ControlMetaData = {
-    code: {
-        
-        maxLength: 2,
-        type: 'string',
-        
-    },
-    default: {
-        
-        
-        type: 'boolean',
-        
-    },
-    mandatory: {
-        
-        
-        type: 'boolean',
-        
-    },
-}
+    export const $metaData: LanguageModel$ControlMetaData = {
+        code: {
+            
+            maxLength: 2,
+            type: 'string',
+            
+        },
+        default: {
+            
+            
+            type: 'boolean',
+            
+        },
+        mandatory: {
+            
+            
+            type: 'boolean',
+            
+        },
+    };
 
-export const LanguageModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<LanguageModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<LanguageModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             code: $controls.code(),
             default: $controls.default(),
@@ -111,6 +108,6 @@ export const LanguageModel = {
     
 
         return group;
-    })
+    }
 }
 

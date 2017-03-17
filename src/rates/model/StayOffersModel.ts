@@ -54,65 +54,62 @@ export interface StayOffersModel$ControlFactories extends StayOffersModel$Form<C
 export interface StayOffersModel$Control extends StayOffersModel$Form<Control | FormGroup> {}
 export interface StayOffersModel$ControlMetaData extends StayOffersModel$Form<IApaleoControlMetaData> {}
 
-const $validators: StayOffersModel$ValidatorFactories = {
-    propertyCode: (() => [
-        
-        
-        
-    ]),
-    arrival: (() => [
-        
-        
-        
-    ]),
-    departure: (() => [
-        
-        
-        
-    ]),
-    offers: (() => [
-        
-        
-        
-    ]),
-}
+export namespace StayOffersModel {
+    export const $validators: StayOffersModel$ValidatorFactories = {
+        propertyCode: (() => [
+            
+            
+            
+        ]),
+        arrival: (() => [
+            
+            
+            
+        ]),
+        departure: (() => [
+            
+            
+            
+        ]),
+        offers: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: StayOffersModel$ControlFactories = {
-    propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
-    arrival: (() => [null, Validators.compose($validators.arrival())]),
-    departure: (() => [null, Validators.compose($validators.departure())]),
-    offers: (() => [null, Validators.compose($validators.offers())]),
-}
+    export const $controls: StayOffersModel$ControlFactories = {
+        propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
+        arrival: (() => [null, Validators.compose($validators.arrival())]),
+        departure: (() => [null, Validators.compose($validators.departure())]),
+        offers: (() => [null, Validators.compose($validators.offers())]),
+    };
 
-const $metaData: StayOffersModel$ControlMetaData = {
-    propertyCode: {
-        
-        
-        type: 'string',
-        
-    },
-    arrival: {
-        
-        
-        type: 'Date',
-        
-    },
-    departure: {
-        
-        
-        type: 'Date',
-        
-    },
-    offers: {
-        
-    },
-}
+    export const $metaData: StayOffersModel$ControlMetaData = {
+        propertyCode: {
+            
+            
+            type: 'string',
+            
+        },
+        arrival: {
+            
+            
+            type: 'Date',
+            
+        },
+        departure: {
+            
+            
+            type: 'Date',
+            
+        },
+        offers: {
+            
+        },
+    };
 
-export const StayOffersModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<StayOffersModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<StayOffersModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             propertyCode: $controls.propertyCode(),
             arrival: $controls.arrival(),
@@ -136,6 +133,6 @@ export const StayOffersModel = {
     
 
         return group;
-    })
+    }
 }
 

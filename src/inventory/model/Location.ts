@@ -42,68 +42,65 @@ export interface Location$ControlFactories extends Location$Form<ControlFactory>
 export interface Location$Control extends Location$Form<Control | FormGroup> {}
 export interface Location$ControlMetaData extends Location$Form<IApaleoControlMetaData> {}
 
-const $validators: Location$ValidatorFactories = {
-    street: (() => [
-        Validators.required,
-        
-        
-    ]),
-    postalCode: (() => [
-        Validators.required,
-        
-        
-    ]),
-    city: (() => [
-        Validators.required,
-        
-        
-    ]),
-    countryCode: (() => [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(2),
-    ]),
-}
+export namespace Location {
+    export const $validators: Location$ValidatorFactories = {
+        street: (() => [
+            Validators.required,
+            
+            
+        ]),
+        postalCode: (() => [
+            Validators.required,
+            
+            
+        ]),
+        city: (() => [
+            Validators.required,
+            
+            
+        ]),
+        countryCode: (() => [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(2),
+        ]),
+    };
 
-const $controls: Location$ControlFactories = {
-    street: (() => [null, Validators.compose($validators.street())]),
-    postalCode: (() => [null, Validators.compose($validators.postalCode())]),
-    city: (() => [null, Validators.compose($validators.city())]),
-    countryCode: (() => [null, Validators.compose($validators.countryCode())]),
-}
+    export const $controls: Location$ControlFactories = {
+        street: (() => [null, Validators.compose($validators.street())]),
+        postalCode: (() => [null, Validators.compose($validators.postalCode())]),
+        city: (() => [null, Validators.compose($validators.city())]),
+        countryCode: (() => [null, Validators.compose($validators.countryCode())]),
+    };
 
-const $metaData: Location$ControlMetaData = {
-    street: {
-        
-        
-        type: 'string',
-        
-    },
-    postalCode: {
-        
-        
-        type: 'string',
-        
-    },
-    city: {
-        
-        
-        type: 'string',
-        
-    },
-    countryCode: {
-        
-        maxLength: 2,
-        type: 'string',
-        
-    },
-}
+    export const $metaData: Location$ControlMetaData = {
+        street: {
+            
+            
+            type: 'string',
+            
+        },
+        postalCode: {
+            
+            
+            type: 'string',
+            
+        },
+        city: {
+            
+            
+            type: 'string',
+            
+        },
+        countryCode: {
+            
+            maxLength: 2,
+            type: 'string',
+            
+        },
+    };
 
-export const Location = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<Location$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<Location$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             street: $controls.street(),
             postalCode: $controls.postalCode(),
@@ -131,6 +128,6 @@ export const Location = {
     
 
         return group;
-    })
+    }
 }
 

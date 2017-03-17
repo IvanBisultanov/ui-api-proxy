@@ -15,8 +15,7 @@ import { Http, Headers, URLSearchParams }                    from '@angular/http
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Response, ResponseContentType }                     from '@angular/http';
 
-import { Observable }                                        from 'rxjs/Observable';
-import * as Rx                                               from 'rxjs/Rx';
+import { Observable }                                        from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
@@ -247,12 +246,12 @@ export class PropertyApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, languages, $options));
                 }
             }
@@ -340,12 +339,12 @@ export class PropertyApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, $options));
                 }
             }
@@ -444,12 +443,12 @@ export class PropertyApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, $options));
                 }
             }
@@ -539,12 +538,12 @@ export class PropertyApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.inventoryV1PropertiesGetWithHttpInfo(languages, $options));
                 }
             }
@@ -637,12 +636,12 @@ export class PropertyApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options));
                 }
             }

@@ -42,44 +42,41 @@ export interface ReplaceRateplanModel$ControlFactories extends ReplaceRateplanMo
 export interface ReplaceRateplanModel$Control extends ReplaceRateplanModel$Form<Control | FormGroup> {}
 export interface ReplaceRateplanModel$ControlMetaData extends ReplaceRateplanModel$Form<IApaleoControlMetaData> {}
 
-const $validators: ReplaceRateplanModel$ValidatorFactories = {
-    name: (() => [
-        Validators.required,
-        
-        
-    ]),
-    defaultPrice: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace ReplaceRateplanModel {
+    export const $validators: ReplaceRateplanModel$ValidatorFactories = {
+        name: (() => [
+            Validators.required,
+            
+            
+        ]),
+        defaultPrice: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: ReplaceRateplanModel$ControlFactories = {
-    name: (() => [null, Validators.compose($validators.name())]),
-    defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
-}
+    export const $controls: ReplaceRateplanModel$ControlFactories = {
+        name: (() => [null, Validators.compose($validators.name())]),
+        defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
+    };
 
-const $metaData: ReplaceRateplanModel$ControlMetaData = {
-    name: {
-        
-        
-        type: '{ [key: string]: string; }',
-        
-    },
-    defaultPrice: {
-        
-        
-        type: 'number',
-        
-    },
-}
+    export const $metaData: ReplaceRateplanModel$ControlMetaData = {
+        name: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        defaultPrice: {
+            
+            
+            type: 'number',
+            
+        },
+    };
 
-export const ReplaceRateplanModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReplaceRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReplaceRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
@@ -97,6 +94,6 @@ export const ReplaceRateplanModel = {
     
 
         return group;
-    })
+    }
 }
 

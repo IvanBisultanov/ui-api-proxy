@@ -17,7 +17,7 @@ import { ValidatorsFactory, ControlFactory, Control }               from '../../
 import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
 import { ResponseModel }                                            from '../../models';
 
-export interface RateplanModel {
+export interface RateplanItemModel {
     /**
      * The rateplan id
      */
@@ -39,29 +39,35 @@ export interface RateplanModel {
     defaultPrice?: number;
 
     /**
-     * The property to which the rateplan belongs to
+     * The code of the property to which the rateplan belongs to
      */
-    property?: models.EmbeddedPropertyModel;
+    propertyCode?: string;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: Array<models.Link>;
 
 }
 
-export type RateplanModelWithRawHttp = RateplanModel & ResponseModel<RateplanModel>;
+export type RateplanItemModelWithRawHttp = RateplanItemModel & ResponseModel<RateplanItemModel>;
 
-export interface RateplanModel$Form<T> {
+export interface RateplanItemModel$Form<T> {
     id: T;
     code: T;
     name: T;
     defaultPrice: T;
-    property: T;
+    propertyCode: T;
+    links: T;
 }
 
-export interface RateplanModel$ValidatorFactories extends RateplanModel$Form<ValidatorsFactory> {}
-export interface RateplanModel$ControlFactories extends RateplanModel$Form<ControlFactory> {}
-export interface RateplanModel$Control extends RateplanModel$Form<Control | FormGroup> {}
-export interface RateplanModel$ControlMetaData extends RateplanModel$Form<IApaleoControlMetaData> {}
+export interface RateplanItemModel$ValidatorFactories extends RateplanItemModel$Form<ValidatorsFactory> {}
+export interface RateplanItemModel$ControlFactories extends RateplanItemModel$Form<ControlFactory> {}
+export interface RateplanItemModel$Control extends RateplanItemModel$Form<Control | FormGroup> {}
+export interface RateplanItemModel$ControlMetaData extends RateplanItemModel$Form<IApaleoControlMetaData> {}
 
-export namespace RateplanModel {
-    export const $validators: RateplanModel$ValidatorFactories = {
+export namespace RateplanItemModel {
+    export const $validators: RateplanItemModel$ValidatorFactories = {
         id: (() => [
             
             
@@ -82,22 +88,28 @@ export namespace RateplanModel {
             
             
         ]),
-        property: (() => [
+        propertyCode: (() => [
+            
+            
+            
+        ]),
+        links: (() => [
             
             
             
         ]),
     };
 
-    export const $controls: RateplanModel$ControlFactories = {
+    export const $controls: RateplanItemModel$ControlFactories = {
         id: (() => [null, Validators.compose($validators.id())]),
         code: (() => [null, Validators.compose($validators.code())]),
         name: (() => [null, Validators.compose($validators.name())]),
         defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
-        property: (() => [null, Validators.compose($validators.property())]),
+        propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
+        links: (() => [null, Validators.compose($validators.links())]),
     };
 
-    export const $metaData: RateplanModel$ControlMetaData = {
+    export const $metaData: RateplanItemModel$ControlMetaData = {
         id: {
             
             
@@ -122,18 +134,24 @@ export namespace RateplanModel {
             type: 'number',
             
         },
-        property: {
+        propertyCode: {
+            
+            
+            type: 'string',
+            
+        },
+        links: {
             
         },
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<RateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<RateplanItemModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             id: $controls.id(),
             code: $controls.code(),
             name: $controls.name(),
             defaultPrice: $controls.defaultPrice(),
-            property: models.EmbeddedPropertyModel.$buildForm(fb),
+            propertyCode: $controls.propertyCode(),
         };
 
         const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
@@ -153,6 +171,10 @@ export namespace RateplanModel {
     
         const defaultPriceCtrl: IApaleoAbstractControl = <any>group.controls['defaultPrice'];
         defaultPriceCtrl.apaleoMetaData = $metaData.defaultPrice;
+    
+    
+        const propertyCodeCtrl: IApaleoAbstractControl = <any>group.controls['propertyCode'];
+        propertyCodeCtrl.apaleoMetaData = $metaData.propertyCode;
     
     
 

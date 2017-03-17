@@ -21,7 +21,7 @@ export interface RateplanListModel {
     /**
      * List of rateplans
      */
-    rateplans?: Array<models.RateplanModel>;
+    rateplans?: Array<models.RateplanItemModel>;
 
 }
 
@@ -36,29 +36,26 @@ export interface RateplanListModel$ControlFactories extends RateplanListModel$Fo
 export interface RateplanListModel$Control extends RateplanListModel$Form<Control | FormGroup> {}
 export interface RateplanListModel$ControlMetaData extends RateplanListModel$Form<IApaleoControlMetaData> {}
 
-const $validators: RateplanListModel$ValidatorFactories = {
-    rateplans: (() => [
-        
-        
-        
-    ]),
-}
+export namespace RateplanListModel {
+    export const $validators: RateplanListModel$ValidatorFactories = {
+        rateplans: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: RateplanListModel$ControlFactories = {
-    rateplans: (() => [null, Validators.compose($validators.rateplans())]),
-}
+    export const $controls: RateplanListModel$ControlFactories = {
+        rateplans: (() => [null, Validators.compose($validators.rateplans())]),
+    };
 
-const $metaData: RateplanListModel$ControlMetaData = {
-    rateplans: {
-        
-    },
-}
+    export const $metaData: RateplanListModel$ControlMetaData = {
+        rateplans: {
+            
+        },
+    };
 
-export const RateplanListModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<RateplanListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<RateplanListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
         };
 
@@ -67,6 +64,6 @@ export const RateplanListModel = {
     
 
         return group;
-    })
+    }
 }
 

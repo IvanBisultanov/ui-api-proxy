@@ -36,29 +36,26 @@ export interface ReservationListModel$ControlFactories extends ReservationListMo
 export interface ReservationListModel$Control extends ReservationListModel$Form<Control | FormGroup> {}
 export interface ReservationListModel$ControlMetaData extends ReservationListModel$Form<IApaleoControlMetaData> {}
 
-const $validators: ReservationListModel$ValidatorFactories = {
-    reservations: (() => [
-        
-        
-        
-    ]),
-}
+export namespace ReservationListModel {
+    export const $validators: ReservationListModel$ValidatorFactories = {
+        reservations: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: ReservationListModel$ControlFactories = {
-    reservations: (() => [null, Validators.compose($validators.reservations())]),
-}
+    export const $controls: ReservationListModel$ControlFactories = {
+        reservations: (() => [null, Validators.compose($validators.reservations())]),
+    };
 
-const $metaData: ReservationListModel$ControlMetaData = {
-    reservations: {
-        
-    },
-}
+    export const $metaData: ReservationListModel$ControlMetaData = {
+        reservations: {
+            
+        },
+    };
 
-export const ReservationListModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<ReservationListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReservationListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
         };
 
@@ -67,6 +64,6 @@ export const ReservationListModel = {
     
 
         return group;
-    })
+    }
 }
 

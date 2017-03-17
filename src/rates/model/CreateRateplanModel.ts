@@ -54,68 +54,65 @@ export interface CreateRateplanModel$ControlFactories extends CreateRateplanMode
 export interface CreateRateplanModel$Control extends CreateRateplanModel$Form<Control | FormGroup> {}
 export interface CreateRateplanModel$ControlMetaData extends CreateRateplanModel$Form<IApaleoControlMetaData> {}
 
-const $validators: CreateRateplanModel$ValidatorFactories = {
-    code: (() => [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
-    ]),
-    propertyCode: (() => [
-        
-        
-        
-    ]),
-    name: (() => [
-        Validators.required,
-        
-        
-    ]),
-    defaultPrice: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace CreateRateplanModel {
+    export const $validators: CreateRateplanModel$ValidatorFactories = {
+        code: (() => [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(10),
+        ]),
+        propertyCode: (() => [
+            
+            
+            
+        ]),
+        name: (() => [
+            Validators.required,
+            
+            
+        ]),
+        defaultPrice: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: CreateRateplanModel$ControlFactories = {
-    code: (() => [null, Validators.compose($validators.code())]),
-    propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
-    name: (() => [null, Validators.compose($validators.name())]),
-    defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
-}
+    export const $controls: CreateRateplanModel$ControlFactories = {
+        code: (() => [null, Validators.compose($validators.code())]),
+        propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
+        name: (() => [null, Validators.compose($validators.name())]),
+        defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
+    };
 
-const $metaData: CreateRateplanModel$ControlMetaData = {
-    code: {
-        
-        maxLength: 10,
-        type: 'string',
-        
-    },
-    propertyCode: {
-        
-        
-        type: 'string',
-        
-    },
-    name: {
-        
-        
-        type: '{ [key: string]: string; }',
-        
-    },
-    defaultPrice: {
-        
-        
-        type: 'number',
-        
-    },
-}
+    export const $metaData: CreateRateplanModel$ControlMetaData = {
+        code: {
+            
+            maxLength: 10,
+            type: 'string',
+            
+        },
+        propertyCode: {
+            
+            
+            type: 'string',
+            
+        },
+        name: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        defaultPrice: {
+            
+            
+            type: 'number',
+            
+        },
+    };
 
-export const CreateRateplanModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<CreateRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<CreateRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             code: $controls.code(),
             propertyCode: $controls.propertyCode(),
@@ -143,6 +140,6 @@ export const CreateRateplanModel = {
     
 
         return group;
-    })
+    }
 }
 

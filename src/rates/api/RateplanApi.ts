@@ -15,8 +15,7 @@ import { Http, Headers, URLSearchParams }                    from '@angular/http
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Response, ResponseContentType }                     from '@angular/http';
 
-import { Observable }                                        from 'rxjs/Observable';
-import * as Rx                                               from 'rxjs/Rx';
+import { Observable }                                        from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
@@ -261,12 +260,12 @@ export class RateplanApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.ratesV1RateplansByIdDeleteWithHttpInfo(id, $options));
                 }
             }
@@ -362,12 +361,12 @@ export class RateplanApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.ratesV1RateplansByIdGetWithHttpInfo(id, languages, $options));
                 }
             }
@@ -455,12 +454,12 @@ export class RateplanApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.ratesV1RateplansByIdHeadWithHttpInfo(id, $options));
                 }
             }
@@ -559,12 +558,12 @@ export class RateplanApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, $options));
                 }
             }
@@ -654,12 +653,12 @@ export class RateplanApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.ratesV1RateplansGetWithHttpInfo(languages, $options));
                 }
             }
@@ -752,12 +751,12 @@ export class RateplanApi {
         return this.http.request(path, requestOptions).catch(err => {
             if (err instanceof Response) {
                 if (isResponseCodeAllowed(err.status)) {
-                    return Rx.Observable.of(err);
+                    return Observable.of(err);
                 } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
                     $options = $options || {};
                     $options.retryTimes = retryTimes - 1;
 
-                    return Rx.Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
+                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
                         this.ratesV1RateplansPostWithHttpInfo(requestBody, $options));
                 }
             }

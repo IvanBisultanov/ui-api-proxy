@@ -60,77 +60,74 @@ export interface CreateAccountModel$ControlFactories extends CreateAccountModel$
 export interface CreateAccountModel$Control extends CreateAccountModel$Form<Control | FormGroup> {}
 export interface CreateAccountModel$ControlMetaData extends CreateAccountModel$Form<IApaleoControlMetaData> {}
 
-const $validators: CreateAccountModel$ValidatorFactories = {
-    code: (() => [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
-    ]),
-    name: (() => [
-        Validators.required,
-        
-        Validators.maxLength(40),
-    ]),
-    description: (() => [
-        Validators.required,
-        
-        
-    ]),
-    logoUrl: (() => [
-        
-        
-        
-    ]),
-    location: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace CreateAccountModel {
+    export const $validators: CreateAccountModel$ValidatorFactories = {
+        code: (() => [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(10),
+        ]),
+        name: (() => [
+            Validators.required,
+            
+            Validators.maxLength(40),
+        ]),
+        description: (() => [
+            Validators.required,
+            
+            
+        ]),
+        logoUrl: (() => [
+            
+            
+            
+        ]),
+        location: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: CreateAccountModel$ControlFactories = {
-    code: (() => [null, Validators.compose($validators.code())]),
-    name: (() => [null, Validators.compose($validators.name())]),
-    description: (() => [null, Validators.compose($validators.description())]),
-    logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
-    location: (() => [null, Validators.compose($validators.location())]),
-}
+    export const $controls: CreateAccountModel$ControlFactories = {
+        code: (() => [null, Validators.compose($validators.code())]),
+        name: (() => [null, Validators.compose($validators.name())]),
+        description: (() => [null, Validators.compose($validators.description())]),
+        logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
+        location: (() => [null, Validators.compose($validators.location())]),
+    };
 
-const $metaData: CreateAccountModel$ControlMetaData = {
-    code: {
-        
-        maxLength: 10,
-        type: 'string',
-        
-    },
-    name: {
-        
-        maxLength: 40,
-        type: 'string',
-        
-    },
-    description: {
-        
-        
-        type: 'string',
-        
-    },
-    logoUrl: {
-        
-        
-        type: 'string',
-        
-    },
-    location: {
-        
-    },
-}
+    export const $metaData: CreateAccountModel$ControlMetaData = {
+        code: {
+            
+            maxLength: 10,
+            type: 'string',
+            
+        },
+        name: {
+            
+            maxLength: 40,
+            type: 'string',
+            
+        },
+        description: {
+            
+            
+            type: 'string',
+            
+        },
+        logoUrl: {
+            
+            
+            type: 'string',
+            
+        },
+        location: {
+            
+        },
+    };
 
-export const CreateAccountModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<CreateAccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<CreateAccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             code: $controls.code(),
             name: $controls.name(),
@@ -160,6 +157,6 @@ export const CreateAccountModel = {
     
 
         return group;
-    })
+    }
 }
 

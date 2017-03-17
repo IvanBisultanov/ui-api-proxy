@@ -63,77 +63,74 @@ export interface AccountModel$ControlFactories extends AccountModel$Form<Control
 export interface AccountModel$Control extends AccountModel$Form<Control | FormGroup> {}
 export interface AccountModel$ControlMetaData extends AccountModel$Form<IApaleoControlMetaData> {}
 
-const $validators: AccountModel$ValidatorFactories = {
-    code: (() => [
-        
-        
-        
-    ]),
-    name: (() => [
-        
-        
-        
-    ]),
-    description: (() => [
-        
-        
-        
-    ]),
-    logoUrl: (() => [
-        
-        
-        
-    ]),
-    location: (() => [
-        
-        
-        
-    ]),
-}
+export namespace AccountModel {
+    export const $validators: AccountModel$ValidatorFactories = {
+        code: (() => [
+            
+            
+            
+        ]),
+        name: (() => [
+            
+            
+            
+        ]),
+        description: (() => [
+            
+            
+            
+        ]),
+        logoUrl: (() => [
+            
+            
+            
+        ]),
+        location: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: AccountModel$ControlFactories = {
-    code: (() => [null, Validators.compose($validators.code())]),
-    name: (() => [null, Validators.compose($validators.name())]),
-    description: (() => [null, Validators.compose($validators.description())]),
-    logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
-    location: (() => [null, Validators.compose($validators.location())]),
-}
+    export const $controls: AccountModel$ControlFactories = {
+        code: (() => [null, Validators.compose($validators.code())]),
+        name: (() => [null, Validators.compose($validators.name())]),
+        description: (() => [null, Validators.compose($validators.description())]),
+        logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
+        location: (() => [null, Validators.compose($validators.location())]),
+    };
 
-const $metaData: AccountModel$ControlMetaData = {
-    code: {
-        
-        
-        type: 'string',
-        
-    },
-    name: {
-        
-        
-        type: 'string',
-        
-    },
-    description: {
-        
-        
-        type: 'string',
-        
-    },
-    logoUrl: {
-        
-        
-        type: 'string',
-        
-    },
-    location: {
-        
-    },
-}
+    export const $metaData: AccountModel$ControlMetaData = {
+        code: {
+            
+            
+            type: 'string',
+            
+        },
+        name: {
+            
+            
+            type: 'string',
+            
+        },
+        description: {
+            
+            
+            type: 'string',
+            
+        },
+        logoUrl: {
+            
+            
+            type: 'string',
+            
+        },
+        location: {
+            
+        },
+    };
 
-export const AccountModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<AccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<AccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             code: $controls.code(),
             name: $controls.name(),
@@ -163,6 +160,6 @@ export const AccountModel = {
     
 
         return group;
-    })
+    }
 }
 

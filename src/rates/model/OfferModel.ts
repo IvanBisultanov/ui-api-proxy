@@ -48,56 +48,53 @@ export interface OfferModel$ControlFactories extends OfferModel$Form<ControlFact
 export interface OfferModel$Control extends OfferModel$Form<Control | FormGroup> {}
 export interface OfferModel$ControlMetaData extends OfferModel$Form<IApaleoControlMetaData> {}
 
-const $validators: OfferModel$ValidatorFactories = {
-    unitTypeCode: (() => [
-        
-        
-        
-    ]),
-    rateplanCode: (() => [
-        
-        
-        
-    ]),
-    price: (() => [
-        
-        
-        
-    ]),
-}
+export namespace OfferModel {
+    export const $validators: OfferModel$ValidatorFactories = {
+        unitTypeCode: (() => [
+            
+            
+            
+        ]),
+        rateplanCode: (() => [
+            
+            
+            
+        ]),
+        price: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: OfferModel$ControlFactories = {
-    unitTypeCode: (() => [null, Validators.compose($validators.unitTypeCode())]),
-    rateplanCode: (() => [null, Validators.compose($validators.rateplanCode())]),
-    price: (() => [null, Validators.compose($validators.price())]),
-}
+    export const $controls: OfferModel$ControlFactories = {
+        unitTypeCode: (() => [null, Validators.compose($validators.unitTypeCode())]),
+        rateplanCode: (() => [null, Validators.compose($validators.rateplanCode())]),
+        price: (() => [null, Validators.compose($validators.price())]),
+    };
 
-const $metaData: OfferModel$ControlMetaData = {
-    unitTypeCode: {
-        
-        
-        type: 'string',
-        
-    },
-    rateplanCode: {
-        
-        
-        type: 'string',
-        
-    },
-    price: {
-        
-        
-        type: 'number',
-        
-    },
-}
+    export const $metaData: OfferModel$ControlMetaData = {
+        unitTypeCode: {
+            
+            
+            type: 'string',
+            
+        },
+        rateplanCode: {
+            
+            
+            type: 'string',
+            
+        },
+        price: {
+            
+            
+            type: 'number',
+            
+        },
+    };
 
-export const OfferModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<OfferModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<OfferModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             unitTypeCode: $controls.unitTypeCode(),
             rateplanCode: $controls.rateplanCode(),
@@ -120,6 +117,6 @@ export const OfferModel = {
     
 
         return group;
-    })
+    }
 }
 

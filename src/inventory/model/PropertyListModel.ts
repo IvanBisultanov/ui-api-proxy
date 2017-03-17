@@ -36,29 +36,26 @@ export interface PropertyListModel$ControlFactories extends PropertyListModel$Fo
 export interface PropertyListModel$Control extends PropertyListModel$Form<Control | FormGroup> {}
 export interface PropertyListModel$ControlMetaData extends PropertyListModel$Form<IApaleoControlMetaData> {}
 
-const $validators: PropertyListModel$ValidatorFactories = {
-    properties: (() => [
-        
-        
-        
-    ]),
-}
+export namespace PropertyListModel {
+    export const $validators: PropertyListModel$ValidatorFactories = {
+        properties: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: PropertyListModel$ControlFactories = {
-    properties: (() => [null, Validators.compose($validators.properties())]),
-}
+    export const $controls: PropertyListModel$ControlFactories = {
+        properties: (() => [null, Validators.compose($validators.properties())]),
+    };
 
-const $metaData: PropertyListModel$ControlMetaData = {
-    properties: {
-        
-    },
-}
+    export const $metaData: PropertyListModel$ControlMetaData = {
+        properties: {
+            
+        },
+    };
 
-export const PropertyListModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<PropertyListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<PropertyListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
         };
 
@@ -67,6 +64,6 @@ export const PropertyListModel = {
     
 
         return group;
-    })
+    }
 }
 

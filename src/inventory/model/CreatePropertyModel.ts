@@ -54,65 +54,62 @@ export interface CreatePropertyModel$ControlFactories extends CreatePropertyMode
 export interface CreatePropertyModel$Control extends CreatePropertyModel$Form<Control | FormGroup> {}
 export interface CreatePropertyModel$ControlMetaData extends CreatePropertyModel$Form<IApaleoControlMetaData> {}
 
-const $validators: CreatePropertyModel$ValidatorFactories = {
-    code: (() => [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(10),
-    ]),
-    name: (() => [
-        Validators.required,
-        
-        
-    ]),
-    description: (() => [
-        Validators.required,
-        
-        
-    ]),
-    location: (() => [
-        Validators.required,
-        
-        
-    ]),
-}
+export namespace CreatePropertyModel {
+    export const $validators: CreatePropertyModel$ValidatorFactories = {
+        code: (() => [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(10),
+        ]),
+        name: (() => [
+            Validators.required,
+            
+            
+        ]),
+        description: (() => [
+            Validators.required,
+            
+            
+        ]),
+        location: (() => [
+            Validators.required,
+            
+            
+        ]),
+    };
 
-const $controls: CreatePropertyModel$ControlFactories = {
-    code: (() => [null, Validators.compose($validators.code())]),
-    name: (() => [null, Validators.compose($validators.name())]),
-    description: (() => [null, Validators.compose($validators.description())]),
-    location: (() => [null, Validators.compose($validators.location())]),
-}
+    export const $controls: CreatePropertyModel$ControlFactories = {
+        code: (() => [null, Validators.compose($validators.code())]),
+        name: (() => [null, Validators.compose($validators.name())]),
+        description: (() => [null, Validators.compose($validators.description())]),
+        location: (() => [null, Validators.compose($validators.location())]),
+    };
 
-const $metaData: CreatePropertyModel$ControlMetaData = {
-    code: {
-        
-        maxLength: 10,
-        type: 'string',
-        
-    },
-    name: {
-        
-        
-        type: '{ [key: string]: string; }',
-        
-    },
-    description: {
-        
-        
-        type: '{ [key: string]: string; }',
-        
-    },
-    location: {
-        
-    },
-}
+    export const $metaData: CreatePropertyModel$ControlMetaData = {
+        code: {
+            
+            maxLength: 10,
+            type: 'string',
+            
+        },
+        name: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        description: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        location: {
+            
+        },
+    };
 
-export const CreatePropertyModel = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<CreatePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<CreatePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
             code: $controls.code(),
             name: $controls.name(),
@@ -137,6 +134,6 @@ export const CreatePropertyModel = {
     
 
         return group;
-    })
+    }
 }
 

@@ -33,29 +33,26 @@ export interface MessageItemCollection$ControlFactories extends MessageItemColle
 export interface MessageItemCollection$Control extends MessageItemCollection$Form<Control | FormGroup> {}
 export interface MessageItemCollection$ControlMetaData extends MessageItemCollection$Form<IApaleoControlMetaData> {}
 
-const $validators: MessageItemCollection$ValidatorFactories = {
-    messages: (() => [
-        
-        
-        
-    ]),
-}
+export namespace MessageItemCollection {
+    export const $validators: MessageItemCollection$ValidatorFactories = {
+        messages: (() => [
+            
+            
+            
+        ]),
+    };
 
-const $controls: MessageItemCollection$ControlFactories = {
-    messages: (() => [null, Validators.compose($validators.messages())]),
-}
+    export const $controls: MessageItemCollection$ControlFactories = {
+        messages: (() => [null, Validators.compose($validators.messages())]),
+    };
 
-const $metaData: MessageItemCollection$ControlMetaData = {
-    messages: {
-        
-    },
-}
+    export const $metaData: MessageItemCollection$ControlMetaData = {
+        messages: {
+            
+        },
+    };
 
-export const MessageItemCollection = {
-    $validators: $validators,
-    $controls: $controls,
-    $metaData: $metaData,
-    $buildForm: ((fb: FormBuilder, specificControls?: Optional<MessageItemCollection$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) => {
+    export function $buildForm(fb: FormBuilder, specificControls?: Optional<MessageItemCollection$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
         const defaultControls = {
         };
 
@@ -64,6 +61,6 @@ export const MessageItemCollection = {
     
 
         return group;
-    })
+    }
 }
 
