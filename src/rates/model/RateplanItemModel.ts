@@ -34,6 +34,11 @@ export interface RateplanItemModel {
     name?: { [key: string]: string; };
 
     /**
+     * The description for the rateplan
+     */
+    description?: { [key: string]: string; };
+
+    /**
      * The default price for the rateplan
      */
     defaultPrice?: number;
@@ -56,6 +61,7 @@ export interface RateplanItemModel$Form<T> {
     id: T;
     code: T;
     name: T;
+    description: T;
     defaultPrice: T;
     propertyCode: T;
     links: T;
@@ -83,6 +89,11 @@ export namespace RateplanItemModel {
             
             
         ]),
+        description: (() => [
+            
+            
+            
+        ]),
         defaultPrice: (() => [
             
             
@@ -104,6 +115,7 @@ export namespace RateplanItemModel {
         id: (() => [null, Validators.compose($validators.id())]),
         code: (() => [null, Validators.compose($validators.code())]),
         name: (() => [null, Validators.compose($validators.name())]),
+        description: (() => [null, Validators.compose($validators.description())]),
         defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
         propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
         links: (() => [null, Validators.compose($validators.links())]),
@@ -123,6 +135,12 @@ export namespace RateplanItemModel {
             
         },
         name: {
+            
+            
+            type: '{ [key: string]: string; }',
+            
+        },
+        description: {
             
             
             type: '{ [key: string]: string; }',
@@ -150,6 +168,7 @@ export namespace RateplanItemModel {
             id: $controls.id(),
             code: $controls.code(),
             name: $controls.name(),
+            description: $controls.description(),
             defaultPrice: $controls.defaultPrice(),
             propertyCode: $controls.propertyCode(),
         };
@@ -167,6 +186,10 @@ export namespace RateplanItemModel {
     
         const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
         nameCtrl.apaleoMetaData = $metaData.name;
+    
+    
+        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
+        descriptionCtrl.apaleoMetaData = $metaData.description;
     
     
         const defaultPriceCtrl: IApaleoAbstractControl = <any>group.controls['defaultPrice'];
