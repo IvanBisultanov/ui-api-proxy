@@ -15,10 +15,11 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface ReplacePropertyModel {
     /**
@@ -40,78 +41,37 @@ export interface ReplacePropertyModel {
 
 export type ReplacePropertyModelWithRawHttp = ReplacePropertyModel & ResponseModel<ReplacePropertyModel>;
 
-export interface ReplacePropertyModel$Form<T> {
-    name: T;
-    description: T;
-    location: T;
-}
-
-export interface ReplacePropertyModel$ValidatorFactories extends ReplacePropertyModel$Form<ValidatorsFactory> {}
-export interface ReplacePropertyModel$ControlFactories extends ReplacePropertyModel$Form<ControlFactory> {}
-export interface ReplacePropertyModel$Control extends ReplacePropertyModel$Form<Control | FormGroup> {}
-export interface ReplacePropertyModel$ControlMetaData extends ReplacePropertyModel$Form<IApaleoControlMetaData> {}
-
 export namespace ReplacePropertyModel {
-    export const $validators: ReplacePropertyModel$ValidatorFactories = {
+    export const $validators = {
         name: (() => [
             Validators.required,
-            
-            
         ]),
         description: (() => [
             Validators.required,
-            
-            
         ]),
         location: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: ReplacePropertyModel$ControlFactories = {
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        location: (() => [null, Validators.compose($validators.location())]),
+    export const $controls = { 
     };
 
-    export const $metaData: ReplacePropertyModel$ControlMetaData = {
-        name: {
-            
-            
+    export const $metaData = { 
+        name: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        location: {
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReplacePropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            name: $controls.name(),
-            description: $controls.description(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertyModel>) {
+        const defaultControls = { 
             location: models.Location.$buildForm(fb),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
 
         return group;
     }

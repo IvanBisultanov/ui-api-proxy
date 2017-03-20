@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface ReservationListModel {
     /**
@@ -27,41 +28,23 @@ export interface ReservationListModel {
 
 export type ReservationListModelWithRawHttp = ReservationListModel & ResponseModel<ReservationListModel>;
 
-export interface ReservationListModel$Form<T> {
-    reservations: T;
-}
-
-export interface ReservationListModel$ValidatorFactories extends ReservationListModel$Form<ValidatorsFactory> {}
-export interface ReservationListModel$ControlFactories extends ReservationListModel$Form<ControlFactory> {}
-export interface ReservationListModel$Control extends ReservationListModel$Form<Control | FormGroup> {}
-export interface ReservationListModel$ControlMetaData extends ReservationListModel$Form<IApaleoControlMetaData> {}
-
 export namespace ReservationListModel {
-    export const $validators: ReservationListModel$ValidatorFactories = {
+    export const $validators = {
         reservations: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: ReservationListModel$ControlFactories = {
-        reservations: (() => [null, Validators.compose($validators.reservations())]),
+    export const $controls = { 
     };
 
-    export const $metaData: ReservationListModel$ControlMetaData = {
-        reservations: {
-            
-        },
+    export const $metaData = { 
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReservationListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationListModel>) {
+        const defaultControls = { 
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
 
         return group;
     }

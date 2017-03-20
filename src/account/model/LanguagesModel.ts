@@ -15,10 +15,11 @@ import * as models from './models';
 /**
  * With this request you can modify the language settings for the account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface LanguagesModel {
     /**
@@ -30,41 +31,24 @@ export interface LanguagesModel {
 
 export type LanguagesModelWithRawHttp = LanguagesModel & ResponseModel<LanguagesModel>;
 
-export interface LanguagesModel$Form<T> {
-    languages: T;
-}
-
-export interface LanguagesModel$ValidatorFactories extends LanguagesModel$Form<ValidatorsFactory> {}
-export interface LanguagesModel$ControlFactories extends LanguagesModel$Form<ControlFactory> {}
-export interface LanguagesModel$Control extends LanguagesModel$Form<Control | FormGroup> {}
-export interface LanguagesModel$ControlMetaData extends LanguagesModel$Form<IApaleoControlMetaData> {}
-
 export namespace LanguagesModel {
-    export const $validators: LanguagesModel$ValidatorFactories = {
+    export const $validators = {
         languages: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: LanguagesModel$ControlFactories = {
-        languages: (() => [null, Validators.compose($validators.languages())]),
+    export const $controls = { 
     };
 
-    export const $metaData: LanguagesModel$ControlMetaData = {
-        languages: {
-            
-        },
+    export const $metaData = { 
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<LanguagesModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguagesModel>) {
+        const defaultControls = { 
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
 
         return group;
     }

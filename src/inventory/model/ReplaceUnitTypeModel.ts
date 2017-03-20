@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface ReplaceUnitTypeModel {
     /**
@@ -42,102 +43,51 @@ export interface ReplaceUnitTypeModel {
 
 export type ReplaceUnitTypeModelWithRawHttp = ReplaceUnitTypeModel & ResponseModel<ReplaceUnitTypeModel>;
 
-export interface ReplaceUnitTypeModel$Form<T> {
-    name: T;
-    description: T;
-    minPersons: T;
-    maxPersons: T;
-}
-
-export interface ReplaceUnitTypeModel$ValidatorFactories extends ReplaceUnitTypeModel$Form<ValidatorsFactory> {}
-export interface ReplaceUnitTypeModel$ControlFactories extends ReplaceUnitTypeModel$Form<ControlFactory> {}
-export interface ReplaceUnitTypeModel$Control extends ReplaceUnitTypeModel$Form<Control | FormGroup> {}
-export interface ReplaceUnitTypeModel$ControlMetaData extends ReplaceUnitTypeModel$Form<IApaleoControlMetaData> {}
-
 export namespace ReplaceUnitTypeModel {
-    export const $validators: ReplaceUnitTypeModel$ValidatorFactories = {
+    export const $validators = {
         name: (() => [
             Validators.required,
-            
-            
         ]),
         description: (() => [
             Validators.required,
-            
-            
         ]),
         minPersons: (() => [
             Validators.required,
-            
-            
         ]),
         maxPersons: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: ReplaceUnitTypeModel$ControlFactories = {
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        minPersons: (() => [null, Validators.compose($validators.minPersons())]),
-        maxPersons: (() => [null, Validators.compose($validators.maxPersons())]),
+    export const $controls = { 
+        minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
+        maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
     };
 
-    export const $metaData: ReplaceUnitTypeModel$ControlMetaData = {
-        name: {
-            
-            
+    export const $metaData = { 
+        name: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        minPersons: {
-            
-            
+        } as IApaleoControlMetaData,
+        minPersons: { 
             type: 'number',
-            
-        },
-        maxPersons: {
-            
-            
+        } as IApaleoControlMetaData,
+        maxPersons: { 
             type: 'number',
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReplaceUnitTypeModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            name: $controls.name(),
-            description: $controls.description(),
-            minPersons: $controls.minPersons(),
-            maxPersons: $controls.maxPersons(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceUnitTypeModel>) {
+        const defaultControls = { 
+            minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
+            maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
-        const minPersonsCtrl: IApaleoAbstractControl = <any>group.controls['minPersons'];
-        minPersonsCtrl.apaleoMetaData = $metaData.minPersons;
-    
-    
-        const maxPersonsCtrl: IApaleoAbstractControl = <any>group.controls['maxPersons'];
-        maxPersonsCtrl.apaleoMetaData = $metaData.maxPersons;
-    
+        (<IApaleoAbstractControl><any>group.controls['minPersons']).apaleoMetaData = $metaData.minPersons;
+        (<IApaleoAbstractControl><any>group.controls['maxPersons']).apaleoMetaData = $metaData.maxPersons;
 
         return group;
     }

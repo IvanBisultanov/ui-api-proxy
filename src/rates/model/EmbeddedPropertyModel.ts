@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface EmbeddedPropertyModel {
     /**
@@ -41,119 +42,61 @@ export interface EmbeddedPropertyModel {
     /**
      * Collection of links to related resources
      */
-    links?: Array<models.Link>;
+    links?: { [key: string]: models.Link; };
 
 }
 
 export type EmbeddedPropertyModelWithRawHttp = EmbeddedPropertyModel & ResponseModel<EmbeddedPropertyModel>;
 
-export interface EmbeddedPropertyModel$Form<T> {
-    id: T;
-    code: T;
-    name: T;
-    description: T;
-    links: T;
-}
-
-export interface EmbeddedPropertyModel$ValidatorFactories extends EmbeddedPropertyModel$Form<ValidatorsFactory> {}
-export interface EmbeddedPropertyModel$ControlFactories extends EmbeddedPropertyModel$Form<ControlFactory> {}
-export interface EmbeddedPropertyModel$Control extends EmbeddedPropertyModel$Form<Control | FormGroup> {}
-export interface EmbeddedPropertyModel$ControlMetaData extends EmbeddedPropertyModel$Form<IApaleoControlMetaData> {}
-
 export namespace EmbeddedPropertyModel {
-    export const $validators: EmbeddedPropertyModel$ValidatorFactories = {
+    export const $validators = {
         id: (() => [
-            
-            
-            
         ]),
         code: (() => [
-            
-            
-            
         ]),
         name: (() => [
-            
-            
-            
         ]),
         description: (() => [
-            
-            
-            
         ]),
         links: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: EmbeddedPropertyModel$ControlFactories = {
-        id: (() => [null, Validators.compose($validators.id())]),
-        code: (() => [null, Validators.compose($validators.code())]),
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        links: (() => [null, Validators.compose($validators.links())]),
+    export const $controls = { 
+        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
+        name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
+        description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
     };
 
-    export const $metaData: EmbeddedPropertyModel$ControlMetaData = {
-        id: {
-            
-            
+    export const $metaData = { 
+        id: { 
             type: 'string',
-            
-        },
-        code: {
-            
-            
+        } as IApaleoControlMetaData,
+        code: { 
             type: 'string',
-            
-        },
-        name: {
-            
-            
+        } as IApaleoControlMetaData,
+        name: { 
             type: 'string',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: 'string',
-            
-        },
-        links: {
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<EmbeddedPropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            id: $controls.id(),
-            code: $controls.code(),
-            name: $controls.name(),
-            description: $controls.description(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<EmbeddedPropertyModel>) {
+        const defaultControls = { 
+            id: $controls.id(getControlOptions(options, 'id')),
+            code: $controls.code(getControlOptions(options, 'code')),
+            name: $controls.name(getControlOptions(options, 'name')),
+            description: $controls.description(getControlOptions(options, 'description')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const idCtrl: IApaleoAbstractControl = <any>group.controls['id'];
-        idCtrl.apaleoMetaData = $metaData.id;
-    
-    
-        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = $metaData.code;
-    
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
+        (<IApaleoAbstractControl><any>group.controls['id']).apaleoMetaData = $metaData.id;
+        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
+        (<IApaleoAbstractControl><any>group.controls['name']).apaleoMetaData = $metaData.name;
+        (<IApaleoAbstractControl><any>group.controls['description']).apaleoMetaData = $metaData.description;
 
         return group;
     }

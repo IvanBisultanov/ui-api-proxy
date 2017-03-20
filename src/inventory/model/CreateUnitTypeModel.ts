@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface CreateUnitTypeModel {
     /**
@@ -52,22 +53,8 @@ export interface CreateUnitTypeModel {
 
 export type CreateUnitTypeModelWithRawHttp = CreateUnitTypeModel & ResponseModel<CreateUnitTypeModel>;
 
-export interface CreateUnitTypeModel$Form<T> {
-    code: T;
-    propertyCode: T;
-    name: T;
-    description: T;
-    minPersons: T;
-    maxPersons: T;
-}
-
-export interface CreateUnitTypeModel$ValidatorFactories extends CreateUnitTypeModel$Form<ValidatorsFactory> {}
-export interface CreateUnitTypeModel$ControlFactories extends CreateUnitTypeModel$Form<ControlFactory> {}
-export interface CreateUnitTypeModel$Control extends CreateUnitTypeModel$Form<Control | FormGroup> {}
-export interface CreateUnitTypeModel$ControlMetaData extends CreateUnitTypeModel$Form<IApaleoControlMetaData> {}
-
 export namespace CreateUnitTypeModel {
-    export const $validators: CreateUnitTypeModel$ValidatorFactories = {
+    export const $validators = {
         code: (() => [
             Validators.required,
             Validators.minLength(3),
@@ -75,115 +62,63 @@ export namespace CreateUnitTypeModel {
         ]),
         propertyCode: (() => [
             Validators.required,
-            
-            
         ]),
         name: (() => [
             Validators.required,
-            
-            
         ]),
         description: (() => [
             Validators.required,
-            
-            
         ]),
         minPersons: (() => [
             Validators.required,
-            
-            
         ]),
         maxPersons: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: CreateUnitTypeModel$ControlFactories = {
-        code: (() => [null, Validators.compose($validators.code())]),
-        propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        minPersons: (() => [null, Validators.compose($validators.minPersons())]),
-        maxPersons: (() => [null, Validators.compose($validators.maxPersons())]),
+    export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
+        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
+        minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
+        maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
     };
 
-    export const $metaData: CreateUnitTypeModel$ControlMetaData = {
-        code: {
-            
+    export const $metaData = { 
+        code: { 
             maxLength: 10,
             type: 'string',
-            
-        },
-        propertyCode: {
-            
-            
+        } as IApaleoControlMetaData,
+        propertyCode: { 
             type: 'string',
-            
-        },
-        name: {
-            
-            
+        } as IApaleoControlMetaData,
+        name: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        minPersons: {
-            
-            
+        } as IApaleoControlMetaData,
+        minPersons: { 
             type: 'number',
-            
-        },
-        maxPersons: {
-            
-            
+        } as IApaleoControlMetaData,
+        maxPersons: { 
             type: 'number',
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<CreateUnitTypeModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            code: $controls.code(),
-            propertyCode: $controls.propertyCode(),
-            name: $controls.name(),
-            description: $controls.description(),
-            minPersons: $controls.minPersons(),
-            maxPersons: $controls.maxPersons(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateUnitTypeModel>) {
+        const defaultControls = { 
+            code: $controls.code(getControlOptions(options, 'code')),
+            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
+            maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = $metaData.code;
-    
-    
-        const propertyCodeCtrl: IApaleoAbstractControl = <any>group.controls['propertyCode'];
-        propertyCodeCtrl.apaleoMetaData = $metaData.propertyCode;
-    
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
-        const minPersonsCtrl: IApaleoAbstractControl = <any>group.controls['minPersons'];
-        minPersonsCtrl.apaleoMetaData = $metaData.minPersons;
-    
-    
-        const maxPersonsCtrl: IApaleoAbstractControl = <any>group.controls['maxPersons'];
-        maxPersonsCtrl.apaleoMetaData = $metaData.maxPersons;
-    
+        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
+        (<IApaleoAbstractControl><any>group.controls['propertyCode']).apaleoMetaData = $metaData.propertyCode;
+        (<IApaleoAbstractControl><any>group.controls['minPersons']).apaleoMetaData = $metaData.minPersons;
+        (<IApaleoAbstractControl><any>group.controls['maxPersons']).apaleoMetaData = $metaData.maxPersons;
 
         return group;
     }

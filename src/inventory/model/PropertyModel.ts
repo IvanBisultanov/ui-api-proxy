@@ -15,10 +15,11 @@ import * as models from './models';
 /**
  * With this request you can create a new property
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface PropertyModel {
     /**
@@ -45,96 +46,42 @@ export interface PropertyModel {
 
 export type PropertyModelWithRawHttp = PropertyModel & ResponseModel<PropertyModel>;
 
-export interface PropertyModel$Form<T> {
-    code: T;
-    name: T;
-    description: T;
-    location: T;
-}
-
-export interface PropertyModel$ValidatorFactories extends PropertyModel$Form<ValidatorsFactory> {}
-export interface PropertyModel$ControlFactories extends PropertyModel$Form<ControlFactory> {}
-export interface PropertyModel$Control extends PropertyModel$Form<Control | FormGroup> {}
-export interface PropertyModel$ControlMetaData extends PropertyModel$Form<IApaleoControlMetaData> {}
-
 export namespace PropertyModel {
-    export const $validators: PropertyModel$ValidatorFactories = {
+    export const $validators = {
         code: (() => [
-            
-            
-            
         ]),
         name: (() => [
-            
-            
-            
         ]),
         description: (() => [
-            
-            
-            
         ]),
         location: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: PropertyModel$ControlFactories = {
-        code: (() => [null, Validators.compose($validators.code())]),
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        location: (() => [null, Validators.compose($validators.location())]),
+    export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
     };
 
-    export const $metaData: PropertyModel$ControlMetaData = {
-        code: {
-            
-            
+    export const $metaData = { 
+        code: { 
             type: 'string',
-            
-        },
-        name: {
-            
-            
+        } as IApaleoControlMetaData,
+        name: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        location: {
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<PropertyModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            code: $controls.code(),
-            name: $controls.name(),
-            description: $controls.description(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyModel>) {
+        const defaultControls = { 
+            code: $controls.code(getControlOptions(options, 'code')),
             location: models.Location.$buildForm(fb),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = $metaData.code;
-    
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
+        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
 
         return group;
     }

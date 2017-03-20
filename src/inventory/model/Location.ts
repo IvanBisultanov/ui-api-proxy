@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface Location {
     street: string;
@@ -30,34 +31,16 @@ export interface Location {
 
 export type LocationWithRawHttp = Location & ResponseModel<Location>;
 
-export interface Location$Form<T> {
-    street: T;
-    postalCode: T;
-    city: T;
-    countryCode: T;
-}
-
-export interface Location$ValidatorFactories extends Location$Form<ValidatorsFactory> {}
-export interface Location$ControlFactories extends Location$Form<ControlFactory> {}
-export interface Location$Control extends Location$Form<Control | FormGroup> {}
-export interface Location$ControlMetaData extends Location$Form<IApaleoControlMetaData> {}
-
 export namespace Location {
-    export const $validators: Location$ValidatorFactories = {
+    export const $validators = {
         street: (() => [
             Validators.required,
-            
-            
         ]),
         postalCode: (() => [
             Validators.required,
-            
-            
         ]),
         city: (() => [
             Validators.required,
-            
-            
         ]),
         countryCode: (() => [
             Validators.required,
@@ -66,66 +49,42 @@ export namespace Location {
         ]),
     };
 
-    export const $controls: Location$ControlFactories = {
-        street: (() => [null, Validators.compose($validators.street())]),
-        postalCode: (() => [null, Validators.compose($validators.postalCode())]),
-        city: (() => [null, Validators.compose($validators.city())]),
-        countryCode: (() => [null, Validators.compose($validators.countryCode())]),
+    export const $controls = { 
+        street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
+        postalCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.postalCode(), options)),
+        city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
+        countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
     };
 
-    export const $metaData: Location$ControlMetaData = {
-        street: {
-            
-            
+    export const $metaData = { 
+        street: { 
             type: 'string',
-            
-        },
-        postalCode: {
-            
-            
+        } as IApaleoControlMetaData,
+        postalCode: { 
             type: 'string',
-            
-        },
-        city: {
-            
-            
+        } as IApaleoControlMetaData,
+        city: { 
             type: 'string',
-            
-        },
-        countryCode: {
-            
+        } as IApaleoControlMetaData,
+        countryCode: { 
             maxLength: 2,
             type: 'string',
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<Location$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            street: $controls.street(),
-            postalCode: $controls.postalCode(),
-            city: $controls.city(),
-            countryCode: $controls.countryCode(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Location>) {
+        const defaultControls = { 
+            street: $controls.street(getControlOptions(options, 'street')),
+            postalCode: $controls.postalCode(getControlOptions(options, 'postalCode')),
+            city: $controls.city(getControlOptions(options, 'city')),
+            countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const streetCtrl: IApaleoAbstractControl = <any>group.controls['street'];
-        streetCtrl.apaleoMetaData = $metaData.street;
-    
-    
-        const postalCodeCtrl: IApaleoAbstractControl = <any>group.controls['postalCode'];
-        postalCodeCtrl.apaleoMetaData = $metaData.postalCode;
-    
-    
-        const cityCtrl: IApaleoAbstractControl = <any>group.controls['city'];
-        cityCtrl.apaleoMetaData = $metaData.city;
-    
-    
-        const countryCodeCtrl: IApaleoAbstractControl = <any>group.controls['countryCode'];
-        countryCodeCtrl.apaleoMetaData = $metaData.countryCode;
-    
+        (<IApaleoAbstractControl><any>group.controls['street']).apaleoMetaData = $metaData.street;
+        (<IApaleoAbstractControl><any>group.controls['postalCode']).apaleoMetaData = $metaData.postalCode;
+        (<IApaleoAbstractControl><any>group.controls['city']).apaleoMetaData = $metaData.city;
+        (<IApaleoAbstractControl><any>group.controls['countryCode']).apaleoMetaData = $metaData.countryCode;
 
         return group;
     }

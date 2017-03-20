@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface LanguageModel {
     code: string;
@@ -28,19 +29,8 @@ export interface LanguageModel {
 
 export type LanguageModelWithRawHttp = LanguageModel & ResponseModel<LanguageModel>;
 
-export interface LanguageModel$Form<T> {
-    code: T;
-    default: T;
-    mandatory: T;
-}
-
-export interface LanguageModel$ValidatorFactories extends LanguageModel$Form<ValidatorsFactory> {}
-export interface LanguageModel$ControlFactories extends LanguageModel$Form<ControlFactory> {}
-export interface LanguageModel$Control extends LanguageModel$Form<Control | FormGroup> {}
-export interface LanguageModel$ControlMetaData extends LanguageModel$Form<IApaleoControlMetaData> {}
-
 export namespace LanguageModel {
-    export const $validators: LanguageModel$ValidatorFactories = {
+    export const $validators = {
         code: (() => [
             Validators.required,
             Validators.minLength(2),
@@ -48,64 +38,42 @@ export namespace LanguageModel {
         ]),
         default: (() => [
             Validators.required,
-            
-            
         ]),
         mandatory: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: LanguageModel$ControlFactories = {
-        code: (() => [null, Validators.compose($validators.code())]),
-        default: (() => [null, Validators.compose($validators.default())]),
-        mandatory: (() => [null, Validators.compose($validators.mandatory())]),
+    export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
+        default: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.default(), options)),
+        mandatory: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.mandatory(), options)),
     };
 
-    export const $metaData: LanguageModel$ControlMetaData = {
-        code: {
-            
+    export const $metaData = { 
+        code: { 
             maxLength: 2,
             type: 'string',
-            
-        },
-        default: {
-            
-            
+        } as IApaleoControlMetaData,
+        default: { 
             type: 'boolean',
-            
-        },
-        mandatory: {
-            
-            
+        } as IApaleoControlMetaData,
+        mandatory: { 
             type: 'boolean',
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<LanguageModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            code: $controls.code(),
-            default: $controls.default(),
-            mandatory: $controls.mandatory(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguageModel>) {
+        const defaultControls = { 
+            code: $controls.code(getControlOptions(options, 'code')),
+            default: $controls.default(getControlOptions(options, 'default')),
+            mandatory: $controls.mandatory(getControlOptions(options, 'mandatory')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = $metaData.code;
-    
-    
-        const defaultCtrl: IApaleoAbstractControl = <any>group.controls['default'];
-        defaultCtrl.apaleoMetaData = $metaData.default;
-    
-    
-        const mandatoryCtrl: IApaleoAbstractControl = <any>group.controls['mandatory'];
-        mandatoryCtrl.apaleoMetaData = $metaData.mandatory;
-    
+        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
+        (<IApaleoAbstractControl><any>group.controls['default']).apaleoMetaData = $metaData.default;
+        (<IApaleoAbstractControl><any>group.controls['mandatory']).apaleoMetaData = $metaData.mandatory;
 
         return group;
     }

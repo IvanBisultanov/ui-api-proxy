@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface MessageItemCollection {
     messages?: Array<string>;
@@ -24,41 +25,26 @@ export interface MessageItemCollection {
 
 export type MessageItemCollectionWithRawHttp = MessageItemCollection & ResponseModel<MessageItemCollection>;
 
-export interface MessageItemCollection$Form<T> {
-    messages: T;
-}
-
-export interface MessageItemCollection$ValidatorFactories extends MessageItemCollection$Form<ValidatorsFactory> {}
-export interface MessageItemCollection$ControlFactories extends MessageItemCollection$Form<ControlFactory> {}
-export interface MessageItemCollection$Control extends MessageItemCollection$Form<Control | FormGroup> {}
-export interface MessageItemCollection$ControlMetaData extends MessageItemCollection$Form<IApaleoControlMetaData> {}
-
 export namespace MessageItemCollection {
-    export const $validators: MessageItemCollection$ValidatorFactories = {
+    export const $validators = {
         messages: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: MessageItemCollection$ControlFactories = {
-        messages: (() => [null, Validators.compose($validators.messages())]),
+    export const $controls = { 
     };
 
-    export const $metaData: MessageItemCollection$ControlMetaData = {
-        messages: {
-            
-        },
+    export const $metaData = { 
+        messages: { 
+            type: 'Array&lt;string&gt;',
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<MessageItemCollection$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<MessageItemCollection>) {
+        const defaultControls = { 
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
 
         return group;
     }

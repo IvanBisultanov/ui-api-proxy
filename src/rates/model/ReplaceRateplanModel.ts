@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface ReplaceRateplanModel {
     /**
@@ -37,84 +38,42 @@ export interface ReplaceRateplanModel {
 
 export type ReplaceRateplanModelWithRawHttp = ReplaceRateplanModel & ResponseModel<ReplaceRateplanModel>;
 
-export interface ReplaceRateplanModel$Form<T> {
-    name: T;
-    description: T;
-    defaultPrice: T;
-}
-
-export interface ReplaceRateplanModel$ValidatorFactories extends ReplaceRateplanModel$Form<ValidatorsFactory> {}
-export interface ReplaceRateplanModel$ControlFactories extends ReplaceRateplanModel$Form<ControlFactory> {}
-export interface ReplaceRateplanModel$Control extends ReplaceRateplanModel$Form<Control | FormGroup> {}
-export interface ReplaceRateplanModel$ControlMetaData extends ReplaceRateplanModel$Form<IApaleoControlMetaData> {}
-
 export namespace ReplaceRateplanModel {
-    export const $validators: ReplaceRateplanModel$ValidatorFactories = {
+    export const $validators = {
         name: (() => [
             Validators.required,
-            
-            
         ]),
         description: (() => [
             Validators.required,
-            
-            
         ]),
         defaultPrice: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: ReplaceRateplanModel$ControlFactories = {
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
+    export const $controls = { 
+        defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
     };
 
-    export const $metaData: ReplaceRateplanModel$ControlMetaData = {
-        name: {
-            
-            
+    export const $metaData = { 
+        name: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        defaultPrice: {
-            
-            
+        } as IApaleoControlMetaData,
+        defaultPrice: { 
             type: 'number',
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReplaceRateplanModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            name: $controls.name(),
-            description: $controls.description(),
-            defaultPrice: $controls.defaultPrice(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceRateplanModel>) {
+        const defaultControls = { 
+            defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
-        const defaultPriceCtrl: IApaleoAbstractControl = <any>group.controls['defaultPrice'];
-        defaultPriceCtrl.apaleoMetaData = $metaData.defaultPrice;
-    
+        (<IApaleoAbstractControl><any>group.controls['defaultPrice']).apaleoMetaData = $metaData.defaultPrice;
 
         return group;
     }

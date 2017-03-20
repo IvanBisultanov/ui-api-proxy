@@ -15,10 +15,11 @@ import * as models from './models';
 /**
  * With this request you can modify an account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface ReplaceAccountModel {
     /**
@@ -45,96 +46,53 @@ export interface ReplaceAccountModel {
 
 export type ReplaceAccountModelWithRawHttp = ReplaceAccountModel & ResponseModel<ReplaceAccountModel>;
 
-export interface ReplaceAccountModel$Form<T> {
-    name: T;
-    description: T;
-    logoUrl: T;
-    location: T;
-}
-
-export interface ReplaceAccountModel$ValidatorFactories extends ReplaceAccountModel$Form<ValidatorsFactory> {}
-export interface ReplaceAccountModel$ControlFactories extends ReplaceAccountModel$Form<ControlFactory> {}
-export interface ReplaceAccountModel$Control extends ReplaceAccountModel$Form<Control | FormGroup> {}
-export interface ReplaceAccountModel$ControlMetaData extends ReplaceAccountModel$Form<IApaleoControlMetaData> {}
-
 export namespace ReplaceAccountModel {
-    export const $validators: ReplaceAccountModel$ValidatorFactories = {
+    export const $validators = {
         name: (() => [
             Validators.required,
-            
             Validators.maxLength(40),
         ]),
         description: (() => [
             Validators.required,
-            
-            
         ]),
         logoUrl: (() => [
-            
-            
-            
         ]),
         location: (() => [
             Validators.required,
-            
-            
         ]),
     };
 
-    export const $controls: ReplaceAccountModel$ControlFactories = {
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
-        location: (() => [null, Validators.compose($validators.location())]),
+    export const $controls = { 
+        name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
+        description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
+        logoUrl: ((options?: IControlFactoryOptions<string>) => getControl($validators.logoUrl(), options)),
     };
 
-    export const $metaData: ReplaceAccountModel$ControlMetaData = {
-        name: {
-            
+    export const $metaData = { 
+        name: { 
             maxLength: 40,
             type: 'string',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: 'string',
-            
-        },
-        logoUrl: {
-            
-            
+        } as IApaleoControlMetaData,
+        logoUrl: { 
             type: 'string',
-            
-        },
-        location: {
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<ReplaceAccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            name: $controls.name(),
-            description: $controls.description(),
-            logoUrl: $controls.logoUrl(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceAccountModel>) {
+        const defaultControls = { 
+            name: $controls.name(getControlOptions(options, 'name')),
+            description: $controls.description(getControlOptions(options, 'description')),
+            logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
             location: models.Location.$buildForm(fb),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
-        const logoUrlCtrl: IApaleoAbstractControl = <any>group.controls['logoUrl'];
-        logoUrlCtrl.apaleoMetaData = $metaData.logoUrl;
-    
-    
+        (<IApaleoAbstractControl><any>group.controls['name']).apaleoMetaData = $metaData.name;
+        (<IApaleoAbstractControl><any>group.controls['description']).apaleoMetaData = $metaData.description;
+        (<IApaleoAbstractControl><any>group.controls['logoUrl']).apaleoMetaData = $metaData.logoUrl;
 
         return group;
     }

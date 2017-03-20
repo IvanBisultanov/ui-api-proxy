@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface RateplanItemModel {
     /**
@@ -51,155 +52,71 @@ export interface RateplanItemModel {
     /**
      * Collection of links to related resources
      */
-    links?: Array<models.Link>;
+    links?: { [key: string]: models.Link; };
 
 }
 
 export type RateplanItemModelWithRawHttp = RateplanItemModel & ResponseModel<RateplanItemModel>;
 
-export interface RateplanItemModel$Form<T> {
-    id: T;
-    code: T;
-    name: T;
-    description: T;
-    defaultPrice: T;
-    propertyCode: T;
-    links: T;
-}
-
-export interface RateplanItemModel$ValidatorFactories extends RateplanItemModel$Form<ValidatorsFactory> {}
-export interface RateplanItemModel$ControlFactories extends RateplanItemModel$Form<ControlFactory> {}
-export interface RateplanItemModel$Control extends RateplanItemModel$Form<Control | FormGroup> {}
-export interface RateplanItemModel$ControlMetaData extends RateplanItemModel$Form<IApaleoControlMetaData> {}
-
 export namespace RateplanItemModel {
-    export const $validators: RateplanItemModel$ValidatorFactories = {
+    export const $validators = {
         id: (() => [
-            
-            
-            
         ]),
         code: (() => [
-            
-            
-            
         ]),
         name: (() => [
-            
-            
-            
         ]),
         description: (() => [
-            
-            
-            
         ]),
         defaultPrice: (() => [
-            
-            
-            
         ]),
         propertyCode: (() => [
-            
-            
-            
         ]),
         links: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: RateplanItemModel$ControlFactories = {
-        id: (() => [null, Validators.compose($validators.id())]),
-        code: (() => [null, Validators.compose($validators.code())]),
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        defaultPrice: (() => [null, Validators.compose($validators.defaultPrice())]),
-        propertyCode: (() => [null, Validators.compose($validators.propertyCode())]),
-        links: (() => [null, Validators.compose($validators.links())]),
+    export const $controls = { 
+        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
+        defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
+        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
     };
 
-    export const $metaData: RateplanItemModel$ControlMetaData = {
-        id: {
-            
-            
+    export const $metaData = { 
+        id: { 
             type: 'string',
-            
-        },
-        code: {
-            
-            
+        } as IApaleoControlMetaData,
+        code: { 
             type: 'string',
-            
-        },
-        name: {
-            
-            
+        } as IApaleoControlMetaData,
+        name: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: '{ [key: string]: string; }',
-            
-        },
-        defaultPrice: {
-            
-            
+        } as IApaleoControlMetaData,
+        defaultPrice: { 
             type: 'number',
-            
-        },
-        propertyCode: {
-            
-            
+        } as IApaleoControlMetaData,
+        propertyCode: { 
             type: 'string',
-            
-        },
-        links: {
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<RateplanItemModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            id: $controls.id(),
-            code: $controls.code(),
-            name: $controls.name(),
-            description: $controls.description(),
-            defaultPrice: $controls.defaultPrice(),
-            propertyCode: $controls.propertyCode(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanItemModel>) {
+        const defaultControls = { 
+            id: $controls.id(getControlOptions(options, 'id')),
+            code: $controls.code(getControlOptions(options, 'code')),
+            defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
+            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const idCtrl: IApaleoAbstractControl = <any>group.controls['id'];
-        idCtrl.apaleoMetaData = $metaData.id;
-    
-    
-        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = $metaData.code;
-    
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
-        const defaultPriceCtrl: IApaleoAbstractControl = <any>group.controls['defaultPrice'];
-        defaultPriceCtrl.apaleoMetaData = $metaData.defaultPrice;
-    
-    
-        const propertyCodeCtrl: IApaleoAbstractControl = <any>group.controls['propertyCode'];
-        propertyCodeCtrl.apaleoMetaData = $metaData.propertyCode;
-    
-    
+        (<IApaleoAbstractControl><any>group.controls['id']).apaleoMetaData = $metaData.id;
+        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
+        (<IApaleoAbstractControl><any>group.controls['defaultPrice']).apaleoMetaData = $metaData.defaultPrice;
+        (<IApaleoAbstractControl><any>group.controls['propertyCode']).apaleoMetaData = $metaData.propertyCode;
 
         return group;
     }

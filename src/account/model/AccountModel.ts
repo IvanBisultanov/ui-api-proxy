@@ -15,10 +15,11 @@ import * as models from './models';
 /**
  * With this request you can create a new account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface AccountModel {
     /**
@@ -50,114 +51,56 @@ export interface AccountModel {
 
 export type AccountModelWithRawHttp = AccountModel & ResponseModel<AccountModel>;
 
-export interface AccountModel$Form<T> {
-    code: T;
-    name: T;
-    description: T;
-    logoUrl: T;
-    location: T;
-}
-
-export interface AccountModel$ValidatorFactories extends AccountModel$Form<ValidatorsFactory> {}
-export interface AccountModel$ControlFactories extends AccountModel$Form<ControlFactory> {}
-export interface AccountModel$Control extends AccountModel$Form<Control | FormGroup> {}
-export interface AccountModel$ControlMetaData extends AccountModel$Form<IApaleoControlMetaData> {}
-
 export namespace AccountModel {
-    export const $validators: AccountModel$ValidatorFactories = {
+    export const $validators = {
         code: (() => [
-            
-            
-            
         ]),
         name: (() => [
-            
-            
-            
         ]),
         description: (() => [
-            
-            
-            
         ]),
         logoUrl: (() => [
-            
-            
-            
         ]),
         location: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: AccountModel$ControlFactories = {
-        code: (() => [null, Validators.compose($validators.code())]),
-        name: (() => [null, Validators.compose($validators.name())]),
-        description: (() => [null, Validators.compose($validators.description())]),
-        logoUrl: (() => [null, Validators.compose($validators.logoUrl())]),
-        location: (() => [null, Validators.compose($validators.location())]),
+    export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
+        name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
+        description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
+        logoUrl: ((options?: IControlFactoryOptions<string>) => getControl($validators.logoUrl(), options)),
     };
 
-    export const $metaData: AccountModel$ControlMetaData = {
-        code: {
-            
-            
+    export const $metaData = { 
+        code: { 
             type: 'string',
-            
-        },
-        name: {
-            
-            
+        } as IApaleoControlMetaData,
+        name: { 
             type: 'string',
-            
-        },
-        description: {
-            
-            
+        } as IApaleoControlMetaData,
+        description: { 
             type: 'string',
-            
-        },
-        logoUrl: {
-            
-            
+        } as IApaleoControlMetaData,
+        logoUrl: { 
             type: 'string',
-            
-        },
-        location: {
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<AccountModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            code: $controls.code(),
-            name: $controls.name(),
-            description: $controls.description(),
-            logoUrl: $controls.logoUrl(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<AccountModel>) {
+        const defaultControls = { 
+            code: $controls.code(getControlOptions(options, 'code')),
+            name: $controls.name(getControlOptions(options, 'name')),
+            description: $controls.description(getControlOptions(options, 'description')),
+            logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
             location: models.Location.$buildForm(fb),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const codeCtrl: IApaleoAbstractControl = <any>group.controls['code'];
-        codeCtrl.apaleoMetaData = $metaData.code;
-    
-    
-        const nameCtrl: IApaleoAbstractControl = <any>group.controls['name'];
-        nameCtrl.apaleoMetaData = $metaData.name;
-    
-    
-        const descriptionCtrl: IApaleoAbstractControl = <any>group.controls['description'];
-        descriptionCtrl.apaleoMetaData = $metaData.description;
-    
-    
-        const logoUrlCtrl: IApaleoAbstractControl = <any>group.controls['logoUrl'];
-        logoUrlCtrl.apaleoMetaData = $metaData.logoUrl;
-    
-    
+        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
+        (<IApaleoAbstractControl><any>group.controls['name']).apaleoMetaData = $metaData.name;
+        (<IApaleoAbstractControl><any>group.controls['description']).apaleoMetaData = $metaData.description;
+        (<IApaleoAbstractControl><any>group.controls['logoUrl']).apaleoMetaData = $metaData.logoUrl;
 
         return group;
     }

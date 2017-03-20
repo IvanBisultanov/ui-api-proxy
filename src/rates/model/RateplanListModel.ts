@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface RateplanListModel {
     /**
@@ -27,41 +28,23 @@ export interface RateplanListModel {
 
 export type RateplanListModelWithRawHttp = RateplanListModel & ResponseModel<RateplanListModel>;
 
-export interface RateplanListModel$Form<T> {
-    rateplans: T;
-}
-
-export interface RateplanListModel$ValidatorFactories extends RateplanListModel$Form<ValidatorsFactory> {}
-export interface RateplanListModel$ControlFactories extends RateplanListModel$Form<ControlFactory> {}
-export interface RateplanListModel$Control extends RateplanListModel$Form<Control | FormGroup> {}
-export interface RateplanListModel$ControlMetaData extends RateplanListModel$Form<IApaleoControlMetaData> {}
-
 export namespace RateplanListModel {
-    export const $validators: RateplanListModel$ValidatorFactories = {
+    export const $validators = {
         rateplans: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: RateplanListModel$ControlFactories = {
-        rateplans: (() => [null, Validators.compose($validators.rateplans())]),
+    export const $controls = { 
     };
 
-    export const $metaData: RateplanListModel$ControlMetaData = {
-        rateplans: {
-            
-        },
+    export const $metaData = { 
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<RateplanListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanListModel>) {
+        const defaultControls = { 
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
 
         return group;
     }

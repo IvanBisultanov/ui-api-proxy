@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface UnitTypeListModel {
     /**
@@ -27,41 +28,23 @@ export interface UnitTypeListModel {
 
 export type UnitTypeListModelWithRawHttp = UnitTypeListModel & ResponseModel<UnitTypeListModel>;
 
-export interface UnitTypeListModel$Form<T> {
-    unitTypes: T;
-}
-
-export interface UnitTypeListModel$ValidatorFactories extends UnitTypeListModel$Form<ValidatorsFactory> {}
-export interface UnitTypeListModel$ControlFactories extends UnitTypeListModel$Form<ControlFactory> {}
-export interface UnitTypeListModel$Control extends UnitTypeListModel$Form<Control | FormGroup> {}
-export interface UnitTypeListModel$ControlMetaData extends UnitTypeListModel$Form<IApaleoControlMetaData> {}
-
 export namespace UnitTypeListModel {
-    export const $validators: UnitTypeListModel$ValidatorFactories = {
+    export const $validators = {
         unitTypes: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: UnitTypeListModel$ControlFactories = {
-        unitTypes: (() => [null, Validators.compose($validators.unitTypes())]),
+    export const $controls = { 
     };
 
-    export const $metaData: UnitTypeListModel$ControlMetaData = {
-        unitTypes: {
-            
-        },
+    export const $metaData = { 
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<UnitTypeListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeListModel>) {
+        const defaultControls = { 
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
 
         return group;
     }

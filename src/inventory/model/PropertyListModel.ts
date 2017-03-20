@@ -12,10 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface PropertyListModel {
     /**
@@ -27,41 +28,23 @@ export interface PropertyListModel {
 
 export type PropertyListModelWithRawHttp = PropertyListModel & ResponseModel<PropertyListModel>;
 
-export interface PropertyListModel$Form<T> {
-    properties: T;
-}
-
-export interface PropertyListModel$ValidatorFactories extends PropertyListModel$Form<ValidatorsFactory> {}
-export interface PropertyListModel$ControlFactories extends PropertyListModel$Form<ControlFactory> {}
-export interface PropertyListModel$Control extends PropertyListModel$Form<Control | FormGroup> {}
-export interface PropertyListModel$ControlMetaData extends PropertyListModel$Form<IApaleoControlMetaData> {}
-
 export namespace PropertyListModel {
-    export const $validators: PropertyListModel$ValidatorFactories = {
+    export const $validators = {
         properties: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: PropertyListModel$ControlFactories = {
-        properties: (() => [null, Validators.compose($validators.properties())]),
+    export const $controls = { 
     };
 
-    export const $metaData: PropertyListModel$ControlMetaData = {
-        properties: {
-            
-        },
+    export const $metaData = { 
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<PropertyListModel$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyListModel>) {
+        const defaultControls = { 
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
 
         return group;
     }

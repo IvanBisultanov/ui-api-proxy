@@ -12,85 +12,42 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup }          from '@angular/forms';
-import { ValidatorsFactory, ControlFactory, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData, Optional } from '../../types';
-import { ResponseModel }                                            from '../../models';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
+import { ResponseModel }                                                    from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
 
 export interface Link {
-    rel?: Link.RelEnum;
-
     href?: string;
 
-}
-export namespace Link {
-    export enum RelEnum {
-        Self = <any> 'self'
-    }
 }
 
 export type LinkWithRawHttp = Link & ResponseModel<Link>;
 
-export interface Link$Form<T> {
-    rel: T;
-    href: T;
-}
-
-export interface Link$ValidatorFactories extends Link$Form<ValidatorsFactory> {}
-export interface Link$ControlFactories extends Link$Form<ControlFactory> {}
-export interface Link$Control extends Link$Form<Control | FormGroup> {}
-export interface Link$ControlMetaData extends Link$Form<IApaleoControlMetaData> {}
-
 export namespace Link {
-    export const $validators: Link$ValidatorFactories = {
-        rel: (() => [
-            
-            
-            
-        ]),
+    export const $validators = {
         href: (() => [
-            
-            
-            
         ]),
     };
 
-    export const $controls: Link$ControlFactories = {
-        rel: (() => [null, Validators.compose($validators.rel())]),
-        href: (() => [null, Validators.compose($validators.href())]),
+    export const $controls = { 
+        href: ((options?: IControlFactoryOptions<string>) => getControl($validators.href(), options)),
     };
 
-    export const $metaData: Link$ControlMetaData = {
-        rel: {
-            
-            
-            
-            
-        },
-        href: {
-            
-            
+    export const $metaData = { 
+        href: { 
             type: 'string',
-            
-        },
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, specificControls?: Optional<Link$Control>, additionalControls?: { [name: string]: (Control | FormGroup) }) {
-        const defaultControls = {
-            rel: $controls.rel(),
-            href: $controls.href(),
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Link>) {
+        const defaultControls = { 
+            href: $controls.href(getControlOptions(options, 'href')),
         };
+        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        const group = fb.group(Object.assign(defaultControls, specificControls, additionalControls));
-
-    
-        const relCtrl: IApaleoAbstractControl = <any>group.controls['rel'];
-        relCtrl.apaleoMetaData = $metaData.rel;
-    
-    
-        const hrefCtrl: IApaleoAbstractControl = <any>group.controls['href'];
-        hrefCtrl.apaleoMetaData = $metaData.href;
-    
+        (<IApaleoAbstractControl><any>group.controls['href']).apaleoMetaData = $metaData.href;
 
         return group;
     }
