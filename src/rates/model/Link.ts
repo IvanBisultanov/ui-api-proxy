@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface Link {
     href?: string;
@@ -47,7 +47,7 @@ export namespace Link {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['href']).apaleoMetaData = $metaData.href;
+        setMetaData(<any>group.controls.href, $metaData.href);
 
         return group;
     }

@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface PropertyListModel {
     /**

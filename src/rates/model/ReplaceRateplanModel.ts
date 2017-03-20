@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface ReplaceRateplanModel {
     /**
@@ -73,7 +73,7 @@ export namespace ReplaceRateplanModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['defaultPrice']).apaleoMetaData = $metaData.defaultPrice;
+        setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
 
         return group;
     }

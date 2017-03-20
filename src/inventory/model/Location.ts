@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface Location {
     street: string;
@@ -81,10 +81,10 @@ export namespace Location {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['street']).apaleoMetaData = $metaData.street;
-        (<IApaleoAbstractControl><any>group.controls['postalCode']).apaleoMetaData = $metaData.postalCode;
-        (<IApaleoAbstractControl><any>group.controls['city']).apaleoMetaData = $metaData.city;
-        (<IApaleoAbstractControl><any>group.controls['countryCode']).apaleoMetaData = $metaData.countryCode;
+        setMetaData(<any>group.controls.street, $metaData.street);
+        setMetaData(<any>group.controls.postalCode, $metaData.postalCode);
+        setMetaData(<any>group.controls.city, $metaData.city);
+        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
 
         return group;
     }

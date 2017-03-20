@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface LanguageModel {
     code: string;
@@ -71,9 +71,9 @@ export namespace LanguageModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
-        (<IApaleoAbstractControl><any>group.controls['default']).apaleoMetaData = $metaData.default;
-        (<IApaleoAbstractControl><any>group.controls['mandatory']).apaleoMetaData = $metaData.mandatory;
+        setMetaData(<any>group.controls.code, $metaData.code);
+        setMetaData(<any>group.controls.default, $metaData.default);
+        setMetaData(<any>group.controls.mandatory, $metaData.mandatory);
 
         return group;
     }

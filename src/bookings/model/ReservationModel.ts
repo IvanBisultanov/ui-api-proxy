@@ -15,11 +15,11 @@ import * as models from './models';
 /**
  * With this request you can setup a new account with an admin user
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface ReservationModel {
     id?: number;
@@ -206,24 +206,24 @@ export namespace ReservationModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['id']).apaleoMetaData = $metaData.id;
-        (<IApaleoAbstractControl><any>group.controls['propertyId']).apaleoMetaData = $metaData.propertyId;
-        (<IApaleoAbstractControl><any>group.controls['checkInTime']).apaleoMetaData = $metaData.checkInTime;
-        (<IApaleoAbstractControl><any>group.controls['checkOutTime']).apaleoMetaData = $metaData.checkOutTime;
-        (<IApaleoAbstractControl><any>group.controls['adults']).apaleoMetaData = $metaData.adults;
-        (<IApaleoAbstractControl><any>group.controls['children']).apaleoMetaData = $metaData.children;
-        (<IApaleoAbstractControl><any>group.controls['guestTitle']).apaleoMetaData = $metaData.guestTitle;
-        (<IApaleoAbstractControl><any>group.controls['firstName']).apaleoMetaData = $metaData.firstName;
-        (<IApaleoAbstractControl><any>group.controls['middleInitial']).apaleoMetaData = $metaData.middleInitial;
-        (<IApaleoAbstractControl><any>group.controls['lastName']).apaleoMetaData = $metaData.lastName;
-        (<IApaleoAbstractControl><any>group.controls['email']).apaleoMetaData = $metaData.email;
-        (<IApaleoAbstractControl><any>group.controls['phone']).apaleoMetaData = $metaData.phone;
-        (<IApaleoAbstractControl><any>group.controls['street']).apaleoMetaData = $metaData.street;
-        (<IApaleoAbstractControl><any>group.controls['number']).apaleoMetaData = $metaData.number;
-        (<IApaleoAbstractControl><any>group.controls['city']).apaleoMetaData = $metaData.city;
-        (<IApaleoAbstractControl><any>group.controls['zipCode']).apaleoMetaData = $metaData.zipCode;
-        (<IApaleoAbstractControl><any>group.controls['countryCode']).apaleoMetaData = $metaData.countryCode;
-        (<IApaleoAbstractControl><any>group.controls['ratePlanId']).apaleoMetaData = $metaData.ratePlanId;
+        setMetaData(<any>group.controls.id, $metaData.id);
+        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
+        setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
+        setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
+        setMetaData(<any>group.controls.adults, $metaData.adults);
+        setMetaData(<any>group.controls.children, $metaData.children);
+        setMetaData(<any>group.controls.guestTitle, $metaData.guestTitle);
+        setMetaData(<any>group.controls.firstName, $metaData.firstName);
+        setMetaData(<any>group.controls.middleInitial, $metaData.middleInitial);
+        setMetaData(<any>group.controls.lastName, $metaData.lastName);
+        setMetaData(<any>group.controls.email, $metaData.email);
+        setMetaData(<any>group.controls.phone, $metaData.phone);
+        setMetaData(<any>group.controls.street, $metaData.street);
+        setMetaData(<any>group.controls.number, $metaData.number);
+        setMetaData(<any>group.controls.city, $metaData.city);
+        setMetaData(<any>group.controls.zipCode, $metaData.zipCode);
+        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
+        setMetaData(<any>group.controls.ratePlanId, $metaData.ratePlanId);
 
         return group;
     }

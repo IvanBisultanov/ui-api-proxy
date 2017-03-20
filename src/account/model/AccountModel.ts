@@ -15,11 +15,11 @@ import * as models from './models';
 /**
  * With this request you can create a new account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface AccountModel {
     /**
@@ -97,10 +97,10 @@ export namespace AccountModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['code']).apaleoMetaData = $metaData.code;
-        (<IApaleoAbstractControl><any>group.controls['name']).apaleoMetaData = $metaData.name;
-        (<IApaleoAbstractControl><any>group.controls['description']).apaleoMetaData = $metaData.description;
-        (<IApaleoAbstractControl><any>group.controls['logoUrl']).apaleoMetaData = $metaData.logoUrl;
+        setMetaData(<any>group.controls.code, $metaData.code);
+        setMetaData(<any>group.controls.name, $metaData.name);
+        setMetaData(<any>group.controls.description, $metaData.description);
+        setMetaData(<any>group.controls.logoUrl, $metaData.logoUrl);
 
         return group;
     }

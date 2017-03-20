@@ -12,11 +12,11 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }               from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                   from '../../types';
-import { ResponseModel }                                                    from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls }             from '../../functions';
+import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
+import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
+import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
+import { ResponseModel }                                                     from '../../models';
+import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface OfferModel {
     /**
@@ -74,9 +74,9 @@ export namespace OfferModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        (<IApaleoAbstractControl><any>group.controls['unitTypeCode']).apaleoMetaData = $metaData.unitTypeCode;
-        (<IApaleoAbstractControl><any>group.controls['rateplanCode']).apaleoMetaData = $metaData.rateplanCode;
-        (<IApaleoAbstractControl><any>group.controls['price']).apaleoMetaData = $metaData.price;
+        setMetaData(<any>group.controls.unitTypeCode, $metaData.unitTypeCode);
+        setMetaData(<any>group.controls.rateplanCode, $metaData.rateplanCode);
+        setMetaData(<any>group.controls.price, $metaData.price);
 
         return group;
     }
