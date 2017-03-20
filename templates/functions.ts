@@ -38,7 +38,7 @@ export function getControlOptions<T, K extends keyof T>(options: IBuildFormOptio
 }
 
 export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, options?: IBuildFormOptions<T>) {
-    if (!options) { return; }
+    if (!options) { return defaultControls; }
     
     defaultControls = cleanUpDefaultControls(defaultControls, options);
     return Object.assign(defaultControls, options.overwriteControls, convertAdditionalControls(options.additionalControls));
