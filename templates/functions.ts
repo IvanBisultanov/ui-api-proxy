@@ -1,5 +1,5 @@
 import { ValidatorFn, Validators, FormGroup } from '@angular/forms';
-import { IControlFactoryOptions, FormGroupControls, IBuildFormOptions, Control, Optional } from './types';
+import { IControlFactoryOptions, FormGroupControls, IBuildFormOptions, Control, Optional, IApaleoAbstractControl, IApaleoControlMetaData } from './types';
 
 export function getControl<T>(validators: ValidatorFn[], options?: IControlFactoryOptions<T>): [T | undefined, ValidatorFn] {
     const finalValidators = [...validators];
@@ -42,6 +42,12 @@ export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, 
     
     defaultControls = cleanUpDefaultControls(defaultControls, options);
     return Object.assign(defaultControls, options.overwriteControls, convertAdditionalControls(options.additionalControls));
+}
+
+export function setMetaData(control?: IApaleoAbstractControl, metaData?: IApaleoControlMetaData) {
+    if (control) {
+        control.apaleoMetaData = metaData || {};
+    }
 }
 
 function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, options: IBuildFormOptions<T>) {
