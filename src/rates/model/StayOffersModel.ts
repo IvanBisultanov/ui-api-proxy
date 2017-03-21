@@ -20,9 +20,9 @@ import { getControl, getControlOptions, adjustDefaultControls, setMetaData } fro
 
 export interface StayOffersModel {
     /**
-     * The property code
+     * The property
      */
-    propertyCode?: string;
+    property?: models.EmbeddedPropertyModel;
 
     /**
      * The arrival date
@@ -45,7 +45,7 @@ export type StayOffersModelWithRawHttp = StayOffersModel & ResponseModel<StayOff
 
 export namespace StayOffersModel {
     export const $validators = {
-        propertyCode: (() => [
+        property: (() => [
         ]),
         arrival: (() => [
         ]),
@@ -56,15 +56,11 @@ export namespace StayOffersModel {
     };
 
     export const $controls = { 
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
         arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
         departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
     };
 
     export const $metaData = { 
-        propertyCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         arrival: { 
             type: 'Date',
         } as IApaleoControlMetaData,
@@ -75,13 +71,12 @@ export namespace StayOffersModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<StayOffersModel>) {
         const defaultControls = { 
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            property: models.EmbeddedPropertyModel.$buildForm(fb),
             arrival: $controls.arrival(getControlOptions(options, 'arrival')),
             departure: $controls.departure(getControlOptions(options, 'departure')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
         setMetaData(<any>group.controls.arrival, $metaData.arrival);
         setMetaData(<any>group.controls.departure, $metaData.departure);
 

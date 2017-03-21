@@ -1,5 +1,7 @@
 export * from './CreateRateplanModel';
 export * from './EmbeddedPropertyModel';
+export * from './EmbeddedRateplanModel';
+export * from './EmbeddedUnitTypeModel';
 export * from './Link';
 export * from './MessageItemCollection';
 export * from './OfferModel';

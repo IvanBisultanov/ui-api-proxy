@@ -4,8 +4,7 @@ node('nodejs') {
   properties([
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '10'))])
 
-  def tokens = "${env.JOB_NAME}".tokenize('/')
-  def branch = tokens[tokens.size()-1]
+  def branch = env.BRANCH_NAME
 
   try {
     notifyBuild('STARTED')
@@ -35,6 +34,17 @@ node('nodejs') {
         catch (e) {
           // Catch everything, PR doesn't need to pass
         }
+      }
+    } else if (branch.startsWith('PR-') && "${env.CHANGE_TITLE}".startsWith('auto-update-')) {
+      stage ('Merge PR') {
+        def branchTokens = branch.tokenize('-')
+        def prId = branchTokens[branchTokens.size() - 1]
+
+        build (
+          job: '/github-jobs/auto-merge-api-proxy', 
+          quietPeriod: 30, 
+          wait: false, 
+          parameters: [[$class: 'StringParameterValue', name: 'pullRequestId', value: prId]])
       }
     }
   }

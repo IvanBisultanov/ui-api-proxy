@@ -22,12 +22,12 @@ export interface OfferModel {
     /**
      * The unit type for which the following offers apply
      */
-    unitTypeCode?: string;
+    unitType?: models.EmbeddedUnitTypeModel;
 
     /**
      * The rate plan for this offer
      */
-    rateplanCode?: string;
+    rateplan?: models.EmbeddedRateplanModel;
 
     /**
      * The price for the whole stay
@@ -40,27 +40,19 @@ export type OfferModelWithRawHttp = OfferModel & ResponseModel<OfferModel>;
 
 export namespace OfferModel {
     export const $validators = {
-        unitTypeCode: (() => [
+        unitType: (() => [
         ]),
-        rateplanCode: (() => [
+        rateplan: (() => [
         ]),
         price: (() => [
         ]),
     };
 
     export const $controls = { 
-        unitTypeCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeCode(), options)),
-        rateplanCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanCode(), options)),
         price: ((options?: IControlFactoryOptions<number>) => getControl($validators.price(), options)),
     };
 
     export const $metaData = { 
-        unitTypeCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        rateplanCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         price: { 
             type: 'number',
         } as IApaleoControlMetaData,
@@ -68,14 +60,12 @@ export namespace OfferModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferModel>) {
         const defaultControls = { 
-            unitTypeCode: $controls.unitTypeCode(getControlOptions(options, 'unitTypeCode')),
-            rateplanCode: $controls.rateplanCode(getControlOptions(options, 'rateplanCode')),
+            unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
+            rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
             price: $controls.price(getControlOptions(options, 'price')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.unitTypeCode, $metaData.unitTypeCode);
-        setMetaData(<any>group.controls.rateplanCode, $metaData.rateplanCode);
         setMetaData(<any>group.controls.price, $metaData.price);
 
         return group;
