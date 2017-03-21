@@ -1,0 +1,62 @@
+#!groovy
+
+node('nodejs') {
+  properties([
+    buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '10'))])
+
+  try {
+    notifyBuild('STARTED')
+
+    stage ('Merge PR') {
+      def prId = string(name: 'pullRequestId', description: 'ID of PR which should be merged')
+
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '64022ff7-f3aa-4b9f-9b59-80753deac696', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN']]) {
+        def statusCode = sh (
+          returnStdout: true,
+          script: "curl 'https://api.github.com/repos/apaleo/ui-api-proxy/pulls/${prId}/merge' \
+              -s -o /dev/null -w '%{http_code}' -XPUT \
+              -H 'Authorization: token $GITHUB_TOKEN' \
+              -H 'Accept: application/vnd.github.polaris-preview' \
+              -d '{ \"merge_method\": \"squash\" }'").trim()
+          
+        if (statusCode == '200') {
+          // rebuild ui/master after new proxy is out there
+          build job: '/apaleo/ui/master', quietPeriod: 30, wait: false
+          slackSend (color: '#8bc34a', message: "Danone - don't forget to update node_modules :wink:", channel: '#dev-tech')
+        } else  {
+          sh "curl 'https://api.github.com/repos/apaleo/ui-api-proxy/pulls/${prId}/merge' \
+              -I -XPUT \
+              -H 'Authorization: token $GITHUB_TOKEN' \
+              -H 'Accept: application/vnd.github.polaris-preview' \
+              -d '{ \"merge_method\": \"squash\" }'"
+        }
+      }
+    }
+  }
+  catch(e) {
+    currentBuild.result = "FAILED"
+    throw e
+  }
+  finally {
+    notifyBuild(currentBuild.result)
+  }
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+  buildStatus =  buildStatus ?: 'SUCCESS'
+
+  def colorCode = '#FF0000'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    colorCode = '#FFFF00'
+  } else if (buildStatus == 'SUCCESS') {
+    colorCode = '#00FF00'
+  } else {
+    colorCode = '#FF0000'
+  }
+
+  slackSend (color: colorCode, message: summary, channel: '#ci')
+}
