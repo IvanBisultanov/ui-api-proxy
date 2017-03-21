@@ -4,11 +4,15 @@ node('nodejs') {
   properties([
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '10'))])
 
+  parameters {
+    string(name: 'pullRequestId', description: 'ID of PR which should be merged')
+  }
+
   try {
     notifyBuild('STARTED')
 
     stage ('Merge PR') {
-      def prId = string(name: 'pullRequestId', description: 'ID of PR which should be merged')
+      def prId = params.pullRequestId
 
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '64022ff7-f3aa-4b9f-9b59-80753deac696', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN']]) {
         def statusCode = sh (
@@ -25,7 +29,7 @@ node('nodejs') {
           slackSend (color: '#8bc34a', message: "Danone - don't forget to update node_modules :wink:", channel: '#dev-tech')
         } else  {
           sh "curl 'https://api.github.com/repos/apaleo/ui-api-proxy/pulls/${prId}/merge' \
-              -I -XPUT \
+              -XPUT \
               -H 'Authorization: token $GITHUB_TOKEN' \
               -H 'Accept: application/vnd.github.polaris-preview' \
               -d '{ \"merge_method\": \"squash\" }'"
