@@ -12,9 +12,6 @@
 
 import * as models from './models';
 
-/**
- * With this request you can setup a new account with an admin user
- */
 import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
 import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
 import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
@@ -25,9 +22,19 @@ export interface ReservationModel {
     id?: number;
 
     /**
-     * The PropertyId for the reservation
+     * The property
      */
-    propertyId?: number;
+    property?: models.EmbeddedPropertyModel;
+
+    /**
+     * The rateplan
+     */
+    rateplan?: models.EmbeddedRateplanModel;
+
+    /**
+     * The unit type
+     */
+    unitType?: models.EmbeddedUnitTypeModel;
 
     checkInTime?: string;
 
@@ -59,8 +66,6 @@ export interface ReservationModel {
 
     countryCode?: string;
 
-    ratePlanId?: number;
-
 }
 
 export type ReservationModelWithRawHttp = ReservationModel & ResponseModel<ReservationModel>;
@@ -69,7 +74,11 @@ export namespace ReservationModel {
     export const $validators = {
         id: (() => [
         ]),
-        propertyId: (() => [
+        property: (() => [
+        ]),
+        rateplan: (() => [
+        ]),
+        unitType: (() => [
         ]),
         checkInTime: (() => [
         ]),
@@ -101,13 +110,10 @@ export namespace ReservationModel {
         ]),
         countryCode: (() => [
         ]),
-        ratePlanId: (() => [
-        ]),
     };
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
-        propertyId: ((options?: IControlFactoryOptions<number>) => getControl($validators.propertyId(), options)),
         checkInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.checkInTime(), options)),
         checkOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.checkOutTime(), options)),
         adults: ((options?: IControlFactoryOptions<number>) => getControl($validators.adults(), options)),
@@ -123,14 +129,10 @@ export namespace ReservationModel {
         city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
         zipCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.zipCode(), options)),
         countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
-        ratePlanId: ((options?: IControlFactoryOptions<number>) => getControl($validators.ratePlanId(), options)),
     };
 
     export const $metaData = { 
         id: { 
-            type: 'number',
-        } as IApaleoControlMetaData,
-        propertyId: { 
             type: 'number',
         } as IApaleoControlMetaData,
         checkInTime: { 
@@ -178,15 +180,14 @@ export namespace ReservationModel {
         countryCode: { 
             type: 'string',
         } as IApaleoControlMetaData,
-        ratePlanId: { 
-            type: 'number',
-        } as IApaleoControlMetaData,
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
-            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
+            property: models.EmbeddedPropertyModel.$buildForm(fb),
+            rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
+            unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
             checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
             checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
             adults: $controls.adults(getControlOptions(options, 'adults')),
@@ -202,12 +203,10 @@ export namespace ReservationModel {
             city: $controls.city(getControlOptions(options, 'city')),
             zipCode: $controls.zipCode(getControlOptions(options, 'zipCode')),
             countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
-            ratePlanId: $controls.ratePlanId(getControlOptions(options, 'ratePlanId')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
         setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
         setMetaData(<any>group.controls.adults, $metaData.adults);
@@ -223,7 +222,6 @@ export namespace ReservationModel {
         setMetaData(<any>group.controls.city, $metaData.city);
         setMetaData(<any>group.controls.zipCode, $metaData.zipCode);
         setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
-        setMetaData(<any>group.controls.ratePlanId, $metaData.ratePlanId);
 
         return group;
     }

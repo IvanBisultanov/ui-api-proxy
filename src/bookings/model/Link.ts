@@ -18,33 +18,36 @@ import { IApaleoAbstractControl, IApaleoControlMetaData }                    fro
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface ReservationListModel {
-    /**
-     * List of reservations
-     */
-    reservations?: Array<models.ReservationItemModel>;
+export interface Link {
+    href?: string;
 
 }
 
-export type ReservationListModelWithRawHttp = ReservationListModel & ResponseModel<ReservationListModel>;
+export type LinkWithRawHttp = Link & ResponseModel<Link>;
 
-export namespace ReservationListModel {
+export namespace Link {
     export const $validators = {
-        reservations: (() => [
+        href: (() => [
         ]),
     };
 
     export const $controls = { 
+        href: ((options?: IControlFactoryOptions<string>) => getControl($validators.href(), options)),
     };
 
     export const $metaData = { 
+        href: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationListModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Link>) {
         const defaultControls = { 
+            href: $controls.href(getControlOptions(options, 'href')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.href, $metaData.href);
 
         return group;
     }

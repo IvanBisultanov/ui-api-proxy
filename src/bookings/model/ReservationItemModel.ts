@@ -12,40 +12,36 @@
 
 import * as models from './models';
 
-/**
- * With this request you can create a reservation
- */
 import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
 import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
 import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface CreateReservationModel {
-    /**
-     * The property
-     */
-    propertyId: string;
+export interface ReservationItemModel {
+    id?: number;
 
-    rateplanId: string;
+    propertyId?: string;
 
-    unitTypeId: string;
+    rateplanId?: string;
 
-    checkInTime: string;
+    unitTypeId?: string;
 
-    checkOutTime: string;
+    checkInTime?: string;
 
-    adults: number;
+    checkOutTime?: string;
 
-    children: number;
+    adults?: number;
 
-    guestTitle: string;
+    children?: number;
 
-    firstName: string;
+    guestTitle?: string;
+
+    firstName?: string;
 
     middleInitial?: string;
 
-    lastName: string;
+    lastName?: string;
 
     email?: string;
 
@@ -55,77 +51,67 @@ export interface CreateReservationModel {
 
     number?: string;
 
-    city: string;
+    city?: string;
 
-    zipCode: string;
+    zipCode?: string;
 
-    countryCode: string;
+    countryCode?: string;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: { [key: string]: models.Link; };
 
 }
 
-export type CreateReservationModelWithRawHttp = CreateReservationModel & ResponseModel<CreateReservationModel>;
+export type ReservationItemModelWithRawHttp = ReservationItemModel & ResponseModel<ReservationItemModel>;
 
-export namespace CreateReservationModel {
+export namespace ReservationItemModel {
     export const $validators = {
+        id: (() => [
+        ]),
         propertyId: (() => [
-            Validators.required,
         ]),
         rateplanId: (() => [
-            Validators.required,
         ]),
         unitTypeId: (() => [
-            Validators.required,
         ]),
         checkInTime: (() => [
-            Validators.required,
         ]),
         checkOutTime: (() => [
-            Validators.required,
         ]),
         adults: (() => [
-            Validators.required,
         ]),
         children: (() => [
-            Validators.required,
         ]),
         guestTitle: (() => [
-            Validators.required,
         ]),
         firstName: (() => [
-            Validators.required,
-            Validators.maxLength(25),
         ]),
         middleInitial: (() => [
-            Validators.maxLength(5),
         ]),
         lastName: (() => [
-            Validators.required,
-            Validators.maxLength(40),
         ]),
         email: (() => [
         ]),
         phone: (() => [
         ]),
         street: (() => [
-            Validators.maxLength(40),
         ]),
         number: (() => [
         ]),
         city: (() => [
-            Validators.required,
-            Validators.maxLength(25),
         ]),
         zipCode: (() => [
-            Validators.required,
-            Validators.maxLength(10),
         ]),
         countryCode: (() => [
-            Validators.required,
-            Validators.maxLength(2),
+        ]),
+        links: (() => [
         ]),
     };
 
     export const $controls = { 
+        id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
         propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
         unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
@@ -147,6 +133,9 @@ export namespace CreateReservationModel {
     };
 
     export const $metaData = { 
+        id: { 
+            type: 'number',
+        } as IApaleoControlMetaData,
         propertyId: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -172,15 +161,12 @@ export namespace CreateReservationModel {
             type: 'string',
         } as IApaleoControlMetaData,
         firstName: { 
-            maxLength: 25,
             type: 'string',
         } as IApaleoControlMetaData,
         middleInitial: { 
-            maxLength: 5,
             type: 'string',
         } as IApaleoControlMetaData,
         lastName: { 
-            maxLength: 40,
             type: 'string',
         } as IApaleoControlMetaData,
         email: { 
@@ -190,28 +176,25 @@ export namespace CreateReservationModel {
             type: 'string',
         } as IApaleoControlMetaData,
         street: { 
-            maxLength: 40,
             type: 'string',
         } as IApaleoControlMetaData,
         number: { 
             type: 'string',
         } as IApaleoControlMetaData,
         city: { 
-            maxLength: 25,
             type: 'string',
         } as IApaleoControlMetaData,
         zipCode: { 
-            maxLength: 10,
             type: 'string',
         } as IApaleoControlMetaData,
         countryCode: { 
-            maxLength: 2,
             type: 'string',
         } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateReservationModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>) {
         const defaultControls = { 
+            id: $controls.id(getControlOptions(options, 'id')),
             propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
             unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
@@ -233,6 +216,7 @@ export namespace CreateReservationModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
         setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
