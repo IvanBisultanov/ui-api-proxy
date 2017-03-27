@@ -25,7 +25,7 @@ export interface LocationModel {
 
     city?: string;
 
-    countryCode?: models.UppercaseString;
+    countryCode?: string;
 
 }
 
@@ -47,6 +47,7 @@ export namespace LocationModel {
         street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
         postalCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.postalCode(), options)),
         city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
+        countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
     };
 
     export const $metaData = { 
@@ -59,6 +60,9 @@ export namespace LocationModel {
         city: { 
             type: 'string',
         } as IApaleoControlMetaData,
+        countryCode: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LocationModel>) {
@@ -66,13 +70,14 @@ export namespace LocationModel {
             street: $controls.street(getControlOptions(options, 'street')),
             postalCode: $controls.postalCode(getControlOptions(options, 'postalCode')),
             city: $controls.city(getControlOptions(options, 'city')),
-            countryCode: models.UppercaseString.$buildForm(fb),
+            countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.street, $metaData.street);
         setMetaData(<any>group.controls.postalCode, $metaData.postalCode);
         setMetaData(<any>group.controls.city, $metaData.city);
+        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
 
         return group;
     }

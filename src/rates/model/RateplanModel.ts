@@ -22,12 +22,12 @@ export interface RateplanModel {
     /**
      * The rateplan id
      */
-    id?: models.UppercaseString;
+    id?: string;
 
     /**
      * The code for the rateplan that can be shown in reports and table views
      */
-    code?: models.UppercaseString;
+    code?: string;
 
     /**
      * The name for the rateplan
@@ -70,10 +70,18 @@ export namespace RateplanModel {
     };
 
     export const $controls = { 
+        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
     };
 
     export const $metaData = { 
+        id: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
+        code: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
         name: { 
             type: '{ [key: string]: string; }',
         } as IApaleoControlMetaData,
@@ -87,13 +95,15 @@ export namespace RateplanModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanModel>) {
         const defaultControls = { 
-            id: models.UppercaseString.$buildForm(fb),
-            code: models.UppercaseString.$buildForm(fb),
+            id: $controls.id(getControlOptions(options, 'id')),
+            code: $controls.code(getControlOptions(options, 'code')),
             defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.id, $metaData.id);
+        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
 
         return group;

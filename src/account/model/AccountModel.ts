@@ -25,7 +25,7 @@ export interface AccountModel {
     /**
      * The code for the account that can be shown in reports and table views
      */
-    code?: models.UppercaseString;
+    code?: string;
 
     /**
      * The name for the account, which usually should be the company name
@@ -66,12 +66,16 @@ export namespace AccountModel {
     };
 
     export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
         logoUrl: ((options?: IControlFactoryOptions<string>) => getControl($validators.logoUrl(), options)),
     };
 
     export const $metaData = { 
+        code: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
         name: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -85,7 +89,7 @@ export namespace AccountModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<AccountModel>) {
         const defaultControls = { 
-            code: models.UppercaseString.$buildForm(fb),
+            code: $controls.code(getControlOptions(options, 'code')),
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
             logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
@@ -93,6 +97,7 @@ export namespace AccountModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.description, $metaData.description);
         setMetaData(<any>group.controls.logoUrl, $metaData.logoUrl);

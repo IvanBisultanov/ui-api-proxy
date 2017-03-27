@@ -25,7 +25,7 @@ export interface PropertyModel {
     /**
      * The code for the property that can be shown in reports and table views
      */
-    code?: models.UppercaseString;
+    code?: string;
 
     /**
      * The name for the property
@@ -59,9 +59,13 @@ export namespace PropertyModel {
     };
 
     export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
     };
 
     export const $metaData = { 
+        code: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
         name: { 
             type: '{ [key: string]: string; }',
         } as IApaleoControlMetaData,
@@ -72,11 +76,12 @@ export namespace PropertyModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyModel>) {
         const defaultControls = { 
-            code: models.UppercaseString.$buildForm(fb),
+            code: $controls.code(getControlOptions(options, 'code')),
             location: models.LocationModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.code, $metaData.code);
 
         return group;
     }

@@ -19,7 +19,7 @@ import { ResponseModel }                                                     fro
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface LanguageModel {
-    code?: models.LowercaseString;
+    code?: string;
 
     default?: boolean;
 
@@ -40,11 +40,15 @@ export namespace LanguageModel {
     };
 
     export const $controls = { 
+        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         default: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.default(), options)),
         mandatory: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.mandatory(), options)),
     };
 
     export const $metaData = { 
+        code: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
         default: { 
             type: 'boolean',
         } as IApaleoControlMetaData,
@@ -55,12 +59,13 @@ export namespace LanguageModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguageModel>) {
         const defaultControls = { 
-            code: models.LowercaseString.$buildForm(fb),
+            code: $controls.code(getControlOptions(options, 'code')),
             default: $controls.default(getControlOptions(options, 'default')),
             mandatory: $controls.mandatory(getControlOptions(options, 'mandatory')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.default, $metaData.default);
         setMetaData(<any>group.controls.mandatory, $metaData.mandatory);
 

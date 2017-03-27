@@ -10,4 +10,3 @@ export * from './RateplanListModel';
 export * from './RateplanModel';
 export * from './ReplaceRateplanModel';
 export * from './StayOffersModel';
-export * from './UppercaseString';

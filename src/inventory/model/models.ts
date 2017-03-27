@@ -9,4 +9,3 @@ export * from './ReplacePropertyModel';
 export * from './ReplaceUnitTypeModel';
 export * from './UnitTypeListModel';
 export * from './UnitTypeModel';
-export * from './UppercaseString';
