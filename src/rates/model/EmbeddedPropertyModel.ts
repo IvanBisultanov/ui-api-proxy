@@ -22,12 +22,12 @@ export interface EmbeddedPropertyModel {
     /**
      * The property id
      */
-    id?: string;
+    id?: models.UppercaseString;
 
     /**
      * The code for the property that can be shown in reports and table views
      */
-    code?: string;
+    code?: models.UppercaseString;
 
     /**
      * The name for the property
@@ -63,19 +63,11 @@ export namespace EmbeddedPropertyModel {
     };
 
     export const $controls = { 
-        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
     };
 
     export const $metaData = { 
-        id: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        code: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         name: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -86,15 +78,13 @@ export namespace EmbeddedPropertyModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<EmbeddedPropertyModel>) {
         const defaultControls = { 
-            id: $controls.id(getControlOptions(options, 'id')),
-            code: $controls.code(getControlOptions(options, 'code')),
+            id: models.UppercaseString.$buildForm(fb),
+            code: models.UppercaseString.$buildForm(fb),
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.description, $metaData.description);
 

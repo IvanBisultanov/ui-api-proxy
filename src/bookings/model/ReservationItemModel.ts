@@ -21,11 +21,11 @@ import { getControl, getControlOptions, adjustDefaultControls, setMetaData } fro
 export interface ReservationItemModel {
     id?: number;
 
-    propertyId?: string;
+    propertyId?: models.UppercaseString;
 
-    rateplanId?: string;
+    rateplanId?: models.UppercaseString;
 
-    unitTypeId?: string;
+    unitTypeId?: models.UppercaseString;
 
     checkInTime?: string;
 
@@ -43,7 +43,7 @@ export interface ReservationItemModel {
 
     lastName?: string;
 
-    email?: string;
+    email?: models.LowercaseString;
 
     phone?: string;
 
@@ -55,7 +55,7 @@ export interface ReservationItemModel {
 
     zipCode?: string;
 
-    countryCode?: string;
+    countryCode?: models.UppercaseString;
 
     /**
      * Collection of links to related resources
@@ -112,9 +112,6 @@ export namespace ReservationItemModel {
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
-        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
-        rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
-        unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
         checkInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.checkInTime(), options)),
         checkOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.checkOutTime(), options)),
         adults: ((options?: IControlFactoryOptions<number>) => getControl($validators.adults(), options)),
@@ -123,27 +120,16 @@ export namespace ReservationItemModel {
         firstName: ((options?: IControlFactoryOptions<string>) => getControl($validators.firstName(), options)),
         middleInitial: ((options?: IControlFactoryOptions<string>) => getControl($validators.middleInitial(), options)),
         lastName: ((options?: IControlFactoryOptions<string>) => getControl($validators.lastName(), options)),
-        email: ((options?: IControlFactoryOptions<string>) => getControl($validators.email(), options)),
         phone: ((options?: IControlFactoryOptions<string>) => getControl($validators.phone(), options)),
         street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
         number: ((options?: IControlFactoryOptions<string>) => getControl($validators.number(), options)),
         city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
         zipCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.zipCode(), options)),
-        countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
     };
 
     export const $metaData = { 
         id: { 
             type: 'number',
-        } as IApaleoControlMetaData,
-        propertyId: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        rateplanId: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        unitTypeId: { 
-            type: 'string',
         } as IApaleoControlMetaData,
         checkInTime: { 
             type: 'string',
@@ -169,9 +155,6 @@ export namespace ReservationItemModel {
         lastName: { 
             type: 'string',
         } as IApaleoControlMetaData,
-        email: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         phone: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -187,17 +170,14 @@ export namespace ReservationItemModel {
         zipCode: { 
             type: 'string',
         } as IApaleoControlMetaData,
-        countryCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
-            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
-            rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
-            unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
+            propertyId: models.UppercaseString.$buildForm(fb),
+            rateplanId: models.UppercaseString.$buildForm(fb),
+            unitTypeId: models.UppercaseString.$buildForm(fb),
             checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
             checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
             adults: $controls.adults(getControlOptions(options, 'adults')),
@@ -206,20 +186,17 @@ export namespace ReservationItemModel {
             firstName: $controls.firstName(getControlOptions(options, 'firstName')),
             middleInitial: $controls.middleInitial(getControlOptions(options, 'middleInitial')),
             lastName: $controls.lastName(getControlOptions(options, 'lastName')),
-            email: $controls.email(getControlOptions(options, 'email')),
+            email: models.LowercaseString.$buildForm(fb),
             phone: $controls.phone(getControlOptions(options, 'phone')),
             street: $controls.street(getControlOptions(options, 'street')),
             number: $controls.number(getControlOptions(options, 'number')),
             city: $controls.city(getControlOptions(options, 'city')),
             zipCode: $controls.zipCode(getControlOptions(options, 'zipCode')),
-            countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
+            countryCode: models.UppercaseString.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
-        setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
-        setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
         setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
         setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
         setMetaData(<any>group.controls.adults, $metaData.adults);
@@ -228,13 +205,11 @@ export namespace ReservationItemModel {
         setMetaData(<any>group.controls.firstName, $metaData.firstName);
         setMetaData(<any>group.controls.middleInitial, $metaData.middleInitial);
         setMetaData(<any>group.controls.lastName, $metaData.lastName);
-        setMetaData(<any>group.controls.email, $metaData.email);
         setMetaData(<any>group.controls.phone, $metaData.phone);
         setMetaData(<any>group.controls.street, $metaData.street);
         setMetaData(<any>group.controls.number, $metaData.number);
         setMetaData(<any>group.controls.city, $metaData.city);
         setMetaData(<any>group.controls.zipCode, $metaData.zipCode);
-        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
 
         return group;
     }

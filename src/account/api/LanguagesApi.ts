@@ -59,7 +59,7 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public accountV1AccountsByCodeLanguagesPut(code: string, requestBody: models.LanguagesModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesPut(code: string, requestBody: models.ReplaceLanguagesModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.accountV1AccountsByCodeLanguagesPutWithRawHttp(code, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -83,7 +83,7 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public accountV1AccountsByCodeLanguagesPutWithRawHttp(code: string, requestBody: models.LanguagesModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesPutWithRawHttp(code: string, requestBody: models.ReplaceLanguagesModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(code, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -192,7 +192,7 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    private accountV1AccountsByCodeLanguagesPutWithHttpInfo(code: string, requestBody: models.LanguagesModel, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeLanguagesPutWithHttpInfo(code: string, requestBody: models.ReplaceLanguagesModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/account/v1/accounts/${code}/languages'
                     .replace('${' + 'code' + '}', String(code));
 

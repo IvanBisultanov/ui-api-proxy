@@ -40,7 +40,7 @@ export interface ReplaceAccountModel {
     /**
      * The location of the account
      */
-    location: models.Location;
+    location: models.ReplaceLocationModel;
 
 }
 
@@ -86,7 +86,7 @@ export namespace ReplaceAccountModel {
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
             logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
-            location: models.Location.$buildForm(fb),
+            location: models.ReplaceLocationModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 

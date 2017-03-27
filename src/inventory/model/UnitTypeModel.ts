@@ -25,17 +25,17 @@ export interface UnitTypeModel {
     /**
      * The unit type id
      */
-    id?: string;
+    id?: models.UppercaseString;
 
     /**
      * The code for the unit type that can be shown in reports and table views
      */
-    code?: string;
+    code?: models.UppercaseString;
 
     /**
      * The property to which the unit type belongs to
      */
-    propertyCode?: string;
+    propertyCode?: models.UppercaseString;
 
     /**
      * The name for the unit type
@@ -80,23 +80,11 @@ export namespace UnitTypeModel {
     };
 
     export const $controls = { 
-        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
         minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
         maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
     };
 
     export const $metaData = { 
-        id: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        code: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        propertyCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         name: { 
             type: '{ [key: string]: string; }',
         } as IApaleoControlMetaData,
@@ -113,17 +101,14 @@ export namespace UnitTypeModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeModel>) {
         const defaultControls = { 
-            id: $controls.id(getControlOptions(options, 'id')),
-            code: $controls.code(getControlOptions(options, 'code')),
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            id: models.UppercaseString.$buildForm(fb),
+            code: models.UppercaseString.$buildForm(fb),
+            propertyCode: models.UppercaseString.$buildForm(fb),
             minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
             maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
         setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
         setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
 

@@ -52,7 +52,7 @@ export interface ReservationModel {
 
     lastName?: string;
 
-    email?: string;
+    email?: models.LowercaseString;
 
     phone?: string;
 
@@ -64,7 +64,7 @@ export interface ReservationModel {
 
     zipCode?: string;
 
-    countryCode?: string;
+    countryCode?: models.UppercaseString;
 
 }
 
@@ -122,13 +122,11 @@ export namespace ReservationModel {
         firstName: ((options?: IControlFactoryOptions<string>) => getControl($validators.firstName(), options)),
         middleInitial: ((options?: IControlFactoryOptions<string>) => getControl($validators.middleInitial(), options)),
         lastName: ((options?: IControlFactoryOptions<string>) => getControl($validators.lastName(), options)),
-        email: ((options?: IControlFactoryOptions<string>) => getControl($validators.email(), options)),
         phone: ((options?: IControlFactoryOptions<string>) => getControl($validators.phone(), options)),
         street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
         number: ((options?: IControlFactoryOptions<string>) => getControl($validators.number(), options)),
         city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
         zipCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.zipCode(), options)),
-        countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
     };
 
     export const $metaData = { 
@@ -159,9 +157,6 @@ export namespace ReservationModel {
         lastName: { 
             type: 'string',
         } as IApaleoControlMetaData,
-        email: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         phone: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -175,9 +170,6 @@ export namespace ReservationModel {
             type: 'string',
         } as IApaleoControlMetaData,
         zipCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
-        countryCode: { 
             type: 'string',
         } as IApaleoControlMetaData,
     };
@@ -196,13 +188,13 @@ export namespace ReservationModel {
             firstName: $controls.firstName(getControlOptions(options, 'firstName')),
             middleInitial: $controls.middleInitial(getControlOptions(options, 'middleInitial')),
             lastName: $controls.lastName(getControlOptions(options, 'lastName')),
-            email: $controls.email(getControlOptions(options, 'email')),
+            email: models.LowercaseString.$buildForm(fb),
             phone: $controls.phone(getControlOptions(options, 'phone')),
             street: $controls.street(getControlOptions(options, 'street')),
             number: $controls.number(getControlOptions(options, 'number')),
             city: $controls.city(getControlOptions(options, 'city')),
             zipCode: $controls.zipCode(getControlOptions(options, 'zipCode')),
-            countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
+            countryCode: models.UppercaseString.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
@@ -215,13 +207,11 @@ export namespace ReservationModel {
         setMetaData(<any>group.controls.firstName, $metaData.firstName);
         setMetaData(<any>group.controls.middleInitial, $metaData.middleInitial);
         setMetaData(<any>group.controls.lastName, $metaData.lastName);
-        setMetaData(<any>group.controls.email, $metaData.email);
         setMetaData(<any>group.controls.phone, $metaData.phone);
         setMetaData(<any>group.controls.street, $metaData.street);
         setMetaData(<any>group.controls.number, $metaData.number);
         setMetaData(<any>group.controls.city, $metaData.city);
         setMetaData(<any>group.controls.zipCode, $metaData.zipCode);
-        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
 
         return group;
     }

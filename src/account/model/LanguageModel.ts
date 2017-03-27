@@ -19,11 +19,11 @@ import { ResponseModel }                                                     fro
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface LanguageModel {
-    code: string;
+    code?: models.LowercaseString;
 
-    default: boolean;
+    default?: boolean;
 
-    mandatory: boolean;
+    mandatory?: boolean;
 
 }
 
@@ -32,29 +32,19 @@ export type LanguageModelWithRawHttp = LanguageModel & ResponseModel<LanguageMod
 export namespace LanguageModel {
     export const $validators = {
         code: (() => [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(2),
         ]),
         default: (() => [
-            Validators.required,
         ]),
         mandatory: (() => [
-            Validators.required,
         ]),
     };
 
     export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         default: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.default(), options)),
         mandatory: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.mandatory(), options)),
     };
 
     export const $metaData = { 
-        code: { 
-            maxLength: 2,
-            type: 'string',
-        } as IApaleoControlMetaData,
         default: { 
             type: 'boolean',
         } as IApaleoControlMetaData,
@@ -65,13 +55,12 @@ export namespace LanguageModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguageModel>) {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
+            code: models.LowercaseString.$buildForm(fb),
             default: $controls.default(getControlOptions(options, 'default')),
             mandatory: $controls.mandatory(getControlOptions(options, 'mandatory')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.default, $metaData.default);
         setMetaData(<any>group.controls.mandatory, $metaData.mandatory);
 

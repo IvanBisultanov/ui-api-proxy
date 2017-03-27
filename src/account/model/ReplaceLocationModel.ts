@@ -18,7 +18,7 @@ import { IApaleoAbstractControl, IApaleoControlMetaData }                    fro
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface Location {
+export interface ReplaceLocationModel {
     street: string;
 
     postalCode: string;
@@ -29,9 +29,9 @@ export interface Location {
 
 }
 
-export type LocationWithRawHttp = Location & ResponseModel<Location>;
+export type ReplaceLocationModelWithRawHttp = ReplaceLocationModel & ResponseModel<ReplaceLocationModel>;
 
-export namespace Location {
+export namespace ReplaceLocationModel {
     export const $validators = {
         street: (() => [
             Validators.required,
@@ -72,7 +72,7 @@ export namespace Location {
         } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Location>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceLocationModel>) {
         const defaultControls = { 
             street: $controls.street(getControlOptions(options, 'street')),
             postalCode: $controls.postalCode(getControlOptions(options, 'postalCode')),

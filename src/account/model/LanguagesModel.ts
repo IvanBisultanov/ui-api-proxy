@@ -25,7 +25,7 @@ export interface LanguagesModel {
     /**
      * The languages for the account
      */
-    languages: Array<models.LanguageModel>;
+    languages?: Array<models.LanguageModel>;
 
 }
 
@@ -34,7 +34,6 @@ export type LanguagesModelWithRawHttp = LanguagesModel & ResponseModel<Languages
 export namespace LanguagesModel {
     export const $validators = {
         languages: (() => [
-            Validators.required,
         ]),
     };
 
