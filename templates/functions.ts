@@ -1,5 +1,5 @@
 import { ValidatorFn, Validators, FormGroup } from '@angular/forms';
-import { IControlFactoryOptions, FormGroupControls, IBuildFormOptions, Control, Optional, IApaleoAbstractControl, IApaleoControlMetaData } from './types';
+import { IControlFactoryOptions, FormGroupControls, IBuildFormOptions, Control, IApaleoAbstractControl, IApaleoControlMetaData } from './types';
 
 export function getControl<T>(validators: ValidatorFn[], options?: IControlFactoryOptions<T>): [T | undefined, ValidatorFn] {
     const finalValidators = [...validators];
