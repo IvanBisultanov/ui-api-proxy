@@ -22,7 +22,7 @@ export type FormControlFactoryOptions<T> = {
 export interface IBuildFormOptions<T> {
     overwriteControls?: OverwriteControls<T>;
     additionalControls?: { [name: string]: (Control<any> | FormGroup | boolean) }
-    defaultValues?: Optional<T>;
+    defaultValues?: Partial<T>;
     additionalValidators?: AdditionalValidators<T>;
     controlOptions?: FormControlFactoryOptions<T>;
     skipControls?: (keyof T)[];
@@ -41,7 +41,3 @@ export interface IApaleoControlMetaData {
     maxLength?: number;
     type?: string;
 }
-
-export type Optional<T> = {
-  [P in keyof T]?: T[P];
-};
