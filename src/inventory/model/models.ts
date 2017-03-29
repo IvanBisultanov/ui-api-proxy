@@ -1,5 +1,7 @@
 export * from './CreatePropertyModel';
 export * from './CreateUnitTypeModel';
+export * from './EmbeddedPropertyModel';
+export * from './Link';
 export * from './LocationModel';
 export * from './MessageItemCollection';
 export * from './PropertyListModel';
@@ -7,5 +9,6 @@ export * from './PropertyModel';
 export * from './ReplaceLocationModel';
 export * from './ReplacePropertyModel';
 export * from './ReplaceUnitTypeModel';
+export * from './UnitTypeItemModel';
 export * from './UnitTypeListModel';
 export * from './UnitTypeModel';

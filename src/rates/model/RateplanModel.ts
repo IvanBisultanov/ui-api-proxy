@@ -49,6 +49,11 @@ export interface RateplanModel {
      */
     property?: models.EmbeddedPropertyModel;
 
+    /**
+     * Unit types linked to the rateplan
+     */
+    unitTypes?: Array<models.EmbeddedUnitTypeModel>;
+
 }
 
 export type RateplanModelWithRawHttp = RateplanModel & ResponseModel<RateplanModel>;
@@ -66,6 +71,8 @@ export namespace RateplanModel {
         defaultPrice: (() => [
         ]),
         property: (() => [
+        ]),
+        unitTypes: (() => [
         ]),
     };
 

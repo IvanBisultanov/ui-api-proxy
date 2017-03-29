@@ -12,78 +12,61 @@
 
 import * as models from './models';
 
-/**
- * With this request you can create a new property
- */
 import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
 import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
 import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface UnitTypeModel {
+export interface EmbeddedPropertyModel {
     /**
-     * The unit type id
+     * The property id
      */
     id?: string;
 
     /**
-     * The code for the unit type that can be shown in reports and table views
+     * The code for the property that can be shown in reports and table views
      */
     code?: string;
 
     /**
-     * The property to which the unit type belongs to
+     * The name for the property
      */
-    property?: models.EmbeddedPropertyModel;
+    name?: string;
 
     /**
-     * The name for the unit type
+     * The description for the property
      */
-    name?: { [key: string]: string; };
+    description?: string;
 
     /**
-     * The description for the unit type
+     * Collection of links to related resources
      */
-    description?: { [key: string]: string; };
-
-    /**
-     * Minimum number of persons for the unit type
-     */
-    minPersons?: number;
-
-    /**
-     * Maximum number of persons for the unit type
-     */
-    maxPersons?: number;
+    links?: { [key: string]: models.Link; };
 
 }
 
-export type UnitTypeModelWithRawHttp = UnitTypeModel & ResponseModel<UnitTypeModel>;
+export type EmbeddedPropertyModelWithRawHttp = EmbeddedPropertyModel & ResponseModel<EmbeddedPropertyModel>;
 
-export namespace UnitTypeModel {
+export namespace EmbeddedPropertyModel {
     export const $validators = {
         id: (() => [
         ]),
         code: (() => [
         ]),
-        property: (() => [
-        ]),
         name: (() => [
         ]),
         description: (() => [
         ]),
-        minPersons: (() => [
-        ]),
-        maxPersons: (() => [
+        links: (() => [
         ]),
     };
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
-        maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
+        name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
+        description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
     };
 
     export const $metaData = { 
@@ -94,33 +77,26 @@ export namespace UnitTypeModel {
             type: 'string',
         } as IApaleoControlMetaData,
         name: { 
-            type: '{ [key: string]: string; }',
+            type: 'string',
         } as IApaleoControlMetaData,
         description: { 
-            type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        minPersons: { 
-            type: 'number',
-        } as IApaleoControlMetaData,
-        maxPersons: { 
-            type: 'number',
+            type: 'string',
         } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<EmbeddedPropertyModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
             code: $controls.code(getControlOptions(options, 'code')),
-            property: models.EmbeddedPropertyModel.$buildForm(fb),
-            minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
-            maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
+            name: $controls.name(getControlOptions(options, 'name')),
+            description: $controls.description(getControlOptions(options, 'description')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
-        setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
+        setMetaData(<any>group.controls.name, $metaData.name);
+        setMetaData(<any>group.controls.description, $metaData.description);
 
         return group;
     }

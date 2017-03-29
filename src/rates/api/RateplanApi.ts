@@ -47,9 +47,9 @@ export class RateplanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    public ratesV1RateplansByIdDelete(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdDelete(id: string, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RateplansByIdDeleteWithRawHttp(id, $options)
+        return this.ratesV1RatePlansByIdDeleteWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -59,9 +59,9 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByIdGet(id: string, languages?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdGet(id: string, languages?: string, $options?: IRequestOptions)
         : Observable<models.RateplanModel | undefined> {
-        return this.ratesV1RateplansByIdGetWithRawHttp(id, languages, $options)
+        return this.ratesV1RatePlansByIdGetWithRawHttp(id, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -70,9 +70,9 @@ export class RateplanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    public ratesV1RateplansByIdHead(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdHead(id: string, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RateplansByIdHeadWithRawHttp(id, $options)
+        return this.ratesV1RatePlansByIdHeadWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -82,20 +82,19 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RateplansByIdPut(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdPut(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RateplansByIdPutWithRawHttp(id, requestBody, $options)
+        return this.ratesV1RatePlansByIdPutWithRawHttp(id, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Get a rateplan list
      * Get the list of rateplans.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGet(languages?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansGet($options?: IRequestOptions)
         : Observable<models.RateplanListModel | undefined> {
-        return this.ratesV1RateplansGetWithRawHttp(languages, $options)
+        return this.ratesV1RatePlansGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -104,9 +103,9 @@ export class RateplanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RateplansPost(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansPost(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RateplansPostWithRawHttp(requestBody, $options)
+        return this.ratesV1RatePlansPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -116,9 +115,9 @@ export class RateplanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    public ratesV1RateplansByIdDeleteWithRawHttp(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdDeleteWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RateplansByIdDeleteWithHttpInfo(id, $options)
+        return this.ratesV1RatePlansByIdDeleteWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -128,9 +127,9 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansByIdGetWithRawHttp(id: string, languages?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdGetWithRawHttp(id: string, languages?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RateplanModel>> {
-        return this.ratesV1RateplansByIdGetWithHttpInfo(id, languages, $options)
+        return this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -139,9 +138,9 @@ export class RateplanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    public ratesV1RateplansByIdHeadWithRawHttp(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdHeadWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RateplansByIdHeadWithHttpInfo(id, $options)
+        return this.ratesV1RatePlansByIdHeadWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -151,20 +150,19 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RateplansByIdPutWithRawHttp(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdPutWithRawHttp(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, $options)
+        return this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Get a rateplan list
      * Get the list of rateplans.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RateplansGetWithRawHttp(languages?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansGetWithRawHttp($options?: IRequestOptions)
         : Observable<ResponseModel<models.RateplanListModel>> {
-        return this.ratesV1RateplansGetWithHttpInfo(languages, $options)
+        return this.ratesV1RatePlansGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -173,9 +171,9 @@ export class RateplanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RateplansPostWithRawHttp(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansPostWithRawHttp(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RateplansPostWithHttpInfo(requestBody, $options)
+        return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -185,15 +183,15 @@ export class RateplanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    private ratesV1RateplansByIdDeleteWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rateplans/${id}'
+    private ratesV1RatePlansByIdDeleteWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate_plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdDelete.');
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdDelete.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -266,7 +264,7 @@ export class RateplanApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RateplansByIdDeleteWithHttpInfo(id, $options));
+                        this.ratesV1RatePlansByIdDeleteWithHttpInfo(id, $options));
                 }
             }
             throw err;
@@ -279,15 +277,15 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private ratesV1RateplansByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rateplans/${id}'
+    private ratesV1RatePlansByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate_plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdGet.');
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdGet.');
         }
         if (languages !== undefined) {
             queryParameters.set('languages', <any>languages);
@@ -367,7 +365,7 @@ export class RateplanApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RateplansByIdGetWithHttpInfo(id, languages, $options));
+                        this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options));
                 }
             }
             throw err;
@@ -379,15 +377,15 @@ export class RateplanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    private ratesV1RateplansByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rateplans/${id}'
+    private ratesV1RatePlansByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate_plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdHead.');
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdHead.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -460,7 +458,7 @@ export class RateplanApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RateplansByIdHeadWithHttpInfo(id, $options));
+                        this.ratesV1RatePlansByIdHeadWithHttpInfo(id, $options));
                 }
             }
             throw err;
@@ -473,19 +471,19 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RateplansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rateplans/${id}'
+    private ratesV1RatePlansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate_plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ratesV1RateplansByIdPut.');
+            throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
         if (requestBody === null || requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RateplansByIdPut.');
+            throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RatePlansByIdPut.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -564,7 +562,7 @@ export class RateplanApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RateplansByIdPutWithHttpInfo(id, requestBody, $options));
+                        this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options));
                 }
             }
             throw err;
@@ -574,17 +572,12 @@ export class RateplanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private ratesV1RateplansGetWithHttpInfo(languages?: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rateplans';
+    private ratesV1RatePlansGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate_plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (languages !== undefined) {
-            queryParameters.set('languages', <any>languages);
-        }
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -659,7 +652,7 @@ export class RateplanApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RateplansGetWithHttpInfo(languages, $options));
+                        this.ratesV1RatePlansGetWithHttpInfo($options));
                 }
             }
             throw err;
@@ -671,14 +664,14 @@ export class RateplanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RateplansPostWithHttpInfo(requestBody: models.CreateRateplanModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rateplans';
+    private ratesV1RatePlansPostWithHttpInfo(requestBody: models.CreateRateplanModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate_plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'requestBody' is not null or undefined
         if (requestBody === null || requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RateplansPost.');
+            throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RatePlansPost.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -757,7 +750,7 @@ export class RateplanApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RateplansPostWithHttpInfo(requestBody, $options));
+                        this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options));
                 }
             }
             throw err;

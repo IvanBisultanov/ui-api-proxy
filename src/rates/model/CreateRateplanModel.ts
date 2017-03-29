@@ -27,7 +27,7 @@ export interface CreateRateplanModel {
     /**
      * The code of the property where rateplan will be created
      */
-    propertyCode?: string;
+    propertyCode: string;
 
     /**
      * The name for the rateplan
@@ -44,6 +44,11 @@ export interface CreateRateplanModel {
      */
     defaultPrice: number;
 
+    /**
+     * The unit types ids to link to the rateplan
+     */
+    unitTypeIds: Array<string>;
+
 }
 
 export type CreateRateplanModelWithRawHttp = CreateRateplanModel & ResponseModel<CreateRateplanModel>;
@@ -56,6 +61,7 @@ export namespace CreateRateplanModel {
             Validators.maxLength(10),
         ]),
         propertyCode: (() => [
+            Validators.required,
         ]),
         name: (() => [
             Validators.required,
@@ -64,6 +70,9 @@ export namespace CreateRateplanModel {
             Validators.required,
         ]),
         defaultPrice: (() => [
+            Validators.required,
+        ]),
+        unitTypeIds: (() => [
             Validators.required,
         ]),
     };
@@ -90,6 +99,9 @@ export namespace CreateRateplanModel {
         } as IApaleoControlMetaData,
         defaultPrice: { 
             type: 'number',
+        } as IApaleoControlMetaData,
+        unitTypeIds: { 
+            type: 'Array&lt;string&gt;',
         } as IApaleoControlMetaData,
     };
 

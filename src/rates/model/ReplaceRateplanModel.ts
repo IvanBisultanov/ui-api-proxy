@@ -34,6 +34,11 @@ export interface ReplaceRateplanModel {
      */
     defaultPrice: number;
 
+    /**
+     * The unit types ids to link to the rateplan
+     */
+    unitTypeIds?: Array<string>;
+
 }
 
 export type ReplaceRateplanModelWithRawHttp = ReplaceRateplanModel & ResponseModel<ReplaceRateplanModel>;
@@ -48,6 +53,8 @@ export namespace ReplaceRateplanModel {
         ]),
         defaultPrice: (() => [
             Validators.required,
+        ]),
+        unitTypeIds: (() => [
         ]),
     };
 
@@ -64,6 +71,9 @@ export namespace ReplaceRateplanModel {
         } as IApaleoControlMetaData,
         defaultPrice: { 
             type: 'number',
+        } as IApaleoControlMetaData,
+        unitTypeIds: { 
+            type: 'Array&lt;string&gt;',
         } as IApaleoControlMetaData,
     };
 

@@ -18,33 +18,36 @@ import { IApaleoAbstractControl, IApaleoControlMetaData }                    fro
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface UnitTypeListModel {
-    /**
-     * List of unit types
-     */
-    unitTypes?: Array<models.UnitTypeItemModel>;
+export interface Link {
+    href?: string;
 
 }
 
-export type UnitTypeListModelWithRawHttp = UnitTypeListModel & ResponseModel<UnitTypeListModel>;
+export type LinkWithRawHttp = Link & ResponseModel<Link>;
 
-export namespace UnitTypeListModel {
+export namespace Link {
     export const $validators = {
-        unitTypes: (() => [
+        href: (() => [
         ]),
     };
 
     export const $controls = { 
+        href: ((options?: IControlFactoryOptions<string>) => getControl($validators.href(), options)),
     };
 
     export const $metaData = { 
+        href: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeListModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Link>) {
         const defaultControls = { 
+            href: $controls.href(getControlOptions(options, 'href')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.href, $metaData.href);
 
         return group;
     }

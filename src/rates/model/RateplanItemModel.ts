@@ -50,6 +50,11 @@ export interface RateplanItemModel {
     propertyCode?: string;
 
     /**
+     * The unit types ids linked to the rateplan
+     */
+    unitTypeIds?: Array<string>;
+
+    /**
      * Collection of links to related resources
      */
     links?: { [key: string]: models.Link; };
@@ -71,6 +76,8 @@ export namespace RateplanItemModel {
         defaultPrice: (() => [
         ]),
         propertyCode: (() => [
+        ]),
+        unitTypeIds: (() => [
         ]),
         links: (() => [
         ]),
@@ -101,6 +108,9 @@ export namespace RateplanItemModel {
         } as IApaleoControlMetaData,
         propertyCode: { 
             type: 'string',
+        } as IApaleoControlMetaData,
+        unitTypeIds: { 
+            type: 'Array&lt;string&gt;',
         } as IApaleoControlMetaData,
     };
 

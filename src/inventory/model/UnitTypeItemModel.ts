@@ -12,16 +12,13 @@
 
 import * as models from './models';
 
-/**
- * With this request you can create a new property
- */
 import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
 import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
 import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface UnitTypeModel {
+export interface UnitTypeItemModel {
     /**
      * The unit type id
      */
@@ -31,11 +28,6 @@ export interface UnitTypeModel {
      * The code for the unit type that can be shown in reports and table views
      */
     code?: string;
-
-    /**
-     * The property to which the unit type belongs to
-     */
-    property?: models.EmbeddedPropertyModel;
 
     /**
      * The name for the unit type
@@ -57,17 +49,25 @@ export interface UnitTypeModel {
      */
     maxPersons?: number;
 
+    /**
+     * The property to which the unit type belongs to
+     */
+    propertyCode?: string;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: { [key: string]: models.Link; };
+
 }
 
-export type UnitTypeModelWithRawHttp = UnitTypeModel & ResponseModel<UnitTypeModel>;
+export type UnitTypeItemModelWithRawHttp = UnitTypeItemModel & ResponseModel<UnitTypeItemModel>;
 
-export namespace UnitTypeModel {
+export namespace UnitTypeItemModel {
     export const $validators = {
         id: (() => [
         ]),
         code: (() => [
-        ]),
-        property: (() => [
         ]),
         name: (() => [
         ]),
@@ -77,6 +77,10 @@ export namespace UnitTypeModel {
         ]),
         maxPersons: (() => [
         ]),
+        propertyCode: (() => [
+        ]),
+        links: (() => [
+        ]),
     };
 
     export const $controls = { 
@@ -84,6 +88,7 @@ export namespace UnitTypeModel {
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
         maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
+        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
     };
 
     export const $metaData = { 
@@ -105,15 +110,18 @@ export namespace UnitTypeModel {
         maxPersons: { 
             type: 'number',
         } as IApaleoControlMetaData,
+        propertyCode: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeItemModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
             code: $controls.code(getControlOptions(options, 'code')),
-            property: models.EmbeddedPropertyModel.$buildForm(fb),
             minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
             maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
+            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
@@ -121,6 +129,7 @@ export namespace UnitTypeModel {
         setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
         setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
+        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
 
         return group;
     }
