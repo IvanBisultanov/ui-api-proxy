@@ -184,7 +184,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      */
     private ratesV1RatePlansByIdDeleteWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rate_plans/${id}'
+        const path = this.basePath + '/rates/v1/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -278,7 +278,7 @@ export class RateplanApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
     private ratesV1RatePlansByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rate_plans/${id}'
+        const path = this.basePath + '/rates/v1/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -378,7 +378,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      */
     private ratesV1RatePlansByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rate_plans/${id}'
+        const path = this.basePath + '/rates/v1/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -472,7 +472,7 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      */
     private ratesV1RatePlansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rate_plans/${id}'
+        const path = this.basePath + '/rates/v1/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -574,7 +574,7 @@ export class RateplanApi {
      * Get the list of rateplans.
      */
     private ratesV1RatePlansGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rate_plans';
+        const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -665,7 +665,7 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      */
     private ratesV1RatePlansPostWithHttpInfo(requestBody: models.CreateRateplanModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/rates/v1/rate_plans';
+        const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845

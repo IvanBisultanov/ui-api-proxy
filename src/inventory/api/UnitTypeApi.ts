@@ -184,7 +184,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      */
     private inventoryV1UnitTypesByIdDeleteWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/unit_types/${id}'
+        const path = this.basePath + '/inventory/v1/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -278,7 +278,7 @@ export class UnitTypeApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
     private inventoryV1UnitTypesByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/unit_types/${id}'
+        const path = this.basePath + '/inventory/v1/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -378,7 +378,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      */
     private inventoryV1UnitTypesByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/unit_types/${id}'
+        const path = this.basePath + '/inventory/v1/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -472,7 +472,7 @@ export class UnitTypeApi {
      * @param requestBody The definition of the unit type.
      */
     private inventoryV1UnitTypesByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceUnitTypeModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/unit_types/${id}'
+        const path = this.basePath + '/inventory/v1/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
@@ -574,7 +574,7 @@ export class UnitTypeApi {
      * Get the list of unit types.
      */
     private inventoryV1UnitTypesGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/unit_types';
+        const path = this.basePath + '/inventory/v1/unit-types';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -665,7 +665,7 @@ export class UnitTypeApi {
      * @param requestBody The definition of the unit type.
      */
     private inventoryV1UnitTypesPostWithHttpInfo(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/unit_types';
+        const path = this.basePath + '/inventory/v1/unit-types';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
