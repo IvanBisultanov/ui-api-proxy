@@ -38,6 +38,11 @@ export interface AccountModel {
     description?: string;
 
     /**
+     * The default language code for the account
+     */
+    defaultLanguage?: string;
+
+    /**
      * The URL of the account logo
      */
     logoUrl?: string;
@@ -59,6 +64,8 @@ export namespace AccountModel {
         ]),
         description: (() => [
         ]),
+        defaultLanguage: (() => [
+        ]),
         logoUrl: (() => [
         ]),
         location: (() => [
@@ -69,6 +76,7 @@ export namespace AccountModel {
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
+        defaultLanguage: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultLanguage(), options)),
         logoUrl: ((options?: IControlFactoryOptions<string>) => getControl($validators.logoUrl(), options)),
     };
 
@@ -82,6 +90,9 @@ export namespace AccountModel {
         description: { 
             type: 'string',
         } as IApaleoControlMetaData,
+        defaultLanguage: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
         logoUrl: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -92,6 +103,7 @@ export namespace AccountModel {
             code: $controls.code(getControlOptions(options, 'code')),
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
+            defaultLanguage: $controls.defaultLanguage(getControlOptions(options, 'defaultLanguage')),
             logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
             location: models.LocationModel.$buildForm(fb),
         };
@@ -100,6 +112,7 @@ export namespace AccountModel {
         setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.description, $metaData.description);
+        setMetaData(<any>group.controls.defaultLanguage, $metaData.defaultLanguage);
         setMetaData(<any>group.controls.logoUrl, $metaData.logoUrl);
 
         return group;

@@ -35,6 +35,11 @@ export interface CreateAccountModel {
     description: string;
 
     /**
+     * The default language code for the account
+     */
+    defaultLanguage: string;
+
+    /**
      * The URL of the account logo
      */
     logoUrl?: string;
@@ -62,6 +67,11 @@ export namespace CreateAccountModel {
         description: (() => [
             Validators.required,
         ]),
+        defaultLanguage: (() => [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(2),
+        ]),
         logoUrl: (() => [
         ]),
         location: (() => [
@@ -73,6 +83,7 @@ export namespace CreateAccountModel {
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
+        defaultLanguage: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultLanguage(), options)),
         logoUrl: ((options?: IControlFactoryOptions<string>) => getControl($validators.logoUrl(), options)),
     };
 
@@ -88,6 +99,10 @@ export namespace CreateAccountModel {
         description: { 
             type: 'string',
         } as IApaleoControlMetaData,
+        defaultLanguage: { 
+            maxLength: 2,
+            type: 'string',
+        } as IApaleoControlMetaData,
         logoUrl: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -98,6 +113,7 @@ export namespace CreateAccountModel {
             code: $controls.code(getControlOptions(options, 'code')),
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
+            defaultLanguage: $controls.defaultLanguage(getControlOptions(options, 'defaultLanguage')),
             logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
             location: models.ReplaceLocationModel.$buildForm(fb),
         };
@@ -106,6 +122,7 @@ export namespace CreateAccountModel {
         setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.description, $metaData.description);
+        setMetaData(<any>group.controls.defaultLanguage, $metaData.defaultLanguage);
         setMetaData(<any>group.controls.logoUrl, $metaData.logoUrl);
 
         return group;
