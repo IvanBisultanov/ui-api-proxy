@@ -41,7 +41,7 @@ export class ResponseModel<T> {
             if (!input.hasOwnProperty(key)) continue;
 
             const value = input[key];
-            let match: RegExpMatchArray | null;
+            let match: RegExpMatchArray | undefined;
             // Check for string properties which look like dates.
             if (typeof value === "string" && (match = value.match(regexIso8601))) {
                 const milliseconds = Date.parse(match[0])
