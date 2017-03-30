@@ -47,7 +47,7 @@ export interface CreateRateplanModel {
     /**
      * The unit types ids to link to the rateplan
      */
-    unitTypeIds: Array<string>;
+    unitTypeIds?: Array<string>;
 
 }
 
@@ -73,7 +73,6 @@ export namespace CreateRateplanModel {
             Validators.required,
         ]),
         unitTypeIds: (() => [
-            Validators.required,
         ]),
     };
 
