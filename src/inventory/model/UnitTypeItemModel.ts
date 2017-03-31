@@ -52,7 +52,7 @@ export interface UnitTypeItemModel {
     /**
      * The property to which the unit type belongs to
      */
-    propertyCode?: string;
+    propertyId?: string;
 
     /**
      * Collection of links to related resources
@@ -77,7 +77,7 @@ export namespace UnitTypeItemModel {
         ]),
         maxPersons: (() => [
         ]),
-        propertyCode: (() => [
+        propertyId: (() => [
         ]),
         links: (() => [
         ]),
@@ -88,7 +88,7 @@ export namespace UnitTypeItemModel {
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
         maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
+        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
     };
 
     export const $metaData = { 
@@ -110,7 +110,7 @@ export namespace UnitTypeItemModel {
         maxPersons: { 
             type: 'number',
         } as IApaleoControlMetaData,
-        propertyCode: { 
+        propertyId: { 
             type: 'string',
         } as IApaleoControlMetaData,
     };
@@ -121,7 +121,7 @@ export namespace UnitTypeItemModel {
             code: $controls.code(getControlOptions(options, 'code')),
             minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
             maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
@@ -129,7 +129,7 @@ export namespace UnitTypeItemModel {
         setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
         setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
+        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
 
         return group;
     }

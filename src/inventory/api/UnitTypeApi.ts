@@ -91,10 +91,11 @@ export class UnitTypeApi {
     /**
      * Get a unit type list
      * Get the list of unit types.
+     * @param propertyId Return unit types for specific property
      */
-    public inventoryV1UnitTypesGet($options?: IRequestOptions)
+    public inventoryV1UnitTypesGet(propertyId?: string, $options?: IRequestOptions)
         : Observable<models.UnitTypeListModel | undefined> {
-        return this.inventoryV1UnitTypesGetWithRawHttp($options)
+        return this.inventoryV1UnitTypesGetWithRawHttp(propertyId, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -159,10 +160,11 @@ export class UnitTypeApi {
     /**
      * Get a unit type list
      * Get the list of unit types.
+     * @param propertyId Return unit types for specific property
      */
-    public inventoryV1UnitTypesGetWithRawHttp($options?: IRequestOptions)
+    public inventoryV1UnitTypesGetWithRawHttp(propertyId?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeListModel>> {
-        return this.inventoryV1UnitTypesGetWithHttpInfo($options)
+        return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -572,12 +574,17 @@ export class UnitTypeApi {
     /**
      * Get a unit type list
      * Get the list of unit types.
+     * @param propertyId Return unit types for specific property
      */
-    private inventoryV1UnitTypesGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesGetWithHttpInfo(propertyId?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/unit-types';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>propertyId);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -652,7 +659,7 @@ export class UnitTypeApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1UnitTypesGetWithHttpInfo($options));
+                        this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, $options));
                 }
             }
             throw err;
