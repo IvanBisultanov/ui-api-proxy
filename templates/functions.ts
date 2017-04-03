@@ -13,7 +13,7 @@ import {
     Control, 
     IApaleoAbstractControl, 
     IApaleoControlMetaData } from './types';
-import { Configuration } from 'configuration';
+import { Configuration, IRetryPolicy } from 'configuration';
 import { 
     Http, 
     Headers, 
@@ -72,6 +72,12 @@ export function setMetaData(control?: IApaleoAbstractControl, metaData?: IApaleo
     }
 }
 
+const defaultRetryPolicy = Object.freeze({
+    defaultRetryTimes: 0,
+    delayInMs: 0,
+    shouldRetryOnStatusCode: () => false
+} as IRetryPolicy)
+
 export function callApiEndpoint(
     http: Http,
     path: string,
@@ -80,9 +86,13 @@ export function callApiEndpoint(
     config: Configuration & IRequestOptions,
     retryMethod: (retryTimesToGo: number) => Observable<Response>
 ) {
+    config.retryPolicy = config.retryPolicy || defaultRetryPolicy;
+
     let retryTimes = config.retryPolicy.defaultRetryTimes;
     let isResponseCodeAllowed: (code: number) => boolean = () => false;
-    let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+
+    const requestOptionsInterceptor = config.customInterceptor || (r => new RequestOptions(r));
+    const responseInterceptor = config.responseInterceptor || ((_, r) => r);
 
     if (config.retryTimes !== undefined) {
         retryTimes = config.retryTimes;
@@ -114,17 +124,13 @@ export function callApiEndpoint(
         }
     }
 
-    if (config.customInterceptor) {
-        requestOptionsInterceptor = config.customInterceptor;
-    }
-
-    let requestOptions: RequestOptionsArgs = requestOptionsInterceptor(requestOptionsArgs);
+    const requestOptions: RequestOptionsArgs = requestOptionsInterceptor(requestOptionsArgs);
 
     return http.request(path, requestOptions)
-        .map(r => config.responseInterceptor(requestOptionsArgs, r))
+        .map(r => responseInterceptor(requestOptionsArgs, r))
         .catch(err => {
             if (err instanceof Response) {
-                config.responseInterceptor(requestOptionsArgs, err);
+                responseInterceptor(requestOptionsArgs, err);
 
                 if (isResponseCodeAllowed(err.status)) {
                     return Observable.of(err);
