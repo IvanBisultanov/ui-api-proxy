@@ -25,6 +25,7 @@ import * as models                                           from '../model/mode
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../../variables';
 import { IRequestOptions, ResponseModel, ResponseHeaders }   from '../../models';
 import { Configuration }                                     from '../../configuration';
+import { callApiEndpoint }                                   from '../../functions';
 
 /* tslint:disable:no-unused-variable member-ordering */
 
@@ -210,65 +211,23 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
-        let isResponseCodeAllowed: (code: number) => boolean = () => false;
-        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Delete,
+                headers: headers,
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
 
-        if ($options) {
-            if ($options.retryTimes !== undefined) {
-                retryTimes = $options.retryTimes;
+                return this.ratesV1RatePlansByIdDeleteWithHttpInfo(id, $options);
             }
-            
-            if ($options.allowResponseCodes) {
-                if (typeof $options.allowResponseCodes === 'function') {
-                    isResponseCodeAllowed = $options.allowResponseCodes;
-                } else {
-                    const allowedResponseCodes = $options.allowResponseCodes;
-                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
-                }
-            }
-            
-            if ($options.ifMatch && $options.ifNoneMatch) {
-                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
-            } else if ($options.ifMatch) {
-                headers.set('If-Match', $options.ifMatch);
-            } else if ($options.ifNoneMatch) {
-                headers.set('If-None-Match', $options.ifNoneMatch);
-            }
-
-            if ($options.additionalHeaders) {
-                for (const key in $options.additionalHeaders) {
-                    if ($options.additionalHeaders.hasOwnProperty(key)) {
-                        headers.set(key, $options.additionalHeaders[key]);
-                    }
-                }
-            }
-
-            if ($options.customInterceptor) {
-                requestOptionsInterceptor = $options.customInterceptor;
-            }
-        }
-
-        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
-            method: RequestMethod.Delete,
-            headers: headers,
-            search: queryParameters
-        });
-
-        return this.http.request(path, requestOptions).catch(err => {
-            if (err instanceof Response) {
-                if (isResponseCodeAllowed(err.status)) {
-                    return Observable.of(err);
-                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                    $options = $options || {};
-                    $options.retryTimes = retryTimes - 1;
-
-                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RatePlansByIdDeleteWithHttpInfo(id, $options));
-                }
-            }
-            throw err;
-        });
+        )
     }
 
     /**
@@ -311,65 +270,23 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
-        let isResponseCodeAllowed: (code: number) => boolean = () => false;
-        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
 
-        if ($options) {
-            if ($options.retryTimes !== undefined) {
-                retryTimes = $options.retryTimes;
+                return this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options);
             }
-            
-            if ($options.allowResponseCodes) {
-                if (typeof $options.allowResponseCodes === 'function') {
-                    isResponseCodeAllowed = $options.allowResponseCodes;
-                } else {
-                    const allowedResponseCodes = $options.allowResponseCodes;
-                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
-                }
-            }
-            
-            if ($options.ifMatch && $options.ifNoneMatch) {
-                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
-            } else if ($options.ifMatch) {
-                headers.set('If-Match', $options.ifMatch);
-            } else if ($options.ifNoneMatch) {
-                headers.set('If-None-Match', $options.ifNoneMatch);
-            }
-
-            if ($options.additionalHeaders) {
-                for (const key in $options.additionalHeaders) {
-                    if ($options.additionalHeaders.hasOwnProperty(key)) {
-                        headers.set(key, $options.additionalHeaders[key]);
-                    }
-                }
-            }
-
-            if ($options.customInterceptor) {
-                requestOptionsInterceptor = $options.customInterceptor;
-            }
-        }
-
-        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters
-        });
-
-        return this.http.request(path, requestOptions).catch(err => {
-            if (err instanceof Response) {
-                if (isResponseCodeAllowed(err.status)) {
-                    return Observable.of(err);
-                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                    $options = $options || {};
-                    $options.retryTimes = retryTimes - 1;
-
-                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options));
-                }
-            }
-            throw err;
-        });
+        )
     }
 
     /**
@@ -404,65 +321,23 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
-        let isResponseCodeAllowed: (code: number) => boolean = () => false;
-        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Head,
+                headers: headers,
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
 
-        if ($options) {
-            if ($options.retryTimes !== undefined) {
-                retryTimes = $options.retryTimes;
+                return this.ratesV1RatePlansByIdHeadWithHttpInfo(id, $options);
             }
-            
-            if ($options.allowResponseCodes) {
-                if (typeof $options.allowResponseCodes === 'function') {
-                    isResponseCodeAllowed = $options.allowResponseCodes;
-                } else {
-                    const allowedResponseCodes = $options.allowResponseCodes;
-                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
-                }
-            }
-            
-            if ($options.ifMatch && $options.ifNoneMatch) {
-                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
-            } else if ($options.ifMatch) {
-                headers.set('If-Match', $options.ifMatch);
-            } else if ($options.ifNoneMatch) {
-                headers.set('If-None-Match', $options.ifNoneMatch);
-            }
-
-            if ($options.additionalHeaders) {
-                for (const key in $options.additionalHeaders) {
-                    if ($options.additionalHeaders.hasOwnProperty(key)) {
-                        headers.set(key, $options.additionalHeaders[key]);
-                    }
-                }
-            }
-
-            if ($options.customInterceptor) {
-                requestOptionsInterceptor = $options.customInterceptor;
-            }
-        }
-
-        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
-            method: RequestMethod.Head,
-            headers: headers,
-            search: queryParameters
-        });
-
-        return this.http.request(path, requestOptions).catch(err => {
-            if (err instanceof Response) {
-                if (isResponseCodeAllowed(err.status)) {
-                    return Observable.of(err);
-                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                    $options = $options || {};
-                    $options.retryTimes = retryTimes - 1;
-
-                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RatePlansByIdHeadWithHttpInfo(id, $options));
-                }
-            }
-            throw err;
-        });
+        )
     }
 
     /**
@@ -507,66 +382,24 @@ export class RateplanApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
-        let isResponseCodeAllowed: (code: number) => boolean = () => false;
-        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Put,
+                headers: headers,
+                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
 
-        if ($options) {
-            if ($options.retryTimes !== undefined) {
-                retryTimes = $options.retryTimes;
+                return this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options);
             }
-            
-            if ($options.allowResponseCodes) {
-                if (typeof $options.allowResponseCodes === 'function') {
-                    isResponseCodeAllowed = $options.allowResponseCodes;
-                } else {
-                    const allowedResponseCodes = $options.allowResponseCodes;
-                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
-                }
-            }
-            
-            if ($options.ifMatch && $options.ifNoneMatch) {
-                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
-            } else if ($options.ifMatch) {
-                headers.set('If-Match', $options.ifMatch);
-            } else if ($options.ifNoneMatch) {
-                headers.set('If-None-Match', $options.ifNoneMatch);
-            }
-
-            if ($options.additionalHeaders) {
-                for (const key in $options.additionalHeaders) {
-                    if ($options.additionalHeaders.hasOwnProperty(key)) {
-                        headers.set(key, $options.additionalHeaders[key]);
-                    }
-                }
-            }
-
-            if ($options.customInterceptor) {
-                requestOptionsInterceptor = $options.customInterceptor;
-            }
-        }
-
-        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
-            method: RequestMethod.Put,
-            headers: headers,
-            body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
-        });
-
-        return this.http.request(path, requestOptions).catch(err => {
-            if (err instanceof Response) {
-                if (isResponseCodeAllowed(err.status)) {
-                    return Observable.of(err);
-                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                    $options = $options || {};
-                    $options.retryTimes = retryTimes - 1;
-
-                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options));
-                }
-            }
-            throw err;
-        });
+        )
     }
 
     /**
@@ -598,65 +431,23 @@ export class RateplanApi {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
-        let isResponseCodeAllowed: (code: number) => boolean = () => false;
-        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
 
-        if ($options) {
-            if ($options.retryTimes !== undefined) {
-                retryTimes = $options.retryTimes;
+                return this.ratesV1RatePlansGetWithHttpInfo($options);
             }
-            
-            if ($options.allowResponseCodes) {
-                if (typeof $options.allowResponseCodes === 'function') {
-                    isResponseCodeAllowed = $options.allowResponseCodes;
-                } else {
-                    const allowedResponseCodes = $options.allowResponseCodes;
-                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
-                }
-            }
-            
-            if ($options.ifMatch && $options.ifNoneMatch) {
-                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
-            } else if ($options.ifMatch) {
-                headers.set('If-Match', $options.ifMatch);
-            } else if ($options.ifNoneMatch) {
-                headers.set('If-None-Match', $options.ifNoneMatch);
-            }
-
-            if ($options.additionalHeaders) {
-                for (const key in $options.additionalHeaders) {
-                    if ($options.additionalHeaders.hasOwnProperty(key)) {
-                        headers.set(key, $options.additionalHeaders[key]);
-                    }
-                }
-            }
-
-            if ($options.customInterceptor) {
-                requestOptionsInterceptor = $options.customInterceptor;
-            }
-        }
-
-        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters
-        });
-
-        return this.http.request(path, requestOptions).catch(err => {
-            if (err instanceof Response) {
-                if (isResponseCodeAllowed(err.status)) {
-                    return Observable.of(err);
-                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                    $options = $options || {};
-                    $options.retryTimes = retryTimes - 1;
-
-                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RatePlansGetWithHttpInfo($options));
-                }
-            }
-            throw err;
-        });
+        )
     }
 
     /**
@@ -695,66 +486,24 @@ export class RateplanApi {
 
         headers.set('Content-Type', 'application/json');
 
-        let retryTimes = this.configuration.retryPolicy.defaultRetryTimes;
-        let isResponseCodeAllowed: (code: number) => boolean = () => false;
-        let requestOptionsInterceptor = (r: RequestOptionsArgs) => (new RequestOptions(r)) as RequestOptionsArgs;
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
 
-        if ($options) {
-            if ($options.retryTimes !== undefined) {
-                retryTimes = $options.retryTimes;
+                return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options);
             }
-            
-            if ($options.allowResponseCodes) {
-                if (typeof $options.allowResponseCodes === 'function') {
-                    isResponseCodeAllowed = $options.allowResponseCodes;
-                } else {
-                    const allowedResponseCodes = $options.allowResponseCodes;
-                    isResponseCodeAllowed = code => allowedResponseCodes.indexOf(code) !== -1;
-                }
-            }
-            
-            if ($options.ifMatch && $options.ifNoneMatch) {
-                throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
-            } else if ($options.ifMatch) {
-                headers.set('If-Match', $options.ifMatch);
-            } else if ($options.ifNoneMatch) {
-                headers.set('If-None-Match', $options.ifNoneMatch);
-            }
-
-            if ($options.additionalHeaders) {
-                for (const key in $options.additionalHeaders) {
-                    if ($options.additionalHeaders.hasOwnProperty(key)) {
-                        headers.set(key, $options.additionalHeaders[key]);
-                    }
-                }
-            }
-
-            if ($options.customInterceptor) {
-                requestOptionsInterceptor = $options.customInterceptor;
-            }
-        }
-
-        let requestOptions: RequestOptionsArgs = requestOptionsInterceptor({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
-        });
-
-        return this.http.request(path, requestOptions).catch(err => {
-            if (err instanceof Response) {
-                if (isResponseCodeAllowed(err.status)) {
-                    return Observable.of(err);
-                } else if (this.configuration.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                    $options = $options || {};
-                    $options.retryTimes = retryTimes - 1;
-
-                    return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options));
-                }
-            }
-            throw err;
-        });
+        )
     }
 
 }
