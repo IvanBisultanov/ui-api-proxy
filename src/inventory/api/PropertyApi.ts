@@ -44,47 +44,46 @@ export class PropertyApi {
 
     /**
      * Get a property
-     * Get a property by code.
-     * @param code The code of the property.
+     * Get a property by id.
+     * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGet(code: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdGet(id: string, languages?: string, $options?: IRequestOptions)
         : Observable<models.PropertyModel | undefined> {
-        return this.inventoryV1PropertiesByCodeGetWithRawHttp(code, languages, $options)
+        return this.inventoryV1PropertiesByIdGetWithRawHttp(id, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Check if a property exists
-     * Check if a property exists by code.
-     * @param code The code of the property.
+     * Check if a property exists by id.
+     * @param id The id of the property.
      */
-    public inventoryV1PropertiesByCodeHead(code: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdHead(id: string, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByCodeHeadWithRawHttp(code, $options)
+        return this.inventoryV1PropertiesByIdHeadWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Replaces a property
      * Use this call to modify a property.
-     * @param code The code of the property.
+     * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesByCodePut(code: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdPut(id: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByCodePutWithRawHttp(code, requestBody, $options)
+        return this.inventoryV1PropertiesByIdPutWithRawHttp(id, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Get a properties list
      * Get the list of properties.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGet(languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesGet($options?: IRequestOptions)
         : Observable<models.PropertyListModel | undefined> {
-        return this.inventoryV1PropertiesGetWithRawHttp(languages, $options)
+        return this.inventoryV1PropertiesGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -102,47 +101,46 @@ export class PropertyApi {
 
     /**
      * Get a property
-     * Get a property by code.
-     * @param code The code of the property.
+     * Get a property by id.
+     * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByCodeGetWithRawHttp(code: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdGetWithRawHttp(id: string, languages?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyModel>> {
-        return this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, languages, $options)
+        return this.inventoryV1PropertiesByIdGetWithHttpInfo(id, languages, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Check if a property exists
-     * Check if a property exists by code.
-     * @param code The code of the property.
+     * Check if a property exists by id.
+     * @param id The id of the property.
      */
-    public inventoryV1PropertiesByCodeHeadWithRawHttp(code: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdHeadWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, $options)
+        return this.inventoryV1PropertiesByIdHeadWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Replaces a property
      * Use this call to modify a property.
-     * @param code The code of the property.
+     * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesByCodePutWithRawHttp(code: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdPutWithRawHttp(id: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, $options)
+        return this.inventoryV1PropertiesByIdPutWithHttpInfo(id, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Get a properties list
      * Get the list of properties.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesGetWithRawHttp(languages?: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesGetWithRawHttp($options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyListModel>> {
-        return this.inventoryV1PropertiesGetWithHttpInfo(languages, $options)
+        return this.inventoryV1PropertiesGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -160,19 +158,19 @@ export class PropertyApi {
 
     /**
      * Get a property
-     * Get a property by code.
-     * @param code The code of the property.
+     * Get a property by id.
+     * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesByCodeGetWithHttpInfo(code: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/properties/${code}'
-                    .replace('${' + 'code' + '}', String(code));
+    private inventoryV1PropertiesByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeGet.');
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdGet.');
         }
         if (languages !== undefined) {
             queryParameters.set('languages', <any>languages);
@@ -252,7 +250,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesByCodeGetWithHttpInfo(code, languages, $options));
+                        this.inventoryV1PropertiesByIdGetWithHttpInfo(id, languages, $options));
                 }
             }
             throw err;
@@ -261,18 +259,18 @@ export class PropertyApi {
 
     /**
      * Check if a property exists
-     * Check if a property exists by code.
-     * @param code The code of the property.
+     * Check if a property exists by id.
+     * @param id The id of the property.
      */
-    private inventoryV1PropertiesByCodeHeadWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/properties/${code}'
-                    .replace('${' + 'code' + '}', String(code));
+    private inventoryV1PropertiesByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodeHead.');
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdHead.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -345,7 +343,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesByCodeHeadWithHttpInfo(code, $options));
+                        this.inventoryV1PropertiesByIdHeadWithHttpInfo(id, $options));
                 }
             }
             throw err;
@@ -355,22 +353,22 @@ export class PropertyApi {
     /**
      * Replaces a property
      * Use this call to modify a property.
-     * @param code The code of the property.
+     * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    private inventoryV1PropertiesByCodePutWithHttpInfo(code: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/inventory/v1/properties/${code}'
-                    .replace('${' + 'code' + '}', String(code));
+    private inventoryV1PropertiesByIdPutWithHttpInfo(id: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/${id}'
+                    .replace('${' + 'id' + '}', String(id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
-            throw new Error('Required parameter code was null or undefined when calling inventoryV1PropertiesByCodePut.');
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
         if (requestBody === null || requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesByCodePut.');
+            throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesByIdPut.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -449,7 +447,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesByCodePutWithHttpInfo(code, requestBody, $options));
+                        this.inventoryV1PropertiesByIdPutWithHttpInfo(id, requestBody, $options));
                 }
             }
             throw err;
@@ -459,17 +457,12 @@ export class PropertyApi {
     /**
      * Get a properties list
      * Get the list of properties.
-     * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesGetWithHttpInfo(languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (languages !== undefined) {
-            queryParameters.set('languages', <any>languages);
-        }
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -544,7 +537,7 @@ export class PropertyApi {
                     $options.retryTimes = retryTimes - 1;
 
                     return Observable.of(0).delay(this.configuration.retryPolicy.delayInMs).mergeMap(() =>
-                        this.inventoryV1PropertiesGetWithHttpInfo(languages, $options));
+                        this.inventoryV1PropertiesGetWithHttpInfo($options));
                 }
             }
             throw err;

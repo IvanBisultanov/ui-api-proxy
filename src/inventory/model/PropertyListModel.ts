@@ -22,7 +22,7 @@ export interface PropertyListModel {
     /**
      * List of properties
      */
-    properties?: Array<models.PropertyModel>;
+    properties?: Array<models.PropertyItemModel>;
 
 }
 

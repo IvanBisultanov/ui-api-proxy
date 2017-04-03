@@ -18,41 +18,31 @@ import { IApaleoAbstractControl, IApaleoControlMetaData }                    fro
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface UnitTypeItemModel {
+export interface PropertyItemModel {
     /**
-     * The unit type id
+     * The property id
      */
     id?: string;
 
     /**
-     * The code for the unit type that can be shown in reports and table views
+     * The code for the property that can be shown in reports and table views
      */
     code?: string;
 
     /**
-     * The name for the unit type
+     * The name for the property
      */
     name?: string;
 
     /**
-     * The description for the unit type
+     * The description for the property
      */
     description?: string;
 
     /**
-     * Minimum number of persons for the unit type
+     * The location of the property
      */
-    minPersons?: number;
-
-    /**
-     * Maximum number of persons for the unit type
-     */
-    maxPersons?: number;
-
-    /**
-     * The property to which the unit type belongs to
-     */
-    propertyId?: string;
+    location?: models.LocationModel;
 
     /**
      * Collection of links to related resources
@@ -61,9 +51,9 @@ export interface UnitTypeItemModel {
 
 }
 
-export type UnitTypeItemModelWithRawHttp = UnitTypeItemModel & ResponseModel<UnitTypeItemModel>;
+export type PropertyItemModelWithRawHttp = PropertyItemModel & ResponseModel<PropertyItemModel>;
 
-export namespace UnitTypeItemModel {
+export namespace PropertyItemModel {
     export const $validators = {
         id: (() => [
         ]),
@@ -73,11 +63,7 @@ export namespace UnitTypeItemModel {
         ]),
         description: (() => [
         ]),
-        minPersons: (() => [
-        ]),
-        maxPersons: (() => [
-        ]),
-        propertyId: (() => [
+        location: (() => [
         ]),
         links: (() => [
         ]),
@@ -88,9 +74,6 @@ export namespace UnitTypeItemModel {
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
-        minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
-        maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
-        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
     };
 
     export const $metaData = { 
@@ -106,26 +89,15 @@ export namespace UnitTypeItemModel {
         description: { 
             type: 'string',
         } as IApaleoControlMetaData,
-        minPersons: { 
-            type: 'number',
-        } as IApaleoControlMetaData,
-        maxPersons: { 
-            type: 'number',
-        } as IApaleoControlMetaData,
-        propertyId: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeItemModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyItemModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
             code: $controls.code(getControlOptions(options, 'code')),
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
-            minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
-            maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
-            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
+            location: models.LocationModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
@@ -133,9 +105,6 @@ export namespace UnitTypeItemModel {
         setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.description, $metaData.description);
-        setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
-        setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
-        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
 
         return group;
     }

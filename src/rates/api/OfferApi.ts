@@ -49,7 +49,7 @@ export class OfferApi {
      * @param arrival The arrival date
      * @param departure The departure date
      */
-    public ratesV1OffersStayGet(propertyCode?: string, arrival?: Date, departure?: Date, $options?: IRequestOptions)
+    public ratesV1OffersStayGet(propertyCode: string, arrival: Date, departure: Date, $options?: IRequestOptions)
         : Observable<models.StayOffersModel | undefined> {
         return this.ratesV1OffersStayGetWithRawHttp(propertyCode, arrival, departure, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -63,7 +63,7 @@ export class OfferApi {
      * @param arrival The arrival date
      * @param departure The departure date
      */
-    public ratesV1OffersStayGetWithRawHttp(propertyCode?: string, arrival?: Date, departure?: Date, $options?: IRequestOptions)
+    public ratesV1OffersStayGetWithRawHttp(propertyCode: string, arrival: Date, departure: Date, $options?: IRequestOptions)
         : Observable<ResponseModel<models.StayOffersModel>> {
         return this.ratesV1OffersStayGetWithHttpInfo(propertyCode, arrival, departure, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -77,11 +77,23 @@ export class OfferApi {
      * @param arrival The arrival date
      * @param departure The departure date
      */
-    private ratesV1OffersStayGetWithHttpInfo(propertyCode?: string, arrival?: Date, departure?: Date, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1OffersStayGetWithHttpInfo(propertyCode: string, arrival: Date, departure: Date, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/offers/stay';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'propertyCode' is not null or undefined
+        if (propertyCode === null || propertyCode === undefined) {
+            throw new Error('Required parameter propertyCode was null or undefined when calling ratesV1OffersStayGet.');
+        }
+        // verify required parameter 'arrival' is not null or undefined
+        if (arrival === null || arrival === undefined) {
+            throw new Error('Required parameter arrival was null or undefined when calling ratesV1OffersStayGet.');
+        }
+        // verify required parameter 'departure' is not null or undefined
+        if (departure === null || departure === undefined) {
+            throw new Error('Required parameter departure was null or undefined when calling ratesV1OffersStayGet.');
+        }
         if (propertyCode !== undefined) {
             queryParameters.set('propertyCode', <any>propertyCode);
         }

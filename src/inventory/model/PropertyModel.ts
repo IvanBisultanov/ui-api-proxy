@@ -23,6 +23,11 @@ import { getControl, getControlOptions, adjustDefaultControls, setMetaData } fro
 
 export interface PropertyModel {
     /**
+     * The property id
+     */
+    id?: string;
+
+    /**
      * The code for the property that can be shown in reports and table views
      */
     code?: string;
@@ -48,6 +53,8 @@ export type PropertyModelWithRawHttp = PropertyModel & ResponseModel<PropertyMod
 
 export namespace PropertyModel {
     export const $validators = {
+        id: (() => [
+        ]),
         code: (() => [
         ]),
         name: (() => [
@@ -59,10 +66,14 @@ export namespace PropertyModel {
     };
 
     export const $controls = { 
+        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
     };
 
     export const $metaData = { 
+        id: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
         code: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -76,11 +87,13 @@ export namespace PropertyModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyModel>) {
         const defaultControls = { 
+            id: $controls.id(getControlOptions(options, 'id')),
             code: $controls.code(getControlOptions(options, 'code')),
             location: models.LocationModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.code, $metaData.code);
 
         return group;

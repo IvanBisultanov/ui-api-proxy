@@ -4,6 +4,7 @@ export * from './EmbeddedPropertyModel';
 export * from './Link';
 export * from './LocationModel';
 export * from './MessageItemCollection';
+export * from './PropertyItemModel';
 export * from './PropertyListModel';
 export * from './PropertyModel';
 export * from './ReplaceLocationModel';
