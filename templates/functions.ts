@@ -13,15 +13,15 @@ import {
     Control, 
     IApaleoAbstractControl, 
     IApaleoControlMetaData } from './types';
-import { Configuration } from "configuration";
+import { Configuration } from 'configuration';
 import { 
     Http, 
     Headers, 
     RequestOptionsArgs, 
     RequestOptions,
-    Response } from "@angular/http";
-import { IRequestOptions } from "models";
-import { Observable } from "rxjs/Rx";
+    Response } from '@angular/http';
+import { IRequestOptions } from 'models';
+import { Observable } from 'rxjs/Rx';
 
 export function getControl<T>(validators: ValidatorFn[], options?: IControlFactoryOptions<T>): [T | undefined, ValidatorFn] {
     const finalValidators = [...validators];
@@ -121,10 +121,10 @@ export function callApiEndpoint(
     let requestOptions: RequestOptionsArgs = requestOptionsInterceptor(requestOptionsArgs);
 
     return http.request(path, requestOptions)
-        .map(r => logResponse(requestOptionsArgs, r, config))
+        .map(r => config.responseInterceptor(requestOptionsArgs, r))
         .catch(err => {
             if (err instanceof Response) {
-                logResponse(requestOptionsArgs, err, config);
+                config.responseInterceptor(requestOptionsArgs, err);
 
                 if (isResponseCodeAllowed(err.status)) {
                     return Observable.of(err);
@@ -134,13 +134,6 @@ export function callApiEndpoint(
             }
             throw err;
         });
-}
-
-function logResponse(req: RequestOptionsArgs, res: Response, config: Configuration): Response {
-    if (config.logResponse) {
-        console.log(`${req.method} ${res.url}: ${res.status} - ${res.headers.get('Apaleo-Tracking-Id')}`)
-    }
-    return res;
 }
 
 function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, options: IBuildFormOptions<T>) {
