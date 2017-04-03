@@ -120,16 +120,27 @@ export function callApiEndpoint(
 
     let requestOptions: RequestOptionsArgs = requestOptionsInterceptor(requestOptionsArgs);
 
-    return http.request(path, requestOptions).catch(err => {
-        if (err instanceof Response) {
-            if (isResponseCodeAllowed(err.status)) {
-                return Observable.of(err);
-            } else if (config.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
-                return Observable.of(0).delay(config.retryPolicy.delayInMs).mergeMap(() => retryMethod(retryTimes - 1));
+    return http.request(path, requestOptions)
+        .map(r => logResponse(requestOptionsArgs, r, config))
+        .catch(err => {
+            if (err instanceof Response) {
+                logResponse(requestOptionsArgs, err, config);
+
+                if (isResponseCodeAllowed(err.status)) {
+                    return Observable.of(err);
+                } else if (config.retryPolicy.shouldRetryOnStatusCode(err.status) && retryTimes > 0) {
+                    return Observable.of(0).delay(config.retryPolicy.delayInMs).mergeMap(() => retryMethod(retryTimes - 1));
+                }
             }
-        }
-        throw err;
-    });
+            throw err;
+        });
+}
+
+function logResponse(req: RequestOptionsArgs, res: Response, config: Configuration): Response {
+    if (config.logResponse) {
+        console.log(`${req.method} ${res.url}: ${res.status} - ${res.headers.get('Apaleo-Tracking-Id')}`)
+    }
+    return res;
 }
 
 function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, options: IBuildFormOptions<T>) {

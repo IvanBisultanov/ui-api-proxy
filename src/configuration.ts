@@ -11,4 +11,5 @@ export class Configuration {
     password: string;
     accessToken: string | (() => string);
     retryPolicy: IRetryPolicy;
+    logResponse: boolean;
 }
