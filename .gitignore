@@ -6,3 +6,4 @@ node_modules
 *.ngsummary.json
 npm-debug.log
 npm-debug.log.*
+.vscode
