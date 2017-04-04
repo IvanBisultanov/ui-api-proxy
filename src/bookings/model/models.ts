@@ -4,6 +4,7 @@ export * from './EmbeddedRateplanModel';
 export * from './EmbeddedUnitTypeModel';
 export * from './Link';
 export * from './MessageItemCollection';
+export * from './ReplaceReservationModel';
 export * from './ReservationItemModel';
 export * from './ReservationListModel';
 export * from './ReservationModel';

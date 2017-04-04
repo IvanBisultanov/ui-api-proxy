@@ -12,80 +12,73 @@
 
 import * as models from './models';
 
+/**
+ * With this request you can modify a reservation
+ */
 import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
 import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
 import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface ReservationItemModel {
-    /**
-     * ID of the reservation
-     */
-    id?: number;
-
+export interface ReplaceReservationModel {
     /**
      * ID of the property
      */
-    propertyId?: string;
+    propertyId: string;
 
     /**
      * ID of the rateplan
      */
-    rateplanId?: string;
+    rateplanId: string;
 
     /**
      * ID of the unit type
      */
-    unitTypeId?: string;
-
-    /**
-     * Total amount
-     */
-    totalAmount?: number;
+    unitTypeId: string;
 
     /**
      * Date of arrival
      */
-    arrival?: Date;
+    arrival: Date;
 
     /**
-     * ID of the departure
+     * Date of departure
      */
-    departure?: Date;
+    departure: Date;
 
     /**
      * Number of adults
      */
-    adults?: number;
+    adults: number;
 
     /**
      * Number of children
      */
-    children?: number;
+    children: number;
 
     /**
      * Code of the guest title
      */
-    guestTitle?: string;
+    guestTitle: string;
 
     /**
      * First name of the guest
      */
-    firstName?: string;
+    firstName: string;
 
     /**
-     * ID of the rateplan
+     * Middle initial of the guest
      */
     middleInitial?: string;
 
     /**
      * Last name of the guest
      */
-    lastName?: string;
+    lastName: string;
 
     /**
-     * Email address of the guest
+     * Email address  of the guest
      */
     email?: string;
 
@@ -107,79 +100,86 @@ export interface ReservationItemModel {
     /**
      * City of the guest
      */
-    city?: string;
+    city: string;
 
     /**
      * Postal code of the guest
      */
-    postalCode?: string;
+    postalCode: string;
 
     /**
      * Country code of the guest
      */
-    countryCode?: string;
-
-    /**
-     * Collection of links to related resources
-     */
-    links?: { [key: string]: models.Link; };
+    countryCode: string;
 
 }
 
-export type ReservationItemModelWithRawHttp = ReservationItemModel & ResponseModel<ReservationItemModel>;
+export type ReplaceReservationModelWithRawHttp = ReplaceReservationModel & ResponseModel<ReplaceReservationModel>;
 
-export namespace ReservationItemModel {
+export namespace ReplaceReservationModel {
     export const $validators = {
-        id: (() => [
-        ]),
         propertyId: (() => [
+            Validators.required,
         ]),
         rateplanId: (() => [
+            Validators.required,
         ]),
         unitTypeId: (() => [
-        ]),
-        totalAmount: (() => [
+            Validators.required,
         ]),
         arrival: (() => [
+            Validators.required,
         ]),
         departure: (() => [
+            Validators.required,
         ]),
         adults: (() => [
+            Validators.required,
         ]),
         children: (() => [
+            Validators.required,
         ]),
         guestTitle: (() => [
+            Validators.required,
         ]),
         firstName: (() => [
+            Validators.required,
+            Validators.maxLength(25),
         ]),
         middleInitial: (() => [
+            Validators.maxLength(5),
         ]),
         lastName: (() => [
+            Validators.required,
+            Validators.maxLength(40),
         ]),
         email: (() => [
         ]),
         phone: (() => [
         ]),
         street: (() => [
+            Validators.maxLength(40),
         ]),
         number: (() => [
         ]),
         city: (() => [
+            Validators.required,
+            Validators.maxLength(25),
         ]),
         postalCode: (() => [
+            Validators.required,
+            Validators.maxLength(10),
         ]),
         countryCode: (() => [
-        ]),
-        links: (() => [
+            Validators.required,
+            Validators.maxLength(2),
         ]),
     };
 
     export const $controls = { 
-        id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
         propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
         unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
-        totalAmount: ((options?: IControlFactoryOptions<number>) => getControl($validators.totalAmount(), options)),
         arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
         departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
         adults: ((options?: IControlFactoryOptions<number>) => getControl($validators.adults(), options)),
@@ -198,9 +198,6 @@ export namespace ReservationItemModel {
     };
 
     export const $metaData = { 
-        id: { 
-            type: 'number',
-        } as IApaleoControlMetaData,
         propertyId: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -209,9 +206,6 @@ export namespace ReservationItemModel {
         } as IApaleoControlMetaData,
         unitTypeId: { 
             type: 'string',
-        } as IApaleoControlMetaData,
-        totalAmount: { 
-            type: 'number',
         } as IApaleoControlMetaData,
         arrival: { 
             type: 'Date',
@@ -229,12 +223,15 @@ export namespace ReservationItemModel {
             type: 'string',
         } as IApaleoControlMetaData,
         firstName: { 
+            maxLength: 25,
             type: 'string',
         } as IApaleoControlMetaData,
         middleInitial: { 
+            maxLength: 5,
             type: 'string',
         } as IApaleoControlMetaData,
         lastName: { 
+            maxLength: 40,
             type: 'string',
         } as IApaleoControlMetaData,
         email: { 
@@ -244,29 +241,31 @@ export namespace ReservationItemModel {
             type: 'string',
         } as IApaleoControlMetaData,
         street: { 
+            maxLength: 40,
             type: 'string',
         } as IApaleoControlMetaData,
         number: { 
             type: 'string',
         } as IApaleoControlMetaData,
         city: { 
+            maxLength: 25,
             type: 'string',
         } as IApaleoControlMetaData,
         postalCode: { 
+            maxLength: 10,
             type: 'string',
         } as IApaleoControlMetaData,
         countryCode: { 
+            maxLength: 2,
             type: 'string',
         } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceReservationModel>) {
         const defaultControls = { 
-            id: $controls.id(getControlOptions(options, 'id')),
             propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
             unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
-            totalAmount: $controls.totalAmount(getControlOptions(options, 'totalAmount')),
             arrival: $controls.arrival(getControlOptions(options, 'arrival')),
             departure: $controls.departure(getControlOptions(options, 'departure')),
             adults: $controls.adults(getControlOptions(options, 'adults')),
@@ -285,11 +284,9 @@ export namespace ReservationItemModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
         setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
-        setMetaData(<any>group.controls.totalAmount, $metaData.totalAmount);
         setMetaData(<any>group.controls.arrival, $metaData.arrival);
         setMetaData(<any>group.controls.departure, $metaData.departure);
         setMetaData(<any>group.controls.adults, $metaData.adults);

@@ -23,42 +23,93 @@ import { getControl, getControlOptions, adjustDefaultControls, setMetaData } fro
 
 export interface CreateReservationModel {
     /**
-     * The property
+     * ID of the property
      */
     propertyId: string;
 
+    /**
+     * ID of the rateplan
+     */
     rateplanId: string;
 
+    /**
+     * ID of the unit type
+     */
     unitTypeId: string;
 
-    checkInTime: string;
+    /**
+     * Date of arrival
+     */
+    arrival: Date;
 
-    checkOutTime: string;
+    /**
+     * Date of departure
+     */
+    departure: Date;
 
+    /**
+     * Number of adults
+     */
     adults: number;
 
+    /**
+     * Number of children
+     */
     children: number;
 
+    /**
+     * Code of the guest title
+     */
     guestTitle: string;
 
+    /**
+     * First name of the guest
+     */
     firstName: string;
 
+    /**
+     * Middle initial of the guest
+     */
     middleInitial?: string;
 
+    /**
+     * Last name of the guest
+     */
     lastName: string;
 
+    /**
+     * Email address number of the guest
+     */
     email?: string;
 
+    /**
+     * Phone number of the guest
+     */
     phone?: string;
 
+    /**
+     * Street of the guest
+     */
     street?: string;
 
+    /**
+     * Street number of the guest
+     */
     number?: string;
 
+    /**
+     * City of the guest
+     */
     city: string;
 
-    zipCode: string;
+    /**
+     * Postal code of the guest
+     */
+    postalCode: string;
 
+    /**
+     * Country code of the guest
+     */
     countryCode: string;
 
 }
@@ -76,10 +127,10 @@ export namespace CreateReservationModel {
         unitTypeId: (() => [
             Validators.required,
         ]),
-        checkInTime: (() => [
+        arrival: (() => [
             Validators.required,
         ]),
-        checkOutTime: (() => [
+        departure: (() => [
             Validators.required,
         ]),
         adults: (() => [
@@ -115,7 +166,7 @@ export namespace CreateReservationModel {
             Validators.required,
             Validators.maxLength(25),
         ]),
-        zipCode: (() => [
+        postalCode: (() => [
             Validators.required,
             Validators.maxLength(10),
         ]),
@@ -129,8 +180,8 @@ export namespace CreateReservationModel {
         propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
         unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
-        checkInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.checkInTime(), options)),
-        checkOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.checkOutTime(), options)),
+        arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
+        departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
         adults: ((options?: IControlFactoryOptions<number>) => getControl($validators.adults(), options)),
         children: ((options?: IControlFactoryOptions<number>) => getControl($validators.children(), options)),
         guestTitle: ((options?: IControlFactoryOptions<string>) => getControl($validators.guestTitle(), options)),
@@ -142,7 +193,7 @@ export namespace CreateReservationModel {
         street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
         number: ((options?: IControlFactoryOptions<string>) => getControl($validators.number(), options)),
         city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
-        zipCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.zipCode(), options)),
+        postalCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.postalCode(), options)),
         countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
     };
 
@@ -156,11 +207,11 @@ export namespace CreateReservationModel {
         unitTypeId: { 
             type: 'string',
         } as IApaleoControlMetaData,
-        checkInTime: { 
-            type: 'string',
+        arrival: { 
+            type: 'Date',
         } as IApaleoControlMetaData,
-        checkOutTime: { 
-            type: 'string',
+        departure: { 
+            type: 'Date',
         } as IApaleoControlMetaData,
         adults: { 
             type: 'number',
@@ -200,7 +251,7 @@ export namespace CreateReservationModel {
             maxLength: 25,
             type: 'string',
         } as IApaleoControlMetaData,
-        zipCode: { 
+        postalCode: { 
             maxLength: 10,
             type: 'string',
         } as IApaleoControlMetaData,
@@ -215,8 +266,8 @@ export namespace CreateReservationModel {
             propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
             unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
-            checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
-            checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
+            arrival: $controls.arrival(getControlOptions(options, 'arrival')),
+            departure: $controls.departure(getControlOptions(options, 'departure')),
             adults: $controls.adults(getControlOptions(options, 'adults')),
             children: $controls.children(getControlOptions(options, 'children')),
             guestTitle: $controls.guestTitle(getControlOptions(options, 'guestTitle')),
@@ -228,7 +279,7 @@ export namespace CreateReservationModel {
             street: $controls.street(getControlOptions(options, 'street')),
             number: $controls.number(getControlOptions(options, 'number')),
             city: $controls.city(getControlOptions(options, 'city')),
-            zipCode: $controls.zipCode(getControlOptions(options, 'zipCode')),
+            postalCode: $controls.postalCode(getControlOptions(options, 'postalCode')),
             countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
@@ -236,8 +287,8 @@ export namespace CreateReservationModel {
         setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
         setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
-        setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
-        setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
+        setMetaData(<any>group.controls.arrival, $metaData.arrival);
+        setMetaData(<any>group.controls.departure, $metaData.departure);
         setMetaData(<any>group.controls.adults, $metaData.adults);
         setMetaData(<any>group.controls.children, $metaData.children);
         setMetaData(<any>group.controls.guestTitle, $metaData.guestTitle);
@@ -249,7 +300,7 @@ export namespace CreateReservationModel {
         setMetaData(<any>group.controls.street, $metaData.street);
         setMetaData(<any>group.controls.number, $metaData.number);
         setMetaData(<any>group.controls.city, $metaData.city);
-        setMetaData(<any>group.controls.zipCode, $metaData.zipCode);
+        setMetaData(<any>group.controls.postalCode, $metaData.postalCode);
         setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
 
         return group;

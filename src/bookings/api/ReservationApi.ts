@@ -55,6 +55,18 @@ export class ReservationApi {
     }
 
     /**
+     * Replace a reservation
+     * Use this call to modify a reservation.
+     * @param id The id of the reservation.
+     * @param requestBody The definition of the reservation.
+     */
+    public bookingsV1ReservationsByIdPut(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.bookingsV1ReservationsByIdPutWithRawHttp(id, requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
      * Get all reservations
      * Use this tp get all reservations.
      */
@@ -84,6 +96,18 @@ export class ReservationApi {
     public bookingsV1ReservationsByIdGetWithRawHttp(id: number, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
         return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Replace a reservation
+     * Use this call to modify a reservation.
+     * @param id The id of the reservation.
+     * @param requestBody The definition of the reservation.
+     */
+    public bookingsV1ReservationsByIdPutWithRawHttp(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -159,6 +183,68 @@ export class ReservationApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options);
+            }
+        )
+    }
+
+    /**
+     * Replace a reservation
+     * Use this call to modify a reservation.
+     * @param id The id of the reservation.
+     * @param requestBody The definition of the reservation.
+     */
+    private bookingsV1ReservationsByIdPutWithHttpInfo(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/bookings/v1/reservations/${id}'
+                    .replace('${' + 'id' + '}', String(id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdPut.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (requestBody === null || requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByIdPut.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Put,
+                headers: headers,
+                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options);
             }
         )
     }
