@@ -25,9 +25,9 @@ export interface CreateUnitTypeModel {
     code: string;
 
     /**
-     * The code of the property where unit type will be created
+     * The id of the property where unit type will be created
      */
-    propertyCode: string;
+    propertyId: string;
 
     /**
      * The name for the unit type
@@ -60,7 +60,7 @@ export namespace CreateUnitTypeModel {
             Validators.minLength(3),
             Validators.maxLength(10),
         ]),
-        propertyCode: (() => [
+        propertyId: (() => [
             Validators.required,
         ]),
         name: (() => [
@@ -79,7 +79,7 @@ export namespace CreateUnitTypeModel {
 
     export const $controls = { 
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
+        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
         maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
     };
@@ -89,7 +89,7 @@ export namespace CreateUnitTypeModel {
             maxLength: 10,
             type: 'string',
         } as IApaleoControlMetaData,
-        propertyCode: { 
+        propertyId: { 
             type: 'string',
         } as IApaleoControlMetaData,
         name: { 
@@ -109,14 +109,14 @@ export namespace CreateUnitTypeModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateUnitTypeModel>) {
         const defaultControls = { 
             code: $controls.code(getControlOptions(options, 'code')),
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
             maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
+        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
         setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
 

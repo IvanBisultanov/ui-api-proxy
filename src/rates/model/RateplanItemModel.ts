@@ -45,9 +45,9 @@ export interface RateplanItemModel {
     defaultPrice?: number;
 
     /**
-     * The code of the property to which the rateplan belongs to
+     * The id of the property to which the rateplan belongs to
      */
-    propertyCode?: string;
+    propertyId?: string;
 
     /**
      * The unit types ids linked to the rateplan
@@ -75,7 +75,7 @@ export namespace RateplanItemModel {
         ]),
         defaultPrice: (() => [
         ]),
-        propertyCode: (() => [
+        propertyId: (() => [
         ]),
         unitTypeIds: (() => [
         ]),
@@ -89,7 +89,7 @@ export namespace RateplanItemModel {
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
         defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
+        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
     };
 
     export const $metaData = { 
@@ -108,7 +108,7 @@ export namespace RateplanItemModel {
         defaultPrice: { 
             type: 'number',
         } as IApaleoControlMetaData,
-        propertyCode: { 
+        propertyId: { 
             type: 'string',
         } as IApaleoControlMetaData,
         unitTypeIds: { 
@@ -123,7 +123,7 @@ export namespace RateplanItemModel {
             name: $controls.name(getControlOptions(options, 'name')),
             description: $controls.description(getControlOptions(options, 'description')),
             defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
@@ -132,7 +132,7 @@ export namespace RateplanItemModel {
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.description, $metaData.description);
         setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
+        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
 
         return group;
     }

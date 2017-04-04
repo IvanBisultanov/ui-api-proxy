@@ -25,9 +25,9 @@ export interface CreateRateplanModel {
     code: string;
 
     /**
-     * The code of the property where rateplan will be created
+     * The id of the property where the rateplan will be created
      */
-    propertyCode: string;
+    propertyId: string;
 
     /**
      * The name for the rateplan
@@ -60,7 +60,7 @@ export namespace CreateRateplanModel {
             Validators.minLength(3),
             Validators.maxLength(10),
         ]),
-        propertyCode: (() => [
+        propertyId: (() => [
             Validators.required,
         ]),
         name: (() => [
@@ -78,7 +78,7 @@ export namespace CreateRateplanModel {
 
     export const $controls = { 
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
+        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
     };
 
@@ -87,7 +87,7 @@ export namespace CreateRateplanModel {
             maxLength: 10,
             type: 'string',
         } as IApaleoControlMetaData,
-        propertyCode: { 
+        propertyId: { 
             type: 'string',
         } as IApaleoControlMetaData,
         name: { 
@@ -107,13 +107,13 @@ export namespace CreateRateplanModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateRateplanModel>) {
         const defaultControls = { 
             code: $controls.code(getControlOptions(options, 'code')),
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
+            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
+        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
 
         return group;

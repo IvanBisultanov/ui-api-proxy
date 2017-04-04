@@ -46,13 +46,13 @@ export class OfferApi {
     /**
      * Get offers for one specifc stay
      * Get offers for a specific property, arrival and departure date.
-     * @param propertyCode The property code
+     * @param propertyId The property id
      * @param arrival The arrival date
      * @param departure The departure date
      */
-    public ratesV1OffersStayGet(propertyCode: string, arrival: Date, departure: Date, $options?: IRequestOptions)
+    public ratesV1OffersStayGet(propertyId: string, arrival: Date, departure: Date, $options?: IRequestOptions)
         : Observable<models.StayOffersModel | undefined> {
-        return this.ratesV1OffersStayGetWithRawHttp(propertyCode, arrival, departure, $options)
+        return this.ratesV1OffersStayGetWithRawHttp(propertyId, arrival, departure, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -60,13 +60,13 @@ export class OfferApi {
     /**
      * Get offers for one specifc stay
      * Get offers for a specific property, arrival and departure date.
-     * @param propertyCode The property code
+     * @param propertyId The property id
      * @param arrival The arrival date
      * @param departure The departure date
      */
-    public ratesV1OffersStayGetWithRawHttp(propertyCode: string, arrival: Date, departure: Date, $options?: IRequestOptions)
+    public ratesV1OffersStayGetWithRawHttp(propertyId: string, arrival: Date, departure: Date, $options?: IRequestOptions)
         : Observable<ResponseModel<models.StayOffersModel>> {
-        return this.ratesV1OffersStayGetWithHttpInfo(propertyCode, arrival, departure, $options)
+        return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrival, departure, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -74,18 +74,18 @@ export class OfferApi {
     /**
      * Get offers for one specifc stay
      * Get offers for a specific property, arrival and departure date.
-     * @param propertyCode The property code
+     * @param propertyId The property id
      * @param arrival The arrival date
      * @param departure The departure date
      */
-    private ratesV1OffersStayGetWithHttpInfo(propertyCode: string, arrival: Date, departure: Date, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1OffersStayGetWithHttpInfo(propertyId: string, arrival: Date, departure: Date, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/offers/stay';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'propertyCode' is not null or undefined
-        if (propertyCode === null || propertyCode === undefined) {
-            throw new Error('Required parameter propertyCode was null or undefined when calling ratesV1OffersStayGet.');
+        // verify required parameter 'propertyId' is not null or undefined
+        if (propertyId === null || propertyId === undefined) {
+            throw new Error('Required parameter propertyId was null or undefined when calling ratesV1OffersStayGet.');
         }
         // verify required parameter 'arrival' is not null or undefined
         if (arrival === null || arrival === undefined) {
@@ -95,8 +95,8 @@ export class OfferApi {
         if (departure === null || departure === undefined) {
             throw new Error('Required parameter departure was null or undefined when calling ratesV1OffersStayGet.');
         }
-        if (propertyCode !== undefined) {
-            queryParameters.set('propertyCode', <any>propertyCode);
+        if (propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>propertyId);
         }
 
         if (arrival !== undefined) {
@@ -141,7 +141,7 @@ export class OfferApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1OffersStayGetWithHttpInfo(propertyCode, arrival, departure, $options);
+                return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrival, departure, $options);
             }
         )
     }
