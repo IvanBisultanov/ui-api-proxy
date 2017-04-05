@@ -105,7 +105,7 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      */
     public ratesV1RatePlansPost(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
-        : Observable<void> {
+        : Observable<models.RateplanCreatedModel | undefined> {
         return this.ratesV1RatePlansPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -173,7 +173,7 @@ export class RateplanApi {
      * @param requestBody The definition of the rateplan.
      */
     public ratesV1RatePlansPostWithRawHttp(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<void>> {
+        : Observable<ResponseModel<models.RateplanCreatedModel>> {
         return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -473,6 +473,9 @@ export class RateplanApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
         ];
 
         // authentication (oauth2) required

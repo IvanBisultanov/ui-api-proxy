@@ -82,7 +82,7 @@ export class ReservationApi {
      * @param requestBody The definition of the reservation.
      */
     public bookingsV1ReservationsPost(requestBody: models.CreateReservationModel, $options?: IRequestOptions)
-        : Observable<void> {
+        : Observable<models.ReservationCreatedModel | undefined> {
         return this.bookingsV1ReservationsPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -127,7 +127,7 @@ export class ReservationApi {
      * @param requestBody The definition of the reservation.
      */
     public bookingsV1ReservationsPostWithRawHttp(requestBody: models.CreateReservationModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<void>> {
+        : Observable<ResponseModel<models.ReservationCreatedModel>> {
         return this.bookingsV1ReservationsPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -320,6 +320,9 @@ export class ReservationApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
         ];
 
         // authentication (oauth2) required

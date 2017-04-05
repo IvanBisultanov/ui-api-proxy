@@ -5,6 +5,7 @@ export * from './EmbeddedUnitTypeModel';
 export * from './Link';
 export * from './MessageItemCollection';
 export * from './ReplaceReservationModel';
+export * from './ReservationCreatedModel';
 export * from './ReservationItemModel';
 export * from './ReservationListModel';
 export * from './ReservationModel';

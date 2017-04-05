@@ -5,6 +5,7 @@ export * from './EmbeddedUnitTypeModel';
 export * from './Link';
 export * from './MessageItemCollection';
 export * from './OfferModel';
+export * from './RateplanCreatedModel';
 export * from './RateplanItemModel';
 export * from './RateplanListModel';
 export * from './RateplanModel';

@@ -106,7 +106,7 @@ export class UnitTypeApi {
      * @param requestBody The definition of the unit type.
      */
     public inventoryV1UnitTypesPost(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions)
-        : Observable<void> {
+        : Observable<models.UnitTypeCreatedModel | undefined> {
         return this.inventoryV1UnitTypesPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -175,7 +175,7 @@ export class UnitTypeApi {
      * @param requestBody The definition of the unit type.
      */
     public inventoryV1UnitTypesPostWithRawHttp(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<void>> {
+        : Observable<ResponseModel<models.UnitTypeCreatedModel>> {
         return this.inventoryV1UnitTypesPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -480,6 +480,9 @@ export class UnitTypeApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
         ];
 
         // authentication (oauth2) required

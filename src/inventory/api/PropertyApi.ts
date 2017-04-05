@@ -94,7 +94,7 @@ export class PropertyApi {
      * @param requestBody The definition of the property.
      */
     public inventoryV1PropertiesPost(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
-        : Observable<void> {
+        : Observable<models.PropertyCreatedModel | undefined> {
         return this.inventoryV1PropertiesPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -151,7 +151,7 @@ export class PropertyApi {
      * @param requestBody The definition of the property.
      */
     public inventoryV1PropertiesPostWithRawHttp(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<void>> {
+        : Observable<ResponseModel<models.PropertyCreatedModel>> {
         return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -400,6 +400,9 @@ export class PropertyApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
         ];
 
         // authentication (oauth2) required
