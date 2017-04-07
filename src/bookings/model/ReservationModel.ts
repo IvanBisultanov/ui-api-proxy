@@ -19,7 +19,25 @@ import { ResponseModel }                                                     fro
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface ReservationModel {
+    /**
+     * Reservation Id
+     */
     id?: number;
+
+    /**
+     * State of the reservation
+     */
+    state?: ReservationModel.StateEnum;
+
+    /**
+     * Time of check-in
+     */
+    checkInTime?: Date;
+
+    /**
+     * Time of check-out
+     */
+    checkOutTime?: Date;
 
     /**
      * Property
@@ -117,12 +135,25 @@ export interface ReservationModel {
     countryCode?: string;
 
 }
+export namespace ReservationModel {
+    export enum StateEnum {
+        Confirmed = <any> 'confirmed',
+        InHouse = <any> 'inHouse',
+        CheckedOut = <any> 'checkedOut'
+    }
+}
 
 export type ReservationModelWithRawHttp = ReservationModel & ResponseModel<ReservationModel>;
 
 export namespace ReservationModel {
     export const $validators = {
         id: (() => [
+        ]),
+        state: (() => [
+        ]),
+        checkInTime: (() => [
+        ]),
+        checkOutTime: (() => [
         ]),
         property: (() => [
         ]),
@@ -166,6 +197,9 @@ export namespace ReservationModel {
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
+        state: ((options?: IControlFactoryOptions<ReservationModel.StateEnum>) => getControl($validators.state(), options)),
+        checkInTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkInTime(), options)),
+        checkOutTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkOutTime(), options)),
         totalAmount: ((options?: IControlFactoryOptions<number>) => getControl($validators.totalAmount(), options)),
         arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
         departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
@@ -187,6 +221,14 @@ export namespace ReservationModel {
     export const $metaData = { 
         id: { 
             type: 'number',
+        } as IApaleoControlMetaData,
+        state: { 
+        } as IApaleoControlMetaData,
+        checkInTime: { 
+            type: 'Date',
+        } as IApaleoControlMetaData,
+        checkOutTime: { 
+            type: 'Date',
         } as IApaleoControlMetaData,
         totalAmount: { 
             type: 'number',
@@ -241,6 +283,9 @@ export namespace ReservationModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
+            state: $controls.state(getControlOptions(options, 'state')),
+            checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
+            checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
@@ -264,6 +309,9 @@ export namespace ReservationModel {
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
+        setMetaData(<any>group.controls.state, $metaData.state);
+        setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
+        setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
         setMetaData(<any>group.controls.totalAmount, $metaData.totalAmount);
         setMetaData(<any>group.controls.arrival, $metaData.arrival);
         setMetaData(<any>group.controls.departure, $metaData.departure);

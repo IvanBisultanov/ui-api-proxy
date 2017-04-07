@@ -44,6 +44,28 @@ export class ReservationApi {
     }
 
     /**
+     * Check-in of a reservation
+     * Use this call to check-in an existing reservation which is in state &#39;Confirmed&#39;.
+     * @param id The id the reservation.
+     */
+    public bookingsV1ReservationsByIdCheckinPost(id: number, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.bookingsV1ReservationsByIdCheckinPostWithRawHttp(id, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Check-out of a reservation
+     * Use this call to check-out an existing reservation which is in state &#39;InHouse&#39;.
+     * @param id The id the reservation.
+     */
+    public bookingsV1ReservationsByIdCheckoutPost(id: number, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
@@ -89,6 +111,28 @@ export class ReservationApi {
 
 
     /**
+     * Check-in of a reservation
+     * Use this call to check-in an existing reservation which is in state &#39;Confirmed&#39;.
+     * @param id The id the reservation.
+     */
+    public bookingsV1ReservationsByIdCheckinPostWithRawHttp(id: number, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Check-out of a reservation
+     * Use this call to check-out an existing reservation which is in state &#39;InHouse&#39;.
+     * @param id The id the reservation.
+     */
+    public bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id: number, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
@@ -132,6 +176,108 @@ export class ReservationApi {
             .map((response: Response) => new ResponseModel(response));
     }
 
+
+    /**
+     * Check-in of a reservation
+     * Use this call to check-in an existing reservation which is in state &#39;Confirmed&#39;.
+     * @param id The id the reservation.
+     */
+    private bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/bookings/v1/reservations/${id}/checkin'
+                    .replace('${' + 'id' + '}', String(id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdCheckinPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id, $options);
+            }
+        )
+    }
+
+    /**
+     * Check-out of a reservation
+     * Use this call to check-out an existing reservation which is in state &#39;InHouse&#39;.
+     * @param id The id the reservation.
+     */
+    private bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/bookings/v1/reservations/${id}/checkout'
+                    .replace('${' + 'id' + '}', String(id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdCheckoutPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id, $options);
+            }
+        )
+    }
 
     /**
      * Get a reservation

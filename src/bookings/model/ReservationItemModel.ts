@@ -25,6 +25,21 @@ export interface ReservationItemModel {
     id?: number;
 
     /**
+     * State of the reservation
+     */
+    state?: ReservationItemModel.StateEnum;
+
+    /**
+     * Time of check-in
+     */
+    checkInTime?: Date;
+
+    /**
+     * Time of check-out
+     */
+    checkOutTime?: Date;
+
+    /**
      * ID of the property
      */
     propertyId?: string;
@@ -125,12 +140,25 @@ export interface ReservationItemModel {
     links?: { [key: string]: models.Link; };
 
 }
+export namespace ReservationItemModel {
+    export enum StateEnum {
+        Confirmed = <any> 'confirmed',
+        InHouse = <any> 'inHouse',
+        CheckedOut = <any> 'checkedOut'
+    }
+}
 
 export type ReservationItemModelWithRawHttp = ReservationItemModel & ResponseModel<ReservationItemModel>;
 
 export namespace ReservationItemModel {
     export const $validators = {
         id: (() => [
+        ]),
+        state: (() => [
+        ]),
+        checkInTime: (() => [
+        ]),
+        checkOutTime: (() => [
         ]),
         propertyId: (() => [
         ]),
@@ -176,6 +204,9 @@ export namespace ReservationItemModel {
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
+        state: ((options?: IControlFactoryOptions<ReservationItemModel.StateEnum>) => getControl($validators.state(), options)),
+        checkInTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkInTime(), options)),
+        checkOutTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkOutTime(), options)),
         propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
         unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
@@ -200,6 +231,14 @@ export namespace ReservationItemModel {
     export const $metaData = { 
         id: { 
             type: 'number',
+        } as IApaleoControlMetaData,
+        state: { 
+        } as IApaleoControlMetaData,
+        checkInTime: { 
+            type: 'Date',
+        } as IApaleoControlMetaData,
+        checkOutTime: { 
+            type: 'Date',
         } as IApaleoControlMetaData,
         propertyId: { 
             type: 'string',
@@ -263,6 +302,9 @@ export namespace ReservationItemModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
+            state: $controls.state(getControlOptions(options, 'state')),
+            checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
+            checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
             propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
             unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
@@ -286,6 +328,9 @@ export namespace ReservationItemModel {
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
+        setMetaData(<any>group.controls.state, $metaData.state);
+        setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
+        setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
         setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
         setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
