@@ -19,8 +19,6 @@ import { ResponseModel }                                                     fro
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface UnitModel {
-    code?: string;
-
     /**
      * The unit id
      */
@@ -62,8 +60,6 @@ export type UnitModelWithRawHttp = UnitModel & ResponseModel<UnitModel>;
 
 export namespace UnitModel {
     export const $validators = {
-        code: (() => [
-        ]),
         id: (() => [
         ]),
         name: (() => [
@@ -81,7 +77,6 @@ export namespace UnitModel {
     };
 
     export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
         minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
@@ -89,9 +84,6 @@ export namespace UnitModel {
     };
 
     export const $metaData = { 
-        code: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         id: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -111,7 +103,6 @@ export namespace UnitModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitModel>) {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
             id: $controls.id(getControlOptions(options, 'id')),
             name: $controls.name(getControlOptions(options, 'name')),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
@@ -121,7 +112,6 @@ export namespace UnitModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.name, $metaData.name);
         setMetaData(<any>group.controls.minPersons, $metaData.minPersons);

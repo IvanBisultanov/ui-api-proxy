@@ -19,8 +19,6 @@ import { ResponseModel }                                                     fro
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
 export interface EmbeddedRateplanModel {
-    propertyCode?: string;
-
     /**
      * The rateplan id
      */
@@ -52,8 +50,6 @@ export type EmbeddedRateplanModelWithRawHttp = EmbeddedRateplanModel & ResponseM
 
 export namespace EmbeddedRateplanModel {
     export const $validators = {
-        propertyCode: (() => [
-        ]),
         id: (() => [
         ]),
         code: (() => [
@@ -67,7 +63,6 @@ export namespace EmbeddedRateplanModel {
     };
 
     export const $controls = { 
-        propertyCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyCode(), options)),
         id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
@@ -75,9 +70,6 @@ export namespace EmbeddedRateplanModel {
     };
 
     export const $metaData = { 
-        propertyCode: { 
-            type: 'string',
-        } as IApaleoControlMetaData,
         id: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -94,7 +86,6 @@ export namespace EmbeddedRateplanModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<EmbeddedRateplanModel>) {
         const defaultControls = { 
-            propertyCode: $controls.propertyCode(getControlOptions(options, 'propertyCode')),
             id: $controls.id(getControlOptions(options, 'id')),
             code: $controls.code(getControlOptions(options, 'code')),
             name: $controls.name(getControlOptions(options, 'name')),
@@ -102,7 +93,6 @@ export namespace EmbeddedRateplanModel {
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.propertyCode, $metaData.propertyCode);
         setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.name, $metaData.name);
