@@ -25,9 +25,9 @@ export interface ReservationItemModel {
     id?: number;
 
     /**
-     * State of the reservation
+     * Status of the reservation
      */
-    state?: ReservationItemModel.StateEnum;
+    status?: ReservationItemModel.StatusEnum;
 
     /**
      * Time of check-in
@@ -141,7 +141,7 @@ export interface ReservationItemModel {
 
 }
 export namespace ReservationItemModel {
-    export enum StateEnum {
+    export enum StatusEnum {
         Confirmed = <any> 'confirmed',
         InHouse = <any> 'inHouse',
         CheckedOut = <any> 'checkedOut'
@@ -154,7 +154,7 @@ export namespace ReservationItemModel {
     export const $validators = {
         id: (() => [
         ]),
-        state: (() => [
+        status: (() => [
         ]),
         checkInTime: (() => [
         ]),
@@ -204,7 +204,7 @@ export namespace ReservationItemModel {
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
-        state: ((options?: IControlFactoryOptions<ReservationItemModel.StateEnum>) => getControl($validators.state(), options)),
+        status: ((options?: IControlFactoryOptions<ReservationItemModel.StatusEnum>) => getControl($validators.status(), options)),
         checkInTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkInTime(), options)),
         checkOutTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkOutTime(), options)),
         propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
@@ -232,7 +232,7 @@ export namespace ReservationItemModel {
         id: { 
             type: 'number',
         } as IApaleoControlMetaData,
-        state: { 
+        status: { 
         } as IApaleoControlMetaData,
         checkInTime: { 
             type: 'Date',
@@ -302,7 +302,7 @@ export namespace ReservationItemModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>) {
         const defaultControls = { 
             id: $controls.id(getControlOptions(options, 'id')),
-            state: $controls.state(getControlOptions(options, 'state')),
+            status: $controls.status(getControlOptions(options, 'status')),
             checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
             checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
             propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
@@ -328,7 +328,7 @@ export namespace ReservationItemModel {
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.state, $metaData.state);
+        setMetaData(<any>group.controls.status, $metaData.status);
         setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
         setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
         setMetaData(<any>group.controls.propertyId, $metaData.propertyId);

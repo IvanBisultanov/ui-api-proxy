@@ -45,7 +45,7 @@ export class ReservationApi {
 
     /**
      * Check-in of a reservation
-     * Use this call to check-in an existing reservation which is in state &#39;Confirmed&#39;.
+     * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
      * @param id The id the reservation.
      */
     public bookingsV1ReservationsByIdCheckinPost(id: number, $options?: IRequestOptions)
@@ -56,7 +56,7 @@ export class ReservationApi {
 
     /**
      * Check-out of a reservation
-     * Use this call to check-out an existing reservation which is in state &#39;InHouse&#39;.
+     * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
      * @param id The id the reservation.
      */
     public bookingsV1ReservationsByIdCheckoutPost(id: number, $options?: IRequestOptions)
@@ -112,7 +112,7 @@ export class ReservationApi {
 
     /**
      * Check-in of a reservation
-     * Use this call to check-in an existing reservation which is in state &#39;Confirmed&#39;.
+     * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
      * @param id The id the reservation.
      */
     public bookingsV1ReservationsByIdCheckinPostWithRawHttp(id: number, $options?: IRequestOptions)
@@ -123,7 +123,7 @@ export class ReservationApi {
 
     /**
      * Check-out of a reservation
-     * Use this call to check-out an existing reservation which is in state &#39;InHouse&#39;.
+     * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
      * @param id The id the reservation.
      */
     public bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id: number, $options?: IRequestOptions)
@@ -179,7 +179,7 @@ export class ReservationApi {
 
     /**
      * Check-in of a reservation
-     * Use this call to check-in an existing reservation which is in state &#39;Confirmed&#39;.
+     * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
      * @param id The id the reservation.
      */
     private bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
@@ -230,7 +230,7 @@ export class ReservationApi {
 
     /**
      * Check-out of a reservation
-     * Use this call to check-out an existing reservation which is in state &#39;InHouse&#39;.
+     * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
      * @param id The id the reservation.
      */
     private bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
