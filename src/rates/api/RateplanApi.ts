@@ -92,10 +92,11 @@ export class RateplanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
+     * @param propertyId Return rate plans for specific property
      */
-    public ratesV1RatePlansGet($options?: IRequestOptions)
+    public ratesV1RatePlansGet(propertyId?: string, $options?: IRequestOptions)
         : Observable<models.RateplanListModel | undefined> {
-        return this.ratesV1RatePlansGetWithRawHttp($options)
+        return this.ratesV1RatePlansGetWithRawHttp(propertyId, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -160,10 +161,11 @@ export class RateplanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
+     * @param propertyId Return rate plans for specific property
      */
-    public ratesV1RatePlansGetWithRawHttp($options?: IRequestOptions)
+    public ratesV1RatePlansGetWithRawHttp(propertyId?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RateplanListModel>> {
-        return this.ratesV1RatePlansGetWithHttpInfo($options)
+        return this.ratesV1RatePlansGetWithHttpInfo(propertyId, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -405,12 +407,17 @@ export class RateplanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
+     * @param propertyId Return rate plans for specific property
      */
-    private ratesV1RatePlansGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansGetWithHttpInfo(propertyId?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>propertyId);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -445,7 +452,7 @@ export class RateplanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansGetWithHttpInfo($options);
+                return this.ratesV1RatePlansGetWithHttpInfo(propertyId, $options);
             }
         )
     }
