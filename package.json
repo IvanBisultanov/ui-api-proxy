@@ -4,27 +4,28 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@angular/compiler-cli": "^2.4.8",
-    "@angular/core": "^2.4.8",
-    "@angular/forms": "^2.4.8",
-    "@angular/http": "^2.4.8",
-    "@angular/platform-browser": "^2.4.8",
-    "@angular/platform-server": "^2.4.8",
+    "@angular/animations": "^4.0.1",
+    "@angular/compiler-cli": "^4.0.1",
+    "@angular/core": "^4.0.1",
+    "@angular/forms": "^4.0.1",
+    "@angular/http": "^4.0.1",
+    "@angular/platform-browser": "^4.0.1",
+    "@angular/platform-server": "^4.0.1",
     "rxjs": "^5.1.0",
     "tslib": "^1.5.0",
-    "zone.js": "^0.7.6"
+    "zone.js": "^0.8.5"
   },
   "devDependencies": {
-    "@angular/common": "^2.4.8",
-    "@angular/compiler": "^2.4.8",
-    "@angular/compiler-cli": "^2.4.8",
-    "@angular/platform-server": "^2.4.8",
-    "typescript": "^2.1.5"
+    "@angular/common": "^4.0.1",
+    "@angular/compiler": "^4.0.1",
+    "@angular/compiler-cli": "^4.0.1",
+    "@angular/platform-server": "^4.0.1",
+    "typescript": "^2.2.2"
   },
   "scripts": {
     "postinstall": "ngc -p src"
   },
   "author": "Apaleo GmbH",
-  "private": true,
+  "license": "Apache-2.0",
   "typings": "index.d.ts"
 }
