@@ -18,82 +18,35 @@ import { IApaleoAbstractControl, IApaleoControlMetaData }                    fro
 import { ResponseModel }                                                     from '../../models';
 import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
 
-export interface CreatePropertyModel {
-    /**
-     * The code for the property that can be shown in reports and table views
-     */
-    code: string;
-
-    /**
-     * The name for the property
-     */
-    name: { [key: string]: string; };
-
-    /**
-     * The description for the property
-     */
-    description: { [key: string]: string; };
-
-    /**
-     * The location of the property
-     */
-    location: models.ReplaceLocationModel;
-
+export interface PropertySettingsModel {
     /**
      * The default check-in time
      */
-    defaultCheckInTime: string;
+    defaultCheckInTime?: string;
 
     /**
      * The default check-out time
      */
-    defaultCheckOutTime: string;
+    defaultCheckOutTime?: string;
 
 }
 
-export type CreatePropertyModelWithRawHttp = CreatePropertyModel & ResponseModel<CreatePropertyModel>;
+export type PropertySettingsModelWithRawHttp = PropertySettingsModel & ResponseModel<PropertySettingsModel>;
 
-export namespace CreatePropertyModel {
+export namespace PropertySettingsModel {
     export const $validators = {
-        code: (() => [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(10),
-        ]),
-        name: (() => [
-            Validators.required,
-        ]),
-        description: (() => [
-            Validators.required,
-        ]),
-        location: (() => [
-            Validators.required,
-        ]),
         defaultCheckInTime: (() => [
-            Validators.required,
         ]),
         defaultCheckOutTime: (() => [
-            Validators.required,
         ]),
     };
 
     export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
         defaultCheckInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckInTime(), options)),
         defaultCheckOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckOutTime(), options)),
     };
 
     export const $metaData = { 
-        code: { 
-            maxLength: 10,
-            type: 'string',
-        } as IApaleoControlMetaData,
-        name: { 
-            type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        description: { 
-            type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
         defaultCheckInTime: { 
             type: 'string',
         } as IApaleoControlMetaData,
@@ -102,16 +55,13 @@ export namespace CreatePropertyModel {
         } as IApaleoControlMetaData,
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreatePropertyModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertySettingsModel>) {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
-            location: models.ReplaceLocationModel.$buildForm(fb),
             defaultCheckInTime: $controls.defaultCheckInTime(getControlOptions(options, 'defaultCheckInTime')),
             defaultCheckOutTime: $controls.defaultCheckOutTime(getControlOptions(options, 'defaultCheckOutTime')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
-        setMetaData(<any>group.controls.code, $metaData.code);
         setMetaData(<any>group.controls.defaultCheckInTime, $metaData.defaultCheckInTime);
         setMetaData(<any>group.controls.defaultCheckOutTime, $metaData.defaultCheckOutTime);
 

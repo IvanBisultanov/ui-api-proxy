@@ -47,6 +47,16 @@ export interface PropertyModel {
      */
     location?: models.LocationModel;
 
+    /**
+     * The default check-in time
+     */
+    defaultCheckInTime?: string;
+
+    /**
+     * The default check-out time
+     */
+    defaultCheckOutTime?: string;
+
 }
 
 export type PropertyModelWithRawHttp = PropertyModel & ResponseModel<PropertyModel>;
@@ -63,11 +73,17 @@ export namespace PropertyModel {
         ]),
         location: (() => [
         ]),
+        defaultCheckInTime: (() => [
+        ]),
+        defaultCheckOutTime: (() => [
+        ]),
     };
 
     export const $controls = { 
         id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
         code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
+        defaultCheckInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckInTime(), options)),
+        defaultCheckOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckOutTime(), options)),
     };
 
     export const $metaData = { 
@@ -83,6 +99,12 @@ export namespace PropertyModel {
         description: { 
             type: '{ [key: string]: string; }',
         } as IApaleoControlMetaData,
+        defaultCheckInTime: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
+        defaultCheckOutTime: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyModel>) {
@@ -90,11 +112,15 @@ export namespace PropertyModel {
             id: $controls.id(getControlOptions(options, 'id')),
             code: $controls.code(getControlOptions(options, 'code')),
             location: models.LocationModel.$buildForm(fb),
+            defaultCheckInTime: $controls.defaultCheckInTime(getControlOptions(options, 'defaultCheckInTime')),
+            defaultCheckOutTime: $controls.defaultCheckOutTime(getControlOptions(options, 'defaultCheckOutTime')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
         setMetaData(<any>group.controls.id, $metaData.id);
         setMetaData(<any>group.controls.code, $metaData.code);
+        setMetaData(<any>group.controls.defaultCheckInTime, $metaData.defaultCheckInTime);
+        setMetaData(<any>group.controls.defaultCheckOutTime, $metaData.defaultCheckOutTime);
 
         return group;
     }
