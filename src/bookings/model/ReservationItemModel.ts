@@ -55,6 +55,11 @@ export interface ReservationItemModel {
     unitTypeId?: string;
 
     /**
+     * ID of the unit
+     */
+    unitId?: string;
+
+    /**
      * Total amount
      */
     totalAmount?: number;
@@ -166,6 +171,8 @@ export namespace ReservationItemModel {
         ]),
         unitTypeId: (() => [
         ]),
+        unitId: (() => [
+        ]),
         totalAmount: (() => [
         ]),
         arrival: (() => [
@@ -210,6 +217,7 @@ export namespace ReservationItemModel {
         propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
         rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
         unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
+        unitId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitId(), options)),
         totalAmount: ((options?: IControlFactoryOptions<number>) => getControl($validators.totalAmount(), options)),
         arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
         departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
@@ -247,6 +255,9 @@ export namespace ReservationItemModel {
             type: 'string',
         } as IApaleoControlMetaData,
         unitTypeId: { 
+            type: 'string',
+        } as IApaleoControlMetaData,
+        unitId: { 
             type: 'string',
         } as IApaleoControlMetaData,
         totalAmount: { 
@@ -308,6 +319,7 @@ export namespace ReservationItemModel {
             propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
             rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
             unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
+            unitId: $controls.unitId(getControlOptions(options, 'unitId')),
             totalAmount: $controls.totalAmount(getControlOptions(options, 'totalAmount')),
             arrival: $controls.arrival(getControlOptions(options, 'arrival')),
             departure: $controls.departure(getControlOptions(options, 'departure')),
@@ -334,6 +346,7 @@ export namespace ReservationItemModel {
         setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
         setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
         setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
+        setMetaData(<any>group.controls.unitId, $metaData.unitId);
         setMetaData(<any>group.controls.totalAmount, $metaData.totalAmount);
         setMetaData(<any>group.controls.arrival, $metaData.arrival);
         setMetaData(<any>group.controls.departure, $metaData.departure);

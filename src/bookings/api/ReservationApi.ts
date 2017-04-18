@@ -89,6 +89,18 @@ export class ReservationApi {
     }
 
     /**
+     * Assign a unit to a reservation
+     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
+     * @param reservationId The id of the reservation.
+     * @param requestBody The definition of a unit to be assigned.
+     */
+    public bookingsV1ReservationsByReservationIdAssignUnitPost(reservationId: number, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.bookingsV1ReservationsByReservationIdAssignUnitPostWithRawHttp(reservationId, requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
      * Get all reservations
      * Use this tp get all reservations.
      */
@@ -152,6 +164,18 @@ export class ReservationApi {
     public bookingsV1ReservationsByIdPutWithRawHttp(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Assign a unit to a reservation
+     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
+     * @param reservationId The id of the reservation.
+     * @param requestBody The definition of a unit to be assigned.
+     */
+    public bookingsV1ReservationsByReservationIdAssignUnitPostWithRawHttp(reservationId: number, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.bookingsV1ReservationsByReservationIdAssignUnitPostWithHttpInfo(reservationId, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -391,6 +415,68 @@ export class ReservationApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options);
+            }
+        )
+    }
+
+    /**
+     * Assign a unit to a reservation
+     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
+     * @param reservationId The id of the reservation.
+     * @param requestBody The definition of a unit to be assigned.
+     */
+    private bookingsV1ReservationsByReservationIdAssignUnitPostWithHttpInfo(reservationId: number, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/bookings/v1/reservations/${reservationId}/assign-unit'
+                    .replace('${' + 'reservationId' + '}', String(reservationId));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'reservationId' is not null or undefined
+        if (reservationId === null || reservationId === undefined) {
+            throw new Error('Required parameter reservationId was null or undefined when calling bookingsV1ReservationsByReservationIdAssignUnitPost.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (requestBody === null || requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByReservationIdAssignUnitPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.bookingsV1ReservationsByReservationIdAssignUnitPostWithHttpInfo(reservationId, requestBody, $options);
             }
         )
     }

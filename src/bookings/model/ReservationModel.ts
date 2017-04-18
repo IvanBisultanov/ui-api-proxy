@@ -40,6 +40,11 @@ export interface ReservationModel {
     checkOutTime?: Date;
 
     /**
+     * Assigned unit
+     */
+    unit?: models.EmbeddedUnitModel;
+
+    /**
      * Property
      */
     property?: models.EmbeddedPropertyModel;
@@ -154,6 +159,8 @@ export namespace ReservationModel {
         checkInTime: (() => [
         ]),
         checkOutTime: (() => [
+        ]),
+        unit: (() => [
         ]),
         property: (() => [
         ]),
@@ -286,6 +293,7 @@ export namespace ReservationModel {
             status: $controls.status(getControlOptions(options, 'status')),
             checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
             checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
+            unit: models.EmbeddedUnitModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
