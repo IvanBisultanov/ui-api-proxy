@@ -1,4 +1,4 @@
-import { ValidatorFn, FormGroup } from '@angular/forms';
+import { ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
 
 export type Control<T> = [T | undefined, ValidatorFn | undefined];
 
@@ -7,24 +7,12 @@ export interface IControlFactoryOptions<T> {
     defaultValue?: T;
 }
 
-export type AdditionalValidators<T> = {
-    [P in keyof T]?: ValidatorFn[];
-}
-
-export type OverwriteControls<T> = {
-    [P in keyof T]?: Control<T[P]> | FormGroup
-}
-
-export type FormControlFactoryOptions<T> = {
-    [P in keyof T]?: IControlFactoryOptions<T[P]>
-}
-
 export interface IBuildFormOptions<T> {
-    overwriteControls?: OverwriteControls<T>;
+    overwriteControls?: {[P in keyof T]?: Control<T[P]> | FormGroup};
     additionalControls?: { [name: string]: (Control<any> | FormGroup | boolean) }
     defaultValues?: Partial<T>;
-    additionalValidators?: AdditionalValidators<T>;
-    controlOptions?: FormControlFactoryOptions<T>;
+    additionalValidators?: {[P in keyof T]?: ValidatorFn[]};
+    controlOptions?: {[P in keyof T]?: IControlFactoryOptions<T[P]>};
     skipControls?: (keyof T)[];
     onlyInclude?: (keyof T)[];
 }
@@ -33,11 +21,17 @@ export type FormGroupControls<T> = {
     [P in keyof T]?: [T[P] | undefined, ValidatorFn] | FormGroup
 }
 
-export interface IApaleoAbstractControl {
-    apaleoMetaData: IApaleoControlMetaData;
+export interface IApaleoAbstractControl extends AbstractControl {
+    apaleoMetaData: IApaleoPropertyMetaData;
 }
 
-export interface IApaleoControlMetaData {
+export interface IApaleoPropertyMetaData {
+    isRequired?: boolean;
+    minLength?: number;
     maxLength?: number;
     type?: string;
+    isEnum?: boolean;
+    isPrimitiveType?: boolean;
+    isListContainer?: boolean;
+    isMapContainer?: boolean;
 }
