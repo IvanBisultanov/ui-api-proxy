@@ -25,6 +25,11 @@ export interface OfferModel {
     unitType?: models.EmbeddedUnitTypeModel;
 
     /**
+     * The number of available units for that offer
+     */
+    availableUnits?: number;
+
+    /**
      * The rate plan for this offer
      */
     rateplan?: models.EmbeddedRateplanModel;
@@ -42,6 +47,8 @@ export namespace OfferModel {
     export const $validators = {
         unitType: (() => [
         ]),
+        availableUnits: (() => [
+        ]),
         rateplan: (() => [
         ]),
         price: (() => [
@@ -49,10 +56,14 @@ export namespace OfferModel {
     };
 
     export const $controls = { 
+        availableUnits: ((options?: IControlFactoryOptions<number>) => getControl($validators.availableUnits(), options)),
         price: ((options?: IControlFactoryOptions<number>) => getControl($validators.price(), options)),
     };
 
     export const $metaData = { 
+        availableUnits: { 
+            type: 'number',
+        } as IApaleoControlMetaData,
         price: { 
             type: 'number',
         } as IApaleoControlMetaData,
@@ -61,11 +72,13 @@ export namespace OfferModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferModel>) {
         const defaultControls = { 
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
+            availableUnits: $controls.availableUnits(getControlOptions(options, 'availableUnits')),
             rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
             price: $controls.price(getControlOptions(options, 'price')),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options)!);
 
+        setMetaData(<any>group.controls.availableUnits, $metaData.availableUnits);
         setMetaData(<any>group.controls.price, $metaData.price);
 
         return group;
