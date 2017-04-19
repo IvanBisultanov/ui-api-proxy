@@ -26,7 +26,7 @@ node('nodejs') {
         if (statusCode == '200') {
           // rebuild ui/master after new proxy is out there
           build job: '/apaleo/ui/master', quietPeriod: 30, wait: false
-          slackSend (color: '#8bc34a', message: "Danone - don't forget to update node_modules :wink:", channel: '#dev-tech')
+          slackSend (color: '#8bc34a', message: "Danone - don't forget to update node_modules :wink:", channel: '#dev-front-end')
         } else  {
           sh "curl 'https://api.github.com/repos/apaleo/ui-api-proxy/pulls/${prId}/merge' \
               -XPUT \

@@ -28,7 +28,7 @@ node('nodejs') {
               returnStdout: true,
               script: "hub pull-request -m '${branch}'").trim()
 
-            slackSend (color: '#b3d4fc', message: "Maybe merge? - ${prUrl}", channel: '#dev-tech')
+            slackSend (color: '#b3d4fc', message: "Maybe merge? - ${prUrl}", channel: '#dev-front-end')
           }
         }
         catch (e) {
@@ -71,6 +71,9 @@ def notifyBuild(String buildStatus = 'STARTED') {
     colorCode = '#00FF00'
   } else {
     colorCode = '#FF0000'
+    if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'release') {
+      slackSend (color: colorCode, message: summary, channel: '#dev-front-end')
+    }
   }
 
   slackSend (color: colorCode, message: summary, channel: '#ci')
