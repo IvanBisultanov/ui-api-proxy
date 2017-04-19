@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface StayOffersModel {
     /**
@@ -44,41 +43,32 @@ export interface StayOffersModel {
 export type StayOffersModelWithRawHttp = StayOffersModel & ResponseModel<StayOffersModel>;
 
 export namespace StayOffersModel {
-    export const $validators = {
-        property: (() => [
-        ]),
-        arrival: (() => [
-        ]),
-        departure: (() => [
-        ]),
-        offers: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
-        departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
-    };
-
     export const $metaData = { 
-        arrival: { 
+        property: Object.freeze({ 
+            type: 'models.EmbeddedPropertyModel',
+        } as IApaleoPropertyMetaData),
+        arrival: Object.freeze({ 
             type: 'Date',
-        } as IApaleoControlMetaData,
-        departure: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        departure: Object.freeze({ 
             type: 'Date',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        offers: Object.freeze({ 
+            type: 'Array<models.OfferModel>',
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<StayOffersModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<StayOffersModel>): FormGroup {
         const defaultControls = { 
             property: models.EmbeddedPropertyModel.$buildForm(fb),
-            arrival: $controls.arrival(getControlOptions(options, 'arrival')),
-            departure: $controls.departure(getControlOptions(options, 'departure')),
+            arrival: getControl($metaData.arrival, options, 'arrival'),
+            departure: getControl($metaData.departure, options, 'departure'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.arrival, $metaData.arrival);
-        setMetaData(<any>group.controls.departure, $metaData.departure);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

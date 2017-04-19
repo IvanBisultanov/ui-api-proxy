@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface OfferModel {
     /**
@@ -44,42 +43,32 @@ export interface OfferModel {
 export type OfferModelWithRawHttp = OfferModel & ResponseModel<OfferModel>;
 
 export namespace OfferModel {
-    export const $validators = {
-        unitType: (() => [
-        ]),
-        availableUnits: (() => [
-        ]),
-        rateplan: (() => [
-        ]),
-        price: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        availableUnits: ((options?: IControlFactoryOptions<number>) => getControl($validators.availableUnits(), options)),
-        price: ((options?: IControlFactoryOptions<number>) => getControl($validators.price(), options)),
-    };
-
     export const $metaData = { 
-        availableUnits: { 
+        unitType: Object.freeze({ 
+            type: 'models.EmbeddedUnitTypeModel',
+        } as IApaleoPropertyMetaData),
+        availableUnits: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
-        price: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        rateplan: Object.freeze({ 
+            type: 'models.EmbeddedRateplanModel',
+        } as IApaleoPropertyMetaData),
+        price: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferModel>): FormGroup {
         const defaultControls = { 
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
-            availableUnits: $controls.availableUnits(getControlOptions(options, 'availableUnits')),
+            availableUnits: getControl($metaData.availableUnits, options, 'availableUnits'),
             rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
-            price: $controls.price(getControlOptions(options, 'price')),
+            price: getControl($metaData.price, options, 'price'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.availableUnits, $metaData.availableUnits);
-        setMetaData(<any>group.controls.price, $metaData.price);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

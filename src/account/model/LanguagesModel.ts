@@ -15,11 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify the language settings for the account
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface LanguagesModel {
     /**
@@ -32,22 +31,18 @@ export interface LanguagesModel {
 export type LanguagesModelWithRawHttp = LanguagesModel & ResponseModel<LanguagesModel>;
 
 export namespace LanguagesModel {
-    export const $validators = {
-        languages: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-    };
-
     export const $metaData = { 
+        languages: Object.freeze({ 
+            type: 'Array<models.LanguageModel>',
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguagesModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguagesModel>): FormGroup {
         const defaultControls = { 
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

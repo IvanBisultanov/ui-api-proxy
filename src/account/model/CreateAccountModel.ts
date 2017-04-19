@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface CreateAccountModel {
     /**
@@ -54,76 +53,53 @@ export interface CreateAccountModel {
 export type CreateAccountModelWithRawHttp = CreateAccountModel & ResponseModel<CreateAccountModel>;
 
 export namespace CreateAccountModel {
-    export const $validators = {
-        code: (() => [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(10),
-        ]),
-        name: (() => [
-            Validators.required,
-            Validators.maxLength(40),
-        ]),
-        description: (() => [
-            Validators.required,
-        ]),
-        defaultLanguage: (() => [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(2),
-        ]),
-        logoUrl: (() => [
-        ]),
-        location: (() => [
-            Validators.required,
-        ]),
-    };
-
-    export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
-        description: ((options?: IControlFactoryOptions<string>) => getControl($validators.description(), options)),
-        defaultLanguage: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultLanguage(), options)),
-        logoUrl: ((options?: IControlFactoryOptions<string>) => getControl($validators.logoUrl(), options)),
-    };
-
     export const $metaData = { 
-        code: { 
+        code: Object.freeze({ 
+            isRequired: true,
+            minLength: 3,
             maxLength: 10,
             type: 'string',
-        } as IApaleoControlMetaData,
-        name: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        name: Object.freeze({ 
+            isRequired: true,
             maxLength: 40,
             type: 'string',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        defaultLanguage: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        defaultLanguage: Object.freeze({ 
+            isRequired: true,
+            minLength: 2,
             maxLength: 2,
             type: 'string',
-        } as IApaleoControlMetaData,
-        logoUrl: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        logoUrl: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        location: Object.freeze({ 
+            isRequired: true,
+            type: 'models.ReplaceLocationModel',
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateAccountModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateAccountModel>): FormGroup {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
-            name: $controls.name(getControlOptions(options, 'name')),
-            description: $controls.description(getControlOptions(options, 'description')),
-            defaultLanguage: $controls.defaultLanguage(getControlOptions(options, 'defaultLanguage')),
-            logoUrl: $controls.logoUrl(getControlOptions(options, 'logoUrl')),
+            code: getControl($metaData.code, options, 'code'),
+            name: getControl($metaData.name, options, 'name'),
+            description: getControl($metaData.description, options, 'description'),
+            defaultLanguage: getControl($metaData.defaultLanguage, options, 'defaultLanguage'),
+            logoUrl: getControl($metaData.logoUrl, options, 'logoUrl'),
             location: models.ReplaceLocationModel.$buildForm(fb),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.name, $metaData.name);
-        setMetaData(<any>group.controls.description, $metaData.description);
-        setMetaData(<any>group.controls.defaultLanguage, $metaData.defaultLanguage);
-        setMetaData(<any>group.controls.logoUrl, $metaData.logoUrl);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

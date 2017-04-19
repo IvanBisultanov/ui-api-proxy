@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface ReplaceRateplanModel {
     /**
@@ -44,46 +43,37 @@ export interface ReplaceRateplanModel {
 export type ReplaceRateplanModelWithRawHttp = ReplaceRateplanModel & ResponseModel<ReplaceRateplanModel>;
 
 export namespace ReplaceRateplanModel {
-    export const $validators = {
-        name: (() => [
-            Validators.required,
-        ]),
-        description: (() => [
-            Validators.required,
-        ]),
-        defaultPrice: (() => [
-            Validators.required,
-        ]),
-        unitTypeIds: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
-    };
-
     export const $metaData = { 
-        name: { 
+        name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        defaultPrice: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        defaultPrice: Object.freeze({ 
+            isRequired: true,
             type: 'number',
-        } as IApaleoControlMetaData,
-        unitTypeIds: { 
-            type: 'Array&lt;string&gt;',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        unitTypeIds: Object.freeze({ 
+            type: 'Array<string>',
+            isPrimitiveType: true,
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceRateplanModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceRateplanModel>): FormGroup {
         const defaultControls = { 
-            defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
+            defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

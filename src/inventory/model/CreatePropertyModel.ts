@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface CreatePropertyModel {
     /**
@@ -54,66 +53,51 @@ export interface CreatePropertyModel {
 export type CreatePropertyModelWithRawHttp = CreatePropertyModel & ResponseModel<CreatePropertyModel>;
 
 export namespace CreatePropertyModel {
-    export const $validators = {
-        code: (() => [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(10),
-        ]),
-        name: (() => [
-            Validators.required,
-        ]),
-        description: (() => [
-            Validators.required,
-        ]),
-        location: (() => [
-            Validators.required,
-        ]),
-        defaultCheckInTime: (() => [
-            Validators.required,
-        ]),
-        defaultCheckOutTime: (() => [
-            Validators.required,
-        ]),
-    };
-
-    export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        defaultCheckInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckInTime(), options)),
-        defaultCheckOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckOutTime(), options)),
-    };
-
     export const $metaData = { 
-        code: { 
+        code: Object.freeze({ 
+            isRequired: true,
+            minLength: 3,
             maxLength: 10,
             type: 'string',
-        } as IApaleoControlMetaData,
-        name: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        defaultCheckInTime: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        location: Object.freeze({ 
+            isRequired: true,
+            type: 'models.ReplaceLocationModel',
+        } as IApaleoPropertyMetaData),
+        defaultCheckInTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        defaultCheckOutTime: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        defaultCheckOutTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreatePropertyModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreatePropertyModel>): FormGroup {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
+            code: getControl($metaData.code, options, 'code'),
             location: models.ReplaceLocationModel.$buildForm(fb),
-            defaultCheckInTime: $controls.defaultCheckInTime(getControlOptions(options, 'defaultCheckInTime')),
-            defaultCheckOutTime: $controls.defaultCheckOutTime(getControlOptions(options, 'defaultCheckOutTime')),
+            defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
+            defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.defaultCheckInTime, $metaData.defaultCheckInTime);
-        setMetaData(<any>group.controls.defaultCheckOutTime, $metaData.defaultCheckOutTime);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

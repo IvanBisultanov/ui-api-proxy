@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface UnitModel {
     /**
@@ -59,63 +58,47 @@ export interface UnitModel {
 export type UnitModelWithRawHttp = UnitModel & ResponseModel<UnitModel>;
 
 export namespace UnitModel {
-    export const $validators = {
-        id: (() => [
-        ]),
-        name: (() => [
-        ]),
-        description: (() => [
-        ]),
-        property: (() => [
-        ]),
-        unitType: (() => [
-        ]),
-        minPersons: (() => [
-        ]),
-        maxPersons: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
-        name: ((options?: IControlFactoryOptions<string>) => getControl($validators.name(), options)),
-        minPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.minPersons(), options)),
-        maxPersons: ((options?: IControlFactoryOptions<number>) => getControl($validators.maxPersons(), options)),
-    };
-
     export const $metaData = { 
-        id: { 
+        id: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        name: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        name: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        minPersons: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        property: Object.freeze({ 
+            type: 'models.EmbeddedPropertyModel',
+        } as IApaleoPropertyMetaData),
+        unitType: Object.freeze({ 
+            type: 'models.EmbeddedUnitTypeModel',
+        } as IApaleoPropertyMetaData),
+        minPersons: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
-        maxPersons: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        maxPersons: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitModel>): FormGroup {
         const defaultControls = { 
-            id: $controls.id(getControlOptions(options, 'id')),
-            name: $controls.name(getControlOptions(options, 'name')),
+            id: getControl($metaData.id, options, 'id'),
+            name: getControl($metaData.name, options, 'name'),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
-            minPersons: $controls.minPersons(getControlOptions(options, 'minPersons')),
-            maxPersons: $controls.maxPersons(getControlOptions(options, 'maxPersons')),
+            minPersons: getControl($metaData.minPersons, options, 'minPersons'),
+            maxPersons: getControl($metaData.maxPersons, options, 'maxPersons'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.name, $metaData.name);
-        setMetaData(<any>group.controls.minPersons, $metaData.minPersons);
-        setMetaData(<any>group.controls.maxPersons, $metaData.maxPersons);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

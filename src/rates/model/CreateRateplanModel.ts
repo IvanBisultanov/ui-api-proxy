@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface CreateRateplanModel {
     /**
@@ -54,67 +53,51 @@ export interface CreateRateplanModel {
 export type CreateRateplanModelWithRawHttp = CreateRateplanModel & ResponseModel<CreateRateplanModel>;
 
 export namespace CreateRateplanModel {
-    export const $validators = {
-        code: (() => [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(10),
-        ]),
-        propertyId: (() => [
-            Validators.required,
-        ]),
-        name: (() => [
-            Validators.required,
-        ]),
-        description: (() => [
-            Validators.required,
-        ]),
-        defaultPrice: (() => [
-            Validators.required,
-        ]),
-        unitTypeIds: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
-        defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
-    };
-
     export const $metaData = { 
-        code: { 
+        code: Object.freeze({ 
+            isRequired: true,
+            minLength: 3,
             maxLength: 10,
             type: 'string',
-        } as IApaleoControlMetaData,
-        propertyId: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        propertyId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        name: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        defaultPrice: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        defaultPrice: Object.freeze({ 
+            isRequired: true,
             type: 'number',
-        } as IApaleoControlMetaData,
-        unitTypeIds: { 
-            type: 'Array&lt;string&gt;',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        unitTypeIds: Object.freeze({ 
+            type: 'Array<string>',
+            isPrimitiveType: true,
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateRateplanModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateRateplanModel>): FormGroup {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
-            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
-            defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
+            code: getControl($metaData.code, options, 'code'),
+            propertyId: getControl($metaData.propertyId, options, 'propertyId'),
+            defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
-        setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

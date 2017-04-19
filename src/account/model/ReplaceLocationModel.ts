@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface ReplaceLocationModel {
     street: string;
@@ -32,59 +31,40 @@ export interface ReplaceLocationModel {
 export type ReplaceLocationModelWithRawHttp = ReplaceLocationModel & ResponseModel<ReplaceLocationModel>;
 
 export namespace ReplaceLocationModel {
-    export const $validators = {
-        street: (() => [
-            Validators.required,
-        ]),
-        postalCode: (() => [
-            Validators.required,
-        ]),
-        city: (() => [
-            Validators.required,
-        ]),
-        countryCode: (() => [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(2),
-        ]),
-    };
-
-    export const $controls = { 
-        street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
-        postalCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.postalCode(), options)),
-        city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
-        countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
-    };
-
     export const $metaData = { 
-        street: { 
+        street: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        postalCode: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        postalCode: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        city: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        city: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        countryCode: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        countryCode: Object.freeze({ 
+            isRequired: true,
+            minLength: 2,
             maxLength: 2,
             type: 'string',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceLocationModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceLocationModel>): FormGroup {
         const defaultControls = { 
-            street: $controls.street(getControlOptions(options, 'street')),
-            postalCode: $controls.postalCode(getControlOptions(options, 'postalCode')),
-            city: $controls.city(getControlOptions(options, 'city')),
-            countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
+            street: getControl($metaData.street, options, 'street'),
+            postalCode: getControl($metaData.postalCode, options, 'postalCode'),
+            city: getControl($metaData.city, options, 'city'),
+            countryCode: getControl($metaData.countryCode, options, 'countryCode'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.street, $metaData.street);
-        setMetaData(<any>group.controls.postalCode, $metaData.postalCode);
-        setMetaData(<any>group.controls.city, $metaData.city);
-        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

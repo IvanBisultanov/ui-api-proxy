@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface LanguageModel {
     code?: string;
@@ -30,44 +29,29 @@ export interface LanguageModel {
 export type LanguageModelWithRawHttp = LanguageModel & ResponseModel<LanguageModel>;
 
 export namespace LanguageModel {
-    export const $validators = {
-        code: (() => [
-        ]),
-        default: (() => [
-        ]),
-        mandatory: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        default: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.default(), options)),
-        mandatory: ((options?: IControlFactoryOptions<boolean>) => getControl($validators.mandatory(), options)),
-    };
-
     export const $metaData = { 
-        code: { 
+        code: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        default: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        default: Object.freeze({ 
             type: 'boolean',
-        } as IApaleoControlMetaData,
-        mandatory: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        mandatory: Object.freeze({ 
             type: 'boolean',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguageModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguageModel>): FormGroup {
         const defaultControls = { 
-            code: $controls.code(getControlOptions(options, 'code')),
-            default: $controls.default(getControlOptions(options, 'default')),
-            mandatory: $controls.mandatory(getControlOptions(options, 'mandatory')),
+            code: getControl($metaData.code, options, 'code'),
+            default: getControl($metaData.default, options, 'default'),
+            mandatory: getControl($metaData.mandatory, options, 'mandatory'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.default, $metaData.default);
-        setMetaData(<any>group.controls.mandatory, $metaData.mandatory);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

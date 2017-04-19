@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface MessageItemCollection {
     messages?: Array<string>;
@@ -26,25 +25,19 @@ export interface MessageItemCollection {
 export type MessageItemCollectionWithRawHttp = MessageItemCollection & ResponseModel<MessageItemCollection>;
 
 export namespace MessageItemCollection {
-    export const $validators = {
-        messages: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-    };
-
     export const $metaData = { 
-        messages: { 
-            type: 'Array&lt;string&gt;',
-        } as IApaleoControlMetaData,
+        messages: Object.freeze({ 
+            type: 'Array<string>',
+            isPrimitiveType: true,
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<MessageItemCollection>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<MessageItemCollection>): FormGroup {
         const defaultControls = { 
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

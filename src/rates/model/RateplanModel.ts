@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface RateplanModel {
     /**
@@ -59,59 +58,47 @@ export interface RateplanModel {
 export type RateplanModelWithRawHttp = RateplanModel & ResponseModel<RateplanModel>;
 
 export namespace RateplanModel {
-    export const $validators = {
-        id: (() => [
-        ]),
-        code: (() => [
-        ]),
-        name: (() => [
-        ]),
-        description: (() => [
-        ]),
-        defaultPrice: (() => [
-        ]),
-        property: (() => [
-        ]),
-        unitTypes: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        id: ((options?: IControlFactoryOptions<string>) => getControl($validators.id(), options)),
-        code: ((options?: IControlFactoryOptions<string>) => getControl($validators.code(), options)),
-        defaultPrice: ((options?: IControlFactoryOptions<number>) => getControl($validators.defaultPrice(), options)),
-    };
-
     export const $metaData = { 
-        id: { 
+        id: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        code: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        code: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        name: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        name: Object.freeze({ 
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        defaultPrice: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        defaultPrice: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        property: Object.freeze({ 
+            type: 'models.EmbeddedPropertyModel',
+        } as IApaleoPropertyMetaData),
+        unitTypes: Object.freeze({ 
+            type: 'Array<models.EmbeddedUnitTypeModel>',
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanModel>): FormGroup {
         const defaultControls = { 
-            id: $controls.id(getControlOptions(options, 'id')),
-            code: $controls.code(getControlOptions(options, 'code')),
-            defaultPrice: $controls.defaultPrice(getControlOptions(options, 'defaultPrice')),
+            id: getControl($metaData.id, options, 'id'),
+            code: getControl($metaData.code, options, 'code'),
+            defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.code, $metaData.code);
-        setMetaData(<any>group.controls.defaultPrice, $metaData.defaultPrice);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

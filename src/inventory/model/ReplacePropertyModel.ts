@@ -15,11 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface ReplacePropertyModel {
     /**
@@ -42,36 +41,31 @@ export interface ReplacePropertyModel {
 export type ReplacePropertyModelWithRawHttp = ReplacePropertyModel & ResponseModel<ReplacePropertyModel>;
 
 export namespace ReplacePropertyModel {
-    export const $validators = {
-        name: (() => [
-            Validators.required,
-        ]),
-        description: (() => [
-            Validators.required,
-        ]),
-        location: (() => [
-            Validators.required,
-        ]),
-    };
-
-    export const $controls = { 
-    };
-
     export const $metaData = { 
-        name: { 
+        name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
-        description: { 
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
+        location: Object.freeze({ 
+            isRequired: true,
+            type: 'models.ReplaceLocationModel',
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertyModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertyModel>): FormGroup {
         const defaultControls = { 
             location: models.ReplaceLocationModel.$buildForm(fb),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

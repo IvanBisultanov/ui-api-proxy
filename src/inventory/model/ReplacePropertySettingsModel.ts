@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface ReplacePropertySettingsModel {
     /**
@@ -34,38 +33,26 @@ export interface ReplacePropertySettingsModel {
 export type ReplacePropertySettingsModelWithRawHttp = ReplacePropertySettingsModel & ResponseModel<ReplacePropertySettingsModel>;
 
 export namespace ReplacePropertySettingsModel {
-    export const $validators = {
-        defaultCheckInTime: (() => [
-            Validators.required,
-        ]),
-        defaultCheckOutTime: (() => [
-            Validators.required,
-        ]),
-    };
-
-    export const $controls = { 
-        defaultCheckInTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckInTime(), options)),
-        defaultCheckOutTime: ((options?: IControlFactoryOptions<string>) => getControl($validators.defaultCheckOutTime(), options)),
-    };
-
     export const $metaData = { 
-        defaultCheckInTime: { 
+        defaultCheckInTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
-        defaultCheckOutTime: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        defaultCheckOutTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertySettingsModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertySettingsModel>): FormGroup {
         const defaultControls = { 
-            defaultCheckInTime: $controls.defaultCheckInTime(getControlOptions(options, 'defaultCheckInTime')),
-            defaultCheckOutTime: $controls.defaultCheckOutTime(getControlOptions(options, 'defaultCheckOutTime')),
+            defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
+            defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.defaultCheckInTime, $metaData.defaultCheckInTime);
-        setMetaData(<any>group.controls.defaultCheckOutTime, $metaData.defaultCheckOutTime);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

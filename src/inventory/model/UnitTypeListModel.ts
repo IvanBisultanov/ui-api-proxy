@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface UnitTypeListModel {
     /**
@@ -29,22 +28,18 @@ export interface UnitTypeListModel {
 export type UnitTypeListModelWithRawHttp = UnitTypeListModel & ResponseModel<UnitTypeListModel>;
 
 export namespace UnitTypeListModel {
-    export const $validators = {
-        unitTypes: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-    };
-
     export const $metaData = { 
+        unitTypes: Object.freeze({ 
+            type: 'Array<models.UnitTypeItemModel>',
+            isListContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeListModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeListModel>): FormGroup {
         const defaultControls = { 
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

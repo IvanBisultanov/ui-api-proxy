@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface ReservationItemModel {
     /**
@@ -156,213 +155,139 @@ export namespace ReservationItemModel {
 export type ReservationItemModelWithRawHttp = ReservationItemModel & ResponseModel<ReservationItemModel>;
 
 export namespace ReservationItemModel {
-    export const $validators = {
-        id: (() => [
-        ]),
-        status: (() => [
-        ]),
-        checkInTime: (() => [
-        ]),
-        checkOutTime: (() => [
-        ]),
-        propertyId: (() => [
-        ]),
-        rateplanId: (() => [
-        ]),
-        unitTypeId: (() => [
-        ]),
-        unitId: (() => [
-        ]),
-        totalAmount: (() => [
-        ]),
-        arrival: (() => [
-        ]),
-        departure: (() => [
-        ]),
-        adults: (() => [
-        ]),
-        children: (() => [
-        ]),
-        guestTitle: (() => [
-        ]),
-        firstName: (() => [
-        ]),
-        middleInitial: (() => [
-        ]),
-        lastName: (() => [
-        ]),
-        email: (() => [
-        ]),
-        phone: (() => [
-        ]),
-        street: (() => [
-        ]),
-        number: (() => [
-        ]),
-        city: (() => [
-        ]),
-        postalCode: (() => [
-        ]),
-        countryCode: (() => [
-        ]),
-        links: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        id: ((options?: IControlFactoryOptions<number>) => getControl($validators.id(), options)),
-        status: ((options?: IControlFactoryOptions<ReservationItemModel.StatusEnum>) => getControl($validators.status(), options)),
-        checkInTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkInTime(), options)),
-        checkOutTime: ((options?: IControlFactoryOptions<Date>) => getControl($validators.checkOutTime(), options)),
-        propertyId: ((options?: IControlFactoryOptions<string>) => getControl($validators.propertyId(), options)),
-        rateplanId: ((options?: IControlFactoryOptions<string>) => getControl($validators.rateplanId(), options)),
-        unitTypeId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitTypeId(), options)),
-        unitId: ((options?: IControlFactoryOptions<string>) => getControl($validators.unitId(), options)),
-        totalAmount: ((options?: IControlFactoryOptions<number>) => getControl($validators.totalAmount(), options)),
-        arrival: ((options?: IControlFactoryOptions<Date>) => getControl($validators.arrival(), options)),
-        departure: ((options?: IControlFactoryOptions<Date>) => getControl($validators.departure(), options)),
-        adults: ((options?: IControlFactoryOptions<number>) => getControl($validators.adults(), options)),
-        children: ((options?: IControlFactoryOptions<number>) => getControl($validators.children(), options)),
-        guestTitle: ((options?: IControlFactoryOptions<string>) => getControl($validators.guestTitle(), options)),
-        firstName: ((options?: IControlFactoryOptions<string>) => getControl($validators.firstName(), options)),
-        middleInitial: ((options?: IControlFactoryOptions<string>) => getControl($validators.middleInitial(), options)),
-        lastName: ((options?: IControlFactoryOptions<string>) => getControl($validators.lastName(), options)),
-        email: ((options?: IControlFactoryOptions<string>) => getControl($validators.email(), options)),
-        phone: ((options?: IControlFactoryOptions<string>) => getControl($validators.phone(), options)),
-        street: ((options?: IControlFactoryOptions<string>) => getControl($validators.street(), options)),
-        number: ((options?: IControlFactoryOptions<string>) => getControl($validators.number(), options)),
-        city: ((options?: IControlFactoryOptions<string>) => getControl($validators.city(), options)),
-        postalCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.postalCode(), options)),
-        countryCode: ((options?: IControlFactoryOptions<string>) => getControl($validators.countryCode(), options)),
-    };
-
     export const $metaData = { 
-        id: { 
+        id: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
-        status: { 
-        } as IApaleoControlMetaData,
-        checkInTime: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        status: Object.freeze({ 
+            type: 'string',
+            isEnum: true,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        checkInTime: Object.freeze({ 
             type: 'Date',
-        } as IApaleoControlMetaData,
-        checkOutTime: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        checkOutTime: Object.freeze({ 
             type: 'Date',
-        } as IApaleoControlMetaData,
-        propertyId: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        propertyId: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        rateplanId: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        rateplanId: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        unitTypeId: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        unitTypeId: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        unitId: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        unitId: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        totalAmount: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        totalAmount: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
-        arrival: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        arrival: Object.freeze({ 
             type: 'Date',
-        } as IApaleoControlMetaData,
-        departure: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        departure: Object.freeze({ 
             type: 'Date',
-        } as IApaleoControlMetaData,
-        adults: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        adults: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
-        children: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        children: Object.freeze({ 
             type: 'number',
-        } as IApaleoControlMetaData,
-        guestTitle: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        guestTitle: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        firstName: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        firstName: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        middleInitial: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        middleInitial: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        lastName: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        lastName: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        email: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        email: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        phone: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        phone: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        street: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        street: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        number: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        number: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        city: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        city: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        postalCode: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        postalCode: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
-        countryCode: { 
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        countryCode: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        links: Object.freeze({ 
+            type: '{ [key: string]: models.Link; }',
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>): FormGroup {
         const defaultControls = { 
-            id: $controls.id(getControlOptions(options, 'id')),
-            status: $controls.status(getControlOptions(options, 'status')),
-            checkInTime: $controls.checkInTime(getControlOptions(options, 'checkInTime')),
-            checkOutTime: $controls.checkOutTime(getControlOptions(options, 'checkOutTime')),
-            propertyId: $controls.propertyId(getControlOptions(options, 'propertyId')),
-            rateplanId: $controls.rateplanId(getControlOptions(options, 'rateplanId')),
-            unitTypeId: $controls.unitTypeId(getControlOptions(options, 'unitTypeId')),
-            unitId: $controls.unitId(getControlOptions(options, 'unitId')),
-            totalAmount: $controls.totalAmount(getControlOptions(options, 'totalAmount')),
-            arrival: $controls.arrival(getControlOptions(options, 'arrival')),
-            departure: $controls.departure(getControlOptions(options, 'departure')),
-            adults: $controls.adults(getControlOptions(options, 'adults')),
-            children: $controls.children(getControlOptions(options, 'children')),
-            guestTitle: $controls.guestTitle(getControlOptions(options, 'guestTitle')),
-            firstName: $controls.firstName(getControlOptions(options, 'firstName')),
-            middleInitial: $controls.middleInitial(getControlOptions(options, 'middleInitial')),
-            lastName: $controls.lastName(getControlOptions(options, 'lastName')),
-            email: $controls.email(getControlOptions(options, 'email')),
-            phone: $controls.phone(getControlOptions(options, 'phone')),
-            street: $controls.street(getControlOptions(options, 'street')),
-            number: $controls.number(getControlOptions(options, 'number')),
-            city: $controls.city(getControlOptions(options, 'city')),
-            postalCode: $controls.postalCode(getControlOptions(options, 'postalCode')),
-            countryCode: $controls.countryCode(getControlOptions(options, 'countryCode')),
+            id: getControl($metaData.id, options, 'id'),
+            status: getControl($metaData.status, options, 'status'),
+            checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
+            checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
+            propertyId: getControl($metaData.propertyId, options, 'propertyId'),
+            rateplanId: getControl($metaData.rateplanId, options, 'rateplanId'),
+            unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),
+            unitId: getControl($metaData.unitId, options, 'unitId'),
+            totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
+            arrival: getControl($metaData.arrival, options, 'arrival'),
+            departure: getControl($metaData.departure, options, 'departure'),
+            adults: getControl($metaData.adults, options, 'adults'),
+            children: getControl($metaData.children, options, 'children'),
+            guestTitle: getControl($metaData.guestTitle, options, 'guestTitle'),
+            firstName: getControl($metaData.firstName, options, 'firstName'),
+            middleInitial: getControl($metaData.middleInitial, options, 'middleInitial'),
+            lastName: getControl($metaData.lastName, options, 'lastName'),
+            email: getControl($metaData.email, options, 'email'),
+            phone: getControl($metaData.phone, options, 'phone'),
+            street: getControl($metaData.street, options, 'street'),
+            number: getControl($metaData.number, options, 'number'),
+            city: getControl($metaData.city, options, 'city'),
+            postalCode: getControl($metaData.postalCode, options, 'postalCode'),
+            countryCode: getControl($metaData.countryCode, options, 'countryCode'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.id, $metaData.id);
-        setMetaData(<any>group.controls.status, $metaData.status);
-        setMetaData(<any>group.controls.checkInTime, $metaData.checkInTime);
-        setMetaData(<any>group.controls.checkOutTime, $metaData.checkOutTime);
-        setMetaData(<any>group.controls.propertyId, $metaData.propertyId);
-        setMetaData(<any>group.controls.rateplanId, $metaData.rateplanId);
-        setMetaData(<any>group.controls.unitTypeId, $metaData.unitTypeId);
-        setMetaData(<any>group.controls.unitId, $metaData.unitId);
-        setMetaData(<any>group.controls.totalAmount, $metaData.totalAmount);
-        setMetaData(<any>group.controls.arrival, $metaData.arrival);
-        setMetaData(<any>group.controls.departure, $metaData.departure);
-        setMetaData(<any>group.controls.adults, $metaData.adults);
-        setMetaData(<any>group.controls.children, $metaData.children);
-        setMetaData(<any>group.controls.guestTitle, $metaData.guestTitle);
-        setMetaData(<any>group.controls.firstName, $metaData.firstName);
-        setMetaData(<any>group.controls.middleInitial, $metaData.middleInitial);
-        setMetaData(<any>group.controls.lastName, $metaData.lastName);
-        setMetaData(<any>group.controls.email, $metaData.email);
-        setMetaData(<any>group.controls.phone, $metaData.phone);
-        setMetaData(<any>group.controls.street, $metaData.street);
-        setMetaData(<any>group.controls.number, $metaData.number);
-        setMetaData(<any>group.controls.city, $metaData.city);
-        setMetaData(<any>group.controls.postalCode, $metaData.postalCode);
-        setMetaData(<any>group.controls.countryCode, $metaData.countryCode);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }

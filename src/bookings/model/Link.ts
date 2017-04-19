@@ -12,11 +12,10 @@
 
 import * as models from './models';
 
-import { Validators, FormBuilder, ValidatorFn, FormGroup, AbstractControl }  from '@angular/forms';
-import { IBuildFormOptions, IControlFactoryOptions, Control }                from '../../types';
-import { IApaleoAbstractControl, IApaleoControlMetaData }                    from '../../types';
-import { ResponseModel }                                                     from '../../models';
-import { getControl, getControlOptions, adjustDefaultControls, setMetaData } from '../../functions';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
+import { ResponseModel }                                  from '../../models';
+import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
 export interface Link {
     href?: string;
@@ -26,28 +25,19 @@ export interface Link {
 export type LinkWithRawHttp = Link & ResponseModel<Link>;
 
 export namespace Link {
-    export const $validators = {
-        href: (() => [
-        ]),
-    };
-
-    export const $controls = { 
-        href: ((options?: IControlFactoryOptions<string>) => getControl($validators.href(), options)),
-    };
-
     export const $metaData = { 
-        href: { 
+        href: Object.freeze({ 
             type: 'string',
-        } as IApaleoControlMetaData,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Link>) {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<Link>): FormGroup {
         const defaultControls = { 
-            href: $controls.href(getControlOptions(options, 'href')),
+            href: getControl($metaData.href, options, 'href'),
         };
-        const group = fb.group(adjustDefaultControls(defaultControls, options)!);
-
-        setMetaData(<any>group.controls.href, $metaData.href);
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        setMetaData(group, $metaData);
 
         return group;
     }
