@@ -39,6 +39,11 @@ export interface CreatePropertyModel {
     location: models.ReplaceLocationModel;
 
     /**
+     * The time zone
+     */
+    timeZone: string;
+
+    /**
      * The default check-in time
      */
     defaultCheckInTime: string;
@@ -77,6 +82,11 @@ export namespace CreatePropertyModel {
             isRequired: true,
             type: 'models.ReplaceLocationModel',
         } as IApaleoPropertyMetaData),
+        timeZone: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -93,6 +103,7 @@ export namespace CreatePropertyModel {
         const defaultControls = { 
             code: getControl($metaData.code, options, 'code'),
             location: models.ReplaceLocationModel.$buildForm(fb),
+            timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };

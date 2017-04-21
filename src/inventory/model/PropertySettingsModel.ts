@@ -19,6 +19,11 @@ import { getControl, adjustDefaultControls, setMetaData } from '../../functions.
 
 export interface PropertySettingsModel {
     /**
+     * The time zone
+     */
+    timeZone?: string;
+
+    /**
      * The default check-in time
      */
     defaultCheckInTime?: string;
@@ -34,6 +39,10 @@ export type PropertySettingsModelWithRawHttp = PropertySettingsModel & ResponseM
 
 export namespace PropertySettingsModel {
     export const $metaData = { 
+        timeZone: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
@@ -46,6 +55,7 @@ export namespace PropertySettingsModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertySettingsModel>): FormGroup {
         const defaultControls = { 
+            timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };

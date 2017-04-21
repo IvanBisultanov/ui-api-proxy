@@ -47,6 +47,11 @@ export interface PropertyModel {
     location?: models.LocationModel;
 
     /**
+     * The time zone
+     */
+    timeZone?: string;
+
+    /**
      * The default check-in time
      */
     defaultCheckInTime?: string;
@@ -83,6 +88,10 @@ export namespace PropertyModel {
         location: Object.freeze({ 
             type: 'models.LocationModel',
         } as IApaleoPropertyMetaData),
+        timeZone: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
@@ -98,6 +107,7 @@ export namespace PropertyModel {
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
             location: models.LocationModel.$buildForm(fb),
+            timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };

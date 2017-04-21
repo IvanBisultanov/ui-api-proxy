@@ -19,6 +19,11 @@ import { getControl, adjustDefaultControls, setMetaData } from '../../functions.
 
 export interface ReplacePropertySettingsModel {
     /**
+     * The time zone
+     */
+    timeZone: string;
+
+    /**
      * The default check-in time
      */
     defaultCheckInTime: string;
@@ -34,6 +39,11 @@ export type ReplacePropertySettingsModelWithRawHttp = ReplacePropertySettingsMod
 
 export namespace ReplacePropertySettingsModel {
     export const $metaData = { 
+        timeZone: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -48,6 +58,7 @@ export namespace ReplacePropertySettingsModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertySettingsModel>): FormGroup {
         const defaultControls = { 
+            timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };
