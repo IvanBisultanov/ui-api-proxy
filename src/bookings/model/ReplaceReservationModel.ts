@@ -22,41 +22,6 @@ import { getControl, adjustDefaultControls, setMetaData } from '../../functions.
 
 export interface ReplaceReservationModel {
     /**
-     * ID of the property
-     */
-    propertyId: string;
-
-    /**
-     * ID of the rateplan
-     */
-    rateplanId: string;
-
-    /**
-     * ID of the unit type
-     */
-    unitTypeId: string;
-
-    /**
-     * Date of arrival
-     */
-    arrival?: Date;
-
-    /**
-     * Date of departure
-     */
-    departure?: Date;
-
-    /**
-     * Number of adults
-     */
-    adults?: number;
-
-    /**
-     * Number of children
-     */
-    children?: number;
-
-    /**
      * Code of the guest title
      */
     guestTitle: string;
@@ -117,37 +82,6 @@ export type ReplaceReservationModelWithRawHttp = ReplaceReservationModel & Respo
 
 export namespace ReplaceReservationModel {
     export const $metaData = { 
-        propertyId: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        rateplanId: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        unitTypeId: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        arrival: Object.freeze({ 
-            type: 'Date',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        departure: Object.freeze({ 
-            type: 'Date',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        adults: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        children: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
         guestTitle: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -220,13 +154,6 @@ export namespace ReplaceReservationModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceReservationModel>): FormGroup {
         const defaultControls = { 
-            propertyId: getControl($metaData.propertyId, options, 'propertyId'),
-            rateplanId: getControl($metaData.rateplanId, options, 'rateplanId'),
-            unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),
-            arrival: getControl($metaData.arrival, options, 'arrival'),
-            departure: getControl($metaData.departure, options, 'departure'),
-            adults: getControl($metaData.adults, options, 'adults'),
-            children: getControl($metaData.children, options, 'children'),
             guestTitle: getControl($metaData.guestTitle, options, 'guestTitle'),
             firstName: getControl($metaData.firstName, options, 'firstName'),
             middleInitial: getControl($metaData.middleInitial, options, 'middleInitial'),
