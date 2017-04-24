@@ -49,6 +49,7 @@ export namespace ReplaceAccountModel {
     export const $metaData = { 
         name: Object.freeze({ 
             isRequired: true,
+            minLength: 1,
             maxLength: 40,
             type: 'string',
             isPrimitiveType: true,

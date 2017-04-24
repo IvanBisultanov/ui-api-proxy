@@ -41,12 +41,12 @@ export interface CreateUnitTypeModel {
     /**
      * Minimum number of persons for the unit type
      */
-    minPersons: number;
+    minPersons?: number;
 
     /**
      * Maximum number of persons for the unit type
      */
-    maxPersons: number;
+    maxPersons?: number;
 
 }
 
@@ -79,12 +79,10 @@ export namespace CreateUnitTypeModel {
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         minPersons: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         maxPersons: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

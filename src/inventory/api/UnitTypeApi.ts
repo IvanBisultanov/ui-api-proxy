@@ -55,7 +55,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1UnitTypesByIdGet(id: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
         : Observable<models.UnitTypeModel | undefined> {
         return this.inventoryV1UnitTypesByIdGetWithRawHttp(id, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -124,7 +124,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1UnitTypesByIdGetWithRawHttp(id: string, languages?: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeModel>> {
         return this.inventoryV1UnitTypesByIdGetWithHttpInfo(id, languages, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -233,7 +233,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1UnitTypesByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesByIdGetWithHttpInfo(id: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -243,8 +243,8 @@ export class UnitTypeApi {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1UnitTypesByIdGet.');
         }
-        if (languages !== undefined) {
-            queryParameters.set('languages', <any>languages);
+        if (languages) {
+            queryParameters.set('languages', languages.join(COLLECTION_FORMATS['csv']));
         }
 
         // to determine the Content-Type header

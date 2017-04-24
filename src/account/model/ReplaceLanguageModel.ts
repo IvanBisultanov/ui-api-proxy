@@ -20,9 +20,9 @@ import { getControl, adjustDefaultControls, setMetaData } from '../../functions.
 export interface ReplaceLanguageModel {
     code: string;
 
-    default: boolean;
+    default?: boolean;
 
-    mandatory: boolean;
+    mandatory?: boolean;
 
 }
 
@@ -38,12 +38,10 @@ export namespace ReplaceLanguageModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         default: Object.freeze({ 
-            isRequired: true,
             type: 'boolean',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         mandatory: Object.freeze({ 
-            isRequired: true,
             type: 'boolean',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

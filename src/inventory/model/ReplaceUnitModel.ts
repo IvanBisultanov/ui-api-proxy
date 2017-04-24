@@ -36,12 +36,12 @@ export interface ReplaceUnitModel {
     /**
      * Minimum number of persons for the unit
      */
-    minPersons: number;
+    minPersons?: number;
 
     /**
      * Maximum number of persons for the unit
      */
-    maxPersons: number;
+    maxPersons?: number;
 
 }
 
@@ -65,12 +65,10 @@ export namespace ReplaceUnitModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         minPersons: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         maxPersons: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

@@ -41,7 +41,7 @@ export interface CreateRateplanModel {
     /**
      * The default price for the rateplan
      */
-    defaultPrice: number;
+    defaultPrice?: number;
 
     /**
      * The unit types ids to link to the rateplan
@@ -79,7 +79,6 @@ export namespace CreateRateplanModel {
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         defaultPrice: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

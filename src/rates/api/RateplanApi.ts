@@ -55,7 +55,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RatePlansByIdGet(id: string, languages?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
         : Observable<models.RateplanModel | undefined> {
         return this.ratesV1RatePlansByIdGetWithRawHttp(id, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -124,7 +124,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RatePlansByIdGetWithRawHttp(id: string, languages?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RateplanModel>> {
         return this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -233,7 +233,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private ratesV1RatePlansByIdGetWithHttpInfo(id: string, languages?: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansByIdGetWithHttpInfo(id: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -243,8 +243,8 @@ export class RateplanApi {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdGet.');
         }
-        if (languages !== undefined) {
-            queryParameters.set('languages', <any>languages);
+        if (languages) {
+            queryParameters.set('languages', languages.join(COLLECTION_FORMATS['csv']));
         }
 
         // to determine the Content-Type header

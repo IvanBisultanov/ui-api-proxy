@@ -39,22 +39,22 @@ export interface CreateReservationModel {
     /**
      * Date of arrival
      */
-    arrival: Date;
+    arrival?: Date;
 
     /**
      * Date of departure
      */
-    departure: Date;
+    departure?: Date;
 
     /**
      * Number of adults
      */
-    adults: number;
+    adults?: number;
 
     /**
      * Number of children
      */
-    children: number;
+    children?: number;
 
     /**
      * Code of the guest title
@@ -69,7 +69,7 @@ export interface CreateReservationModel {
     /**
      * Middle initial of the guest
      */
-    middleInitial?: string;
+    middleInitial: string;
 
     /**
      * Last name of the guest
@@ -79,17 +79,17 @@ export interface CreateReservationModel {
     /**
      * Email address number of the guest
      */
-    email?: string;
+    email: string;
 
     /**
      * Phone number of the guest
      */
-    phone?: string;
+    phone: string;
 
     /**
      * Street of the guest
      */
-    street?: string;
+    street: string;
 
     /**
      * Street number of the guest
@@ -133,22 +133,18 @@ export namespace CreateReservationModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         arrival: Object.freeze({ 
-            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         departure: Object.freeze({ 
-            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         adults: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         children: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -159,30 +155,38 @@ export namespace CreateReservationModel {
         } as IApaleoPropertyMetaData),
         firstName: Object.freeze({ 
             isRequired: true,
+            minLength: 1,
             maxLength: 25,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         middleInitial: Object.freeze({ 
+            isRequired: true,
+            minLength: 1,
             maxLength: 5,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         lastName: Object.freeze({ 
             isRequired: true,
+            minLength: 1,
             maxLength: 40,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         email: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         phone: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         street: Object.freeze({ 
+            isRequired: true,
+            minLength: 1,
             maxLength: 40,
             type: 'string',
             isPrimitiveType: true,
@@ -193,18 +197,21 @@ export namespace CreateReservationModel {
         } as IApaleoPropertyMetaData),
         city: Object.freeze({ 
             isRequired: true,
+            minLength: 1,
             maxLength: 25,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         postalCode: Object.freeze({ 
             isRequired: true,
+            minLength: 1,
             maxLength: 10,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         countryCode: Object.freeze({ 
             isRequired: true,
+            minLength: 2,
             maxLength: 2,
             type: 'string',
             isPrimitiveType: true,
