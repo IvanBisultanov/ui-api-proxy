@@ -39,7 +39,7 @@ export interface CreatePropertyModel {
     location: models.ReplaceLocationModel;
 
     /**
-     * The time zone
+     * The time zone name of the property from the IANA Time Zone Database.  (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
      */
     timeZone: string;
 
