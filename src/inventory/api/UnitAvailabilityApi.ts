@@ -40,7 +40,7 @@ export class UnitAvailabilityApi {
 
     /**
      * Get an available units list
-     * Get the list of available units.
+     * Get the list of available units for a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for from is specified the max of  default check-in time of the property and the current time will be used. If no time for to  is specified the default check-out time of the property will be used
      * @param propertyId The property id
      * @param fromDate The date in the format yyyy-MM-dd
      * @param toDate The date in the format yyyy-MM-dd
@@ -57,7 +57,7 @@ export class UnitAvailabilityApi {
 
     /**
      * Get an available units list
-     * Get the list of available units.
+     * Get the list of available units for a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for from is specified the max of  default check-in time of the property and the current time will be used. If no time for to  is specified the default check-out time of the property will be used
      * @param propertyId The property id
      * @param fromDate The date in the format yyyy-MM-dd
      * @param toDate The date in the format yyyy-MM-dd
@@ -74,7 +74,7 @@ export class UnitAvailabilityApi {
 
     /**
      * Get an available units list
-     * Get the list of available units.
+     * Get the list of available units for a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for from is specified the max of  default check-in time of the property and the current time will be used. If no time for to  is specified the default check-out time of the property will be used
      * @param propertyId The property id
      * @param fromDate The date in the format yyyy-MM-dd
      * @param toDate The date in the format yyyy-MM-dd
