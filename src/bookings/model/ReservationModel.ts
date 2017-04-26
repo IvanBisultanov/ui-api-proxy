@@ -19,9 +19,14 @@ import { getControl, adjustDefaultControls, setMetaData } from '../../functions.
 
 export interface ReservationModel {
     /**
-     * Reservation Id
+     * Reservation id
      */
-    id?: number;
+    id?: string;
+
+    /**
+     * Confirmation code of the reservation
+     */
+    code?: string;
 
     /**
      * Status of the reservation
@@ -152,7 +157,11 @@ export type ReservationModelWithRawHttp = ReservationModel & ResponseModel<Reser
 export namespace ReservationModel {
     export const $metaData = { 
         id: Object.freeze({ 
-            type: 'number',
+            type: 'string',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        code: Object.freeze({ 
+            type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         status: Object.freeze({ 
@@ -249,6 +258,7 @@ export namespace ReservationModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
+            code: getControl($metaData.code, options, 'code'),
             status: getControl($metaData.status, options, 'status'),
             checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
             checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),

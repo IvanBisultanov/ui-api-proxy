@@ -39,11 +39,23 @@ export class ReservationApi {
     }
 
     /**
+     * Assign a unit to a reservation
+     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
+     * @param id The id of the reservation.
+     * @param requestBody The definition of a unit to be assigned.
+     */
+    public bookingsV1ReservationsByIdAssignUnitPost(id: string, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+        : Observable<void> {
+        return this.bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id, requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
      * Check-in of a reservation
      * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
-     * @param id The id the reservation.
+     * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckinPost(id: number, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckinPost(id: string, $options?: IRequestOptions)
         : Observable<void> {
         return this.bookingsV1ReservationsByIdCheckinPostWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -52,9 +64,9 @@ export class ReservationApi {
     /**
      * Check-out of a reservation
      * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
-     * @param id The id the reservation.
+     * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckoutPost(id: number, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckoutPost(id: string, $options?: IRequestOptions)
         : Observable<void> {
         return this.bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -65,7 +77,7 @@ export class ReservationApi {
      * Get a reservation by id.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdGet(id: number, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdGet(id: string, $options?: IRequestOptions)
         : Observable<models.ReservationModel | undefined> {
         return this.bookingsV1ReservationsByIdGetWithRawHttp(id, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -77,21 +89,9 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsByIdPut(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdPut(id: string, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.bookingsV1ReservationsByIdPutWithRawHttp(id, requestBody, $options)
-            .map(response => response.$hasValue(response) ? response : undefined);
-    }
-
-    /**
-     * Assign a unit to a reservation
-     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
-     * @param reservationId The id of the reservation.
-     * @param requestBody The definition of a unit to be assigned.
-     */
-    public bookingsV1ReservationsByReservationIdAssignUnitPost(reservationId: number, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
-        : Observable<void> {
-        return this.bookingsV1ReservationsByReservationIdAssignUnitPostWithRawHttp(reservationId, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -118,11 +118,23 @@ export class ReservationApi {
 
 
     /**
+     * Assign a unit to a reservation
+     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
+     * @param id The id of the reservation.
+     * @param requestBody The definition of a unit to be assigned.
+     */
+    public bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id: string, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id, requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
      * Check-in of a reservation
      * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
-     * @param id The id the reservation.
+     * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckinPostWithRawHttp(id: number, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckinPostWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -131,9 +143,9 @@ export class ReservationApi {
     /**
      * Check-out of a reservation
      * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
-     * @param id The id the reservation.
+     * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id: number, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -144,7 +156,7 @@ export class ReservationApi {
      * Get a reservation by id.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdGetWithRawHttp(id: number, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdGetWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
         return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -156,21 +168,9 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsByIdPutWithRawHttp(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdPutWithRawHttp(id: string, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options)
-            .map((response: Response) => new ResponseModel(response));
-    }
-
-    /**
-     * Assign a unit to a reservation
-     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
-     * @param reservationId The id of the reservation.
-     * @param requestBody The definition of a unit to be assigned.
-     */
-    public bookingsV1ReservationsByReservationIdAssignUnitPostWithRawHttp(reservationId: number, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<void>> {
-        return this.bookingsV1ReservationsByReservationIdAssignUnitPostWithHttpInfo(reservationId, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -197,11 +197,73 @@ export class ReservationApi {
 
 
     /**
+     * Assign a unit to a reservation
+     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
+     * @param id The id of the reservation.
+     * @param requestBody The definition of a unit to be assigned.
+     */
+    private bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id: string, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/bookings/v1/reservations/${id}/assign-unit'
+                    .replace('${' + 'id' + '}', String(id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdAssignUnitPost.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (requestBody === null || requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByIdAssignUnitPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                search: queryParameters
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id, requestBody, $options);
+            }
+        )
+    }
+
+    /**
      * Check-in of a reservation
      * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
-     * @param id The id the reservation.
+     * @param id The id of the reservation.
      */
-    private bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations/${id}/checkin'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -250,9 +312,9 @@ export class ReservationApi {
     /**
      * Check-out of a reservation
      * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
-     * @param id The id the reservation.
+     * @param id The id of the reservation.
      */
-    private bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations/${id}/checkout'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -303,7 +365,7 @@ export class ReservationApi {
      * Get a reservation by id.
      * @param id The id of the reservation.
      */
-    private bookingsV1ReservationsByIdGetWithHttpInfo(id: number, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdGetWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -358,7 +420,7 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of the reservation.
      */
-    private bookingsV1ReservationsByIdPutWithHttpInfo(id: number, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -410,68 +472,6 @@ export class ReservationApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options);
-            }
-        )
-    }
-
-    /**
-     * Assign a unit to a reservation
-     * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
-     * @param reservationId The id of the reservation.
-     * @param requestBody The definition of a unit to be assigned.
-     */
-    private bookingsV1ReservationsByReservationIdAssignUnitPostWithHttpInfo(reservationId: number, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions): Observable<Response> {
-        const path = this.basePath + '/bookings/v1/reservations/${reservationId}/assign-unit'
-                    .replace('${' + 'reservationId' + '}', String(reservationId));
-
-        let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'reservationId' is not null or undefined
-        if (reservationId === null || reservationId === undefined) {
-            throw new Error('Required parameter reservationId was null or undefined when calling bookingsV1ReservationsByReservationIdAssignUnitPost.');
-        }
-        // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByReservationIdAssignUnitPost.');
-        }
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json', 
-            'text/json', 
-            'application/json-patch+json'
-        ];
-
-        // to determine the Accept header
-        let produces: string[] = [
-        ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-        headers.set('Content-Type', 'application/json');
-
-        return callApiEndpoint(
-            this.http, 
-            path,
-            headers,
-            {
-                method: RequestMethod.Post,
-                headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
-                search: queryParameters
-            },
-            Object.assign({}, this.configuration, $options),
-            retryTimesToGo => {
-                $options = $options || {};
-                $options.retryTimes = retryTimesToGo;
-
-                return this.bookingsV1ReservationsByReservationIdAssignUnitPostWithHttpInfo(reservationId, requestBody, $options);
             }
         )
     }
