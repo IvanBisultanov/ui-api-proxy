@@ -18,7 +18,7 @@ export interface IBuildFormOptions<T> {
 }
 
 export type FormGroupControls<T> = {
-    [P in keyof T]?: [T[P] | undefined, ValidatorFn] | FormGroup
+    [P in keyof T]?: [T[P] | undefined, ValidatorFn | null] | FormGroup
 }
 
 export interface IApaleoAbstractControl extends AbstractControl {
