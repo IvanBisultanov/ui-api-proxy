@@ -13,7 +13,7 @@ import {
     IApaleoPropertyMetaData
 } from './types';
 
-export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): [T[K] | undefined, ValidatorFn] {
+export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): [T[K] | undefined, ValidatorFn | null] {
     const ctrlOptions = getControlOptions(options, property);
     const validators = getValidators(metaData, ctrlOptions.additionalValidators);
 
