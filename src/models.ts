@@ -64,7 +64,7 @@ export class ResponseHeaders {
         return this.response.status;
     }
 
-    public get statusText(): string {
+    public get statusText(): string | null {
         return this.response.statusText;
     }
 
