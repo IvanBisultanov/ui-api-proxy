@@ -73,22 +73,32 @@ export class ResponseHeaders {
     }
 
     public get isJson(): boolean {
-        let contentType: string | null = this.response.headers.get('content-type');
+        let contentType = this.getHeader('content-type');
 
         if (contentType) {
             contentType = contentType.toLowerCase();
 
             return contentType.indexOf('application/json') !== -1 || contentType.indexOf('text/json') !== -1;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public get etag(): string | null {
-        return this.response.headers.get('etag');
+        return this.getHeader('etag');
     }
 
     public get location(): string | null {
-        return this.response.headers.get('location');
+        return this.getHeader('location');
+    }
+
+    public getHeader(name: string): string | null {
+        const headers = this.response.headers;
+
+        if (headers) {
+            return headers.get(name);
+        } else {
+            return null;
+        }
     }
 }
