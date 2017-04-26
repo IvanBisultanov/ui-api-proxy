@@ -44,8 +44,8 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of a unit to be assigned.
      */
-    public bookingsV1ReservationsByIdAssignUnitPost(id: string, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
-        : Observable<void> {
+    public bookingsV1ReservationsByIdAssignUnitPost(id: string, requestBody?: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+        : Observable<models.ReservationAssignedUnitModel | undefined> {
         return this.bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -123,8 +123,8 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of a unit to be assigned.
      */
-    public bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id: string, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<void>> {
+    public bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id: string, requestBody?: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.ReservationAssignedUnitModel>> {
         return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -202,7 +202,7 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of a unit to be assigned.
      */
-    private bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id: string, requestBody: models.ReservationAssignUnitModel, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id: string, requestBody?: models.ReservationAssignUnitModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations/${id}/assign-unit'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -211,10 +211,6 @@ export class ReservationApi {
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdAssignUnitPost.');
-        }
-        // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByIdAssignUnitPost.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -225,6 +221,9 @@ export class ReservationApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
         ];
 
         // authentication (oauth2) required

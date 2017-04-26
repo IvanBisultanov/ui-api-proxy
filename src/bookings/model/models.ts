@@ -7,6 +7,7 @@ export * from './Link';
 export * from './MessageItemCollection';
 export * from './ReplaceReservationModel';
 export * from './ReservationAssignUnitModel';
+export * from './ReservationAssignedUnitModel';
 export * from './ReservationCreatedModel';
 export * from './ReservationItemModel';
 export * from './ReservationListModel';

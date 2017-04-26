@@ -12,25 +12,22 @@
 
 import * as models from './models';
 
-/**
- * With this request you can assign a unit to a reservation
- */
 import { FormBuilder, FormGroup }                         from '@angular/forms';
 import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
 import { ResponseModel }                                  from '../../models';
 import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
-export interface ReservationAssignUnitModel {
+export interface ReservationAssignedUnitModel {
     /**
-     * ID of the unit
+     * Id of the assigned unit
      */
     unitId?: string;
 
 }
 
-export type ReservationAssignUnitModelWithRawHttp = ReservationAssignUnitModel & ResponseModel<ReservationAssignUnitModel>;
+export type ReservationAssignedUnitModelWithRawHttp = ReservationAssignedUnitModel & ResponseModel<ReservationAssignedUnitModel>;
 
-export namespace ReservationAssignUnitModel {
+export namespace ReservationAssignedUnitModel {
     export const $metaData = { 
         unitId: Object.freeze({ 
             type: 'string',
@@ -38,7 +35,7 @@ export namespace ReservationAssignUnitModel {
         } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationAssignUnitModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationAssignedUnitModel>): FormGroup {
         const defaultControls = { 
             unitId: getControl($metaData.unitId, options, 'unitId'),
         };
