@@ -51,7 +51,7 @@ export interface ReservationItemModel {
     /**
      * ID of the rateplan
      */
-    rateplanId?: string;
+    ratePlanId?: string;
 
     /**
      * ID of the unit type
@@ -186,7 +186,7 @@ export namespace ReservationItemModel {
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        rateplanId: Object.freeze({ 
+        ratePlanId: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -276,7 +276,7 @@ export namespace ReservationItemModel {
             checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
             checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
-            rateplanId: getControl($metaData.rateplanId, options, 'rateplanId'),
+            ratePlanId: getControl($metaData.ratePlanId, options, 'ratePlanId'),
             unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),
             unitId: getControl($metaData.unitId, options, 'unitId'),
             totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),

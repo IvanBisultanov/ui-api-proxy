@@ -31,7 +31,7 @@ export interface OfferModel {
     /**
      * The rate plan for this offer
      */
-    rateplan?: models.EmbeddedRateplanModel;
+    ratePlan?: models.EmbeddedRatePlanModel;
 
     /**
      * The price for the whole stay
@@ -51,8 +51,8 @@ export namespace OfferModel {
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        rateplan: Object.freeze({ 
-            type: 'models.EmbeddedRateplanModel',
+        ratePlan: Object.freeze({ 
+            type: 'models.EmbeddedRatePlanModel',
         } as IApaleoPropertyMetaData),
         price: Object.freeze({ 
             type: 'number',
@@ -64,7 +64,7 @@ export namespace OfferModel {
         const defaultControls = { 
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
             availableUnits: getControl($metaData.availableUnits, options, 'availableUnits'),
-            rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
+            ratePlan: models.EmbeddedRatePlanModel.$buildForm(fb),
             price: getControl($metaData.price, options, 'price'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

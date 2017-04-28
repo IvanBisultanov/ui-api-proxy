@@ -17,7 +17,7 @@ import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
 import { ResponseModel }                                  from '../../models';
 import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
-export interface RateplanModel {
+export interface RatePlanModel {
     /**
      * The rateplan id
      */
@@ -55,9 +55,9 @@ export interface RateplanModel {
 
 }
 
-export type RateplanModelWithRawHttp = RateplanModel & ResponseModel<RateplanModel>;
+export type RatePlanModelWithRawHttp = RatePlanModel & ResponseModel<RatePlanModel>;
 
-export namespace RateplanModel {
+export namespace RatePlanModel {
     export const $metaData = { 
         id: Object.freeze({ 
             type: 'string',
@@ -90,7 +90,7 @@ export namespace RateplanModel {
         } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RatePlanModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),

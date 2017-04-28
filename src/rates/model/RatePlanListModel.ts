@@ -17,27 +17,26 @@ import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
 import { ResponseModel }                                  from '../../models';
 import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
 
-export interface RateplanCreatedModel {
+export interface RatePlanListModel {
     /**
-     * The rate plan id
+     * List of rateplans
      */
-    id?: string;
+    ratePlans?: Array<models.RatePlanItemModel>;
 
 }
 
-export type RateplanCreatedModelWithRawHttp = RateplanCreatedModel & ResponseModel<RateplanCreatedModel>;
+export type RatePlanListModelWithRawHttp = RatePlanListModel & ResponseModel<RatePlanListModel>;
 
-export namespace RateplanCreatedModel {
+export namespace RatePlanListModel {
     export const $metaData = { 
-        id: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
+        ratePlans: Object.freeze({ 
+            type: 'Array<models.RatePlanItemModel>',
+            isListContainer: true,
         } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateplanCreatedModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RatePlanListModel>): FormGroup {
         const defaultControls = { 
-            id: getControl($metaData.id, options, 'id'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         setMetaData(group, $metaData);

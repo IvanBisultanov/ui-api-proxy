@@ -54,9 +54,9 @@ export interface ReservationModel {
     property?: models.EmbeddedPropertyModel;
 
     /**
-     * Rateplan
+     * RatePlan
      */
-    rateplan?: models.EmbeddedRateplanModel;
+    ratePlan?: models.EmbeddedRatePlanModel;
 
     /**
      * Unit type
@@ -183,8 +183,8 @@ export namespace ReservationModel {
         property: Object.freeze({ 
             type: 'models.EmbeddedPropertyModel',
         } as IApaleoPropertyMetaData),
-        rateplan: Object.freeze({ 
-            type: 'models.EmbeddedRateplanModel',
+        ratePlan: Object.freeze({ 
+            type: 'models.EmbeddedRatePlanModel',
         } as IApaleoPropertyMetaData),
         unitType: Object.freeze({ 
             type: 'models.EmbeddedUnitTypeModel',
@@ -264,7 +264,7 @@ export namespace ReservationModel {
             checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
             unit: models.EmbeddedUnitModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
-            rateplan: models.EmbeddedRateplanModel.$buildForm(fb),
+            ratePlan: models.EmbeddedRatePlanModel.$buildForm(fb),
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
             totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
             arrival: getControl($metaData.arrival, options, 'arrival'),

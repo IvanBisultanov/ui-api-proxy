@@ -26,7 +26,7 @@ import { callApiEndpoint }                                         from '../../f
 
 
 @Injectable()
-export class RateplanApi {
+export class RatePlanApi {
     public defaultHeaders: Headers = new Headers();
 
     constructor(
@@ -56,7 +56,7 @@ export class RateplanApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
     public ratesV1RatePlansByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
-        : Observable<models.RateplanModel | undefined> {
+        : Observable<models.RatePlanModel | undefined> {
         return this.ratesV1RatePlansByIdGetWithRawHttp(id, languages, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -78,7 +78,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansByIdPut(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdPut(id: string, requestBody: models.ReplaceRatePlanModel, $options?: IRequestOptions)
         : Observable<void> {
         return this.ratesV1RatePlansByIdPutWithRawHttp(id, requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -90,7 +90,7 @@ export class RateplanApi {
      * @param propertyId Return rate plans for specific property
      */
     public ratesV1RatePlansGet(propertyId?: string, $options?: IRequestOptions)
-        : Observable<models.RateplanListModel | undefined> {
+        : Observable<models.RatePlanListModel | undefined> {
         return this.ratesV1RatePlansGetWithRawHttp(propertyId, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -100,8 +100,8 @@ export class RateplanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansPost(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
-        : Observable<models.RateplanCreatedModel | undefined> {
+    public ratesV1RatePlansPost(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions)
+        : Observable<models.RatePlanCreatedModel | undefined> {
         return this.ratesV1RatePlansPostWithRawHttp(requestBody, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -125,7 +125,7 @@ export class RateplanApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
     public ratesV1RatePlansByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
-        : Observable<ResponseModel<models.RateplanModel>> {
+        : Observable<ResponseModel<models.RatePlanModel>> {
         return this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -147,7 +147,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansByIdPutWithRawHttp(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdPutWithRawHttp(id: string, requestBody: models.ReplaceRatePlanModel, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -159,7 +159,7 @@ export class RateplanApi {
      * @param propertyId Return rate plans for specific property
      */
     public ratesV1RatePlansGetWithRawHttp(propertyId?: string, $options?: IRequestOptions)
-        : Observable<ResponseModel<models.RateplanListModel>> {
+        : Observable<ResponseModel<models.RatePlanListModel>> {
         return this.ratesV1RatePlansGetWithHttpInfo(propertyId, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -169,8 +169,8 @@ export class RateplanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansPostWithRawHttp(requestBody: models.CreateRateplanModel, $options?: IRequestOptions)
-        : Observable<ResponseModel<models.RateplanCreatedModel>> {
+    public ratesV1RatePlansPostWithRawHttp(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.RatePlanCreatedModel>> {
         return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -343,7 +343,7 @@ export class RateplanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RatePlansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRateplanModel, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRatePlanModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(id));
 
@@ -457,7 +457,7 @@ export class RateplanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RatePlansPostWithHttpInfo(requestBody: models.CreateRateplanModel, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansPostWithHttpInfo(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();

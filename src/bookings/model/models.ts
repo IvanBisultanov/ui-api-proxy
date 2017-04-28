@@ -1,6 +1,6 @@
 export * from './CreateReservationModel';
 export * from './EmbeddedPropertyModel';
-export * from './EmbeddedRateplanModel';
+export * from './EmbeddedRatePlanModel';
 export * from './EmbeddedUnitModel';
 export * from './EmbeddedUnitTypeModel';
 export * from './Link';

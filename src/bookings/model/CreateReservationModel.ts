@@ -29,7 +29,7 @@ export interface CreateReservationModel {
     /**
      * ID of the rateplan
      */
-    rateplanId: string;
+    ratePlanId: string;
 
     /**
      * ID of the unit type
@@ -122,7 +122,7 @@ export namespace CreateReservationModel {
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        rateplanId: Object.freeze({ 
+        ratePlanId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
@@ -221,7 +221,7 @@ export namespace CreateReservationModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateReservationModel>): FormGroup {
         const defaultControls = { 
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
-            rateplanId: getControl($metaData.rateplanId, options, 'rateplanId'),
+            ratePlanId: getControl($metaData.ratePlanId, options, 'ratePlanId'),
             unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),
             arrival: getControl($metaData.arrival, options, 'arrival'),
             departure: getControl($metaData.departure, options, 'departure'),
