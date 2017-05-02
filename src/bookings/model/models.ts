@@ -1,4 +1,5 @@
 export * from './CreateReservationModel';
+export * from './DateTimeModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedRatePlanModel';
 export * from './EmbeddedUnitModel';

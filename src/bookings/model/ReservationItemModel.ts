@@ -36,12 +36,12 @@ export interface ReservationItemModel {
     /**
      * Time of check-in
      */
-    checkInTime?: Date;
+    checkInTimeUtc?: Date;
 
     /**
      * Time of check-out
      */
-    checkOutTime?: Date;
+    checkOutTimeUtc?: Date;
 
     /**
      * ID of the property
@@ -174,11 +174,11 @@ export namespace ReservationItemModel {
             isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        checkInTime: Object.freeze({ 
+        checkInTimeUtc: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        checkOutTime: Object.freeze({ 
+        checkOutTimeUtc: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -273,8 +273,8 @@ export namespace ReservationItemModel {
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
             status: getControl($metaData.status, options, 'status'),
-            checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
-            checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
+            checkInTimeUtc: getControl($metaData.checkInTimeUtc, options, 'checkInTimeUtc'),
+            checkOutTimeUtc: getControl($metaData.checkOutTimeUtc, options, 'checkOutTimeUtc'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
             ratePlanId: getControl($metaData.ratePlanId, options, 'ratePlanId'),
             unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),

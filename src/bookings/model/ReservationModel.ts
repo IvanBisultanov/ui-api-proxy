@@ -36,12 +36,12 @@ export interface ReservationModel {
     /**
      * Time of check-in
      */
-    checkInTime?: Date;
+    checkInTimeUtc?: Date;
 
     /**
      * Time of check-out
      */
-    checkOutTime?: Date;
+    checkOutTimeUtc?: Date;
 
     /**
      * Assigned unit
@@ -169,11 +169,11 @@ export namespace ReservationModel {
             isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        checkInTime: Object.freeze({ 
+        checkInTimeUtc: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        checkOutTime: Object.freeze({ 
+        checkOutTimeUtc: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -260,8 +260,8 @@ export namespace ReservationModel {
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
             status: getControl($metaData.status, options, 'status'),
-            checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
-            checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
+            checkInTimeUtc: getControl($metaData.checkInTimeUtc, options, 'checkInTimeUtc'),
+            checkOutTimeUtc: getControl($metaData.checkOutTimeUtc, options, 'checkOutTimeUtc'),
             unit: models.EmbeddedUnitModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             ratePlan: models.EmbeddedRatePlanModel.$buildForm(fb),
