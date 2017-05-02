@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { FormBuilder, FormGroup }                         from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
-import { ResponseModel }                                  from '../../models';
-import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
+import { FormBuilder, FormGroup }                              from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
+import { ResponseModel }                                       from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
 export interface ReplacePropertyModel {
     /**
@@ -65,7 +65,7 @@ export namespace ReplacePropertyModel {
             location: models.ReplaceLocationModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
-        setMetaData(group, $metaData);
+        prepareFormGroup(group, $metaData, options);
 
         return group;
     }

@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can create a new property
  */
-import { FormBuilder, FormGroup }                         from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
-import { ResponseModel }                                  from '../../models';
-import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
+import { FormBuilder, FormGroup }                              from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
+import { ResponseModel }                                       from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
 export interface PropertyModel {
     /**
@@ -112,7 +112,7 @@ export namespace PropertyModel {
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
-        setMetaData(group, $metaData);
+        prepareFormGroup(group, $metaData, options);
 
         return group;
     }

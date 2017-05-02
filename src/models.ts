@@ -5,6 +5,7 @@ export interface IRequestOptions {
     retryTimes?: number;
     ifMatch?: string;
     ifNoneMatch?: string;
+    doNotShareRequest?: boolean;
     additionalHeaders?: { [key: string]: (string | string[]) };
     customInterceptor?: (requestOptions: RequestOptionsArgs) => RequestOptionsArgs;
 }

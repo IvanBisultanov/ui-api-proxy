@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/catch';
 
 import { Configuration, IRetryPolicy } from 'configuration';
@@ -32,7 +33,7 @@ export function callApiEndpoint(
     const rc = getRequestConfig(config);
     const requestOptions: RequestOptionsArgs = rc.requestOptionsInterceptor(requestOptionsArgs);
 
-    return http.request(path, requestOptions)
+    const request = http.request(path, requestOptions)
         .map(r => rc.responseInterceptor(requestOptionsArgs, r))
         .catch(err => {
             if (err instanceof Response) {
@@ -46,6 +47,12 @@ export function callApiEndpoint(
             }
             throw err;
         });
+    
+    if (config.doNotShareRequest) {
+        return request;
+    } else {
+        return request.share();
+    }
 }
 
 function getRequestConfig(config: Configuration & IRequestOptions) {

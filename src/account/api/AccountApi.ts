@@ -172,7 +172,8 @@ export class AccountApi {
             {
                 method: RequestMethod.Get,
                 headers: headers,
-                search: queryParameters
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
             },
             Object.assign({}, this.configuration, $options),
             retryTimesToGo => {
@@ -223,7 +224,8 @@ export class AccountApi {
             {
                 method: RequestMethod.Head,
                 headers: headers,
-                search: queryParameters
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
             },
             Object.assign({}, this.configuration, $options),
             retryTimesToGo => {
@@ -285,7 +287,8 @@ export class AccountApi {
                 method: RequestMethod.Put,
                 headers: headers,
                 body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
-                search: queryParameters
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
             },
             Object.assign({}, this.configuration, $options),
             retryTimesToGo => {
@@ -341,7 +344,8 @@ export class AccountApi {
                 method: RequestMethod.Post,
                 headers: headers,
                 body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
-                search: queryParameters
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
             },
             Object.assign({}, this.configuration, $options),
             retryTimesToGo => {

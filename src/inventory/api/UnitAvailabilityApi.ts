@@ -150,7 +150,8 @@ export class UnitAvailabilityApi {
             {
                 method: RequestMethod.Get,
                 headers: headers,
-                search: queryParameters
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
             },
             Object.assign({}, this.configuration, $options),
             retryTimesToGo => {

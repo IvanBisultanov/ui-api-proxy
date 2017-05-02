@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                         from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }     from '../../types';
-import { ResponseModel }                                  from '../../models';
-import { getControl, adjustDefaultControls, setMetaData } from '../../functions.model';
+import { FormBuilder, FormGroup }                              from '@angular/forms';
+import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
+import { ResponseModel }                                       from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
 export interface LocationModel {
     street?: string;
@@ -58,7 +58,7 @@ export namespace LocationModel {
             countryCode: getControl($metaData.countryCode, options, 'countryCode'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
-        setMetaData(group, $metaData);
+        prepareFormGroup(group, $metaData, options);
 
         return group;
     }
