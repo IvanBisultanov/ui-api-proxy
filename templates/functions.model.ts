@@ -1,23 +1,23 @@
 import {
     ValidatorFn,
     Validators,
-    FormGroup, 
+    FormGroup,
     AbstractControl
 } from '@angular/forms';
 import {
-    IControlFactoryOptions,
     FormGroupControls,
     IBuildFormOptions,
     Control,
     IApaleoAbstractControl,
-    IApaleoPropertyMetaData
+    IApaleoPropertyMetaData,
+    ApaleoFormGroupMetaData,
+    FullyOptional
 } from './types';
 
 export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): [T[K] | undefined, ValidatorFn | null] {
-    const ctrlOptions = getControlOptions(options, property);
-    const validators = getValidators(metaData, ctrlOptions.additionalValidators);
+    const validators = getValidators(metaData, getAdditionalValidators(options, property));
 
-    return [ctrlOptions.defaultValue, Validators.compose(validators)];
+    return [undefined, Validators.compose(validators)];
 }
 
 export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, options?: IBuildFormOptions<T>) {
@@ -27,11 +27,12 @@ export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, 
     return Object.assign(defaultControls, options.overwriteControls, convertAdditionalControls(options.additionalControls));
 }
 
-export function setMetaData(group: FormGroup, metaData: { [key: string]: IApaleoPropertyMetaData }) {
-    for (const key of Object.keys(group.controls)) {
-        if (metaData[key]) {
-            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key];
-        }
+export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroupMetaData<T>, options?: IBuildFormOptions<T>) {
+    if (metaData) {
+        setMetaData(group, metaData)
+    }
+    if (options && options.defaultValues) {
+        group.patchValue(options.defaultValues);
     }
 }
 
@@ -39,26 +40,21 @@ export function isApaleoAbstractControl(ctrl: IApaleoAbstractControl | AbstractC
     return !!(<IApaleoAbstractControl>ctrl).apaleoMetaData;
 }
 
-function getControlOptions<T, K extends keyof T>(options: IBuildFormOptions<T> | undefined, property: K) {
-    options = options || {};
-    let co: IControlFactoryOptions<T[K]> = {};
-
-    if (options.controlOptions) {
-        co = options.controlOptions[property] || {};
-    }
-    if (options.additionalValidators) {
-        const additionalValidators = options.additionalValidators[property] || [];
-
-        if (co.additionalValidators) {
-            co.additionalValidators.push(...additionalValidators);
-        } else {
-            co.additionalValidators = additionalValidators;
+function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>) {
+    for (const key of Object.keys(group.controls) as [keyof T]) {
+        if (metaData[key]) {
+            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key]!;
         }
     }
-    if (co.defaultValue === undefined && options.defaultValues) {
-        co.defaultValue = options.defaultValues[property];
+}
+
+function getAdditionalValidators<T, K extends keyof T>(options: IBuildFormOptions<T> | undefined, property: K) {
+    options = options || {};
+
+    if (options.additionalValidators) {
+        return options.additionalValidators[property];
     }
-    return co;
+    return undefined;
 }
 
 function getValidators(metaData: IApaleoPropertyMetaData, additionalValidators?: ValidatorFn[]) {

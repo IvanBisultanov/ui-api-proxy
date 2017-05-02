@@ -12,6 +12,7 @@ export class Configuration {
     username: string;
     password: string;
     accessToken: string | (() => string);
+    withCredentials: boolean;
     retryPolicy: IRetryPolicy;
     responseInterceptor: (req: RequestOptionsArgs, res: Response) => Response;
 }
