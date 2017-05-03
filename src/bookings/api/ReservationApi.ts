@@ -96,12 +96,22 @@ export class ReservationApi {
     }
 
     /**
-     * Get all reservations
-     * Use this tp get all reservations.
+     * Get reservations with filters
+     * Use this to get reservations matching the given filter criteria.
+     * @param propertyIds Return reservations for specific properties
+     * @param ratePlanIds Return reservations with specific rate plans
+     * @param unitIds Return reservations with specific units assigned
+     * @param unitTypeIds Return reservations with specific unit types
+     * @param statuses Return reservations where the status is one of the specified values
+     * @param fromDate The date in the format yyyy-MM-dd
+     * @param fromTime The time in the format HH:mm
+     * @param toDate The date in the format yyyy-MM-dd
+     * @param toTime The time in the format HH:mm
+     * @param dateFilter Date field to filter reservations by. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.  Arrival, Departure, Stay dates are in hotel timezone.  Creation, Modification dates are in UTC±00:00.
      */
-    public bookingsV1ReservationsGet($options?: IRequestOptions)
+    public bookingsV1ReservationsGet(propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, fromDate?: Date, fromTime?: string, toDate?: Date, toTime?: string, dateFilter?: string, $options?: IRequestOptions)
         : Observable<models.ReservationListModel | undefined> {
-        return this.bookingsV1ReservationsGetWithRawHttp($options)
+        return this.bookingsV1ReservationsGetWithRawHttp(propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, fromDate, fromTime, toDate, toTime, dateFilter, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -175,12 +185,22 @@ export class ReservationApi {
     }
 
     /**
-     * Get all reservations
-     * Use this tp get all reservations.
+     * Get reservations with filters
+     * Use this to get reservations matching the given filter criteria.
+     * @param propertyIds Return reservations for specific properties
+     * @param ratePlanIds Return reservations with specific rate plans
+     * @param unitIds Return reservations with specific units assigned
+     * @param unitTypeIds Return reservations with specific unit types
+     * @param statuses Return reservations where the status is one of the specified values
+     * @param fromDate The date in the format yyyy-MM-dd
+     * @param fromTime The time in the format HH:mm
+     * @param toDate The date in the format yyyy-MM-dd
+     * @param toTime The time in the format HH:mm
+     * @param dateFilter Date field to filter reservations by. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.  Arrival, Departure, Stay dates are in hotel timezone.  Creation, Modification dates are in UTC±00:00.
      */
-    public bookingsV1ReservationsGetWithRawHttp($options?: IRequestOptions)
+    public bookingsV1ReservationsGetWithRawHttp(propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, fromDate?: Date, fromTime?: string, toDate?: Date, toTime?: string, dateFilter?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationListModel>> {
-        return this.bookingsV1ReservationsGetWithHttpInfo($options)
+        return this.bookingsV1ReservationsGetWithHttpInfo(propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, fromDate, fromTime, toDate, toTime, dateFilter, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -481,14 +501,64 @@ export class ReservationApi {
     }
 
     /**
-     * Get all reservations
-     * Use this tp get all reservations.
+     * Get reservations with filters
+     * Use this to get reservations matching the given filter criteria.
+     * @param propertyIds Return reservations for specific properties
+     * @param ratePlanIds Return reservations with specific rate plans
+     * @param unitIds Return reservations with specific units assigned
+     * @param unitTypeIds Return reservations with specific unit types
+     * @param statuses Return reservations where the status is one of the specified values
+     * @param fromDate The date in the format yyyy-MM-dd
+     * @param fromTime The time in the format HH:mm
+     * @param toDate The date in the format yyyy-MM-dd
+     * @param toTime The time in the format HH:mm
+     * @param dateFilter Date field to filter reservations by. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.  Arrival, Departure, Stay dates are in hotel timezone.  Creation, Modification dates are in UTC±00:00.
      */
-    private bookingsV1ReservationsGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsGetWithHttpInfo(propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, fromDate?: Date, fromTime?: string, toDate?: Date, toTime?: string, dateFilter?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/bookings/v1/reservations';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (propertyIds) {
+            queryParameters.set('propertyIds', propertyIds.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (ratePlanIds) {
+            queryParameters.set('ratePlanIds', ratePlanIds.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (unitIds) {
+            queryParameters.set('unitIds', unitIds.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (unitTypeIds) {
+            queryParameters.set('unitTypeIds', unitTypeIds.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (statuses) {
+            queryParameters.set('statuses', statuses.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (fromDate !== undefined) {
+            queryParameters.set('from.Date', <any>fromDate.toISOString());
+        }
+
+        if (fromTime !== undefined) {
+            queryParameters.set('from.Time', <any>fromTime);
+        }
+
+        if (toDate !== undefined) {
+            queryParameters.set('to.Date', <any>toDate.toISOString());
+        }
+
+        if (toTime !== undefined) {
+            queryParameters.set('to.Time', <any>toTime);
+        }
+
+        if (dateFilter !== undefined) {
+            queryParameters.set('dateFilter', <any>dateFilter);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -524,7 +594,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsGetWithHttpInfo($options);
+                return this.bookingsV1ReservationsGetWithHttpInfo(propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, fromDate, fromTime, toDate, toTime, dateFilter, $options);
             }
         )
     }

@@ -146,9 +146,9 @@ export interface ReservationModel {
 }
 export namespace ReservationModel {
     export enum StatusEnum {
-        Confirmed = <any> 'confirmed',
-        InHouse = <any> 'inHouse',
-        CheckedOut = <any> 'checkedOut'
+        Confirmed = <any> 'Confirmed',
+        InHouse = <any> 'InHouse',
+        CheckedOut = <any> 'CheckedOut'
     }
 }
 
