@@ -10,7 +10,18 @@ export interface IRequestOptions {
     customInterceptor?: (requestOptions: RequestOptionsArgs) => RequestOptionsArgs;
 }
 
-const regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(\.(\d{1,}))?(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
+// Regular Expressions explained:
+// year:     /[12]\d{3}/
+// month:    /(0[1-9])|(1[012])/
+// day:      /(0[1-9])|([12]\d)|(3[01])/
+// hour:     /([01]\d)|(2[0123])/
+// minute:   /[0-5]\d/
+// second:   /[0-5]\d/
+// ms:       /\.\d{1,}/
+// timezone: /Z|([\-+]([01]\d)|(2[0123]):[0-5]\d)/
+
+const regexIso8601OrSimilar = 
+    /^[12]\d{3}-((0[1-9])|(1[012]))-((0[1-9])|([12]\d)|(3[01]))(T(([01]\d)|(2[0123])):[0-5]\d:[0-5]\d(\.\d{1,})?(Z|([\-+](([01]\d)|(2[0123])):[0-5]\d))?)?$/
 
 export class ResponseModel<T> {
     public readonly $headers: ResponseHeaders;
@@ -44,7 +55,7 @@ export class ResponseModel<T> {
             const value = input[key];
             let match: RegExpMatchArray | null;
             // Check for string properties which look like dates.
-            if (typeof value === "string" && (match = value.match(regexIso8601))) {
+            if (typeof value === "string" && (match = value.match(regexIso8601OrSimilar))) {
                 const milliseconds = Date.parse(match[0])
                 if (!isNaN(milliseconds)) {
                     input[key] = new Date(milliseconds);
