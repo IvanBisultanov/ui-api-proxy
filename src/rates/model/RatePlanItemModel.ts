@@ -39,6 +39,11 @@ export interface RatePlanItemModel {
     description?: string;
 
     /**
+     * The way the defined rates are applied when an offer is calculated for this rate plan
+     */
+    sellingUnit?: RatePlanItemModel.SellingUnitEnum;
+
+    /**
      * The default price for the rateplan
      */
     defaultPrice?: number;
@@ -59,6 +64,12 @@ export interface RatePlanItemModel {
     links?: { [key: string]: models.Link; };
 
 }
+export namespace RatePlanItemModel {
+    export enum SellingUnitEnum {
+        Night = <any> 'Night',
+        Day = <any> 'Day'
+    }
+}
 
 export type RatePlanItemModelWithRawHttp = RatePlanItemModel & ResponseModel<RatePlanItemModel>;
 
@@ -78,6 +89,11 @@ export namespace RatePlanItemModel {
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
             type: 'string',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        sellingUnit: Object.freeze({ 
+            type: 'string',
+            isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultPrice: Object.freeze({ 
@@ -105,6 +121,7 @@ export namespace RatePlanItemModel {
             code: getControl($metaData.code, options, 'code'),
             name: getControl($metaData.name, options, 'name'),
             description: getControl($metaData.description, options, 'description'),
+            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
             defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
         };

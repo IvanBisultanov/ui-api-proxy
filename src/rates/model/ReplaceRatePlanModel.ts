@@ -29,6 +29,11 @@ export interface ReplaceRatePlanModel {
     description: { [key: string]: string; };
 
     /**
+     * Select the way the defined rates are applied when an offer is calculated for this rate plan
+     */
+    sellingUnit: ReplaceRatePlanModel.SellingUnitEnum;
+
+    /**
      * The default price for the rateplan
      */
     defaultPrice?: number;
@@ -38,6 +43,12 @@ export interface ReplaceRatePlanModel {
      */
     unitTypeIds?: Array<string>;
 
+}
+export namespace ReplaceRatePlanModel {
+    export enum SellingUnitEnum {
+        Night = <any> 'Night',
+        Day = <any> 'Day'
+    }
 }
 
 export type ReplaceRatePlanModelWithRawHttp = ReplaceRatePlanModel & ResponseModel<ReplaceRatePlanModel>;
@@ -56,6 +67,12 @@ export namespace ReplaceRatePlanModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
+        sellingUnit: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isEnum: true,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         defaultPrice: Object.freeze({ 
             type: 'number',
             isPrimitiveType: true,
@@ -69,6 +86,7 @@ export namespace ReplaceRatePlanModel {
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceRatePlanModel>): FormGroup {
         const defaultControls = { 
+            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
             defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

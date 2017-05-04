@@ -39,6 +39,11 @@ export interface CreateRatePlanModel {
     description: { [key: string]: string; };
 
     /**
+     * Select the way the defined rates are applied when an offer is calculated for this rate plan
+     */
+    sellingUnit: CreateRatePlanModel.SellingUnitEnum;
+
+    /**
      * The default price for the rateplan
      */
     defaultPrice?: number;
@@ -48,6 +53,12 @@ export interface CreateRatePlanModel {
      */
     unitTypeIds?: Array<string>;
 
+}
+export namespace CreateRatePlanModel {
+    export enum SellingUnitEnum {
+        Night = <any> 'Night',
+        Day = <any> 'Day'
+    }
 }
 
 export type CreateRatePlanModelWithRawHttp = CreateRatePlanModel & ResponseModel<CreateRatePlanModel>;
@@ -78,6 +89,12 @@ export namespace CreateRatePlanModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
+        sellingUnit: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isEnum: true,
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         defaultPrice: Object.freeze({ 
             type: 'number',
             isPrimitiveType: true,
@@ -93,6 +110,7 @@ export namespace CreateRatePlanModel {
         const defaultControls = { 
             code: getControl($metaData.code, options, 'code'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
+            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
             defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
