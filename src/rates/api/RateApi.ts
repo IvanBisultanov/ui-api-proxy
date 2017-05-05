@@ -41,7 +41,7 @@ export class RateApi {
     /**
      * Get a rate list for a rate plan
      * Get the list of rates for a rate plan.
-     * @param id The id of the rateplan
+     * @param id The id of the rate plan
      */
     public ratesV1RatePlansByIdRatesGet(id: string, $options?: IRequestOptions)
         : Observable<models.RateListModel | undefined> {
@@ -65,7 +65,7 @@ export class RateApi {
     /**
      * Get a rate list for a rate plan
      * Get the list of rates for a rate plan.
-     * @param id The id of the rateplan
+     * @param id The id of the rate plan
      */
     public ratesV1RatePlansByIdRatesGetWithRawHttp(id: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RateListModel>> {
@@ -89,7 +89,7 @@ export class RateApi {
     /**
      * Get a rate list for a rate plan
      * Get the list of rates for a rate plan.
-     * @param id The id of the rateplan
+     * @param id The id of the rate plan
      */
     private ratesV1RatePlansByIdRatesGetWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rate-plans/${id}/rates'

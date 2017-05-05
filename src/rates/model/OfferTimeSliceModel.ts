@@ -17,55 +17,47 @@ import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types
 import { ResponseModel }                                       from '../../models';
 import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
-export interface StayOffersModel {
+export interface OfferTimeSliceModel {
     /**
-     * The property
+     * The start date and time for this time slice
      */
-    property?: models.EmbeddedPropertyModel;
+    from?: Date;
 
     /**
-     * The requested arrival date and time
+     * The end date and time for this time slice
      */
-    arrivalRequested?: Date;
+    to?: Date;
 
     /**
-     * The requested departure date and time
+     * The price for this time slice
      */
-    departureRequested?: Date;
-
-    /**
-     * List of offered unit types with rates
-     */
-    offers?: Array<models.OfferModel>;
+    amount?: number;
 
 }
 
-export type StayOffersModelWithRawHttp = StayOffersModel & ResponseModel<StayOffersModel>;
+export type OfferTimeSliceModelWithRawHttp = OfferTimeSliceModel & ResponseModel<OfferTimeSliceModel>;
 
-export namespace StayOffersModel {
+export namespace OfferTimeSliceModel {
     export const $metaData = { 
-        property: Object.freeze({ 
-            type: 'models.EmbeddedPropertyModel',
-        } as IApaleoPropertyMetaData),
-        arrivalRequested: Object.freeze({ 
+        from: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        departureRequested: Object.freeze({ 
+        to: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        offers: Object.freeze({ 
-            type: 'Array<models.OfferModel>',
-            isListContainer: true,
+        amount: Object.freeze({ 
+            type: 'number',
+            isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<StayOffersModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferTimeSliceModel>): FormGroup {
         const defaultControls = { 
-            property: models.EmbeddedPropertyModel.$buildForm(fb),
-            arrivalRequested: getControl($metaData.arrivalRequested, options, 'arrivalRequested'),
-            departureRequested: getControl($metaData.departureRequested, options, 'departureRequested'),
+            from: getControl($metaData.from, options, 'from'),
+            to: getControl($metaData.to, options, 'to'),
+            amount: getControl($metaData.amount, options, 'amount'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

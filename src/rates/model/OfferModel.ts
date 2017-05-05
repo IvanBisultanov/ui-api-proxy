@@ -19,6 +19,16 @@ import { getControl, adjustDefaultControls, prepareFormGroup } from '../../funct
 
 export interface OfferModel {
     /**
+     * The earliest arrival date and time for this offer
+     */
+    arrival?: Date;
+
+    /**
+     * The latest departure date and time for this offer
+     */
+    departure?: Date;
+
+    /**
      * The unit type for which the following offers apply
      */
     unitType?: models.EmbeddedUnitTypeModel;
@@ -36,7 +46,12 @@ export interface OfferModel {
     /**
      * The price for the whole stay
      */
-    price?: number;
+    totalAmount?: number;
+
+    /**
+     * The breakdown for each time slice for this offer
+     */
+    timeSlices?: Array<models.OfferTimeSliceModel>;
 
 }
 
@@ -44,6 +59,14 @@ export type OfferModelWithRawHttp = OfferModel & ResponseModel<OfferModel>;
 
 export namespace OfferModel {
     export const $metaData = { 
+        arrival: Object.freeze({ 
+            type: 'Date',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        departure: Object.freeze({ 
+            type: 'Date',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
         unitType: Object.freeze({ 
             type: 'models.EmbeddedUnitTypeModel',
         } as IApaleoPropertyMetaData),
@@ -54,18 +77,24 @@ export namespace OfferModel {
         ratePlan: Object.freeze({ 
             type: 'models.EmbeddedRatePlanModel',
         } as IApaleoPropertyMetaData),
-        price: Object.freeze({ 
+        totalAmount: Object.freeze({ 
             type: 'number',
             isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        timeSlices: Object.freeze({ 
+            type: 'Array<models.OfferTimeSliceModel>',
+            isListContainer: true,
         } as IApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferModel>): FormGroup {
         const defaultControls = { 
+            arrival: getControl($metaData.arrival, options, 'arrival'),
+            departure: getControl($metaData.departure, options, 'departure'),
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
             availableUnits: getControl($metaData.availableUnits, options, 'availableUnits'),
             ratePlan: models.EmbeddedRatePlanModel.$buildForm(fb),
-            price: getControl($metaData.price, options, 'price'),
+            totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);
