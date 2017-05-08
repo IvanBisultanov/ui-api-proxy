@@ -48,10 +48,10 @@ export function callApiEndpoint(
             throw err;
         });
     
-    if (config.doNotShareRequest) {
+    if (config.doNotReplayRequest) {
         return request;
     } else {
-        return request.share();
+        return request.publishReplay(1).refCount();
     }
 }
 
