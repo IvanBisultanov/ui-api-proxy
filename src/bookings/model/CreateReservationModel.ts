@@ -37,14 +37,14 @@ export interface CreateReservationModel {
     unitTypeId: string;
 
     /**
-     * Date of arrival and the optional time
+     * Date of arrival and the optional time with UTC offset
      */
-    arrival: models.DateTimeModel;
+    arrival: string;
 
     /**
-     * Date of departure and the optional time
+     * Date of departure and the optional time with UTC offset
      */
-    departure: models.DateTimeModel;
+    departure: string;
 
     /**
      * Number of adults
@@ -134,11 +134,13 @@ export namespace CreateReservationModel {
         } as IApaleoPropertyMetaData),
         arrival: Object.freeze({ 
             isRequired: true,
-            type: 'models.DateTimeModel',
+            type: 'string',
+            isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         departure: Object.freeze({ 
             isRequired: true,
-            type: 'models.DateTimeModel',
+            type: 'string',
+            isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         adults: Object.freeze({ 
             type: 'number',
@@ -223,8 +225,8 @@ export namespace CreateReservationModel {
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
             ratePlanId: getControl($metaData.ratePlanId, options, 'ratePlanId'),
             unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),
-            arrival: models.DateTimeModel.$buildForm(fb),
-            departure: models.DateTimeModel.$buildForm(fb),
+            arrival: getControl($metaData.arrival, options, 'arrival'),
+            departure: getControl($metaData.departure, options, 'departure'),
             adults: getControl($metaData.adults, options, 'adults'),
             children: getControl($metaData.children, options, 'children'),
             guestTitle: getControl($metaData.guestTitle, options, 'guestTitle'),

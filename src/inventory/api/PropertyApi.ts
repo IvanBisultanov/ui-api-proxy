@@ -76,10 +76,12 @@ export class PropertyApi {
     /**
      * Get a properties list
      * Get the list of properties.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      */
-    public inventoryV1PropertiesGet($options?: IRequestOptions)
+    public inventoryV1PropertiesGet(pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
         : Observable<models.PropertyListModel | undefined> {
-        return this.inventoryV1PropertiesGetWithRawHttp($options)
+        return this.inventoryV1PropertiesGetWithRawHttp(pageNumber, pageSize, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -91,6 +93,16 @@ export class PropertyApi {
     public inventoryV1PropertiesPost(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
         : Observable<models.PropertyCreatedModel | undefined> {
         return this.inventoryV1PropertiesPostWithRawHttp(requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Return total count of properties
+     * Return total count of properties
+     */
+    public inventoryV1PropertiescountGet($options?: IRequestOptions)
+        : Observable<number | undefined> {
+        return this.inventoryV1PropertiescountGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -133,10 +145,12 @@ export class PropertyApi {
     /**
      * Get a properties list
      * Get the list of properties.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      */
-    public inventoryV1PropertiesGetWithRawHttp($options?: IRequestOptions)
+    public inventoryV1PropertiesGetWithRawHttp(pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyListModel>> {
-        return this.inventoryV1PropertiesGetWithHttpInfo($options)
+        return this.inventoryV1PropertiesGetWithHttpInfo(pageNumber, pageSize, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -148,6 +162,16 @@ export class PropertyApi {
     public inventoryV1PropertiesPostWithRawHttp(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyCreatedModel>> {
         return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Return total count of properties
+     * Return total count of properties
+     */
+    public inventoryV1PropertiescountGetWithRawHttp($options?: IRequestOptions)
+        : Observable<ResponseModel<number>> {
+        return this.inventoryV1PropertiescountGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -330,12 +354,22 @@ export class PropertyApi {
     /**
      * Get a properties list
      * Get the list of properties.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      */
-    private inventoryV1PropertiesGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesGetWithHttpInfo(pageNumber?: number, pageSize?: number, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>pageNumber);
+        }
+
+        if (pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>pageSize);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -371,7 +405,7 @@ export class PropertyApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesGetWithHttpInfo($options);
+                return this.inventoryV1PropertiesGetWithHttpInfo(pageNumber, pageSize, $options);
             }
         )
     }
@@ -432,6 +466,55 @@ export class PropertyApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options);
+            }
+        )
+    }
+
+    /**
+     * Return total count of properties
+     * Return total count of properties
+     */
+    private inventoryV1PropertiescountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/properties/$count';
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.inventoryV1PropertiescountGetWithHttpInfo($options);
             }
         )
     }

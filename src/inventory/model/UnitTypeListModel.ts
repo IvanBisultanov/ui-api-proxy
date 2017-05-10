@@ -23,6 +23,16 @@ export interface UnitTypeListModel {
      */
     unitTypes?: Array<models.UnitTypeItemModel>;
 
+    /**
+     * Total count of items
+     */
+    count?: number;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: { [key: string]: models.Link; };
+
 }
 
 export type UnitTypeListModelWithRawHttp = UnitTypeListModel & ResponseModel<UnitTypeListModel>;
@@ -33,10 +43,19 @@ export namespace UnitTypeListModel {
             type: 'Array<models.UnitTypeItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
+        count: Object.freeze({ 
+            type: 'number',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        links: Object.freeze({ 
+            type: '{ [key: string]: models.Link; }',
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitTypeListModel>): FormGroup {
         const defaultControls = { 
+            count: getControl($metaData.count, options, 'count'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

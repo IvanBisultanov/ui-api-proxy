@@ -23,6 +23,16 @@ export interface ReservationListModel {
      */
     reservations?: Array<models.ReservationItemModel>;
 
+    /**
+     * Total count of items
+     */
+    count?: number;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: { [key: string]: models.Link; };
+
 }
 
 export type ReservationListModelWithRawHttp = ReservationListModel & ResponseModel<ReservationListModel>;
@@ -33,10 +43,19 @@ export namespace ReservationListModel {
             type: 'Array<models.ReservationItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
+        count: Object.freeze({ 
+            type: 'number',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        links: Object.freeze({ 
+            type: '{ [key: string]: models.Link; }',
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationListModel>): FormGroup {
         const defaultControls = { 
+            count: getControl($metaData.count, options, 'count'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

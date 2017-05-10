@@ -87,11 +87,13 @@ export class RatePlanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    public ratesV1RatePlansGet(propertyId?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansGet(pageNumber: number, pageSize: number, propertyId?: string, $options?: IRequestOptions)
         : Observable<models.RatePlanListModel | undefined> {
-        return this.ratesV1RatePlansGetWithRawHttp(propertyId, $options)
+        return this.ratesV1RatePlansGetWithRawHttp(pageNumber, pageSize, propertyId, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -103,6 +105,16 @@ export class RatePlanApi {
     public ratesV1RatePlansPost(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions)
         : Observable<models.RatePlanCreatedModel | undefined> {
         return this.ratesV1RatePlansPostWithRawHttp(requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Return total count of rateplans
+     * Return total count of rateplans
+     */
+    public ratesV1RatePlanscountGet($options?: IRequestOptions)
+        : Observable<number | undefined> {
+        return this.ratesV1RatePlanscountGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -156,11 +168,13 @@ export class RatePlanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    public ratesV1RatePlansGetWithRawHttp(propertyId?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansGetWithRawHttp(pageNumber: number, pageSize: number, propertyId?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RatePlanListModel>> {
-        return this.ratesV1RatePlansGetWithHttpInfo(propertyId, $options)
+        return this.ratesV1RatePlansGetWithHttpInfo(pageNumber, pageSize, propertyId, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -172,6 +186,16 @@ export class RatePlanApi {
     public ratesV1RatePlansPostWithRawHttp(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RatePlanCreatedModel>> {
         return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Return total count of rateplans
+     * Return total count of rateplans
+     */
+    public ratesV1RatePlanscountGetWithRawHttp($options?: IRequestOptions)
+        : Observable<ResponseModel<number>> {
+        return this.ratesV1RatePlanscountGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -406,15 +430,33 @@ export class RatePlanApi {
     /**
      * Get a rateplan list
      * Get the list of rateplans.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    private ratesV1RatePlansGetWithHttpInfo(propertyId?: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansGetWithHttpInfo(pageNumber: number, pageSize: number, propertyId?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'pageNumber' is not null or undefined
+        if (pageNumber === null || pageNumber === undefined) {
+            throw new Error('Required parameter pageNumber was null or undefined when calling ratesV1RatePlansGet.');
+        }
+        // verify required parameter 'pageSize' is not null or undefined
+        if (pageSize === null || pageSize === undefined) {
+            throw new Error('Required parameter pageSize was null or undefined when calling ratesV1RatePlansGet.');
+        }
         if (propertyId !== undefined) {
             queryParameters.set('propertyId', <any>propertyId);
+        }
+
+        if (pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>pageNumber);
+        }
+
+        if (pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>pageSize);
         }
 
         // to determine the Content-Type header
@@ -452,7 +494,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansGetWithHttpInfo(propertyId, $options);
+                return this.ratesV1RatePlansGetWithHttpInfo(pageNumber, pageSize, propertyId, $options);
             }
         )
     }
@@ -513,6 +555,55 @@ export class RatePlanApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options);
+            }
+        )
+    }
+
+    /**
+     * Return total count of rateplans
+     * Return total count of rateplans
+     */
+    private ratesV1RatePlanscountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/rates/v1/rate-plans/$count';
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.ratesV1RatePlanscountGetWithHttpInfo($options);
             }
         )
     }

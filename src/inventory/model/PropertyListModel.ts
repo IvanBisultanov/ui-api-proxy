@@ -23,6 +23,16 @@ export interface PropertyListModel {
      */
     properties?: Array<models.PropertyItemModel>;
 
+    /**
+     * Total count of items
+     */
+    count?: number;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: { [key: string]: models.Link; };
+
 }
 
 export type PropertyListModelWithRawHttp = PropertyListModel & ResponseModel<PropertyListModel>;
@@ -33,10 +43,19 @@ export namespace PropertyListModel {
             type: 'Array<models.PropertyItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
+        count: Object.freeze({ 
+            type: 'number',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        links: Object.freeze({ 
+            type: '{ [key: string]: models.Link; }',
+            isMapContainer: true,
+        } as IApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<PropertyListModel>): FormGroup {
         const defaultControls = { 
+            count: getControl($metaData.count, options, 'count'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

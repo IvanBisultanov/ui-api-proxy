@@ -85,13 +85,15 @@ export class UnitTypeApi {
     }
 
     /**
-     * Get a unit type list
+     * Get all unit types, or all unit types for a property
      * Get the list of unit types.
      * @param propertyId Return unit types for specific property
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      */
-    public inventoryV1UnitTypesGet(propertyId?: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesGet(propertyId?: string, pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
         : Observable<models.UnitTypeListModel | undefined> {
-        return this.inventoryV1UnitTypesGetWithRawHttp(propertyId, $options)
+        return this.inventoryV1UnitTypesGetWithRawHttp(propertyId, pageNumber, pageSize, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -103,6 +105,16 @@ export class UnitTypeApi {
     public inventoryV1UnitTypesPost(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions)
         : Observable<models.UnitTypeCreatedModel | undefined> {
         return this.inventoryV1UnitTypesPostWithRawHttp(requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Return total count of unit types
+     * Return total count of unit types
+     */
+    public inventoryV1UnitTypescountGet($options?: IRequestOptions)
+        : Observable<number | undefined> {
+        return this.inventoryV1UnitTypescountGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -154,13 +166,15 @@ export class UnitTypeApi {
     }
 
     /**
-     * Get a unit type list
+     * Get all unit types, or all unit types for a property
      * Get the list of unit types.
      * @param propertyId Return unit types for specific property
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      */
-    public inventoryV1UnitTypesGetWithRawHttp(propertyId?: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesGetWithRawHttp(propertyId?: string, pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeListModel>> {
-        return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, $options)
+        return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, pageNumber, pageSize, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -172,6 +186,16 @@ export class UnitTypeApi {
     public inventoryV1UnitTypesPostWithRawHttp(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeCreatedModel>> {
         return this.inventoryV1UnitTypesPostWithHttpInfo(requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Return total count of unit types
+     * Return total count of unit types
+     */
+    public inventoryV1UnitTypescountGetWithRawHttp($options?: IRequestOptions)
+        : Observable<ResponseModel<number>> {
+        return this.inventoryV1UnitTypescountGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -404,17 +428,27 @@ export class UnitTypeApi {
     }
 
     /**
-     * Get a unit type list
+     * Get all unit types, or all unit types for a property
      * Get the list of unit types.
      * @param propertyId Return unit types for specific property
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      */
-    private inventoryV1UnitTypesGetWithHttpInfo(propertyId?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesGetWithHttpInfo(propertyId?: string, pageNumber?: number, pageSize?: number, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/unit-types';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (propertyId !== undefined) {
             queryParameters.set('propertyId', <any>propertyId);
+        }
+
+        if (pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>pageNumber);
+        }
+
+        if (pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>pageSize);
         }
 
         // to determine the Content-Type header
@@ -452,7 +486,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, $options);
+                return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, pageNumber, pageSize, $options);
             }
         )
     }
@@ -513,6 +547,55 @@ export class UnitTypeApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.inventoryV1UnitTypesPostWithHttpInfo(requestBody, $options);
+            }
+        )
+    }
+
+    /**
+     * Return total count of unit types
+     * Return total count of unit types
+     */
+    private inventoryV1UnitTypescountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/unit-types/$count';
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.inventoryV1UnitTypescountGetWithHttpInfo($options);
             }
         )
     }

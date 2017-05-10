@@ -31,13 +31,14 @@ export interface RateItemModel {
 }
 export namespace RateItemModel {
     export enum WeekdayEnum {
-        Sunday = <any> 'Sunday',
+        None = <any> 'None',
         Monday = <any> 'Monday',
         Tuesday = <any> 'Tuesday',
         Wednesday = <any> 'Wednesday',
         Thursday = <any> 'Thursday',
         Friday = <any> 'Friday',
-        Saturday = <any> 'Saturday'
+        Saturday = <any> 'Saturday',
+        Sunday = <any> 'Sunday'
     }
 }
 

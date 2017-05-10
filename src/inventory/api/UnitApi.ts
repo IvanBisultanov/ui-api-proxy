@@ -76,12 +76,14 @@ export class UnitApi {
     /**
      * Get a units list
      * Get the list of units.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Return units for specific property
      * @param unitTypeId Return units for the specific unit type
      */
-    public inventoryV1UnitsGet(propertyId?: string, unitTypeId?: string, $options?: IRequestOptions)
+    public inventoryV1UnitsGet(pageNumber: number, pageSize: number, propertyId?: string, unitTypeId?: string, $options?: IRequestOptions)
         : Observable<models.UnitListModel | undefined> {
-        return this.inventoryV1UnitsGetWithRawHttp(propertyId, unitTypeId, $options)
+        return this.inventoryV1UnitsGetWithRawHttp(pageNumber, pageSize, propertyId, unitTypeId, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -93,6 +95,16 @@ export class UnitApi {
     public inventoryV1UnitsPost(requestBody: models.CreateUnitModel, $options?: IRequestOptions)
         : Observable<models.UnitCreatedModel | undefined> {
         return this.inventoryV1UnitsPostWithRawHttp(requestBody, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Return total count of units
+     * Return total count of units
+     */
+    public inventoryV1UnitscountGet($options?: IRequestOptions)
+        : Observable<number | undefined> {
+        return this.inventoryV1UnitscountGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -135,12 +147,14 @@ export class UnitApi {
     /**
      * Get a units list
      * Get the list of units.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Return units for specific property
      * @param unitTypeId Return units for the specific unit type
      */
-    public inventoryV1UnitsGetWithRawHttp(propertyId?: string, unitTypeId?: string, $options?: IRequestOptions)
+    public inventoryV1UnitsGetWithRawHttp(pageNumber: number, pageSize: number, propertyId?: string, unitTypeId?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitListModel>> {
-        return this.inventoryV1UnitsGetWithHttpInfo(propertyId, unitTypeId, $options)
+        return this.inventoryV1UnitsGetWithHttpInfo(pageNumber, pageSize, propertyId, unitTypeId, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -152,6 +166,16 @@ export class UnitApi {
     public inventoryV1UnitsPostWithRawHttp(requestBody: models.CreateUnitModel, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitCreatedModel>> {
         return this.inventoryV1UnitsPostWithHttpInfo(requestBody, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Return total count of units
+     * Return total count of units
+     */
+    public inventoryV1UnitscountGetWithRawHttp($options?: IRequestOptions)
+        : Observable<ResponseModel<number>> {
+        return this.inventoryV1UnitscountGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -334,20 +358,38 @@ export class UnitApi {
     /**
      * Get a units list
      * Get the list of units.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Return units for specific property
      * @param unitTypeId Return units for the specific unit type
      */
-    private inventoryV1UnitsGetWithHttpInfo(propertyId?: string, unitTypeId?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitsGetWithHttpInfo(pageNumber: number, pageSize: number, propertyId?: string, unitTypeId?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/units';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'pageNumber' is not null or undefined
+        if (pageNumber === null || pageNumber === undefined) {
+            throw new Error('Required parameter pageNumber was null or undefined when calling inventoryV1UnitsGet.');
+        }
+        // verify required parameter 'pageSize' is not null or undefined
+        if (pageSize === null || pageSize === undefined) {
+            throw new Error('Required parameter pageSize was null or undefined when calling inventoryV1UnitsGet.');
+        }
         if (propertyId !== undefined) {
             queryParameters.set('propertyId', <any>propertyId);
         }
 
         if (unitTypeId !== undefined) {
             queryParameters.set('unitTypeId', <any>unitTypeId);
+        }
+
+        if (pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>pageNumber);
+        }
+
+        if (pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>pageSize);
         }
 
         // to determine the Content-Type header
@@ -385,7 +427,7 @@ export class UnitApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitsGetWithHttpInfo(propertyId, unitTypeId, $options);
+                return this.inventoryV1UnitsGetWithHttpInfo(pageNumber, pageSize, propertyId, unitTypeId, $options);
             }
         )
     }
@@ -446,6 +488,55 @@ export class UnitApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.inventoryV1UnitsPostWithHttpInfo(requestBody, $options);
+            }
+        )
+    }
+
+    /**
+     * Return total count of units
+     * Return total count of units
+     */
+    private inventoryV1UnitscountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+        const path = this.basePath + '/inventory/v1/units/$count';
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.inventoryV1UnitscountGetWithHttpInfo($options);
             }
         )
     }

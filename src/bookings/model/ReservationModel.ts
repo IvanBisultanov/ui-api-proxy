@@ -36,12 +36,12 @@ export interface ReservationModel {
     /**
      * Time of check-in
      */
-    checkInTimeUtc?: Date;
+    checkInTime?: Date;
 
     /**
      * Time of check-out
      */
-    checkOutTimeUtc?: Date;
+    checkOutTime?: Date;
 
     /**
      * Assigned unit
@@ -77,6 +77,16 @@ export interface ReservationModel {
      * Date of departure
      */
     departure?: Date;
+
+    /**
+     * Date of creation
+     */
+    created?: Date;
+
+    /**
+     * Date of last modification
+     */
+    modified?: Date;
 
     /**
      * Number of adults
@@ -169,11 +179,11 @@ export namespace ReservationModel {
             isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        checkInTimeUtc: Object.freeze({ 
+        checkInTime: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        checkOutTimeUtc: Object.freeze({ 
+        checkOutTime: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -198,6 +208,14 @@ export namespace ReservationModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         departure: Object.freeze({ 
+            type: 'Date',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        created: Object.freeze({ 
+            type: 'Date',
+            isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        modified: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -260,8 +278,8 @@ export namespace ReservationModel {
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
             status: getControl($metaData.status, options, 'status'),
-            checkInTimeUtc: getControl($metaData.checkInTimeUtc, options, 'checkInTimeUtc'),
-            checkOutTimeUtc: getControl($metaData.checkOutTimeUtc, options, 'checkOutTimeUtc'),
+            checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
+            checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
             unit: models.EmbeddedUnitModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             ratePlan: models.EmbeddedRatePlanModel.$buildForm(fb),
@@ -269,6 +287,8 @@ export namespace ReservationModel {
             totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
             arrival: getControl($metaData.arrival, options, 'arrival'),
             departure: getControl($metaData.departure, options, 'departure'),
+            created: getControl($metaData.created, options, 'created'),
+            modified: getControl($metaData.modified, options, 'modified'),
             adults: getControl($metaData.adults, options, 'adults'),
             children: getControl($metaData.children, options, 'children'),
             guestTitle: getControl($metaData.guestTitle, options, 'guestTitle'),

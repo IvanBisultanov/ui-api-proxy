@@ -39,50 +39,44 @@ export class UnitAvailabilityApi {
     }
 
     /**
-     * Get an available units list
-     * Get the list of available units for a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for from is specified the max of  default check-in time of the property and the current time will be used. If no time for to  is specified the default check-out time of the property will be used
+     * Get a list of all available units in a property
+     * Get the list of available units for a property, and a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
-     * @param fromDate The date in the format yyyy-MM-dd
-     * @param toDate The date in the format yyyy-MM-dd
+     * @param from The from date and the optional time
+     * @param to The to date and the optional time
      * @param unitTypeId The unit type id
-     * @param fromTime The time in the format HH:mm
-     * @param toTime The time in the format HH:mm
      */
-    public inventoryV1UnitsAvailableGet(propertyId: string, fromDate: Date, toDate: Date, unitTypeId?: string, fromTime?: string, toTime?: string, $options?: IRequestOptions)
+    public inventoryV1UnitsAvailableGet(propertyId: string, from: string, to: string, unitTypeId?: string, $options?: IRequestOptions)
         : Observable<models.UnitListModel | undefined> {
-        return this.inventoryV1UnitsAvailableGetWithRawHttp(propertyId, fromDate, toDate, unitTypeId, fromTime, toTime, $options)
+        return this.inventoryV1UnitsAvailableGetWithRawHttp(propertyId, from, to, unitTypeId, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
 
     /**
-     * Get an available units list
-     * Get the list of available units for a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for from is specified the max of  default check-in time of the property and the current time will be used. If no time for to  is specified the default check-out time of the property will be used
+     * Get a list of all available units in a property
+     * Get the list of available units for a property, and a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
-     * @param fromDate The date in the format yyyy-MM-dd
-     * @param toDate The date in the format yyyy-MM-dd
+     * @param from The from date and the optional time
+     * @param to The to date and the optional time
      * @param unitTypeId The unit type id
-     * @param fromTime The time in the format HH:mm
-     * @param toTime The time in the format HH:mm
      */
-    public inventoryV1UnitsAvailableGetWithRawHttp(propertyId: string, fromDate: Date, toDate: Date, unitTypeId?: string, fromTime?: string, toTime?: string, $options?: IRequestOptions)
+    public inventoryV1UnitsAvailableGetWithRawHttp(propertyId: string, from: string, to: string, unitTypeId?: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitListModel>> {
-        return this.inventoryV1UnitsAvailableGetWithHttpInfo(propertyId, fromDate, toDate, unitTypeId, fromTime, toTime, $options)
+        return this.inventoryV1UnitsAvailableGetWithHttpInfo(propertyId, from, to, unitTypeId, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
 
     /**
-     * Get an available units list
-     * Get the list of available units for a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for from is specified the max of  default check-in time of the property and the current time will be used. If no time for to  is specified the default check-out time of the property will be used
+     * Get a list of all available units in a property
+     * Get the list of available units for a property, and a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
-     * @param fromDate The date in the format yyyy-MM-dd
-     * @param toDate The date in the format yyyy-MM-dd
+     * @param from The from date and the optional time
+     * @param to The to date and the optional time
      * @param unitTypeId The unit type id
-     * @param fromTime The time in the format HH:mm
-     * @param toTime The time in the format HH:mm
      */
-    private inventoryV1UnitsAvailableGetWithHttpInfo(propertyId: string, fromDate: Date, toDate: Date, unitTypeId?: string, fromTime?: string, toTime?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitsAvailableGetWithHttpInfo(propertyId: string, from: string, to: string, unitTypeId?: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/inventory/v1/units/available';
 
         let queryParameters = new URLSearchParams();
@@ -91,13 +85,13 @@ export class UnitAvailabilityApi {
         if (propertyId === null || propertyId === undefined) {
             throw new Error('Required parameter propertyId was null or undefined when calling inventoryV1UnitsAvailableGet.');
         }
-        // verify required parameter 'fromDate' is not null or undefined
-        if (fromDate === null || fromDate === undefined) {
-            throw new Error('Required parameter fromDate was null or undefined when calling inventoryV1UnitsAvailableGet.');
+        // verify required parameter 'from' is not null or undefined
+        if (from === null || from === undefined) {
+            throw new Error('Required parameter from was null or undefined when calling inventoryV1UnitsAvailableGet.');
         }
-        // verify required parameter 'toDate' is not null or undefined
-        if (toDate === null || toDate === undefined) {
-            throw new Error('Required parameter toDate was null or undefined when calling inventoryV1UnitsAvailableGet.');
+        // verify required parameter 'to' is not null or undefined
+        if (to === null || to === undefined) {
+            throw new Error('Required parameter to was null or undefined when calling inventoryV1UnitsAvailableGet.');
         }
         if (propertyId !== undefined) {
             queryParameters.set('propertyId', <any>propertyId);
@@ -107,20 +101,12 @@ export class UnitAvailabilityApi {
             queryParameters.set('unitTypeId', <any>unitTypeId);
         }
 
-        if (fromDate !== undefined) {
-            queryParameters.set('from.Date', <any>fromDate.toISOString());
+        if (from !== undefined) {
+            queryParameters.set('from', <any>from);
         }
 
-        if (fromTime !== undefined) {
-            queryParameters.set('from.Time', <any>fromTime);
-        }
-
-        if (toDate !== undefined) {
-            queryParameters.set('to.Date', <any>toDate.toISOString());
-        }
-
-        if (toTime !== undefined) {
-            queryParameters.set('to.Time', <any>toTime);
+        if (to !== undefined) {
+            queryParameters.set('to', <any>to);
         }
 
         // to determine the Content-Type header
@@ -158,7 +144,7 @@ export class UnitAvailabilityApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitsAvailableGetWithHttpInfo(propertyId, fromDate, toDate, unitTypeId, fromTime, toTime, $options);
+                return this.inventoryV1UnitsAvailableGetWithHttpInfo(propertyId, from, to, unitTypeId, $options);
             }
         )
     }

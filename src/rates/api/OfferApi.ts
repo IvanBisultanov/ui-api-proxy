@@ -42,14 +42,12 @@ export class OfferApi {
      * Get offers for one specifc stay
      * Get offers for a specific property, arrival and departure date.
      * @param propertyId The property id
-     * @param arrivalDate The date in the format yyyy-MM-dd
-     * @param departureDate The date in the format yyyy-MM-dd
-     * @param arrivalTime The time in the format HH:mm
-     * @param departureTime The time in the format HH:mm
+     * @param arrival The arrival date and the optional time
+     * @param departure The departure date and the optional time
      */
-    public ratesV1OffersStayGet(propertyId: string, arrivalDate: Date, departureDate: Date, arrivalTime?: string, departureTime?: string, $options?: IRequestOptions)
+    public ratesV1OffersStayGet(propertyId: string, arrival: string, departure: string, $options?: IRequestOptions)
         : Observable<models.StayOffersModel | undefined> {
-        return this.ratesV1OffersStayGetWithRawHttp(propertyId, arrivalDate, departureDate, arrivalTime, departureTime, $options)
+        return this.ratesV1OffersStayGetWithRawHttp(propertyId, arrival, departure, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -58,14 +56,12 @@ export class OfferApi {
      * Get offers for one specifc stay
      * Get offers for a specific property, arrival and departure date.
      * @param propertyId The property id
-     * @param arrivalDate The date in the format yyyy-MM-dd
-     * @param departureDate The date in the format yyyy-MM-dd
-     * @param arrivalTime The time in the format HH:mm
-     * @param departureTime The time in the format HH:mm
+     * @param arrival The arrival date and the optional time
+     * @param departure The departure date and the optional time
      */
-    public ratesV1OffersStayGetWithRawHttp(propertyId: string, arrivalDate: Date, departureDate: Date, arrivalTime?: string, departureTime?: string, $options?: IRequestOptions)
+    public ratesV1OffersStayGetWithRawHttp(propertyId: string, arrival: string, departure: string, $options?: IRequestOptions)
         : Observable<ResponseModel<models.StayOffersModel>> {
-        return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrivalDate, departureDate, arrivalTime, departureTime, $options)
+        return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrival, departure, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -74,12 +70,10 @@ export class OfferApi {
      * Get offers for one specifc stay
      * Get offers for a specific property, arrival and departure date.
      * @param propertyId The property id
-     * @param arrivalDate The date in the format yyyy-MM-dd
-     * @param departureDate The date in the format yyyy-MM-dd
-     * @param arrivalTime The time in the format HH:mm
-     * @param departureTime The time in the format HH:mm
+     * @param arrival The arrival date and the optional time
+     * @param departure The departure date and the optional time
      */
-    private ratesV1OffersStayGetWithHttpInfo(propertyId: string, arrivalDate: Date, departureDate: Date, arrivalTime?: string, departureTime?: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1OffersStayGetWithHttpInfo(propertyId: string, arrival: string, departure: string, $options?: IRequestOptions): Observable<Response> {
         const path = this.basePath + '/rates/v1/offers/stay';
 
         let queryParameters = new URLSearchParams();
@@ -88,32 +82,24 @@ export class OfferApi {
         if (propertyId === null || propertyId === undefined) {
             throw new Error('Required parameter propertyId was null or undefined when calling ratesV1OffersStayGet.');
         }
-        // verify required parameter 'arrivalDate' is not null or undefined
-        if (arrivalDate === null || arrivalDate === undefined) {
-            throw new Error('Required parameter arrivalDate was null or undefined when calling ratesV1OffersStayGet.');
+        // verify required parameter 'arrival' is not null or undefined
+        if (arrival === null || arrival === undefined) {
+            throw new Error('Required parameter arrival was null or undefined when calling ratesV1OffersStayGet.');
         }
-        // verify required parameter 'departureDate' is not null or undefined
-        if (departureDate === null || departureDate === undefined) {
-            throw new Error('Required parameter departureDate was null or undefined when calling ratesV1OffersStayGet.');
+        // verify required parameter 'departure' is not null or undefined
+        if (departure === null || departure === undefined) {
+            throw new Error('Required parameter departure was null or undefined when calling ratesV1OffersStayGet.');
         }
         if (propertyId !== undefined) {
             queryParameters.set('propertyId', <any>propertyId);
         }
 
-        if (arrivalDate !== undefined) {
-            queryParameters.set('arrival.Date', <any>arrivalDate.toISOString());
+        if (arrival !== undefined) {
+            queryParameters.set('arrival', <any>arrival);
         }
 
-        if (arrivalTime !== undefined) {
-            queryParameters.set('arrival.Time', <any>arrivalTime);
-        }
-
-        if (departureDate !== undefined) {
-            queryParameters.set('departure.Date', <any>departureDate.toISOString());
-        }
-
-        if (departureTime !== undefined) {
-            queryParameters.set('departure.Time', <any>departureTime);
+        if (departure !== undefined) {
+            queryParameters.set('departure', <any>departure);
         }
 
         // to determine the Content-Type header
@@ -151,7 +137,7 @@ export class OfferApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrivalDate, departureDate, arrivalTime, departureTime, $options);
+                return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrival, departure, $options);
             }
         )
     }
