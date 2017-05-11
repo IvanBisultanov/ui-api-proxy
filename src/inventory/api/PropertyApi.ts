@@ -25,6 +25,49 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface inventoryV1PropertiesByIdGetParams {
+    /**
+     * The id of the property.
+     */
+    id: string;
+    /**
+     * 'all' or comma separated list of language codes
+     */
+    languages?: Array<string>;
+}
+export interface inventoryV1PropertiesByIdHeadParams {
+    /**
+     * The id of the property.
+     */
+    id: string;
+}
+export interface inventoryV1PropertiesByIdPutParams {
+    /**
+     * The id of the property.
+     */
+    id: string;
+    /**
+     * The definition of the property.
+     */
+    requestBody: models.ReplacePropertyModel;
+}
+export interface inventoryV1PropertiesGetParams {
+    /**
+     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     */
+    pageNumber: number;
+    /**
+     * Page size
+     */
+    pageSize: number;
+}
+export interface inventoryV1PropertiesPostParams {
+    /**
+     * The definition of the property.
+     */
+    requestBody: models.CreatePropertyModel;
+}
+
 @Injectable()
 export class PropertyApi {
     public defaultHeaders: Headers = new Headers();
@@ -44,9 +87,9 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdGet(params: inventoryV1PropertiesByIdGetParams, $options?: IRequestOptions)
         : Observable<models.PropertyModel | undefined> {
-        return this.inventoryV1PropertiesByIdGetWithRawHttp(id, languages, $options)
+        return this.inventoryV1PropertiesByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -55,9 +98,9 @@ export class PropertyApi {
      * Check if a property exists by id.
      * @param id The id of the property.
      */
-    public inventoryV1PropertiesByIdHead(id: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdHead(params: inventoryV1PropertiesByIdHeadParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByIdHeadWithRawHttp(id, $options)
+        return this.inventoryV1PropertiesByIdHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -67,9 +110,9 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesByIdPut(id: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdPut(params: inventoryV1PropertiesByIdPutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByIdPutWithRawHttp(id, requestBody, $options)
+        return this.inventoryV1PropertiesByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -79,9 +122,9 @@ export class PropertyApi {
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
      */
-    public inventoryV1PropertiesGet(pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
+    public inventoryV1PropertiesGet(params: inventoryV1PropertiesGetParams, $options?: IRequestOptions)
         : Observable<models.PropertyListModel | undefined> {
-        return this.inventoryV1PropertiesGetWithRawHttp(pageNumber, pageSize, $options)
+        return this.inventoryV1PropertiesGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -90,9 +133,9 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesPost(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesPost(params: inventoryV1PropertiesPostParams, $options?: IRequestOptions)
         : Observable<models.PropertyCreatedModel | undefined> {
-        return this.inventoryV1PropertiesPostWithRawHttp(requestBody, $options)
+        return this.inventoryV1PropertiesPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -113,9 +156,9 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1PropertiesByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdGetWithRawHttp(params: inventoryV1PropertiesByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyModel>> {
-        return this.inventoryV1PropertiesByIdGetWithHttpInfo(id, languages, $options)
+        return this.inventoryV1PropertiesByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -124,9 +167,9 @@ export class PropertyApi {
      * Check if a property exists by id.
      * @param id The id of the property.
      */
-    public inventoryV1PropertiesByIdHeadWithRawHttp(id: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdHeadWithRawHttp(params: inventoryV1PropertiesByIdHeadParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByIdHeadWithHttpInfo(id, $options)
+        return this.inventoryV1PropertiesByIdHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -136,9 +179,9 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesByIdPutWithRawHttp(id: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdPutWithRawHttp(params: inventoryV1PropertiesByIdPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByIdPutWithHttpInfo(id, requestBody, $options)
+        return this.inventoryV1PropertiesByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -148,9 +191,9 @@ export class PropertyApi {
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
      */
-    public inventoryV1PropertiesGetWithRawHttp(pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
+    public inventoryV1PropertiesGetWithRawHttp(params: inventoryV1PropertiesGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyListModel>> {
-        return this.inventoryV1PropertiesGetWithHttpInfo(pageNumber, pageSize, $options)
+        return this.inventoryV1PropertiesGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -159,9 +202,9 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    public inventoryV1PropertiesPostWithRawHttp(requestBody: models.CreatePropertyModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesPostWithRawHttp(params: inventoryV1PropertiesPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertyCreatedModel>> {
-        return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options)
+        return this.inventoryV1PropertiesPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -182,18 +225,19 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1PropertiesByIdGetWithHttpInfo(id: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByIdGetWithHttpInfo(params: inventoryV1PropertiesByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdGet.');
         }
-        if (languages) {
-            queryParameters.set('languages', languages.join(COLLECTION_FORMATS['csv']));
+        if (params.languages) {
+            queryParameters.set('languages', params.languages.join(COLLECTION_FORMATS['csv']));
         }
 
         // to determine the Content-Type header
@@ -231,7 +275,7 @@ export class PropertyApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesByIdGetWithHttpInfo(id, languages, $options);
+                return this.inventoryV1PropertiesByIdGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -241,14 +285,15 @@ export class PropertyApi {
      * Check if a property exists by id.
      * @param id The id of the property.
      */
-    private inventoryV1PropertiesByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByIdHeadWithHttpInfo(params: inventoryV1PropertiesByIdHeadParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdHead.');
         }
         // to determine the Content-Type header
@@ -283,7 +328,7 @@ export class PropertyApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesByIdHeadWithHttpInfo(id, $options);
+                return this.inventoryV1PropertiesByIdHeadWithHttpInfo(params, $options);
             }
         )
     }
@@ -294,18 +339,19 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    private inventoryV1PropertiesByIdPutWithHttpInfo(id: string, requestBody: models.ReplacePropertyModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByIdPutWithHttpInfo(params: inventoryV1PropertiesByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesByIdPut.');
         }
         // to determine the Content-Type header
@@ -337,7 +383,7 @@ export class PropertyApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -346,7 +392,7 @@ export class PropertyApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesByIdPutWithHttpInfo(id, requestBody, $options);
+                return this.inventoryV1PropertiesByIdPutWithHttpInfo(params, $options);
             }
         )
     }
@@ -357,17 +403,26 @@ export class PropertyApi {
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
      */
-    private inventoryV1PropertiesGetWithHttpInfo(pageNumber?: number, pageSize?: number, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesGetWithHttpInfo(params: inventoryV1PropertiesGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (pageNumber !== undefined) {
-            queryParameters.set('pageNumber', <any>pageNumber);
+        // verify required parameter 'pageNumber' is not null or undefined
+        if (params.pageNumber === null || params.pageNumber === undefined) {
+            throw new Error('Required parameter pageNumber was null or undefined when calling inventoryV1PropertiesGet.');
+        }
+        // verify required parameter 'pageSize' is not null or undefined
+        if (params.pageSize === null || params.pageSize === undefined) {
+            throw new Error('Required parameter pageSize was null or undefined when calling inventoryV1PropertiesGet.');
+        }
+        if (params.pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>params.pageNumber);
         }
 
-        if (pageSize !== undefined) {
-            queryParameters.set('pageSize', <any>pageSize);
+        if (params.pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>params.pageSize);
         }
 
         // to determine the Content-Type header
@@ -405,7 +460,7 @@ export class PropertyApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesGetWithHttpInfo(pageNumber, pageSize, $options);
+                return this.inventoryV1PropertiesGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -415,13 +470,14 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    private inventoryV1PropertiesPostWithHttpInfo(requestBody: models.CreatePropertyModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesPostWithHttpInfo(params: inventoryV1PropertiesPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesPost.');
         }
         // to determine the Content-Type header
@@ -456,7 +512,7 @@ export class PropertyApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -465,7 +521,7 @@ export class PropertyApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesPostWithHttpInfo(requestBody, $options);
+                return this.inventoryV1PropertiesPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -475,6 +531,7 @@ export class PropertyApi {
      * Return total count of properties
      */
     private inventoryV1PropertiescountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+
         const path = this.basePath + '/inventory/v1/properties/$count';
 
         let queryParameters = new URLSearchParams();

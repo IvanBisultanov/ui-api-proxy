@@ -25,6 +25,23 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface accountV1AccountsByCodeLanguagesGetParams {
+    /**
+     * The code of the account.
+     */
+    code: string;
+}
+export interface accountV1AccountsByCodeLanguagesPutParams {
+    /**
+     * The code of the account.
+     */
+    code: string;
+    /**
+     * The definition of the language settings.
+     */
+    requestBody: models.ReplaceLanguagesModel;
+}
+
 @Injectable()
 export class LanguagesApi {
     public defaultHeaders: Headers = new Headers();
@@ -43,9 +60,9 @@ export class LanguagesApi {
      * Get the language settings
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeLanguagesGet(code: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesGet(params: accountV1AccountsByCodeLanguagesGetParams, $options?: IRequestOptions)
         : Observable<models.LanguagesModel | undefined> {
-        return this.accountV1AccountsByCodeLanguagesGetWithRawHttp(code, $options)
+        return this.accountV1AccountsByCodeLanguagesGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -55,9 +72,9 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public accountV1AccountsByCodeLanguagesPut(code: string, requestBody: models.ReplaceLanguagesModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesPut(params: accountV1AccountsByCodeLanguagesPutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.accountV1AccountsByCodeLanguagesPutWithRawHttp(code, requestBody, $options)
+        return this.accountV1AccountsByCodeLanguagesPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -67,9 +84,9 @@ export class LanguagesApi {
      * Get the language settings
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeLanguagesGetWithRawHttp(code: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesGetWithRawHttp(params: accountV1AccountsByCodeLanguagesGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.LanguagesModel>> {
-        return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, $options)
+        return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -79,9 +96,9 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public accountV1AccountsByCodeLanguagesPutWithRawHttp(code: string, requestBody: models.ReplaceLanguagesModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodeLanguagesPutWithRawHttp(params: accountV1AccountsByCodeLanguagesPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(code, requestBody, $options)
+        return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -91,14 +108,15 @@ export class LanguagesApi {
      * Get the language settings
      * @param code The code of the account.
      */
-    private accountV1AccountsByCodeLanguagesGetWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeLanguagesGetWithHttpInfo(params: accountV1AccountsByCodeLanguagesGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/account/v1/accounts/${code}/languages'
-                    .replace('${' + 'code' + '}', String(code));
+                    .replace('${' + 'code' + '}', String(params.code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
+        if (params.code === null || params.code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeLanguagesGet.');
         }
         // to determine the Content-Type header
@@ -136,7 +154,7 @@ export class LanguagesApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(code, $options);
+                return this.accountV1AccountsByCodeLanguagesGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -147,18 +165,19 @@ export class LanguagesApi {
      * @param code The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    private accountV1AccountsByCodeLanguagesPutWithHttpInfo(code: string, requestBody: models.ReplaceLanguagesModel, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeLanguagesPutWithHttpInfo(params: accountV1AccountsByCodeLanguagesPutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/account/v1/accounts/${code}/languages'
-                    .replace('${' + 'code' + '}', String(code));
+                    .replace('${' + 'code' + '}', String(params.code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
+        if (params.code === null || params.code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeLanguagesPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling accountV1AccountsByCodeLanguagesPut.');
         }
         // to determine the Content-Type header
@@ -190,7 +209,7 @@ export class LanguagesApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -199,7 +218,7 @@ export class LanguagesApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(code, requestBody, $options);
+                return this.accountV1AccountsByCodeLanguagesPutWithHttpInfo(params, $options);
             }
         )
     }

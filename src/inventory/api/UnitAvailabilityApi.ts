@@ -25,6 +25,25 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface inventoryV1UnitsAvailableGetParams {
+    /**
+     * The property id
+     */
+    propertyId: string;
+    /**
+     * The from date and the optional time
+     */
+    from: string;
+    /**
+     * The to date and the optional time
+     */
+    to: string;
+    /**
+     * The unit type id
+     */
+    unitTypeId?: string;
+}
+
 @Injectable()
 export class UnitAvailabilityApi {
     public defaultHeaders: Headers = new Headers();
@@ -46,9 +65,9 @@ export class UnitAvailabilityApi {
      * @param to The to date and the optional time
      * @param unitTypeId The unit type id
      */
-    public inventoryV1UnitsAvailableGet(propertyId: string, from: string, to: string, unitTypeId?: string, $options?: IRequestOptions)
+    public inventoryV1UnitsAvailableGet(params: inventoryV1UnitsAvailableGetParams, $options?: IRequestOptions)
         : Observable<models.UnitListModel | undefined> {
-        return this.inventoryV1UnitsAvailableGetWithRawHttp(propertyId, from, to, unitTypeId, $options)
+        return this.inventoryV1UnitsAvailableGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -61,9 +80,9 @@ export class UnitAvailabilityApi {
      * @param to The to date and the optional time
      * @param unitTypeId The unit type id
      */
-    public inventoryV1UnitsAvailableGetWithRawHttp(propertyId: string, from: string, to: string, unitTypeId?: string, $options?: IRequestOptions)
+    public inventoryV1UnitsAvailableGetWithRawHttp(params: inventoryV1UnitsAvailableGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitListModel>> {
-        return this.inventoryV1UnitsAvailableGetWithHttpInfo(propertyId, from, to, unitTypeId, $options)
+        return this.inventoryV1UnitsAvailableGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -76,37 +95,38 @@ export class UnitAvailabilityApi {
      * @param to The to date and the optional time
      * @param unitTypeId The unit type id
      */
-    private inventoryV1UnitsAvailableGetWithHttpInfo(propertyId: string, from: string, to: string, unitTypeId?: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitsAvailableGetWithHttpInfo(params: inventoryV1UnitsAvailableGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/units/available';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'propertyId' is not null or undefined
-        if (propertyId === null || propertyId === undefined) {
+        if (params.propertyId === null || params.propertyId === undefined) {
             throw new Error('Required parameter propertyId was null or undefined when calling inventoryV1UnitsAvailableGet.');
         }
         // verify required parameter 'from' is not null or undefined
-        if (from === null || from === undefined) {
+        if (params.from === null || params.from === undefined) {
             throw new Error('Required parameter from was null or undefined when calling inventoryV1UnitsAvailableGet.');
         }
         // verify required parameter 'to' is not null or undefined
-        if (to === null || to === undefined) {
+        if (params.to === null || params.to === undefined) {
             throw new Error('Required parameter to was null or undefined when calling inventoryV1UnitsAvailableGet.');
         }
-        if (propertyId !== undefined) {
-            queryParameters.set('propertyId', <any>propertyId);
+        if (params.propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>params.propertyId);
         }
 
-        if (unitTypeId !== undefined) {
-            queryParameters.set('unitTypeId', <any>unitTypeId);
+        if (params.unitTypeId !== undefined) {
+            queryParameters.set('unitTypeId', <any>params.unitTypeId);
         }
 
-        if (from !== undefined) {
-            queryParameters.set('from', <any>from);
+        if (params.from !== undefined) {
+            queryParameters.set('from', <any>params.from);
         }
 
-        if (to !== undefined) {
-            queryParameters.set('to', <any>to);
+        if (params.to !== undefined) {
+            queryParameters.set('to', <any>params.to);
         }
 
         // to determine the Content-Type header
@@ -144,7 +164,7 @@ export class UnitAvailabilityApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitsAvailableGetWithHttpInfo(propertyId, from, to, unitTypeId, $options);
+                return this.inventoryV1UnitsAvailableGetWithHttpInfo(params, $options);
             }
         )
     }

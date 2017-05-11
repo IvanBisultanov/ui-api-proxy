@@ -25,6 +25,23 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface inventoryV1PropertiesByIdSettingsGetParams {
+    /**
+     * The id of the property.
+     */
+    id: string;
+}
+export interface inventoryV1PropertiesByIdSettingsPutParams {
+    /**
+     * The id of the property.
+     */
+    id: string;
+    /**
+     * The definition of the property settings.
+     */
+    requestBody: models.ReplacePropertySettingsModel;
+}
+
 @Injectable()
 export class PropertySettingsApi {
     public defaultHeaders: Headers = new Headers();
@@ -43,9 +60,9 @@ export class PropertySettingsApi {
      * Get base settings for a property
      * @param id The id of the property.
      */
-    public inventoryV1PropertiesByIdSettingsGet(id: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdSettingsGet(params: inventoryV1PropertiesByIdSettingsGetParams, $options?: IRequestOptions)
         : Observable<models.PropertySettingsModel | undefined> {
-        return this.inventoryV1PropertiesByIdSettingsGetWithRawHttp(id, $options)
+        return this.inventoryV1PropertiesByIdSettingsGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -55,9 +72,9 @@ export class PropertySettingsApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property settings.
      */
-    public inventoryV1PropertiesByIdSettingsPut(id: string, requestBody: models.ReplacePropertySettingsModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdSettingsPut(params: inventoryV1PropertiesByIdSettingsPutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1PropertiesByIdSettingsPutWithRawHttp(id, requestBody, $options)
+        return this.inventoryV1PropertiesByIdSettingsPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -67,9 +84,9 @@ export class PropertySettingsApi {
      * Get base settings for a property
      * @param id The id of the property.
      */
-    public inventoryV1PropertiesByIdSettingsGetWithRawHttp(id: string, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdSettingsGetWithRawHttp(params: inventoryV1PropertiesByIdSettingsGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.PropertySettingsModel>> {
-        return this.inventoryV1PropertiesByIdSettingsGetWithHttpInfo(id, $options)
+        return this.inventoryV1PropertiesByIdSettingsGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -79,9 +96,9 @@ export class PropertySettingsApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property settings.
      */
-    public inventoryV1PropertiesByIdSettingsPutWithRawHttp(id: string, requestBody: models.ReplacePropertySettingsModel, $options?: IRequestOptions)
+    public inventoryV1PropertiesByIdSettingsPutWithRawHttp(params: inventoryV1PropertiesByIdSettingsPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1PropertiesByIdSettingsPutWithHttpInfo(id, requestBody, $options)
+        return this.inventoryV1PropertiesByIdSettingsPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -91,14 +108,15 @@ export class PropertySettingsApi {
      * Get base settings for a property
      * @param id The id of the property.
      */
-    private inventoryV1PropertiesByIdSettingsGetWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByIdSettingsGetWithHttpInfo(params: inventoryV1PropertiesByIdSettingsGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties/${id}/settings'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdSettingsGet.');
         }
         // to determine the Content-Type header
@@ -136,7 +154,7 @@ export class PropertySettingsApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesByIdSettingsGetWithHttpInfo(id, $options);
+                return this.inventoryV1PropertiesByIdSettingsGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -147,18 +165,19 @@ export class PropertySettingsApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property settings.
      */
-    private inventoryV1PropertiesByIdSettingsPutWithHttpInfo(id: string, requestBody: models.ReplacePropertySettingsModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1PropertiesByIdSettingsPutWithHttpInfo(params: inventoryV1PropertiesByIdSettingsPutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/properties/${id}/settings'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1PropertiesByIdSettingsPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1PropertiesByIdSettingsPut.');
         }
         // to determine the Content-Type header
@@ -190,7 +209,7 @@ export class PropertySettingsApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -199,7 +218,7 @@ export class PropertySettingsApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1PropertiesByIdSettingsPutWithHttpInfo(id, requestBody, $options);
+                return this.inventoryV1PropertiesByIdSettingsPutWithHttpInfo(params, $options);
             }
         )
     }

@@ -25,6 +25,35 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface accountV1AccountsByCodeGetParams {
+    /**
+     * The code of the account.
+     */
+    code: string;
+}
+export interface accountV1AccountsByCodeHeadParams {
+    /**
+     * The code of the account.
+     */
+    code: string;
+}
+export interface accountV1AccountsByCodePutParams {
+    /**
+     * The code of the account.
+     */
+    code: string;
+    /**
+     * The definition of the account.
+     */
+    requestBody: models.ReplaceAccountModel;
+}
+export interface accountV1AccountsPostParams {
+    /**
+     * The definition of the account.
+     */
+    requestBody: models.CreateAccountModel;
+}
+
 @Injectable()
 export class AccountApi {
     public defaultHeaders: Headers = new Headers();
@@ -43,9 +72,9 @@ export class AccountApi {
      * Get an account by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeGet(code: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeGet(params: accountV1AccountsByCodeGetParams, $options?: IRequestOptions)
         : Observable<models.AccountModel | undefined> {
-        return this.accountV1AccountsByCodeGetWithRawHttp(code, $options)
+        return this.accountV1AccountsByCodeGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -54,9 +83,9 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeHead(code: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeHead(params: accountV1AccountsByCodeHeadParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.accountV1AccountsByCodeHeadWithRawHttp(code, $options)
+        return this.accountV1AccountsByCodeHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -66,9 +95,9 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsByCodePut(code: string, requestBody: models.ReplaceAccountModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodePut(params: accountV1AccountsByCodePutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.accountV1AccountsByCodePutWithRawHttp(code, requestBody, $options)
+        return this.accountV1AccountsByCodePutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -77,9 +106,9 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsPost(requestBody: models.CreateAccountModel, $options?: IRequestOptions)
+    public accountV1AccountsPost(params: accountV1AccountsPostParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.accountV1AccountsPostWithRawHttp(requestBody, $options)
+        return this.accountV1AccountsPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -89,9 +118,9 @@ export class AccountApi {
      * Get an account by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeGetWithRawHttp(code: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeGetWithRawHttp(params: accountV1AccountsByCodeGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.AccountModel>> {
-        return this.accountV1AccountsByCodeGetWithHttpInfo(code, $options)
+        return this.accountV1AccountsByCodeGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -100,9 +129,9 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    public accountV1AccountsByCodeHeadWithRawHttp(code: string, $options?: IRequestOptions)
+    public accountV1AccountsByCodeHeadWithRawHttp(params: accountV1AccountsByCodeHeadParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.accountV1AccountsByCodeHeadWithHttpInfo(code, $options)
+        return this.accountV1AccountsByCodeHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -112,9 +141,9 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsByCodePutWithRawHttp(code: string, requestBody: models.ReplaceAccountModel, $options?: IRequestOptions)
+    public accountV1AccountsByCodePutWithRawHttp(params: accountV1AccountsByCodePutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, $options)
+        return this.accountV1AccountsByCodePutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -123,9 +152,9 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountV1AccountsPostWithRawHttp(requestBody: models.CreateAccountModel, $options?: IRequestOptions)
+    public accountV1AccountsPostWithRawHttp(params: accountV1AccountsPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.accountV1AccountsPostWithHttpInfo(requestBody, $options)
+        return this.accountV1AccountsPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -135,14 +164,15 @@ export class AccountApi {
      * Get an account by code.
      * @param code The code of the account.
      */
-    private accountV1AccountsByCodeGetWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeGetWithHttpInfo(params: accountV1AccountsByCodeGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/account/v1/accounts/${code}'
-                    .replace('${' + 'code' + '}', String(code));
+                    .replace('${' + 'code' + '}', String(params.code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
+        if (params.code === null || params.code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeGet.');
         }
         // to determine the Content-Type header
@@ -180,7 +210,7 @@ export class AccountApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.accountV1AccountsByCodeGetWithHttpInfo(code, $options);
+                return this.accountV1AccountsByCodeGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -190,14 +220,15 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    private accountV1AccountsByCodeHeadWithHttpInfo(code: string, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodeHeadWithHttpInfo(params: accountV1AccountsByCodeHeadParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/account/v1/accounts/${code}'
-                    .replace('${' + 'code' + '}', String(code));
+                    .replace('${' + 'code' + '}', String(params.code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
+        if (params.code === null || params.code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodeHead.');
         }
         // to determine the Content-Type header
@@ -232,7 +263,7 @@ export class AccountApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.accountV1AccountsByCodeHeadWithHttpInfo(code, $options);
+                return this.accountV1AccountsByCodeHeadWithHttpInfo(params, $options);
             }
         )
     }
@@ -243,18 +274,19 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    private accountV1AccountsByCodePutWithHttpInfo(code: string, requestBody: models.ReplaceAccountModel, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsByCodePutWithHttpInfo(params: accountV1AccountsByCodePutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/account/v1/accounts/${code}'
-                    .replace('${' + 'code' + '}', String(code));
+                    .replace('${' + 'code' + '}', String(params.code));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'code' is not null or undefined
-        if (code === null || code === undefined) {
+        if (params.code === null || params.code === undefined) {
             throw new Error('Required parameter code was null or undefined when calling accountV1AccountsByCodePut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling accountV1AccountsByCodePut.');
         }
         // to determine the Content-Type header
@@ -286,7 +318,7 @@ export class AccountApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -295,7 +327,7 @@ export class AccountApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.accountV1AccountsByCodePutWithHttpInfo(code, requestBody, $options);
+                return this.accountV1AccountsByCodePutWithHttpInfo(params, $options);
             }
         )
     }
@@ -305,13 +337,14 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    private accountV1AccountsPostWithHttpInfo(requestBody: models.CreateAccountModel, $options?: IRequestOptions): Observable<Response> {
+    private accountV1AccountsPostWithHttpInfo(params: accountV1AccountsPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/account/v1/accounts';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling accountV1AccountsPost.');
         }
         // to determine the Content-Type header
@@ -343,7 +376,7 @@ export class AccountApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -352,7 +385,7 @@ export class AccountApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.accountV1AccountsPostWithHttpInfo(requestBody, $options);
+                return this.accountV1AccountsPostWithHttpInfo(params, $options);
             }
         )
     }

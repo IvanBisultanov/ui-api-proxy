@@ -25,6 +25,127 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface bookingsV1ReservationsByIdAssignUnitPostParams {
+    /**
+     * The id of the reservation.
+     */
+    id: string;
+    /**
+     * The definition of a unit to be assigned.
+     */
+    requestBody?: models.ReservationAssignUnitModel;
+}
+export interface bookingsV1ReservationsByIdCheckinPostParams {
+    /**
+     * The id of the reservation.
+     */
+    id: string;
+}
+export interface bookingsV1ReservationsByIdCheckoutPostParams {
+    /**
+     * The id of the reservation.
+     */
+    id: string;
+}
+export interface bookingsV1ReservationsByIdGetParams {
+    /**
+     * The id of the reservation.
+     */
+    id: string;
+}
+export interface bookingsV1ReservationsByIdPutParams {
+    /**
+     * The id of the reservation.
+     */
+    id: string;
+    /**
+     * The definition of the reservation.
+     */
+    requestBody: models.ReplaceReservationModel;
+}
+export interface bookingsV1ReservationsGetParams {
+    /**
+     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     */
+    pageNumber: number;
+    /**
+     * Page size
+     */
+    pageSize: number;
+    /**
+     * Return reservations for specific properties
+     */
+    propertyIds?: Array<string>;
+    /**
+     * Return reservations with specific rate plans
+     */
+    ratePlanIds?: Array<string>;
+    /**
+     * Return reservations with specific units assigned
+     */
+    unitIds?: Array<string>;
+    /**
+     * Return reservations with specific unit types
+     */
+    unitTypeIds?: Array<string>;
+    /**
+     * Return reservations where the status is one of the specified values
+     */
+    statuses?: Array<string>;
+    /**
+     * Start date and time for the selected date filter
+     */
+    from?: Date;
+    /**
+     * End date and time for the selected date filter
+     */
+    to?: Date;
+    /**
+     * Filter by date and time attributes of reservation. The 'to' and 'from' dates will then define the date and time range.
+     */
+    dateFilter?: string;
+}
+export interface bookingsV1ReservationsPostParams {
+    /**
+     * The definition of the reservation.
+     */
+    requestBody: models.CreateReservationModel;
+}
+export interface bookingsV1ReservationscountGetParams {
+    /**
+     * Return reservations for specific properties
+     */
+    propertyIds?: Array<string>;
+    /**
+     * Return reservations with specific rate plans
+     */
+    ratePlanIds?: Array<string>;
+    /**
+     * Return reservations with specific units assigned
+     */
+    unitIds?: Array<string>;
+    /**
+     * Return reservations with specific unit types
+     */
+    unitTypeIds?: Array<string>;
+    /**
+     * Return reservations where the status is one of the specified values
+     */
+    statuses?: Array<string>;
+    /**
+     * Start date and time for the selected date filter
+     */
+    from?: Date;
+    /**
+     * End date and time for the selected date filter
+     */
+    to?: Date;
+    /**
+     * Filter by date and time attributes of reservation. The 'to' and 'from' dates will then define the date and time range.
+     */
+    dateFilter?: string;
+}
+
 @Injectable()
 export class ReservationApi {
     public defaultHeaders: Headers = new Headers();
@@ -44,9 +165,9 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of a unit to be assigned.
      */
-    public bookingsV1ReservationsByIdAssignUnitPost(id: string, requestBody?: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdAssignUnitPost(params: bookingsV1ReservationsByIdAssignUnitPostParams, $options?: IRequestOptions)
         : Observable<models.ReservationAssignedUnitModel | undefined> {
-        return this.bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id, requestBody, $options)
+        return this.bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -55,9 +176,9 @@ export class ReservationApi {
      * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckinPost(id: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckinPost(params: bookingsV1ReservationsByIdCheckinPostParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.bookingsV1ReservationsByIdCheckinPostWithRawHttp(id, $options)
+        return this.bookingsV1ReservationsByIdCheckinPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -66,9 +187,9 @@ export class ReservationApi {
      * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckoutPost(id: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckoutPost(params: bookingsV1ReservationsByIdCheckoutPostParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id, $options)
+        return this.bookingsV1ReservationsByIdCheckoutPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -77,9 +198,9 @@ export class ReservationApi {
      * Get a reservation by id.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdGet(id: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdGet(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<models.ReservationModel | undefined> {
-        return this.bookingsV1ReservationsByIdGetWithRawHttp(id, $options)
+        return this.bookingsV1ReservationsByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -89,9 +210,9 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsByIdPut(id: string, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdPut(params: bookingsV1ReservationsByIdPutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.bookingsV1ReservationsByIdPutWithRawHttp(id, requestBody, $options)
+        return this.bookingsV1ReservationsByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -109,9 +230,9 @@ export class ReservationApi {
      * @param to End date and time for the selected date filter
      * @param dateFilter Filter by date and time attributes of reservation. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.
      */
-    public bookingsV1ReservationsGet(pageNumber: number, pageSize: number, propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, from?: Date, to?: Date, dateFilter?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsGet(params: bookingsV1ReservationsGetParams, $options?: IRequestOptions)
         : Observable<models.ReservationListModel | undefined> {
-        return this.bookingsV1ReservationsGetWithRawHttp(pageNumber, pageSize, propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, from, to, dateFilter, $options)
+        return this.bookingsV1ReservationsGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -120,9 +241,9 @@ export class ReservationApi {
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsPost(requestBody: models.CreateReservationModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsPost(params: bookingsV1ReservationsPostParams, $options?: IRequestOptions)
         : Observable<models.ReservationCreatedModel | undefined> {
-        return this.bookingsV1ReservationsPostWithRawHttp(requestBody, $options)
+        return this.bookingsV1ReservationsPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -138,9 +259,9 @@ export class ReservationApi {
      * @param to End date and time for the selected date filter
      * @param dateFilter Filter by date and time attributes of reservation. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.
      */
-    public bookingsV1ReservationscountGet(propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, from?: Date, to?: Date, dateFilter?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationscountGet(params: bookingsV1ReservationscountGetParams, $options?: IRequestOptions)
         : Observable<number | undefined> {
-        return this.bookingsV1ReservationscountGetWithRawHttp(propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, from, to, dateFilter, $options)
+        return this.bookingsV1ReservationscountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -151,9 +272,9 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of a unit to be assigned.
      */
-    public bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(id: string, requestBody?: models.ReservationAssignUnitModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdAssignUnitPostWithRawHttp(params: bookingsV1ReservationsByIdAssignUnitPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationAssignedUnitModel>> {
-        return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id, requestBody, $options)
+        return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -162,9 +283,9 @@ export class ReservationApi {
      * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckinPostWithRawHttp(id: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckinPostWithRawHttp(params: bookingsV1ReservationsByIdCheckinPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id, $options)
+        return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -173,9 +294,9 @@ export class ReservationApi {
      * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdCheckoutPostWithRawHttp(id: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdCheckoutPostWithRawHttp(params: bookingsV1ReservationsByIdCheckoutPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id, $options)
+        return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -184,9 +305,9 @@ export class ReservationApi {
      * Get a reservation by id.
      * @param id The id of the reservation.
      */
-    public bookingsV1ReservationsByIdGetWithRawHttp(id: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdGetWithRawHttp(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
-        return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options)
+        return this.bookingsV1ReservationsByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -196,9 +317,9 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsByIdPutWithRawHttp(id: string, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsByIdPutWithRawHttp(params: bookingsV1ReservationsByIdPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options)
+        return this.bookingsV1ReservationsByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -216,9 +337,9 @@ export class ReservationApi {
      * @param to End date and time for the selected date filter
      * @param dateFilter Filter by date and time attributes of reservation. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.
      */
-    public bookingsV1ReservationsGetWithRawHttp(pageNumber: number, pageSize: number, propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, from?: Date, to?: Date, dateFilter?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationsGetWithRawHttp(params: bookingsV1ReservationsGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationListModel>> {
-        return this.bookingsV1ReservationsGetWithHttpInfo(pageNumber, pageSize, propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, from, to, dateFilter, $options)
+        return this.bookingsV1ReservationsGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -227,9 +348,9 @@ export class ReservationApi {
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
      */
-    public bookingsV1ReservationsPostWithRawHttp(requestBody: models.CreateReservationModel, $options?: IRequestOptions)
+    public bookingsV1ReservationsPostWithRawHttp(params: bookingsV1ReservationsPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationCreatedModel>> {
-        return this.bookingsV1ReservationsPostWithHttpInfo(requestBody, $options)
+        return this.bookingsV1ReservationsPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -245,9 +366,9 @@ export class ReservationApi {
      * @param to End date and time for the selected date filter
      * @param dateFilter Filter by date and time attributes of reservation. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.
      */
-    public bookingsV1ReservationscountGetWithRawHttp(propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, from?: Date, to?: Date, dateFilter?: string, $options?: IRequestOptions)
+    public bookingsV1ReservationscountGetWithRawHttp(params: bookingsV1ReservationscountGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<number>> {
-        return this.bookingsV1ReservationscountGetWithHttpInfo(propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, from, to, dateFilter, $options)
+        return this.bookingsV1ReservationscountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -258,14 +379,15 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of a unit to be assigned.
      */
-    private bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id: string, requestBody?: models.ReservationAssignUnitModel, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(params: bookingsV1ReservationsByIdAssignUnitPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations/${id}/assign-unit'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdAssignUnitPost.');
         }
         // to determine the Content-Type header
@@ -300,7 +422,7 @@ export class ReservationApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -309,7 +431,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(id, requestBody, $options);
+                return this.bookingsV1ReservationsByIdAssignUnitPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -319,14 +441,15 @@ export class ReservationApi {
      * Use this call to check-in an existing reservation which is in status &#39;Confirmed&#39;.
      * @param id The id of the reservation.
      */
-    private bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdCheckinPostWithHttpInfo(params: bookingsV1ReservationsByIdCheckinPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations/${id}/checkin'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdCheckinPost.');
         }
         // to determine the Content-Type header
@@ -361,7 +484,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(id, $options);
+                return this.bookingsV1ReservationsByIdCheckinPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -371,14 +494,15 @@ export class ReservationApi {
      * Use this call to check-out an existing reservation which is in status &#39;InHouse&#39;.
      * @param id The id of the reservation.
      */
-    private bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(params: bookingsV1ReservationsByIdCheckoutPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations/${id}/checkout'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdCheckoutPost.');
         }
         // to determine the Content-Type header
@@ -413,7 +537,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(id, $options);
+                return this.bookingsV1ReservationsByIdCheckoutPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -423,14 +547,15 @@ export class ReservationApi {
      * Get a reservation by id.
      * @param id The id of the reservation.
      */
-    private bookingsV1ReservationsByIdGetWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdGetWithHttpInfo(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdGet.');
         }
         // to determine the Content-Type header
@@ -468,7 +593,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsByIdGetWithHttpInfo(id, $options);
+                return this.bookingsV1ReservationsByIdGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -479,18 +604,19 @@ export class ReservationApi {
      * @param id The id of the reservation.
      * @param requestBody The definition of the reservation.
      */
-    private bookingsV1ReservationsByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceReservationModel, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsByIdPutWithHttpInfo(params: bookingsV1ReservationsByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByIdPut.');
         }
         // to determine the Content-Type header
@@ -522,7 +648,7 @@ export class ReservationApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -531,7 +657,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsByIdPutWithHttpInfo(id, requestBody, $options);
+                return this.bookingsV1ReservationsByIdPutWithHttpInfo(params, $options);
             }
         )
     }
@@ -550,57 +676,58 @@ export class ReservationApi {
      * @param to End date and time for the selected date filter
      * @param dateFilter Filter by date and time attributes of reservation. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.
      */
-    private bookingsV1ReservationsGetWithHttpInfo(pageNumber: number, pageSize: number, propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, from?: Date, to?: Date, dateFilter?: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsGetWithHttpInfo(params: bookingsV1ReservationsGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'pageNumber' is not null or undefined
-        if (pageNumber === null || pageNumber === undefined) {
+        if (params.pageNumber === null || params.pageNumber === undefined) {
             throw new Error('Required parameter pageNumber was null or undefined when calling bookingsV1ReservationsGet.');
         }
         // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
+        if (params.pageSize === null || params.pageSize === undefined) {
             throw new Error('Required parameter pageSize was null or undefined when calling bookingsV1ReservationsGet.');
         }
-        if (propertyIds) {
-            queryParameters.set('propertyIds', propertyIds.join(COLLECTION_FORMATS['csv']));
+        if (params.propertyIds) {
+            queryParameters.set('propertyIds', params.propertyIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (ratePlanIds) {
-            queryParameters.set('ratePlanIds', ratePlanIds.join(COLLECTION_FORMATS['csv']));
+        if (params.ratePlanIds) {
+            queryParameters.set('ratePlanIds', params.ratePlanIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (unitIds) {
-            queryParameters.set('unitIds', unitIds.join(COLLECTION_FORMATS['csv']));
+        if (params.unitIds) {
+            queryParameters.set('unitIds', params.unitIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (unitTypeIds) {
-            queryParameters.set('unitTypeIds', unitTypeIds.join(COLLECTION_FORMATS['csv']));
+        if (params.unitTypeIds) {
+            queryParameters.set('unitTypeIds', params.unitTypeIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (statuses) {
-            queryParameters.set('statuses', statuses.join(COLLECTION_FORMATS['csv']));
+        if (params.statuses) {
+            queryParameters.set('statuses', params.statuses.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (from !== undefined) {
-            queryParameters.set('from', <any>from.toISOString());
+        if (params.from !== undefined) {
+            queryParameters.set('from', <any>params.from.toISOString());
         }
 
-        if (to !== undefined) {
-            queryParameters.set('to', <any>to.toISOString());
+        if (params.to !== undefined) {
+            queryParameters.set('to', <any>params.to.toISOString());
         }
 
-        if (dateFilter !== undefined) {
-            queryParameters.set('dateFilter', <any>dateFilter);
+        if (params.dateFilter !== undefined) {
+            queryParameters.set('dateFilter', <any>params.dateFilter);
         }
 
-        if (pageNumber !== undefined) {
-            queryParameters.set('pageNumber', <any>pageNumber);
+        if (params.pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>params.pageNumber);
         }
 
-        if (pageSize !== undefined) {
-            queryParameters.set('pageSize', <any>pageSize);
+        if (params.pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>params.pageSize);
         }
 
         // to determine the Content-Type header
@@ -638,7 +765,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsGetWithHttpInfo(pageNumber, pageSize, propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, from, to, dateFilter, $options);
+                return this.bookingsV1ReservationsGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -648,13 +775,14 @@ export class ReservationApi {
      * Use this call to create a new reservation.
      * @param requestBody The definition of the reservation.
      */
-    private bookingsV1ReservationsPostWithHttpInfo(requestBody: models.CreateReservationModel, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationsPostWithHttpInfo(params: bookingsV1ReservationsPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsPost.');
         }
         // to determine the Content-Type header
@@ -689,7 +817,7 @@ export class ReservationApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -698,7 +826,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationsPostWithHttpInfo(requestBody, $options);
+                return this.bookingsV1ReservationsPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -715,41 +843,42 @@ export class ReservationApi {
      * @param to End date and time for the selected date filter
      * @param dateFilter Filter by date and time attributes of reservation. The &#39;to&#39; and &#39;from&#39; dates will then define the date and time range.
      */
-    private bookingsV1ReservationscountGetWithHttpInfo(propertyIds?: Array<string>, ratePlanIds?: Array<string>, unitIds?: Array<string>, unitTypeIds?: Array<string>, statuses?: Array<string>, from?: Date, to?: Date, dateFilter?: string, $options?: IRequestOptions): Observable<Response> {
+    private bookingsV1ReservationscountGetWithHttpInfo(params: bookingsV1ReservationscountGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/bookings/v1/reservations/$count';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (propertyIds) {
-            queryParameters.set('propertyIds', propertyIds.join(COLLECTION_FORMATS['csv']));
+        if (params.propertyIds) {
+            queryParameters.set('propertyIds', params.propertyIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (ratePlanIds) {
-            queryParameters.set('ratePlanIds', ratePlanIds.join(COLLECTION_FORMATS['csv']));
+        if (params.ratePlanIds) {
+            queryParameters.set('ratePlanIds', params.ratePlanIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (unitIds) {
-            queryParameters.set('unitIds', unitIds.join(COLLECTION_FORMATS['csv']));
+        if (params.unitIds) {
+            queryParameters.set('unitIds', params.unitIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (unitTypeIds) {
-            queryParameters.set('unitTypeIds', unitTypeIds.join(COLLECTION_FORMATS['csv']));
+        if (params.unitTypeIds) {
+            queryParameters.set('unitTypeIds', params.unitTypeIds.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (statuses) {
-            queryParameters.set('statuses', statuses.join(COLLECTION_FORMATS['csv']));
+        if (params.statuses) {
+            queryParameters.set('statuses', params.statuses.join(COLLECTION_FORMATS['csv']));
         }
 
-        if (from !== undefined) {
-            queryParameters.set('from', <any>from.toISOString());
+        if (params.from !== undefined) {
+            queryParameters.set('from', <any>params.from.toISOString());
         }
 
-        if (to !== undefined) {
-            queryParameters.set('to', <any>to.toISOString());
+        if (params.to !== undefined) {
+            queryParameters.set('to', <any>params.to.toISOString());
         }
 
-        if (dateFilter !== undefined) {
-            queryParameters.set('dateFilter', <any>dateFilter);
+        if (params.dateFilter !== undefined) {
+            queryParameters.set('dateFilter', <any>params.dateFilter);
         }
 
         // to determine the Content-Type header
@@ -787,7 +916,7 @@ export class ReservationApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.bookingsV1ReservationscountGetWithHttpInfo(propertyIds, ratePlanIds, unitIds, unitTypeIds, statuses, from, to, dateFilter, $options);
+                return this.bookingsV1ReservationscountGetWithHttpInfo(params, $options);
             }
         )
     }

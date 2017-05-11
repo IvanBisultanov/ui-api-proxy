@@ -25,6 +25,59 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface ratesV1RatePlansByIdDeleteParams {
+    /**
+     * The id of the rateplan.
+     */
+    id: string;
+}
+export interface ratesV1RatePlansByIdGetParams {
+    /**
+     * The id of the rateplan.
+     */
+    id: string;
+    /**
+     * 'all' or comma separated list of language codes
+     */
+    languages?: Array<string>;
+}
+export interface ratesV1RatePlansByIdHeadParams {
+    /**
+     * The id of the rateplan.
+     */
+    id: string;
+}
+export interface ratesV1RatePlansByIdPutParams {
+    /**
+     * The id of the rateplan.
+     */
+    id: string;
+    /**
+     * The definition of the rateplan.
+     */
+    requestBody: models.ReplaceRatePlanModel;
+}
+export interface ratesV1RatePlansGetParams {
+    /**
+     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     */
+    pageNumber: number;
+    /**
+     * Page size
+     */
+    pageSize: number;
+    /**
+     * Return rate plans for specific property
+     */
+    propertyId?: string;
+}
+export interface ratesV1RatePlansPostParams {
+    /**
+     * The definition of the rateplan.
+     */
+    requestBody: models.CreateRatePlanModel;
+}
+
 @Injectable()
 export class RatePlanApi {
     public defaultHeaders: Headers = new Headers();
@@ -43,9 +96,9 @@ export class RatePlanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    public ratesV1RatePlansByIdDelete(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdDelete(params: ratesV1RatePlansByIdDeleteParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RatePlansByIdDeleteWithRawHttp(id, $options)
+        return this.ratesV1RatePlansByIdDeleteWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -55,9 +108,9 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RatePlansByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdGet(params: ratesV1RatePlansByIdGetParams, $options?: IRequestOptions)
         : Observable<models.RatePlanModel | undefined> {
-        return this.ratesV1RatePlansByIdGetWithRawHttp(id, languages, $options)
+        return this.ratesV1RatePlansByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -66,9 +119,9 @@ export class RatePlanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    public ratesV1RatePlansByIdHead(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdHead(params: ratesV1RatePlansByIdHeadParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RatePlansByIdHeadWithRawHttp(id, $options)
+        return this.ratesV1RatePlansByIdHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -78,9 +131,9 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansByIdPut(id: string, requestBody: models.ReplaceRatePlanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdPut(params: ratesV1RatePlansByIdPutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.ratesV1RatePlansByIdPutWithRawHttp(id, requestBody, $options)
+        return this.ratesV1RatePlansByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -91,9 +144,9 @@ export class RatePlanApi {
      * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    public ratesV1RatePlansGet(pageNumber: number, pageSize: number, propertyId?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansGet(params: ratesV1RatePlansGetParams, $options?: IRequestOptions)
         : Observable<models.RatePlanListModel | undefined> {
-        return this.ratesV1RatePlansGetWithRawHttp(pageNumber, pageSize, propertyId, $options)
+        return this.ratesV1RatePlansGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -102,9 +155,9 @@ export class RatePlanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansPost(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansPost(params: ratesV1RatePlansPostParams, $options?: IRequestOptions)
         : Observable<models.RatePlanCreatedModel | undefined> {
-        return this.ratesV1RatePlansPostWithRawHttp(requestBody, $options)
+        return this.ratesV1RatePlansPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -124,9 +177,9 @@ export class RatePlanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    public ratesV1RatePlansByIdDeleteWithRawHttp(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdDeleteWithRawHttp(params: ratesV1RatePlansByIdDeleteParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RatePlansByIdDeleteWithHttpInfo(id, $options)
+        return this.ratesV1RatePlansByIdDeleteWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -136,9 +189,9 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public ratesV1RatePlansByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdGetWithRawHttp(params: ratesV1RatePlansByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RatePlanModel>> {
-        return this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options)
+        return this.ratesV1RatePlansByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -147,9 +200,9 @@ export class RatePlanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    public ratesV1RatePlansByIdHeadWithRawHttp(id: string, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdHeadWithRawHttp(params: ratesV1RatePlansByIdHeadParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RatePlansByIdHeadWithHttpInfo(id, $options)
+        return this.ratesV1RatePlansByIdHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -159,9 +212,9 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansByIdPutWithRawHttp(id: string, requestBody: models.ReplaceRatePlanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansByIdPutWithRawHttp(params: ratesV1RatePlansByIdPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options)
+        return this.ratesV1RatePlansByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -172,9 +225,9 @@ export class RatePlanApi {
      * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    public ratesV1RatePlansGetWithRawHttp(pageNumber: number, pageSize: number, propertyId?: string, $options?: IRequestOptions)
+    public ratesV1RatePlansGetWithRawHttp(params: ratesV1RatePlansGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RatePlanListModel>> {
-        return this.ratesV1RatePlansGetWithHttpInfo(pageNumber, pageSize, propertyId, $options)
+        return this.ratesV1RatePlansGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -183,9 +236,9 @@ export class RatePlanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesV1RatePlansPostWithRawHttp(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions)
+    public ratesV1RatePlansPostWithRawHttp(params: ratesV1RatePlansPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RatePlanCreatedModel>> {
-        return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options)
+        return this.ratesV1RatePlansPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -205,14 +258,15 @@ export class RatePlanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    private ratesV1RatePlansByIdDeleteWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansByIdDeleteWithHttpInfo(params: ratesV1RatePlansByIdDeleteParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/rate-plans/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdDelete.');
         }
         // to determine the Content-Type header
@@ -247,7 +301,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansByIdDeleteWithHttpInfo(id, $options);
+                return this.ratesV1RatePlansByIdDeleteWithHttpInfo(params, $options);
             }
         )
     }
@@ -258,18 +312,19 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private ratesV1RatePlansByIdGetWithHttpInfo(id: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansByIdGetWithHttpInfo(params: ratesV1RatePlansByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/rate-plans/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdGet.');
         }
-        if (languages) {
-            queryParameters.set('languages', languages.join(COLLECTION_FORMATS['csv']));
+        if (params.languages) {
+            queryParameters.set('languages', params.languages.join(COLLECTION_FORMATS['csv']));
         }
 
         // to determine the Content-Type header
@@ -307,7 +362,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansByIdGetWithHttpInfo(id, languages, $options);
+                return this.ratesV1RatePlansByIdGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -317,14 +372,15 @@ export class RatePlanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    private ratesV1RatePlansByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansByIdHeadWithHttpInfo(params: ratesV1RatePlansByIdHeadParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/rate-plans/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdHead.');
         }
         // to determine the Content-Type header
@@ -359,7 +415,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansByIdHeadWithHttpInfo(id, $options);
+                return this.ratesV1RatePlansByIdHeadWithHttpInfo(params, $options);
             }
         )
     }
@@ -370,18 +426,19 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RatePlansByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceRatePlanModel, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansByIdPutWithHttpInfo(params: ratesV1RatePlansByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/rate-plans/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling ratesV1RatePlansByIdPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RatePlansByIdPut.');
         }
         // to determine the Content-Type header
@@ -413,7 +470,7 @@ export class RatePlanApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -422,7 +479,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansByIdPutWithHttpInfo(id, requestBody, $options);
+                return this.ratesV1RatePlansByIdPutWithHttpInfo(params, $options);
             }
         )
     }
@@ -434,29 +491,30 @@ export class RatePlanApi {
      * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    private ratesV1RatePlansGetWithHttpInfo(pageNumber: number, pageSize: number, propertyId?: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansGetWithHttpInfo(params: ratesV1RatePlansGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'pageNumber' is not null or undefined
-        if (pageNumber === null || pageNumber === undefined) {
+        if (params.pageNumber === null || params.pageNumber === undefined) {
             throw new Error('Required parameter pageNumber was null or undefined when calling ratesV1RatePlansGet.');
         }
         // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
+        if (params.pageSize === null || params.pageSize === undefined) {
             throw new Error('Required parameter pageSize was null or undefined when calling ratesV1RatePlansGet.');
         }
-        if (propertyId !== undefined) {
-            queryParameters.set('propertyId', <any>propertyId);
+        if (params.propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>params.propertyId);
         }
 
-        if (pageNumber !== undefined) {
-            queryParameters.set('pageNumber', <any>pageNumber);
+        if (params.pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>params.pageNumber);
         }
 
-        if (pageSize !== undefined) {
-            queryParameters.set('pageSize', <any>pageSize);
+        if (params.pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>params.pageSize);
         }
 
         // to determine the Content-Type header
@@ -494,7 +552,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansGetWithHttpInfo(pageNumber, pageSize, propertyId, $options);
+                return this.ratesV1RatePlansGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -504,13 +562,14 @@ export class RatePlanApi {
      * Use this call to create a new rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesV1RatePlansPostWithHttpInfo(requestBody: models.CreateRatePlanModel, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1RatePlansPostWithHttpInfo(params: ratesV1RatePlansPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/rate-plans';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling ratesV1RatePlansPost.');
         }
         // to determine the Content-Type header
@@ -545,7 +604,7 @@ export class RatePlanApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -554,7 +613,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1RatePlansPostWithHttpInfo(requestBody, $options);
+                return this.ratesV1RatePlansPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -564,6 +623,7 @@ export class RatePlanApi {
      * Return total count of rateplans
      */
     private ratesV1RatePlanscountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+
         const path = this.basePath + '/rates/v1/rate-plans/$count';
 
         let queryParameters = new URLSearchParams();

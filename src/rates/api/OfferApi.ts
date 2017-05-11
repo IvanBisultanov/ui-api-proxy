@@ -25,6 +25,21 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface ratesV1OffersStayGetParams {
+    /**
+     * The property id
+     */
+    propertyId: string;
+    /**
+     * The arrival date and the optional time
+     */
+    arrival: string;
+    /**
+     * The departure date and the optional time
+     */
+    departure: string;
+}
+
 @Injectable()
 export class OfferApi {
     public defaultHeaders: Headers = new Headers();
@@ -45,9 +60,9 @@ export class OfferApi {
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
      */
-    public ratesV1OffersStayGet(propertyId: string, arrival: string, departure: string, $options?: IRequestOptions)
+    public ratesV1OffersStayGet(params: ratesV1OffersStayGetParams, $options?: IRequestOptions)
         : Observable<models.StayOffersModel | undefined> {
-        return this.ratesV1OffersStayGetWithRawHttp(propertyId, arrival, departure, $options)
+        return this.ratesV1OffersStayGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -59,9 +74,9 @@ export class OfferApi {
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
      */
-    public ratesV1OffersStayGetWithRawHttp(propertyId: string, arrival: string, departure: string, $options?: IRequestOptions)
+    public ratesV1OffersStayGetWithRawHttp(params: ratesV1OffersStayGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.StayOffersModel>> {
-        return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrival, departure, $options)
+        return this.ratesV1OffersStayGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -73,33 +88,34 @@ export class OfferApi {
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
      */
-    private ratesV1OffersStayGetWithHttpInfo(propertyId: string, arrival: string, departure: string, $options?: IRequestOptions): Observable<Response> {
+    private ratesV1OffersStayGetWithHttpInfo(params: ratesV1OffersStayGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/v1/offers/stay';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'propertyId' is not null or undefined
-        if (propertyId === null || propertyId === undefined) {
+        if (params.propertyId === null || params.propertyId === undefined) {
             throw new Error('Required parameter propertyId was null or undefined when calling ratesV1OffersStayGet.');
         }
         // verify required parameter 'arrival' is not null or undefined
-        if (arrival === null || arrival === undefined) {
+        if (params.arrival === null || params.arrival === undefined) {
             throw new Error('Required parameter arrival was null or undefined when calling ratesV1OffersStayGet.');
         }
         // verify required parameter 'departure' is not null or undefined
-        if (departure === null || departure === undefined) {
+        if (params.departure === null || params.departure === undefined) {
             throw new Error('Required parameter departure was null or undefined when calling ratesV1OffersStayGet.');
         }
-        if (propertyId !== undefined) {
-            queryParameters.set('propertyId', <any>propertyId);
+        if (params.propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>params.propertyId);
         }
 
-        if (arrival !== undefined) {
-            queryParameters.set('arrival', <any>arrival);
+        if (params.arrival !== undefined) {
+            queryParameters.set('arrival', <any>params.arrival);
         }
 
-        if (departure !== undefined) {
-            queryParameters.set('departure', <any>departure);
+        if (params.departure !== undefined) {
+            queryParameters.set('departure', <any>params.departure);
         }
 
         // to determine the Content-Type header
@@ -137,7 +153,7 @@ export class OfferApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesV1OffersStayGetWithHttpInfo(propertyId, arrival, departure, $options);
+                return this.ratesV1OffersStayGetWithHttpInfo(params, $options);
             }
         )
     }

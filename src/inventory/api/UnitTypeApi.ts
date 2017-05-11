@@ -25,6 +25,59 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface inventoryV1UnitTypesByIdDeleteParams {
+    /**
+     * The id of the unit type.
+     */
+    id: string;
+}
+export interface inventoryV1UnitTypesByIdGetParams {
+    /**
+     * The id of the unit type.
+     */
+    id: string;
+    /**
+     * 'all' or comma separated list of language codes
+     */
+    languages?: Array<string>;
+}
+export interface inventoryV1UnitTypesByIdHeadParams {
+    /**
+     * The id of the unit type.
+     */
+    id: string;
+}
+export interface inventoryV1UnitTypesByIdPutParams {
+    /**
+     * The id of the unit type.
+     */
+    id: string;
+    /**
+     * The definition of the unit type.
+     */
+    requestBody: models.ReplaceUnitTypeModel;
+}
+export interface inventoryV1UnitTypesGetParams {
+    /**
+     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     */
+    pageNumber: number;
+    /**
+     * Page size
+     */
+    pageSize: number;
+    /**
+     * Return unit types for specific property
+     */
+    propertyId?: string;
+}
+export interface inventoryV1UnitTypesPostParams {
+    /**
+     * The definition of the unit type.
+     */
+    requestBody: models.CreateUnitTypeModel;
+}
+
 @Injectable()
 export class UnitTypeApi {
     public defaultHeaders: Headers = new Headers();
@@ -43,9 +96,9 @@ export class UnitTypeApi {
      * Use this call to delete a unit type.
      * @param id The id of the unit type.
      */
-    public inventoryV1UnitTypesByIdDelete(id: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdDelete(params: inventoryV1UnitTypesByIdDeleteParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1UnitTypesByIdDeleteWithRawHttp(id, $options)
+        return this.inventoryV1UnitTypesByIdDeleteWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -55,9 +108,9 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1UnitTypesByIdGet(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdGet(params: inventoryV1UnitTypesByIdGetParams, $options?: IRequestOptions)
         : Observable<models.UnitTypeModel | undefined> {
-        return this.inventoryV1UnitTypesByIdGetWithRawHttp(id, languages, $options)
+        return this.inventoryV1UnitTypesByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -66,9 +119,9 @@ export class UnitTypeApi {
      * Check if a unit type exists by id.
      * @param id The id of the unit type.
      */
-    public inventoryV1UnitTypesByIdHead(id: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdHead(params: inventoryV1UnitTypesByIdHeadParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1UnitTypesByIdHeadWithRawHttp(id, $options)
+        return this.inventoryV1UnitTypesByIdHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -78,22 +131,22 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryV1UnitTypesByIdPut(id: string, requestBody: models.ReplaceUnitTypeModel, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdPut(params: inventoryV1UnitTypesByIdPutParams, $options?: IRequestOptions)
         : Observable<void> {
-        return this.inventoryV1UnitTypesByIdPutWithRawHttp(id, requestBody, $options)
+        return this.inventoryV1UnitTypesByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
      * Get all unit types, or all unit types for a property
      * Get the list of unit types.
-     * @param propertyId Return unit types for specific property
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
+     * @param propertyId Return unit types for specific property
      */
-    public inventoryV1UnitTypesGet(propertyId?: string, pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
+    public inventoryV1UnitTypesGet(params: inventoryV1UnitTypesGetParams, $options?: IRequestOptions)
         : Observable<models.UnitTypeListModel | undefined> {
-        return this.inventoryV1UnitTypesGetWithRawHttp(propertyId, pageNumber, pageSize, $options)
+        return this.inventoryV1UnitTypesGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -102,9 +155,9 @@ export class UnitTypeApi {
      * Use this call to create a new unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryV1UnitTypesPost(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions)
+    public inventoryV1UnitTypesPost(params: inventoryV1UnitTypesPostParams, $options?: IRequestOptions)
         : Observable<models.UnitTypeCreatedModel | undefined> {
-        return this.inventoryV1UnitTypesPostWithRawHttp(requestBody, $options)
+        return this.inventoryV1UnitTypesPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -124,9 +177,9 @@ export class UnitTypeApi {
      * Use this call to delete a unit type.
      * @param id The id of the unit type.
      */
-    public inventoryV1UnitTypesByIdDeleteWithRawHttp(id: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdDeleteWithRawHttp(params: inventoryV1UnitTypesByIdDeleteParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1UnitTypesByIdDeleteWithHttpInfo(id, $options)
+        return this.inventoryV1UnitTypesByIdDeleteWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -136,9 +189,9 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryV1UnitTypesByIdGetWithRawHttp(id: string, languages?: Array<string>, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdGetWithRawHttp(params: inventoryV1UnitTypesByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeModel>> {
-        return this.inventoryV1UnitTypesByIdGetWithHttpInfo(id, languages, $options)
+        return this.inventoryV1UnitTypesByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -147,9 +200,9 @@ export class UnitTypeApi {
      * Check if a unit type exists by id.
      * @param id The id of the unit type.
      */
-    public inventoryV1UnitTypesByIdHeadWithRawHttp(id: string, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdHeadWithRawHttp(params: inventoryV1UnitTypesByIdHeadParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1UnitTypesByIdHeadWithHttpInfo(id, $options)
+        return this.inventoryV1UnitTypesByIdHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -159,22 +212,22 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryV1UnitTypesByIdPutWithRawHttp(id: string, requestBody: models.ReplaceUnitTypeModel, $options?: IRequestOptions)
+    public inventoryV1UnitTypesByIdPutWithRawHttp(params: inventoryV1UnitTypesByIdPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.inventoryV1UnitTypesByIdPutWithHttpInfo(id, requestBody, $options)
+        return this.inventoryV1UnitTypesByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
      * Get all unit types, or all unit types for a property
      * Get the list of unit types.
-     * @param propertyId Return unit types for specific property
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
+     * @param propertyId Return unit types for specific property
      */
-    public inventoryV1UnitTypesGetWithRawHttp(propertyId?: string, pageNumber?: number, pageSize?: number, $options?: IRequestOptions)
+    public inventoryV1UnitTypesGetWithRawHttp(params: inventoryV1UnitTypesGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeListModel>> {
-        return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, pageNumber, pageSize, $options)
+        return this.inventoryV1UnitTypesGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -183,9 +236,9 @@ export class UnitTypeApi {
      * Use this call to create a new unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryV1UnitTypesPostWithRawHttp(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions)
+    public inventoryV1UnitTypesPostWithRawHttp(params: inventoryV1UnitTypesPostParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitTypeCreatedModel>> {
-        return this.inventoryV1UnitTypesPostWithHttpInfo(requestBody, $options)
+        return this.inventoryV1UnitTypesPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -205,14 +258,15 @@ export class UnitTypeApi {
      * Use this call to delete a unit type.
      * @param id The id of the unit type.
      */
-    private inventoryV1UnitTypesByIdDeleteWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesByIdDeleteWithHttpInfo(params: inventoryV1UnitTypesByIdDeleteParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/unit-types/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1UnitTypesByIdDelete.');
         }
         // to determine the Content-Type header
@@ -247,7 +301,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesByIdDeleteWithHttpInfo(id, $options);
+                return this.inventoryV1UnitTypesByIdDeleteWithHttpInfo(params, $options);
             }
         )
     }
@@ -258,18 +312,19 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryV1UnitTypesByIdGetWithHttpInfo(id: string, languages?: Array<string>, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesByIdGetWithHttpInfo(params: inventoryV1UnitTypesByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/unit-types/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1UnitTypesByIdGet.');
         }
-        if (languages) {
-            queryParameters.set('languages', languages.join(COLLECTION_FORMATS['csv']));
+        if (params.languages) {
+            queryParameters.set('languages', params.languages.join(COLLECTION_FORMATS['csv']));
         }
 
         // to determine the Content-Type header
@@ -307,7 +362,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesByIdGetWithHttpInfo(id, languages, $options);
+                return this.inventoryV1UnitTypesByIdGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -317,14 +372,15 @@ export class UnitTypeApi {
      * Check if a unit type exists by id.
      * @param id The id of the unit type.
      */
-    private inventoryV1UnitTypesByIdHeadWithHttpInfo(id: string, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesByIdHeadWithHttpInfo(params: inventoryV1UnitTypesByIdHeadParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/unit-types/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1UnitTypesByIdHead.');
         }
         // to determine the Content-Type header
@@ -359,7 +415,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesByIdHeadWithHttpInfo(id, $options);
+                return this.inventoryV1UnitTypesByIdHeadWithHttpInfo(params, $options);
             }
         )
     }
@@ -370,18 +426,19 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param requestBody The definition of the unit type.
      */
-    private inventoryV1UnitTypesByIdPutWithHttpInfo(id: string, requestBody: models.ReplaceUnitTypeModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesByIdPutWithHttpInfo(params: inventoryV1UnitTypesByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/unit-types/${id}'
-                    .replace('${' + 'id' + '}', String(id));
+                    .replace('${' + 'id' + '}', String(params.id));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
+        if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling inventoryV1UnitTypesByIdPut.');
         }
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1UnitTypesByIdPut.');
         }
         // to determine the Content-Type header
@@ -413,7 +470,7 @@ export class UnitTypeApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -422,7 +479,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesByIdPutWithHttpInfo(id, requestBody, $options);
+                return this.inventoryV1UnitTypesByIdPutWithHttpInfo(params, $options);
             }
         )
     }
@@ -430,25 +487,34 @@ export class UnitTypeApi {
     /**
      * Get all unit types, or all unit types for a property
      * Get the list of unit types.
-     * @param propertyId Return unit types for specific property
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
+     * @param propertyId Return unit types for specific property
      */
-    private inventoryV1UnitTypesGetWithHttpInfo(propertyId?: string, pageNumber?: number, pageSize?: number, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesGetWithHttpInfo(params: inventoryV1UnitTypesGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/unit-types';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (propertyId !== undefined) {
-            queryParameters.set('propertyId', <any>propertyId);
+        // verify required parameter 'pageNumber' is not null or undefined
+        if (params.pageNumber === null || params.pageNumber === undefined) {
+            throw new Error('Required parameter pageNumber was null or undefined when calling inventoryV1UnitTypesGet.');
+        }
+        // verify required parameter 'pageSize' is not null or undefined
+        if (params.pageSize === null || params.pageSize === undefined) {
+            throw new Error('Required parameter pageSize was null or undefined when calling inventoryV1UnitTypesGet.');
+        }
+        if (params.propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>params.propertyId);
         }
 
-        if (pageNumber !== undefined) {
-            queryParameters.set('pageNumber', <any>pageNumber);
+        if (params.pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>params.pageNumber);
         }
 
-        if (pageSize !== undefined) {
-            queryParameters.set('pageSize', <any>pageSize);
+        if (params.pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>params.pageSize);
         }
 
         // to determine the Content-Type header
@@ -486,7 +552,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesGetWithHttpInfo(propertyId, pageNumber, pageSize, $options);
+                return this.inventoryV1UnitTypesGetWithHttpInfo(params, $options);
             }
         )
     }
@@ -496,13 +562,14 @@ export class UnitTypeApi {
      * Use this call to create a new unit type.
      * @param requestBody The definition of the unit type.
      */
-    private inventoryV1UnitTypesPostWithHttpInfo(requestBody: models.CreateUnitTypeModel, $options?: IRequestOptions): Observable<Response> {
+    private inventoryV1UnitTypesPostWithHttpInfo(params: inventoryV1UnitTypesPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/v1/unit-types';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         // verify required parameter 'requestBody' is not null or undefined
-        if (requestBody === null || requestBody === undefined) {
+        if (params.requestBody === null || params.requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling inventoryV1UnitTypesPost.');
         }
         // to determine the Content-Type header
@@ -537,7 +604,7 @@ export class UnitTypeApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: requestBody == null ? '' : JSON.stringify(requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -546,7 +613,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryV1UnitTypesPostWithHttpInfo(requestBody, $options);
+                return this.inventoryV1UnitTypesPostWithHttpInfo(params, $options);
             }
         )
     }
@@ -556,6 +623,7 @@ export class UnitTypeApi {
      * Return total count of unit types
      */
     private inventoryV1UnitTypescountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+
         const path = this.basePath + '/inventory/v1/unit-types/$count';
 
         let queryParameters = new URLSearchParams();
