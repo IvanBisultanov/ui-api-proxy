@@ -17,27 +17,27 @@ import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types
 import { ResponseModel }                                       from '../../models';
 import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
-export interface ReservationCreatedModel {
+export interface ReservationAmendedModel {
     /**
-     * Id of the reservation
+     * Total amount for the whole stay
      */
-    id?: string;
+    totalAmount?: number;
 
 }
 
-export type ReservationCreatedModelWithRawHttp = ReservationCreatedModel & ResponseModel<ReservationCreatedModel>;
+export type ReservationAmendedModelWithRawHttp = ReservationAmendedModel & ResponseModel<ReservationAmendedModel>;
 
-export namespace ReservationCreatedModel {
+export namespace ReservationAmendedModel {
     export const $metaData = { 
-        id: Object.freeze({ 
-            type: 'string',
+        totalAmount: Object.freeze({ 
+            type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationCreatedModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationAmendedModel>): FormGroup {
         const defaultControls = { 
-            id: getControl($metaData.id, options, 'id'),
+            totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

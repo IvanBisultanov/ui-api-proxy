@@ -25,6 +25,16 @@ import { callApiEndpoint }                                         from '../../f
 /* tslint:disable:no-unused-variable member-ordering */
 
 
+export interface bookingsV1ReservationsByIdAmendPostParams {
+    /**
+     * The id of the reservation
+     */
+    id: string;
+    /**
+     * The amended stay data of the reservation.
+     */
+    requestBody: models.AmendReservationModel;
+}
 export interface bookingsV1ReservationsByIdAssignUnitPostParams {
     /**
      * The id of the reservation.
@@ -160,6 +170,18 @@ export class ReservationApi {
     }
 
     /**
+     * Amends a reservation
+     * Use this call to modify the stay data of a reservation.
+     * @param id The id of the reservation
+     * @param requestBody The amended stay data of the reservation.
+     */
+    public bookingsV1ReservationsByIdAmendPost(params: bookingsV1ReservationsByIdAmendPostParams, $options?: IRequestOptions)
+        : Observable<models.ReservationAmendedModel | undefined> {
+        return this.bookingsV1ReservationsByIdAmendPostWithRawHttp(params, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
      * Assign a unit to a reservation
      * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
      * @param id The id of the reservation.
@@ -267,6 +289,18 @@ export class ReservationApi {
 
 
     /**
+     * Amends a reservation
+     * Use this call to modify the stay data of a reservation.
+     * @param id The id of the reservation
+     * @param requestBody The amended stay data of the reservation.
+     */
+    public bookingsV1ReservationsByIdAmendPostWithRawHttp(params: bookingsV1ReservationsByIdAmendPostParams, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.ReservationAmendedModel>> {
+        return this.bookingsV1ReservationsByIdAmendPostWithHttpInfo(params, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
      * Assign a unit to a reservation
      * Use this call to assign a unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
      * @param id The id of the reservation.
@@ -372,6 +406,73 @@ export class ReservationApi {
             .map((response: Response) => new ResponseModel(response));
     }
 
+
+    /**
+     * Amends a reservation
+     * Use this call to modify the stay data of a reservation.
+     * @param id The id of the reservation
+     * @param requestBody The amended stay data of the reservation.
+     */
+    private bookingsV1ReservationsByIdAmendPostWithHttpInfo(params: bookingsV1ReservationsByIdAmendPostParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
+        const path = this.basePath + '/bookings/v1/reservations/${id}/amend'
+                    .replace('${' + 'id' + '}', String(params.id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (params.id === null || params.id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdAmendPost.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (params.requestBody === null || params.requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling bookingsV1ReservationsByIdAmendPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json', 
+            'text/json', 
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain', 
+            'application/json', 
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.bookingsV1ReservationsByIdAmendPostWithHttpInfo(params, $options);
+            }
+        )
+    }
 
     /**
      * Assign a unit to a reservation
