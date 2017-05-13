@@ -85,6 +85,8 @@ export class ResponseHeaders {
     }
 
     public get isJson(): boolean {
+        if (this.response.status === 204) { return false; }
+
         let contentType = this.getHeader('content-type');
 
         if (contentType) {
