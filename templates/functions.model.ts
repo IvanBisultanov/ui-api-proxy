@@ -40,24 +40,7 @@ export function isApaleoAbstractControl(ctrl: IApaleoAbstractControl | AbstractC
     return !!(<IApaleoAbstractControl>ctrl).apaleoMetaData;
 }
 
-function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>) {
-    for (const key of Object.keys(group.controls) as [keyof T]) {
-        if (metaData[key]) {
-            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key]!;
-        }
-    }
-}
-
-function getAdditionalValidators<T, K extends keyof T>(options: IBuildFormOptions<T> | undefined, property: K) {
-    options = options || {};
-
-    if (options.additionalValidators) {
-        return options.additionalValidators[property];
-    }
-    return undefined;
-}
-
-function getValidators(metaData: IApaleoPropertyMetaData, additionalValidators?: ValidatorFn[]) {
+export function getValidators(metaData: IApaleoPropertyMetaData, additionalValidators?: ValidatorFn[]) {
     const validators = [] as ValidatorFn[];
 
     if (metaData.isRequired) {
@@ -73,6 +56,23 @@ function getValidators(metaData: IApaleoPropertyMetaData, additionalValidators?:
         validators.push(...additionalValidators);
     }
     return validators;
+}
+
+function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>) {
+    for (const key of Object.keys(group.controls) as [keyof T]) {
+        if (metaData[key]) {
+            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key]!;
+        }
+    }
+}
+
+function getAdditionalValidators<T, K extends keyof T>(options: IBuildFormOptions<T> | undefined, property: K) {
+    options = options || {};
+
+    if (options.additionalValidators) {
+        return options.additionalValidators[property];
+    }
+    return undefined;
 }
 
 function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, options: IBuildFormOptions<T>) {
