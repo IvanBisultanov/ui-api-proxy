@@ -62,6 +62,10 @@ export interface bookingsV1ReservationsByIdGetParams {
      * The id of the reservation.
      */
     id: string;
+    /**
+     * List all fields that should be expanded in the response - otherwise you will just get id and _link.  <remarks>Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.</remarks>
+     */
+    expandFields?: Array<string>;
 }
 export interface bookingsV1ReservationsByIdPutParams {
     /**
@@ -219,6 +223,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
+     * @param expandFields List all fields that should be expanded in the response - otherwise you will just get id and _link.  &lt;remarks&gt;Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.&lt;/remarks&gt;
      */
     public bookingsV1ReservationsByIdGet(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<models.ReservationModel | undefined> {
@@ -338,6 +343,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
+     * @param expandFields List all fields that should be expanded in the response - otherwise you will just get id and _link.  &lt;remarks&gt;Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.&lt;/remarks&gt;
      */
     public bookingsV1ReservationsByIdGetWithRawHttp(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
@@ -647,6 +653,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
+     * @param expandFields List all fields that should be expanded in the response - otherwise you will just get id and _link.  &lt;remarks&gt;Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.&lt;/remarks&gt;
      */
     private bookingsV1ReservationsByIdGetWithHttpInfo(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};
@@ -659,6 +666,10 @@ export class ReservationApi {
         if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdGet.');
         }
+        if (params.expandFields) {
+            queryParameters.set('expandFields', params.expandFields.join(COLLECTION_FORMATS['csv']));
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
