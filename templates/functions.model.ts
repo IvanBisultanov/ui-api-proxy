@@ -2,7 +2,8 @@ import {
     ValidatorFn,
     Validators,
     FormGroup,
-    AbstractControl
+    AbstractControl,
+    FormArray
 } from '@angular/forms';
 import {
     FormGroupControls,
@@ -93,8 +94,8 @@ function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, option
     return defaultControls;
 }
 
-function convertAdditionalControls(additionalControls?: { [name: string]: (Control<any> | FormGroup | boolean) }) {
-    const ret: { [name: string]: (Control<any> | FormGroup) } = {};
+function convertAdditionalControls(additionalControls?: { [name: string]: (Control<any> | FormGroup | FormArray | boolean) }) {
+    const ret: { [name: string]: (Control<any> | FormGroup | FormArray) } = {};
 
     if (!additionalControls) {
         return ret;
