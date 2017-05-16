@@ -1,6 +1,6 @@
-import { ValidatorFn, FormGroup, AbstractControl } from '@angular/forms';
+import { ValidatorFn, FormGroup, AbstractControl, FormArray } from '@angular/forms';
 
-export type Control<T> = [T | undefined, ValidatorFn | undefined];
+export type Control<T> = [T | undefined, ValidatorFn | null | undefined];
 
 export type FullyOptional<T> = {
     [P in keyof T]?: T[P] | FullyOptional<T[P]>;
@@ -8,7 +8,7 @@ export type FullyOptional<T> = {
 
 export interface IBuildFormOptions<T> {
     overwriteControls?: {[P in keyof T]?: Control<T[P]> | FormGroup};
-    additionalControls?: { [name: string]: (Control<any> | FormGroup | boolean) }
+    additionalControls?: { [name: string]: (Control<any> | FormGroup | FormArray | boolean) }
     defaultValues?: FullyOptional<T>;
     additionalValidators?: {[P in keyof T]?: ValidatorFn[]};
     skipControls?: (keyof T)[];
@@ -16,7 +16,7 @@ export interface IBuildFormOptions<T> {
 }
 
 export type FormGroupControls<T> = {
-    [P in keyof T]?: [T[P] | undefined, ValidatorFn | null] | FormGroup
+    [P in keyof T]?: Control<T[P]> | FormGroup | FormArray
 }
 
 export interface IApaleoAbstractControl extends AbstractControl {

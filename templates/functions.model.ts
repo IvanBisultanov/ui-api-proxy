@@ -15,7 +15,7 @@ import {
     FullyOptional
 } from './types';
 
-export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): [T[K] | undefined, ValidatorFn | null] {
+export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): Control<T[K]> {
     const validators = getValidators(metaData, getAdditionalValidators(options, property));
 
     return [undefined, Validators.compose(validators)];

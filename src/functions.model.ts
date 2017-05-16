@@ -2,7 +2,8 @@ import {
     ValidatorFn,
     Validators,
     FormGroup,
-    AbstractControl
+    AbstractControl,
+    FormArray
 } from '@angular/forms';
 import {
     FormGroupControls,
@@ -14,7 +15,7 @@ import {
     FullyOptional
 } from './types';
 
-export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): [T[K] | undefined, ValidatorFn | null] {
+export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): Control<T[K]> {
     const validators = getValidators(metaData, getAdditionalValidators(options, property));
 
     return [undefined, Validators.compose(validators)];
@@ -93,8 +94,8 @@ function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, option
     return defaultControls;
 }
 
-function convertAdditionalControls(additionalControls?: { [name: string]: (Control<any> | FormGroup | boolean) }) {
-    const ret: { [name: string]: (Control<any> | FormGroup) } = {};
+function convertAdditionalControls(additionalControls?: { [name: string]: (Control<any> | FormGroup | FormArray | boolean) }) {
+    const ret: { [name: string]: (Control<any> | FormGroup | FormArray) } = {};
 
     if (!additionalControls) {
         return ret;

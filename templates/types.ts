@@ -1,6 +1,6 @@
 import { ValidatorFn, FormGroup, AbstractControl, FormArray } from '@angular/forms';
 
-export type Control<T> = [T | undefined, ValidatorFn | undefined];
+export type Control<T> = [T | undefined, ValidatorFn | null | undefined];
 
 export type FullyOptional<T> = {
     [P in keyof T]?: T[P] | FullyOptional<T[P]>;
