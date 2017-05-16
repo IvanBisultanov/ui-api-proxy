@@ -8,7 +8,7 @@ export type FullyOptional<T> = {
 
 export interface IBuildFormOptions<T> {
     overwriteControls?: {[P in keyof T]?: Control<T[P]> | FormGroup};
-    additionalControls?: { [name: string]: (Control<any> | FormGroup | boolean) }
+    additionalControls?: { [name: string]: (Control<any> | FormGroup | FormArray | boolean) }
     defaultValues?: FullyOptional<T>;
     additionalValidators?: {[P in keyof T]?: ValidatorFn[]};
     skipControls?: (keyof T)[];
