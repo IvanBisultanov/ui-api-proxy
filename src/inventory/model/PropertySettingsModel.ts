@@ -21,17 +21,17 @@ export interface PropertySettingsModel {
     /**
      * The time zone
      */
-    timeZone?: string;
+    timeZone: string;
 
     /**
      * The default check-in time
      */
-    defaultCheckInTime?: string;
+    defaultCheckInTime: string;
 
     /**
      * The default check-out time
      */
-    defaultCheckOutTime?: string;
+    defaultCheckOutTime: string;
 
 }
 
@@ -40,14 +40,17 @@ export type PropertySettingsModelWithRawHttp = PropertySettingsModel & ResponseM
 export namespace PropertySettingsModel {
     export const $metaData = { 
         timeZone: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultCheckOutTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

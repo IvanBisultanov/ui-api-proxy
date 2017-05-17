@@ -21,7 +21,7 @@ export interface ReservationAmendedModel {
     /**
      * Total amount for the whole stay
      */
-    totalAmount?: number;
+    totalAmount: number;
 
 }
 
@@ -30,6 +30,7 @@ export type ReservationAmendedModelWithRawHttp = ReservationAmendedModel & Respo
 export namespace ReservationAmendedModel {
     export const $metaData = { 
         totalAmount: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

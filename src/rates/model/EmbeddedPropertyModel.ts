@@ -21,7 +21,7 @@ export interface EmbeddedPropertyModel {
     /**
      * The property id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the property that can be shown in reports and table views
@@ -50,6 +50,7 @@ export type EmbeddedPropertyModelWithRawHttp = EmbeddedPropertyModel & ResponseM
 export namespace EmbeddedPropertyModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

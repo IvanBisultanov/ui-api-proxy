@@ -24,7 +24,7 @@ export interface LanguagesModel {
     /**
      * The languages for the account
      */
-    languages?: Array<models.LanguageModel>;
+    languages: Array<models.LanguageModel>;
 
 }
 
@@ -33,6 +33,7 @@ export type LanguagesModelWithRawHttp = LanguagesModel & ResponseModel<Languages
 export namespace LanguagesModel {
     export const $metaData = { 
         languages: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.LanguageModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),

@@ -21,7 +21,7 @@ export interface UnitTypeCreatedModel {
     /**
      * The unit type id
      */
-    id?: string;
+    id: string;
 
 }
 
@@ -30,6 +30,7 @@ export type UnitTypeCreatedModelWithRawHttp = UnitTypeCreatedModel & ResponseMod
 export namespace UnitTypeCreatedModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

@@ -24,37 +24,37 @@ export interface UnitTypeModel {
     /**
      * The unit type id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the unit type that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The property to which the unit type belongs to
      */
-    property?: models.EmbeddedPropertyModel;
+    property: models.EmbeddedPropertyModel;
 
     /**
      * The name for the unit type
      */
-    name?: { [key: string]: string; };
+    name: { [key: string]: string; };
 
     /**
      * The description for the unit type
      */
-    description?: { [key: string]: string; };
+    description: { [key: string]: string; };
 
     /**
      * Minimum number of persons for the unit type
      */
-    minPersons?: number;
+    minPersons: number;
 
     /**
      * Maximum number of persons for the unit type
      */
-    maxPersons?: number;
+    maxPersons: number;
 
 }
 
@@ -63,31 +63,38 @@ export type UnitTypeModelWithRawHttp = UnitTypeModel & ResponseModel<UnitTypeMod
 export namespace UnitTypeModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         property: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedPropertyModel',
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         minPersons: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         maxPersons: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

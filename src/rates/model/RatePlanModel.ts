@@ -21,37 +21,37 @@ export interface RatePlanModel {
     /**
      * The rateplan id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the rateplan that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the rateplan
      */
-    name?: { [key: string]: string; };
+    name: { [key: string]: string; };
 
     /**
      * The description for the rateplan
      */
-    description?: { [key: string]: string; };
+    description: { [key: string]: string; };
 
     /**
      * The way the defined rates are applied when an offer is calculated for this rate plan
      */
-    sellingUnit?: RatePlanModel.SellingUnitEnum;
+    sellingUnit: RatePlanModel.SellingUnitEnum;
 
     /**
      * The default price for the rateplan
      */
-    defaultPrice?: number;
+    defaultPrice: number;
 
     /**
      * The property to which the rateplan belongs to
      */
-    property?: models.EmbeddedPropertyModel;
+    property: models.EmbeddedPropertyModel;
 
     /**
      * Unit types linked to the rateplan
@@ -71,33 +71,40 @@ export type RatePlanModelWithRawHttp = RatePlanModel & ResponseModel<RatePlanMod
 export namespace RatePlanModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         sellingUnit: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultPrice: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         property: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedPropertyModel',
         } as IApaleoPropertyMetaData),
         unitTypes: Object.freeze({ 

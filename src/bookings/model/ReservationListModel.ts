@@ -21,12 +21,12 @@ export interface ReservationListModel {
     /**
      * List of reservations
      */
-    reservations?: Array<models.ReservationItemModel>;
+    reservations: Array<models.ReservationItemModel>;
 
     /**
      * Total count of items
      */
-    count?: number;
+    count: number;
 
     /**
      * Collection of links to related resources
@@ -40,10 +40,12 @@ export type ReservationListModelWithRawHttp = ReservationListModel & ResponseMod
 export namespace ReservationListModel {
     export const $metaData = { 
         reservations: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.ReservationItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
         count: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

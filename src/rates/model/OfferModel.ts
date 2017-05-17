@@ -21,37 +21,37 @@ export interface OfferModel {
     /**
      * The earliest arrival date and time for this offer
      */
-    arrival?: Date;
+    arrival: Date;
 
     /**
      * The latest departure date and time for this offer
      */
-    departure?: Date;
+    departure: Date;
 
     /**
      * The unit type for which the following offers apply
      */
-    unitType?: models.EmbeddedUnitTypeModel;
+    unitType: models.EmbeddedUnitTypeModel;
 
     /**
      * The number of available units for that offer
      */
-    availableUnits?: number;
+    availableUnits: number;
 
     /**
      * The rate plan for this offer
      */
-    ratePlan?: models.EmbeddedRatePlanModel;
+    ratePlan: models.EmbeddedRatePlanModel;
 
     /**
      * The price for the whole stay
      */
-    totalAmount?: number;
+    totalAmount: number;
 
     /**
      * The breakdown for each time slice for this offer
      */
-    timeSlices?: Array<models.OfferTimeSliceModel>;
+    timeSlices: Array<models.OfferTimeSliceModel>;
 
 }
 
@@ -60,28 +60,35 @@ export type OfferModelWithRawHttp = OfferModel & ResponseModel<OfferModel>;
 export namespace OfferModel {
     export const $metaData = { 
         arrival: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         departure: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         unitType: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedUnitTypeModel',
         } as IApaleoPropertyMetaData),
         availableUnits: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         ratePlan: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedRatePlanModel',
         } as IApaleoPropertyMetaData),
         totalAmount: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         timeSlices: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.OfferTimeSliceModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),

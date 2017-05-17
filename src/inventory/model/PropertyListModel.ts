@@ -21,12 +21,12 @@ export interface PropertyListModel {
     /**
      * List of properties
      */
-    properties?: Array<models.PropertyItemModel>;
+    properties: Array<models.PropertyItemModel>;
 
     /**
      * Total count of items
      */
-    count?: number;
+    count: number;
 
     /**
      * Collection of links to related resources
@@ -40,10 +40,12 @@ export type PropertyListModelWithRawHttp = PropertyListModel & ResponseModel<Pro
 export namespace PropertyListModel {
     export const $metaData = { 
         properties: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.PropertyItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
         count: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

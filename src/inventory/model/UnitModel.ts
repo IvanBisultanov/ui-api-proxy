@@ -21,22 +21,22 @@ export interface UnitModel {
     /**
      * The unit id
      */
-    id?: string;
+    id: string;
 
     /**
      * The name for the unit
      */
-    name?: string;
+    name: string;
 
     /**
      * The description for the unit
      */
-    description?: { [key: string]: string; };
+    description: { [key: string]: string; };
 
     /**
      * The property to which the unit belongs to
      */
-    property?: models.EmbeddedPropertyModel;
+    property: models.EmbeddedPropertyModel;
 
     /**
      * The unit type
@@ -46,12 +46,12 @@ export interface UnitModel {
     /**
      * Minimum number of persons for the unit
      */
-    minPersons?: number;
+    minPersons: number;
 
     /**
      * Maximum number of persons for the unit
      */
-    maxPersons?: number;
+    maxPersons: number;
 
 }
 
@@ -60,29 +60,35 @@ export type UnitModelWithRawHttp = UnitModel & ResponseModel<UnitModel>;
 export namespace UnitModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         property: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedPropertyModel',
         } as IApaleoPropertyMetaData),
         unitType: Object.freeze({ 
             type: 'models.EmbeddedUnitTypeModel',
         } as IApaleoPropertyMetaData),
         minPersons: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         maxPersons: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

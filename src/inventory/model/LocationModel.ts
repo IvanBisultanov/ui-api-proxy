@@ -18,13 +18,13 @@ import { ResponseModel }                                       from '../../model
 import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
 export interface LocationModel {
-    street?: string;
+    street: string;
 
-    postalCode?: string;
+    postalCode: string;
 
-    city?: string;
+    city: string;
 
-    countryCode?: string;
+    countryCode: string;
 
 }
 
@@ -33,18 +33,22 @@ export type LocationModelWithRawHttp = LocationModel & ResponseModel<LocationMod
 export namespace LocationModel {
     export const $metaData = { 
         street: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         postalCode: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         city: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         countryCode: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

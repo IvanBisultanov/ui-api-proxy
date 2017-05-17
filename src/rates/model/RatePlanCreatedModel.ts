@@ -21,7 +21,7 @@ export interface RatePlanCreatedModel {
     /**
      * The rate plan id
      */
-    id?: string;
+    id: string;
 
 }
 
@@ -30,6 +30,7 @@ export type RatePlanCreatedModelWithRawHttp = RatePlanCreatedModel & ResponseMod
 export namespace RatePlanCreatedModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

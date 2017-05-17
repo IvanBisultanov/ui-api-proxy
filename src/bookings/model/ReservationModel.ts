@@ -21,17 +21,17 @@ export interface ReservationModel {
     /**
      * Reservation id
      */
-    id?: string;
+    id: string;
 
     /**
      * Confirmation code of the reservation
      */
-    code?: string;
+    code: string;
 
     /**
      * Status of the reservation
      */
-    status?: ReservationModel.StatusEnum;
+    status: ReservationModel.StatusEnum;
 
     /**
      * Time of check-in
@@ -51,62 +51,62 @@ export interface ReservationModel {
     /**
      * Property
      */
-    property?: models.EmbeddedPropertyModel;
+    property: models.EmbeddedPropertyModel;
 
     /**
      * RatePlan
      */
-    ratePlan?: models.EmbeddedRatePlanModel;
+    ratePlan: models.EmbeddedRatePlanModel;
 
     /**
      * Unit type
      */
-    unitType?: models.EmbeddedUnitTypeModel;
+    unitType: models.EmbeddedUnitTypeModel;
 
     /**
      * Total amount
      */
-    totalAmount?: number;
+    totalAmount: number;
 
     /**
      * Date of arrival
      */
-    arrival?: Date;
+    arrival: Date;
 
     /**
      * Date of departure
      */
-    departure?: Date;
+    departure: Date;
 
     /**
      * Date of creation
      */
-    created?: Date;
+    created: Date;
 
     /**
      * Date of last modification
      */
-    modified?: Date;
+    modified: Date;
 
     /**
      * Number of adults
      */
-    adults?: number;
+    adults: number;
 
     /**
      * Number of children
      */
-    children?: number;
+    children: number;
 
     /**
      * Code of the guest title
      */
-    guestTitle?: string;
+    guestTitle: string;
 
     /**
      * First name of the guest
      */
-    firstName?: string;
+    firstName: string;
 
     /**
      * Middle initial of the guest
@@ -116,12 +116,12 @@ export interface ReservationModel {
     /**
      * Last name of the guest
      */
-    lastName?: string;
+    lastName: string;
 
     /**
      * Email address  of the guest
      */
-    email?: string;
+    email: string;
 
     /**
      * Phone number of the guest
@@ -141,17 +141,17 @@ export interface ReservationModel {
     /**
      * City of the guest
      */
-    city?: string;
+    city: string;
 
     /**
      * Postal code of the guest
      */
-    postalCode?: string;
+    postalCode: string;
 
     /**
      * Country code of the guest
      */
-    countryCode?: string;
+    countryCode: string;
 
 }
 export namespace ReservationModel {
@@ -167,14 +167,17 @@ export type ReservationModelWithRawHttp = ReservationModel & ResponseModel<Reser
 export namespace ReservationModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         status: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isEnum: true,
             isPrimitiveType: true,
@@ -191,47 +194,59 @@ export namespace ReservationModel {
             type: 'models.EmbeddedUnitModel',
         } as IApaleoPropertyMetaData),
         property: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedPropertyModel',
         } as IApaleoPropertyMetaData),
         ratePlan: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedRatePlanModel',
         } as IApaleoPropertyMetaData),
         unitType: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedUnitTypeModel',
         } as IApaleoPropertyMetaData),
         totalAmount: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         arrival: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         departure: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         created: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         modified: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         adults: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         children: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         guestTitle: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         firstName: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -240,10 +255,12 @@ export namespace ReservationModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         lastName: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         email: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -260,14 +277,17 @@ export namespace ReservationModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         city: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         postalCode: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         countryCode: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

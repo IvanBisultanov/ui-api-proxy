@@ -21,7 +21,7 @@ export interface ReservationAssignedUnitModel {
     /**
      * Id of the assigned unit
      */
-    unitId?: string;
+    unitId: string;
 
 }
 
@@ -30,6 +30,7 @@ export type ReservationAssignedUnitModelWithRawHttp = ReservationAssignedUnitMod
 export namespace ReservationAssignedUnitModel {
     export const $metaData = { 
         unitId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

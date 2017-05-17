@@ -21,22 +21,22 @@ export interface UnitItemModel {
     /**
      * The unit id
      */
-    id?: string;
+    id: string;
 
     /**
      * The name for the unit
      */
-    name?: string;
+    name: string;
 
     /**
      * The description for the unit
      */
-    description?: string;
+    description: string;
 
     /**
      * The id of the property to which the unit belongs to
      */
-    propertyId?: string;
+    propertyId: string;
 
     /**
      * The id of the unit type
@@ -46,12 +46,12 @@ export interface UnitItemModel {
     /**
      * Minimum number of persons for the unit
      */
-    minPersons?: number;
+    minPersons: number;
 
     /**
      * Maximum number of persons for the unit
      */
-    maxPersons?: number;
+    maxPersons: number;
 
     /**
      * Collection of links to related resources
@@ -65,18 +65,22 @@ export type UnitItemModelWithRawHttp = UnitItemModel & ResponseModel<UnitItemMod
 export namespace UnitItemModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         propertyId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -85,10 +89,12 @@ export namespace UnitItemModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         minPersons: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         maxPersons: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

@@ -69,7 +69,7 @@ export interface CreateReservationModel {
     /**
      * Middle initial of the guest
      */
-    middleInitial: string;
+    middleInitial?: string;
 
     /**
      * Last name of the guest
@@ -84,12 +84,12 @@ export interface CreateReservationModel {
     /**
      * Phone number of the guest
      */
-    phone: string;
+    phone?: string;
 
     /**
      * Street of the guest
      */
-    street: string;
+    street?: string;
 
     /**
      * Street number of the guest
@@ -163,9 +163,6 @@ export namespace CreateReservationModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         middleInitial: Object.freeze({ 
-            isRequired: true,
-            minLength: 1,
-            maxLength: 5,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -182,14 +179,10 @@ export namespace CreateReservationModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         phone: Object.freeze({ 
-            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         street: Object.freeze({ 
-            isRequired: true,
-            minLength: 1,
-            maxLength: 40,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

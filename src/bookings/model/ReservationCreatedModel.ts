@@ -21,7 +21,7 @@ export interface ReservationCreatedModel {
     /**
      * Id of the reservation
      */
-    id?: string;
+    id: string;
 
 }
 
@@ -30,6 +30,7 @@ export type ReservationCreatedModelWithRawHttp = ReservationCreatedModel & Respo
 export namespace ReservationCreatedModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

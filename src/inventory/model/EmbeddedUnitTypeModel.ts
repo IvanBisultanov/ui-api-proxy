@@ -21,12 +21,12 @@ export interface EmbeddedUnitTypeModel {
     /**
      * The unit type id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the unit type that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the unit type
@@ -50,10 +50,12 @@ export type EmbeddedUnitTypeModelWithRawHttp = EmbeddedUnitTypeModel & ResponseM
 export namespace EmbeddedUnitTypeModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

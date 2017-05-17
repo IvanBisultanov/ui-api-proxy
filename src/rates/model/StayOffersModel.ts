@@ -21,22 +21,22 @@ export interface StayOffersModel {
     /**
      * The property
      */
-    property?: models.EmbeddedPropertyModel;
+    property: models.EmbeddedPropertyModel;
 
     /**
      * The requested arrival date and time
      */
-    arrivalRequested?: Date;
+    arrivalRequested: Date;
 
     /**
      * The requested departure date and time
      */
-    departureRequested?: Date;
+    departureRequested: Date;
 
     /**
      * List of offered unit types with rates
      */
-    offers?: Array<models.OfferModel>;
+    offers: Array<models.OfferModel>;
 
 }
 
@@ -45,17 +45,21 @@ export type StayOffersModelWithRawHttp = StayOffersModel & ResponseModel<StayOff
 export namespace StayOffersModel {
     export const $metaData = { 
         property: Object.freeze({ 
+            isRequired: true,
             type: 'models.EmbeddedPropertyModel',
         } as IApaleoPropertyMetaData),
         arrivalRequested: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         departureRequested: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         offers: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.OfferModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),

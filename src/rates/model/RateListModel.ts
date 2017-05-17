@@ -21,7 +21,7 @@ export interface RateListModel {
     /**
      * List of rates
      */
-    rates?: Array<models.RateItemModel>;
+    rates: Array<models.RateItemModel>;
 
 }
 
@@ -30,6 +30,7 @@ export type RateListModelWithRawHttp = RateListModel & ResponseModel<RateListMod
 export namespace RateListModel {
     export const $metaData = { 
         rates: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.RateItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),

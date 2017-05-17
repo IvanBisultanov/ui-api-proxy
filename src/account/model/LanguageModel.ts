@@ -18,11 +18,11 @@ import { ResponseModel }                                       from '../../model
 import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
 
 export interface LanguageModel {
-    code?: string;
+    code: string;
 
-    default?: boolean;
+    default: boolean;
 
-    mandatory?: boolean;
+    mandatory: boolean;
 
 }
 
@@ -31,14 +31,17 @@ export type LanguageModelWithRawHttp = LanguageModel & ResponseModel<LanguageMod
 export namespace LanguageModel {
     export const $metaData = { 
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         default: Object.freeze({ 
+            isRequired: true,
             type: 'boolean',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         mandatory: Object.freeze({ 
+            isRequired: true,
             type: 'boolean',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

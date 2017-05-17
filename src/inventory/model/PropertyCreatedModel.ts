@@ -21,7 +21,7 @@ export interface PropertyCreatedModel {
     /**
      * The property id
      */
-    id?: string;
+    id: string;
 
 }
 
@@ -30,6 +30,7 @@ export type PropertyCreatedModelWithRawHttp = PropertyCreatedModel & ResponseMod
 export namespace PropertyCreatedModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

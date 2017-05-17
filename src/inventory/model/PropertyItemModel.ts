@@ -21,27 +21,27 @@ export interface PropertyItemModel {
     /**
      * The property id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the property that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the property
      */
-    name?: string;
+    name: string;
 
     /**
      * The description for the property
      */
-    description?: string;
+    description: string;
 
     /**
      * The location of the property
      */
-    location?: models.LocationModel;
+    location: models.LocationModel;
 
     /**
      * Collection of links to related resources
@@ -55,22 +55,27 @@ export type PropertyItemModelWithRawHttp = PropertyItemModel & ResponseModel<Pro
 export namespace PropertyItemModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         location: Object.freeze({ 
+            isRequired: true,
             type: 'models.LocationModel',
         } as IApaleoPropertyMetaData),
         links: Object.freeze({ 

@@ -24,22 +24,22 @@ export interface AccountModel {
     /**
      * The code for the account that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the account, which usually should be the company name
      */
-    name?: string;
+    name: string;
 
     /**
      * The description for the account
      */
-    description?: string;
+    description: string;
 
     /**
      * The default language code for the account
      */
-    defaultLanguage?: string;
+    defaultLanguage: string;
 
     /**
      * The URL of the account logo
@@ -49,7 +49,7 @@ export interface AccountModel {
     /**
      * The location of the account
      */
-    location?: models.LocationModel;
+    location: models.LocationModel;
 
 }
 
@@ -58,18 +58,22 @@ export type AccountModelWithRawHttp = AccountModel & ResponseModel<AccountModel>
 export namespace AccountModel {
     export const $metaData = { 
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultLanguage: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
@@ -78,6 +82,7 @@ export namespace AccountModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         location: Object.freeze({ 
+            isRequired: true,
             type: 'models.LocationModel',
         } as IApaleoPropertyMetaData),
     };

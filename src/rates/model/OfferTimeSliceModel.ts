@@ -21,17 +21,17 @@ export interface OfferTimeSliceModel {
     /**
      * The start date and time for this time slice
      */
-    from?: Date;
+    from: Date;
 
     /**
      * The end date and time for this time slice
      */
-    to?: Date;
+    to: Date;
 
     /**
      * The price for this time slice
      */
-    amount?: number;
+    amount: number;
 
 }
 
@@ -40,14 +40,17 @@ export type OfferTimeSliceModelWithRawHttp = OfferTimeSliceModel & ResponseModel
 export namespace OfferTimeSliceModel {
     export const $metaData = { 
         from: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         to: Object.freeze({ 
+            isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         amount: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

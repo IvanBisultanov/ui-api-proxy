@@ -21,12 +21,12 @@ export interface RatePlanListModel {
     /**
      * List of rateplans
      */
-    ratePlans?: Array<models.RatePlanItemModel>;
+    ratePlans: Array<models.RatePlanItemModel>;
 
     /**
      * Total count of items
      */
-    count?: number;
+    count: number;
 
     /**
      * Collection of links to related resources
@@ -40,10 +40,12 @@ export type RatePlanListModelWithRawHttp = RatePlanListModel & ResponseModel<Rat
 export namespace RatePlanListModel {
     export const $metaData = { 
         ratePlans: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.RatePlanItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
         count: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

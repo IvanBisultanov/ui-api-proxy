@@ -21,12 +21,12 @@ export interface UnitListModel {
     /**
      * List of units
      */
-    units?: Array<models.UnitItemModel>;
+    units: Array<models.UnitItemModel>;
 
     /**
      * Total count of items
      */
-    count?: number;
+    count: number;
 
     /**
      * Collection of links to related resources
@@ -40,10 +40,12 @@ export type UnitListModelWithRawHttp = UnitListModel & ResponseModel<UnitListMod
 export namespace UnitListModel {
     export const $metaData = { 
         units: Object.freeze({ 
+            isRequired: true,
             type: 'Array<models.UnitItemModel>',
             isListContainer: true,
         } as IApaleoPropertyMetaData),
         count: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

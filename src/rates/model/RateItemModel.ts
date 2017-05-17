@@ -21,12 +21,12 @@ export interface RateItemModel {
     /**
      * The day of the week
      */
-    weekday?: RateItemModel.WeekdayEnum;
+    weekday: RateItemModel.WeekdayEnum;
 
     /**
      * The price for the rate
      */
-    price?: number;
+    price: number;
 
 }
 export namespace RateItemModel {
@@ -47,11 +47,13 @@ export type RateItemModelWithRawHttp = RateItemModel & ResponseModel<RateItemMod
 export namespace RateItemModel {
     export const $metaData = { 
         weekday: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         price: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

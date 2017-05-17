@@ -21,37 +21,37 @@ export interface RatePlanItemModel {
     /**
      * The rateplan id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the rateplan that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the rateplan
      */
-    name?: string;
+    name: string;
 
     /**
      * The description for the rateplan
      */
-    description?: string;
+    description: string;
 
     /**
      * The way the defined rates are applied when an offer is calculated for this rate plan
      */
-    sellingUnit?: RatePlanItemModel.SellingUnitEnum;
+    sellingUnit: RatePlanItemModel.SellingUnitEnum;
 
     /**
      * The default price for the rateplan
      */
-    defaultPrice?: number;
+    defaultPrice: number;
 
     /**
      * The id of the property to which the rateplan belongs to
      */
-    propertyId?: string;
+    propertyId: string;
 
     /**
      * The unit types ids linked to the rateplan
@@ -76,31 +76,38 @@ export type RatePlanItemModelWithRawHttp = RatePlanItemModel & ResponseModel<Rat
 export namespace RatePlanItemModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         sellingUnit: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isEnum: true,
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultPrice: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         propertyId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

@@ -24,42 +24,42 @@ export interface PropertyModel {
     /**
      * The property id
      */
-    id?: string;
+    id: string;
 
     /**
      * The code for the property that can be shown in reports and table views
      */
-    code?: string;
+    code: string;
 
     /**
      * The name for the property
      */
-    name?: { [key: string]: string; };
+    name: { [key: string]: string; };
 
     /**
      * The description for the property
      */
-    description?: { [key: string]: string; };
+    description: { [key: string]: string; };
 
     /**
      * The location of the property
      */
-    location?: models.LocationModel;
+    location: models.LocationModel;
 
     /**
      * The time zone
      */
-    timeZone?: string;
+    timeZone: string;
 
     /**
      * The default check-in time
      */
-    defaultCheckInTime?: string;
+    defaultCheckInTime: string;
 
     /**
      * The default check-out time
      */
-    defaultCheckOutTime?: string;
+    defaultCheckOutTime: string;
 
 }
 
@@ -68,35 +68,43 @@ export type PropertyModelWithRawHttp = PropertyModel & ResponseModel<PropertyMod
 export namespace PropertyModel {
     export const $metaData = { 
         id: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         description: Object.freeze({ 
+            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as IApaleoPropertyMetaData),
         location: Object.freeze({ 
+            isRequired: true,
             type: 'models.LocationModel',
         } as IApaleoPropertyMetaData),
         timeZone: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         defaultCheckOutTime: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
