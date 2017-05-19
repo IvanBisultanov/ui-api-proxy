@@ -2,6 +2,8 @@ node_modules
 *.js
 *.js.map
 *.d.ts
+!templates/typings/*.d.ts
+!src/typings/*.d.ts
 *.metadata.json
 *.ngsummary.json
 npm-debug.log

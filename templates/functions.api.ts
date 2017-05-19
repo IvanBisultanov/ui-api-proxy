@@ -33,6 +33,11 @@ export function callApiEndpoint(
     const rc = getRequestConfig(config);
     const requestOptions: RequestOptionsArgs = rc.requestOptionsInterceptor(requestOptionsArgs);
 
+    const body = tryGetAsObject(requestOptions.body);
+    if (body) {
+        requestOptions.body = body.toApaleoJson();
+    }
+
     const request = http.request(path, requestOptions)
         .map(r => rc.responseInterceptor(requestOptionsArgs, r))
         .catch(err => {
@@ -100,5 +105,13 @@ function setHeaders(headers: Headers, config: Configuration & IRequestOptions) {
                 headers.set(key, config.additionalHeaders[key]);
             }
         }
+    }
+}
+
+function tryGetAsObject(val: any) {
+    if (val && typeof val === 'object') { 
+        return val as object;
+    } else {
+        return undefined;
     }
 }

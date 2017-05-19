@@ -823,11 +823,11 @@ export class ReservationApi {
         }
 
         if (params.from !== undefined) {
-            queryParameters.set('from', <any>params.from.toISOString());
+            queryParameters.set('from', <any>params.from.toApaleoIso());
         }
 
         if (params.to !== undefined) {
-            queryParameters.set('to', <any>params.to.toISOString());
+            queryParameters.set('to', <any>params.to.toApaleoIso());
         }
 
         if (params.dateFilter !== undefined) {
@@ -982,11 +982,11 @@ export class ReservationApi {
         }
 
         if (params.from !== undefined) {
-            queryParameters.set('from', <any>params.from.toISOString());
+            queryParameters.set('from', <any>params.from.toApaleoIso());
         }
 
         if (params.to !== undefined) {
-            queryParameters.set('to', <any>params.to.toISOString());
+            queryParameters.set('to', <any>params.to.toApaleoIso());
         }
 
         if (params.dateFilter !== undefined) {
