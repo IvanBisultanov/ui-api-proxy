@@ -40,6 +40,10 @@ export interface ratesV1RatePlansByIdGetParams {
      * 'all' or comma separated list of language codes
      */
     languages?: Array<string>;
+    /**
+     * List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
+     */
+    expand?: string;
 }
 export interface ratesV1RatePlansByIdHeadParams {
     /**
@@ -107,6 +111,7 @@ export class RatePlanApi {
      * Get a rateplan by id.
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
      */
     public ratesV1RatePlansByIdGet(params: ratesV1RatePlansByIdGetParams, $options?: IRequestOptions)
         : Observable<models.RatePlanModel | undefined> {
@@ -188,6 +193,7 @@ export class RatePlanApi {
      * Get a rateplan by id.
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
      */
     public ratesV1RatePlansByIdGetWithRawHttp(params: ratesV1RatePlansByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.RatePlanModel>> {
@@ -311,6 +317,7 @@ export class RatePlanApi {
      * Get a rateplan by id.
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
      */
     private ratesV1RatePlansByIdGetWithHttpInfo(params: ratesV1RatePlansByIdGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};
@@ -325,6 +332,10 @@ export class RatePlanApi {
         }
         if (params.languages) {
             queryParameters.set('languages', params.languages.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (params.expand !== undefined) {
+            queryParameters.set('expand', <any>params.expand);
         }
 
         // to determine the Content-Type header

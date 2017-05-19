@@ -34,6 +34,10 @@ export interface inventoryV1UnitsByIdGetParams {
      * 'all' or comma separated list of language codes
      */
     languages?: Array<string>;
+    /**
+     * List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unitType. All other values will be silently ignored.
+     */
+    expand?: string;
 }
 export interface inventoryV1UnitsByIdHeadParams {
     /**
@@ -94,6 +98,7 @@ export class UnitApi {
      * Get a unit by id.
      * @param id The id of the unit.
      * @param languages &#39;all&#39; or comma separated list of language codes
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unitType. All other values will be silently ignored.
      */
     public inventoryV1UnitsByIdGet(params: inventoryV1UnitsByIdGetParams, $options?: IRequestOptions)
         : Observable<models.UnitModel | undefined> {
@@ -165,6 +170,7 @@ export class UnitApi {
      * Get a unit by id.
      * @param id The id of the unit.
      * @param languages &#39;all&#39; or comma separated list of language codes
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unitType. All other values will be silently ignored.
      */
     public inventoryV1UnitsByIdGetWithRawHttp(params: inventoryV1UnitsByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.UnitModel>> {
@@ -236,6 +242,7 @@ export class UnitApi {
      * Get a unit by id.
      * @param id The id of the unit.
      * @param languages &#39;all&#39; or comma separated list of language codes
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unitType. All other values will be silently ignored.
      */
     private inventoryV1UnitsByIdGetWithHttpInfo(params: inventoryV1UnitsByIdGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};
@@ -250,6 +257,10 @@ export class UnitApi {
         }
         if (params.languages) {
             queryParameters.set('languages', params.languages.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (params.expand !== undefined) {
+            queryParameters.set('expand', <any>params.expand);
         }
 
         // to determine the Content-Type header

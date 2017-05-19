@@ -63,9 +63,9 @@ export interface bookingsV1ReservationsByIdGetParams {
      */
     id: string;
     /**
-     * List all fields that should be expanded in the response - otherwise you will just get id and _link.  <remarks>Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.</remarks>
+     * List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
      */
-    expandFields?: Array<string>;
+    expand?: string;
 }
 export interface bookingsV1ReservationsByIdPutParams {
     /**
@@ -223,7 +223,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param expandFields List all fields that should be expanded in the response - otherwise you will just get id and _link.  &lt;remarks&gt;Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.&lt;/remarks&gt;
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
      */
     public bookingsV1ReservationsByIdGet(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<models.ReservationModel | undefined> {
@@ -343,7 +343,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param expandFields List all fields that should be expanded in the response - otherwise you will just get id and _link.  &lt;remarks&gt;Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.&lt;/remarks&gt;
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
      */
     public bookingsV1ReservationsByIdGetWithRawHttp(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
@@ -653,7 +653,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param expandFields List all fields that should be expanded in the response - otherwise you will just get id and _link.  &lt;remarks&gt;Possible values are ratePlan, unit, unitType, property. All other values will be silently ignored.&lt;/remarks&gt;
+     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
      */
     private bookingsV1ReservationsByIdGetWithHttpInfo(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};
@@ -666,8 +666,8 @@ export class ReservationApi {
         if (params.id === null || params.id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling bookingsV1ReservationsByIdGet.');
         }
-        if (params.expandFields) {
-            queryParameters.set('expandFields', params.expandFields.join(COLLECTION_FORMATS['csv']));
+        if (params.expand !== undefined) {
+            queryParameters.set('expand', <any>params.expand);
         }
 
         // to determine the Content-Type header
