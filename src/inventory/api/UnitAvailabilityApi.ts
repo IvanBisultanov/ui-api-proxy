@@ -66,7 +66,7 @@ export class UnitAvailabilityApi {
      * @param unitTypeId The unit type id
      */
     public inventoryV1UnitsAvailableGet(params: inventoryV1UnitsAvailableGetParams, $options?: IRequestOptions)
-        : Observable<models.UnitListModel | undefined> {
+        : Observable<models.AvailableUnitListModel | undefined> {
         return this.inventoryV1UnitsAvailableGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -81,7 +81,7 @@ export class UnitAvailabilityApi {
      * @param unitTypeId The unit type id
      */
     public inventoryV1UnitsAvailableGetWithRawHttp(params: inventoryV1UnitsAvailableGetParams, $options?: IRequestOptions)
-        : Observable<ResponseModel<models.UnitListModel>> {
+        : Observable<ResponseModel<models.AvailableUnitListModel>> {
         return this.inventoryV1UnitsAvailableGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }

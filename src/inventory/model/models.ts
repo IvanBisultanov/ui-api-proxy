@@ -1,3 +1,5 @@
+export * from './AvailableUnitItemModel';
+export * from './AvailableUnitListModel';
 export * from './CreatePropertyModel';
 export * from './CreateUnitModel';
 export * from './CreateUnitTypeModel';
