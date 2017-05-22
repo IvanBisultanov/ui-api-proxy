@@ -1,5 +1,3 @@
-/// <reference path="../typings/types.d.ts" />
-
 /**
  * converts date to string in format YYYY-MM-DD
  */

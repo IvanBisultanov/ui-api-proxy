@@ -39,7 +39,7 @@ export interface ratesV1OffersStayGetParams {
      */
     departure: string;
     /**
-     * List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
+     * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     expand?: string;
 }
@@ -63,7 +63,7 @@ export class OfferApi {
      * @param propertyId The property id
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
-     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     public ratesV1OffersStayGet(params: ratesV1OffersStayGetParams, $options?: IRequestOptions)
         : Observable<models.StayOffersModel | undefined> {
@@ -78,7 +78,7 @@ export class OfferApi {
      * @param propertyId The property id
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
-     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     public ratesV1OffersStayGetWithRawHttp(params: ratesV1OffersStayGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.StayOffersModel>> {
@@ -93,7 +93,7 @@ export class OfferApi {
      * @param propertyId The property id
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
-     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     private ratesV1OffersStayGetWithHttpInfo(params: ratesV1OffersStayGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};

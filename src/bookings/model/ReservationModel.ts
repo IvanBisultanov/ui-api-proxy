@@ -153,6 +153,11 @@ export interface ReservationModel {
      */
     countryCode: string;
 
+    /**
+     * Time Slices
+     */
+    timeSlices?: Array<models.TimeSliceModel>;
+
 }
 export namespace ReservationModel {
     export enum StatusEnum {
@@ -290,6 +295,10 @@ export namespace ReservationModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
+        } as IApaleoPropertyMetaData),
+        timeSlices: Object.freeze({ 
+            type: 'Array<models.TimeSliceModel>',
+            isListContainer: true,
         } as IApaleoPropertyMetaData),
     };
 

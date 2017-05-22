@@ -63,7 +63,7 @@ export interface bookingsV1ReservationsByIdGetParams {
      */
     id: string;
     /**
-     * List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
+     * List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
     expand?: string;
 }
@@ -223,7 +223,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
     public bookingsV1ReservationsByIdGet(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<models.ReservationModel | undefined> {
@@ -343,7 +343,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
     public bookingsV1ReservationsByIdGetWithRawHttp(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
@@ -653,7 +653,7 @@ export class ReservationApi {
      * Get a reservation
      * Get a reservation by id.
      * @param id The id of the reservation.
-     * @param expand List of all embedded resources that should be expanded in the response - otherwise you will just get id and _link. Possible values are: property, unit, unitType, ratePlan. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
     private bookingsV1ReservationsByIdGetWithHttpInfo(params: bookingsV1ReservationsByIdGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};

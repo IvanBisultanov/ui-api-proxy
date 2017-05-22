@@ -14,3 +14,4 @@ export * from './ReservationCreatedModel';
 export * from './ReservationItemModel';
 export * from './ReservationListModel';
 export * from './ReservationModel';
+export * from './TimeSliceModel';
