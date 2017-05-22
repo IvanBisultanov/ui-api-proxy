@@ -1,3 +1,5 @@
+/// <reference path="../typings/types.d.ts" />
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
@@ -35,7 +37,7 @@ export function callApiEndpoint(
 
     const body = tryGetAsObject(requestOptions.body);
     if (body) {
-        requestOptions.body = body.toApaleoJson();
+        requestOptions.body = apaleoJsonStringify(body);
     }
 
     const request = http.request(path, requestOptions)
@@ -58,6 +60,19 @@ export function callApiEndpoint(
     } else {
         return request.publishReplay(1).refCount();
     }
+}
+
+/**
+ * JSON.stringify which temporarily overwrites Date.prototype.toJSON to serialize date correctly.
+ */
+export function apaleoJsonStringify(value: {}) {
+    const originalDateToJson = Date.prototype.toJSON;
+
+    Date.prototype.toJSON = Date.prototype.toApaleoIso;
+
+    const ret = JSON.stringify(value);
+    Date.prototype.toJSON = originalDateToJson;
+    return ret;
 }
 
 function getRequestConfig(config: Configuration & IRequestOptions) {

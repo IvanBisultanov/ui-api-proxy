@@ -17,19 +17,6 @@ Date.prototype.toApaleoIso = function (this: Date) {
         + toTwoDigitsWithLeadingZeros(this.getUTCSeconds()) + 'Z';
 }
 
-/**
- * JSON.stringify which temporarily overwrites Date.prototype.toJSON to serialize date correctly.
- */
-Object.prototype.toApaleoJson = function (this: Object) {
-    const originalDateToJson = Date.prototype.toJSON;
-
-    Date.prototype.toJSON = Date.prototype.toApaleoIso;
-
-    const ret = JSON.stringify(this);
-    Date.prototype.toJSON = originalDateToJson;
-    return ret;
-}
-
 function toTwoDigitsWithLeadingZeros(num: number) {
     if (0 <= num && num <= 9) {
         return `0${num}`;
