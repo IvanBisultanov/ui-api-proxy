@@ -121,9 +121,18 @@ function convertAdditionalControls(additionalControls?: { [name: string]: (Contr
 
 function disableFilteredControls<T>(group: FormGroup, options: IBuildFormOptions<T>) {
     if (!options.disabledControls) { return; }
+    let disabledControls = options.disabledControls;
 
-    options.disabledControls
+    if (!(disabledControls instanceof Array)) {
+        disabledControls = convertToDisabledControlsArray(disabledControls);
+    }
+    disabledControls
         .map(ctrlName => group.controls[ctrlName])
         .filter(ctrl => !!ctrl)
         .forEach(ctrl => ctrl.disable());
+}
+
+function convertToDisabledControlsArray<T>(disabledControls: {[P in keyof T]?: boolean }): (keyof T)[] {
+    const keys = Object.keys(disabledControls) as (keyof T)[];
+    return keys.filter(k => !!disabledControls[k]);
 }
