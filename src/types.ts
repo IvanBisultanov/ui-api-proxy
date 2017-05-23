@@ -13,6 +13,7 @@ export interface IBuildFormOptions<T> {
     additionalValidators?: {[P in keyof T]?: ValidatorFn[]};
     skipControls?: (keyof T)[];
     onlyInclude?: (keyof T)[];
+    disabledControls?: (keyof T)[];
 }
 
 export type FormGroupControls<T> = {
