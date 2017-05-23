@@ -29,11 +29,16 @@ export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, 
 }
 
 export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroupMetaData<T>, options?: IBuildFormOptions<T>) {
+    options = options || {};
+
     if (metaData) {
         setMetaData(group, metaData)
     }
-    if (options && options.defaultValues) {
+    if (options.defaultValues) {
         group.patchValue(options.defaultValues);
+    }
+    if (options.disabledControls) {
+
     }
 }
 
@@ -114,4 +119,13 @@ function convertAdditionalControls(additionalControls?: { [name: string]: (Contr
     }
 
     return ret;
+}
+
+function disableFilteredControls<T>(group: FormGroup, options: IBuildFormOptions<T>) {
+    if (!options.disabledControls) { return; }
+
+    options.disabledControls
+        .map(ctrlName => group.controls[ctrlName])
+        .filter(ctrl => !!ctrl)
+        .forEach(ctrl => ctrl.disable());
 }
