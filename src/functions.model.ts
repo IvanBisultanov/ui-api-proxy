@@ -37,9 +37,7 @@ export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroup
     if (options.defaultValues) {
         group.patchValue(options.defaultValues);
     }
-    if (options.disabledControls) {
-
-    }
+    disableFilteredControls(group, options);
 }
 
 export function isApaleoAbstractControl(ctrl: IApaleoAbstractControl | AbstractControl): ctrl is IApaleoAbstractControl {
