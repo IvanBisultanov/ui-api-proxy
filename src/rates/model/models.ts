@@ -1,11 +1,8 @@
 export * from './CreateRatePlanModel';
 export * from './EmbeddedPropertyModel';
-export * from './EmbeddedRatePlanModel';
 export * from './EmbeddedUnitTypeModel';
 export * from './Link';
 export * from './MessageItemCollection';
-export * from './OfferModel';
-export * from './OfferTimeSliceModel';
 export * from './RateItemModel';
 export * from './RateListModel';
 export * from './RatePlanCreatedModel';
@@ -15,4 +12,3 @@ export * from './RatePlanModel';
 export * from './ReplaceRateModel';
 export * from './ReplaceRatePlanModel';
 export * from './ReplaceRatesModel';
-export * from './StayOffersModel';

@@ -1,5 +1,3 @@
-export * from './AvailableUnitItemModel';
-export * from './AvailableUnitListModel';
 export * from './CreatePropertyModel';
 export * from './CreateUnitModel';
 export * from './CreateUnitTypeModel';
@@ -12,10 +10,8 @@ export * from './PropertyCreatedModel';
 export * from './PropertyItemModel';
 export * from './PropertyListModel';
 export * from './PropertyModel';
-export * from './PropertySettingsModel';
 export * from './ReplaceLocationModel';
 export * from './ReplacePropertyModel';
-export * from './ReplacePropertySettingsModel';
 export * from './ReplaceUnitModel';
 export * from './ReplaceUnitTypeModel';
 export * from './UnitCreatedModel';
