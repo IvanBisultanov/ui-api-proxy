@@ -1,6 +1,6 @@
 /**
  * Inventory Management
- * Set up hotels, rooms, room categories and other units in the portfolio.
+ * Setup and manage the account’s properties and all the units to rent out: rooms, parking lots, beds, meeting rooms, etc.
  *
  * OpenAPI spec version: 1.0.0
  * 

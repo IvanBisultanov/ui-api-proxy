@@ -1,6 +1,6 @@
 /**
  * Settings
- * Set up and change global account- and property settings.
+ * Set up and change global account and property settings.
  *
  * OpenAPI spec version: 1.0.0
  * 

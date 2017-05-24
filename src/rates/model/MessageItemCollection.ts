@@ -1,6 +1,6 @@
 /**
  * Rates Management
- * Manage rates and rateplans for all properties.
+ * Manage the rate plans and rates to rent out your inventory at the best price.
  *
  * OpenAPI spec version: 1.0.0
  * 

@@ -1,6 +1,6 @@
 /**
  * Account
- * Everything about the hotel or hotel chain.
+ * Manage accounts, subscriptions and more.
  *
  * OpenAPI spec version: 1.0.0
  * 
