@@ -26,7 +26,7 @@ export interface EmbeddedRatePlanModel {
     /**
      * The code for the rateplan that can be shown in reports and table views
      */
-    code: string;
+    code?: string;
 
     /**
      * The name for the rateplan
@@ -55,7 +55,6 @@ export namespace EmbeddedRatePlanModel {
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         code: Object.freeze({ 
-            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

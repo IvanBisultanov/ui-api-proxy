@@ -24,12 +24,12 @@ export interface AmendReservationModel {
     /**
      * ID of the rateplan
      */
-    rateplanId?: string;
+    rateplanId: string;
 
     /**
      * ID of the unit type
      */
-    unitTypeId?: string;
+    unitTypeId: string;
 
     /**
      * Date of arrival
@@ -58,10 +58,12 @@ export type AmendReservationModelWithRawHttp = AmendReservationModel & ResponseM
 export namespace AmendReservationModel {
     export const $metaData = { 
         rateplanId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
         unitTypeId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),

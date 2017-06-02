@@ -24,11 +24,6 @@ export interface ReservationItemModel {
     id: string;
 
     /**
-     * Confirmation code of the reservation
-     */
-    code: string;
-
-    /**
      * Status of the reservation
      */
     status: ReservationItemModel.StatusEnum;
@@ -176,11 +171,6 @@ export namespace ReservationItemModel {
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        code: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
         status: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -309,7 +299,6 @@ export namespace ReservationItemModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
-            code: getControl($metaData.code, options, 'code'),
             status: getControl($metaData.status, options, 'status'),
             checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
             checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),

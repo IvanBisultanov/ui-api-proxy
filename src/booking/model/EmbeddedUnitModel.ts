@@ -24,11 +24,6 @@ export interface EmbeddedUnitModel {
     id: string;
 
     /**
-     * The code for the unit that can be shown in reports and table views
-     */
-    code: string;
-
-    /**
      * The name for the unit
      */
     name?: string;
@@ -54,11 +49,6 @@ export namespace EmbeddedUnitModel {
             type: 'string',
             isPrimitiveType: true,
         } as IApaleoPropertyMetaData),
-        code: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
         name: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
@@ -76,7 +66,6 @@ export namespace EmbeddedUnitModel {
     export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<EmbeddedUnitModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
-            code: getControl($metaData.code, options, 'code'),
             name: getControl($metaData.name, options, 'name'),
             description: getControl($metaData.description, options, 'description'),
         };
