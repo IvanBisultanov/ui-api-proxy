@@ -81,6 +81,12 @@ export interface inventoryUnitTypesPostParams {
      */
     requestBody: models.CreateUnitTypeModel;
 }
+export interface inventoryUnitTypescountGetParams {
+    /**
+     * Return unit types for specific property
+     */
+    propertyId?: string;
+}
 
 @Injectable()
 export class UnitTypeApi {
@@ -167,12 +173,13 @@ export class UnitTypeApi {
     }
 
     /**
-     * Return total count of unit types
-     * Return total count of unit types
+     * Returns number of unit types
+     * Returns number of unit types matching the filter criteria
+     * @param propertyId Return unit types for specific property
      */
-    public inventoryUnitTypescountGet($options?: IRequestOptions)
-        : Observable<number | undefined> {
-        return this.inventoryUnitTypescountGetWithRawHttp($options)
+    public inventoryUnitTypescountGet(params: inventoryUnitTypescountGetParams, $options?: IRequestOptions)
+        : Observable<models.CountModel | undefined> {
+        return this.inventoryUnitTypescountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -249,12 +256,13 @@ export class UnitTypeApi {
     }
 
     /**
-     * Return total count of unit types
-     * Return total count of unit types
+     * Returns number of unit types
+     * Returns number of unit types matching the filter criteria
+     * @param propertyId Return unit types for specific property
      */
-    public inventoryUnitTypescountGetWithRawHttp($options?: IRequestOptions)
-        : Observable<ResponseModel<number>> {
-        return this.inventoryUnitTypescountGetWithHttpInfo($options)
+    public inventoryUnitTypescountGetWithRawHttp(params: inventoryUnitTypescountGetParams, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.CountModel>> {
+        return this.inventoryUnitTypescountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -630,15 +638,20 @@ export class UnitTypeApi {
     }
 
     /**
-     * Return total count of unit types
-     * Return total count of unit types
+     * Returns number of unit types
+     * Returns number of unit types matching the filter criteria
+     * @param propertyId Return unit types for specific property
      */
-    private inventoryUnitTypescountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
-
+    private inventoryUnitTypescountGetWithHttpInfo(params: inventoryUnitTypescountGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/inventory/unit-types/$count';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (params.propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>params.propertyId);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -674,7 +687,7 @@ export class UnitTypeApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.inventoryUnitTypescountGetWithHttpInfo($options);
+                return this.inventoryUnitTypescountGetWithHttpInfo(params, $options);
             }
         )
     }

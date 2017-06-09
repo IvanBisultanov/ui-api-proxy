@@ -231,7 +231,7 @@ export class ReservationApi {
      * @param to The end of the time interval.
      */
     public bookingReservationscountGet(params: bookingReservationscountGetParams, $options?: IRequestOptions)
-        : Observable<number | undefined> {
+        : Observable<models.CountModel | undefined> {
         return this.bookingReservationscountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -317,7 +317,7 @@ export class ReservationApi {
      * @param to The end of the time interval.
      */
     public bookingReservationscountGetWithRawHttp(params: bookingReservationscountGetParams, $options?: IRequestOptions)
-        : Observable<ResponseModel<number>> {
+        : Observable<ResponseModel<models.CountModel>> {
         return this.bookingReservationscountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }

@@ -1,6 +1,7 @@
 export * from './AmendReservationModel';
 export * from './AvailableUnitItemModel';
 export * from './AvailableUnitListModel';
+export * from './CountModel';
 export * from './CreateReservationModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedRatePlanModel';

@@ -144,7 +144,7 @@ export class PropertyApi {
      * Return total count of properties
      */
     public inventoryPropertiescountGet($options?: IRequestOptions)
-        : Observable<number | undefined> {
+        : Observable<models.CountModel | undefined> {
         return this.inventoryPropertiescountGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -213,7 +213,7 @@ export class PropertyApi {
      * Return total count of properties
      */
     public inventoryPropertiescountGetWithRawHttp($options?: IRequestOptions)
-        : Observable<ResponseModel<number>> {
+        : Observable<ResponseModel<models.CountModel>> {
         return this.inventoryPropertiescountGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
     }

@@ -1,3 +1,4 @@
+export * from './CountModel';
 export * from './CreateRatePlanModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedUnitTypeModel';

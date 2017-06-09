@@ -81,6 +81,12 @@ export interface ratesRatePlansPostParams {
      */
     requestBody: models.CreateRatePlanModel;
 }
+export interface ratesRatePlanscountGetParams {
+    /**
+     * Return rate plans for specific property
+     */
+    propertyId?: string;
+}
 
 @Injectable()
 export class RatePlanApi {
@@ -167,12 +173,13 @@ export class RatePlanApi {
     }
 
     /**
-     * Return total count of rateplans
-     * Return total count of rateplans
+     * Returns number of rate plans
+     * Returns number of rate plans matching the filter criteria
+     * @param propertyId Return rate plans for specific property
      */
-    public ratesRatePlanscountGet($options?: IRequestOptions)
-        : Observable<number | undefined> {
-        return this.ratesRatePlanscountGetWithRawHttp($options)
+    public ratesRatePlanscountGet(params: ratesRatePlanscountGetParams, $options?: IRequestOptions)
+        : Observable<models.CountModel | undefined> {
+        return this.ratesRatePlanscountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -249,12 +256,13 @@ export class RatePlanApi {
     }
 
     /**
-     * Return total count of rateplans
-     * Return total count of rateplans
+     * Returns number of rate plans
+     * Returns number of rate plans matching the filter criteria
+     * @param propertyId Return rate plans for specific property
      */
-    public ratesRatePlanscountGetWithRawHttp($options?: IRequestOptions)
-        : Observable<ResponseModel<number>> {
-        return this.ratesRatePlanscountGetWithHttpInfo($options)
+    public ratesRatePlanscountGetWithRawHttp(params: ratesRatePlanscountGetParams, $options?: IRequestOptions)
+        : Observable<ResponseModel<models.CountModel>> {
+        return this.ratesRatePlanscountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -630,15 +638,20 @@ export class RatePlanApi {
     }
 
     /**
-     * Return total count of rateplans
-     * Return total count of rateplans
+     * Returns number of rate plans
+     * Returns number of rate plans matching the filter criteria
+     * @param propertyId Return rate plans for specific property
      */
-    private ratesRatePlanscountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
-
+    private ratesRatePlanscountGetWithHttpInfo(params: ratesRatePlanscountGetParams, $options?: IRequestOptions): Observable<Response> {
+        params = params || {};
         const path = this.basePath + '/rates/rate-plans/$count';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (params.propertyId !== undefined) {
+            queryParameters.set('propertyId', <any>params.propertyId);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -674,7 +687,7 @@ export class RatePlanApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.ratesRatePlanscountGetWithHttpInfo($options);
+                return this.ratesRatePlanscountGetWithHttpInfo(params, $options);
             }
         )
     }

@@ -1,3 +1,4 @@
+export * from './CountModel';
 export * from './CreatePropertyModel';
 export * from './CreateUnitModel';
 export * from './CreateUnitTypeModel';
