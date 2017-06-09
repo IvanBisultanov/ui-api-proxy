@@ -12,7 +12,10 @@ import {
     IApaleoAbstractControl,
     IApaleoPropertyMetaData,
     ApaleoFormGroupMetaData,
-    FullyOptional
+    FullyOptional,
+    PossibleAdditionalControlWithOptionalMetaData,
+    PossibleAdditionalControl,
+    PossibleAdditionalControlWithMetaData
 } from './types';
 
 export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): Control<T[K]> {
@@ -62,10 +65,18 @@ export function getValidators(metaData: IApaleoPropertyMetaData, additionalValid
     return validators;
 }
 
-function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>) {
-    for (const key of Object.keys(group.controls) as [keyof T]) {
+function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>, options?: IBuildFormOptions<T>) {
+    options = options || {};
+    options.additionalControls = options.additionalControls || {};
+
+    for (const key of Object.keys(group.controls) as [string | keyof T]) {
         if (metaData[key]) {
             (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key]!;
+        }
+
+        const ac = options.additionalControls[key];
+        if (ac && hasMetaData(ac)) {
+            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = ac.metaData;            
         }
     }
 }
@@ -97,9 +108,9 @@ function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, option
     return defaultControls;
 }
 
-function convertAdditionalControls(additionalControls?: { [name: string]: (Control<any> | FormGroup | FormArray | boolean) }) {
-    const ret: { [name: string]: (Control<any> | FormGroup | FormArray) } = {};
-
+function convertAdditionalControls(additionalControls?: { [name: string]: PossibleAdditionalControlWithOptionalMetaData }) {
+    const ret: { [name: string]: PossibleAdditionalControl } = {};
+    
     if (!additionalControls) {
         return ret;
     }
@@ -110,6 +121,8 @@ function convertAdditionalControls(additionalControls?: { [name: string]: (Contr
 
             if (typeof ac === 'boolean') {
                 ret[ctrl] = [undefined, undefined];
+            } else if (hasMetaData(ac))  {
+                ret[ctrl] = ac.control || [undefined, undefined];
             } else {
                 ret[ctrl] = ac;
             }
@@ -135,4 +148,8 @@ function disableFilteredControls<T>(group: FormGroup, options: IBuildFormOptions
 function convertToDisabledControlsArray<T>(disabledControls: {[P in keyof T]?: boolean }): (keyof T)[] {
     const keys = Object.keys(disabledControls) as (keyof T)[];
     return keys.filter(k => !!disabledControls[k]);
+}
+
+function hasMetaData(control: PossibleAdditionalControlWithOptionalMetaData): control is PossibleAdditionalControlWithMetaData {
+    return !!(control as PossibleAdditionalControlWithMetaData).metaData;
 }

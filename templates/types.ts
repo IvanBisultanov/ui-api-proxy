@@ -8,12 +8,12 @@ export type FullyOptional<T> = {
 
 export interface IBuildFormOptions<T> {
     overwriteControls?: {[P in keyof T]?: Control<T[P]> | FormGroup};
-    additionalControls?: { [name: string]: (Control<any> | FormGroup | FormArray | boolean) }
+    additionalControls?: { [name: string]: PossibleAdditionalControlWithOptionalMetaData }
     defaultValues?: FullyOptional<T>;
     additionalValidators?: {[P in keyof T]?: ValidatorFn[]};
     skipControls?: (keyof T)[];
     onlyInclude?: (keyof T)[];
-    disabledControls?: (keyof T)[] | { [P in keyof T]?: boolean };
+    disabledControls?: (keyof T)[] | {[P in keyof T]?: boolean };
 }
 
 export type FormGroupControls<T> = {
@@ -38,3 +38,10 @@ export interface IApaleoPropertyMetaData {
 export type ApaleoFormGroupMetaData<T> = {
     [P in keyof T]?: IApaleoPropertyMetaData;
 }
+
+export type PossibleAdditionalControl = Control<any> | FormGroup | FormArray;
+export type PossibleAdditionalControlWithMetaData = { metaData: IApaleoPropertyMetaData; control?: PossibleAdditionalControl; };
+export type PossibleAdditionalControlWithOptionalMetaData =
+    PossibleAdditionalControl | 
+    boolean | 
+    PossibleAdditionalControlWithMetaData
