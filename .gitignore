@@ -5,6 +5,7 @@ node_modules
 !typings/*.d.ts
 *.metadata.json
 *.ngsummary.json
+*.ngsummary.ts
 npm-debug.log
 npm-debug.log.*
 .vscode
