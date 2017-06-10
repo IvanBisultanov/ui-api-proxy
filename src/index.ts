@@ -8,5 +8,7 @@ import * as _booking from './booking';
 export const booking = _booking;
 import * as _settings from './settings';
 export const settings = _settings;
+import * as _finance from './finance';
+export const finance = _finance;
 export * from './configuration';
 export * from './variables';
