@@ -3,4 +3,4 @@ inventory|swagger/inventory/swagger.json
 rates|swagger/rates/swagger.json
 booking|swagger/booking/swagger.json
 settings|swagger/settings/swagger.json
-folio|swagger/folios/swagger.json
+finance|swagger/finance/swagger.json
