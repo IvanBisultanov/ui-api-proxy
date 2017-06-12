@@ -27,7 +27,7 @@ import { callApiEndpoint }                                         from '../../f
 
 export interface financeFolioActionsNightAuditPutParams {
     /**
-     * Filter folio list by proprty id
+     * Filter folio list by property id
      */
     propertyId?: string;
 }
@@ -48,7 +48,7 @@ export class FolioActionsApi {
     /**
      * Performs the night audit for one property.
      * The night audit will post all outstanding items in the folio.
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     public financeFolioActionsNightAuditPut(params: financeFolioActionsNightAuditPutParams, $options?: IRequestOptions)
         : Observable<void> {
@@ -60,7 +60,7 @@ export class FolioActionsApi {
     /**
      * Performs the night audit for one property.
      * The night audit will post all outstanding items in the folio.
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     public financeFolioActionsNightAuditPutWithRawHttp(params: financeFolioActionsNightAuditPutParams, $options?: IRequestOptions)
         : Observable<ResponseModel<void>> {
@@ -72,7 +72,7 @@ export class FolioActionsApi {
     /**
      * Performs the night audit for one property.
      * The night audit will post all outstanding items in the folio.
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     private financeFolioActionsNightAuditPutWithHttpInfo(params: financeFolioActionsNightAuditPutParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};

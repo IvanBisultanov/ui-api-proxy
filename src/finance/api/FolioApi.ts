@@ -33,7 +33,7 @@ export interface financeFoliosByIdGetParams {
 }
 export interface financeFoliosGetParams {
     /**
-     * Filter folio list by proprty id
+     * Filter folio list by property id
      */
     propertyId?: string;
 }
@@ -45,7 +45,7 @@ export interface financeFoliosPostParams {
 }
 export interface financeFolioscountGetParams {
     /**
-     * Filter folio list by proprty id
+     * Filter folio list by property id
      */
     propertyId?: string;
 }
@@ -77,7 +77,7 @@ export class FolioApi {
     /**
      * Returns a list of all folios.
      * Returns a list of all folios.
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     public financeFoliosGet(params: financeFoliosGetParams, $options?: IRequestOptions)
         : Observable<models.FolioListModel | undefined> {
@@ -99,7 +99,7 @@ export class FolioApi {
     /**
      * Returns number of folios
      * Returns number of folios matching the filter criteria
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     public financeFolioscountGet(params: financeFolioscountGetParams, $options?: IRequestOptions)
         : Observable<models.CountModel | undefined> {
@@ -122,7 +122,7 @@ export class FolioApi {
     /**
      * Returns a list of all folios.
      * Returns a list of all folios.
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     public financeFoliosGetWithRawHttp(params: financeFoliosGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.FolioListModel>> {
@@ -144,7 +144,7 @@ export class FolioApi {
     /**
      * Returns number of folios
      * Returns number of folios matching the filter criteria
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     public financeFolioscountGetWithRawHttp(params: financeFolioscountGetParams, $options?: IRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
@@ -212,7 +212,7 @@ export class FolioApi {
     /**
      * Returns a list of all folios.
      * Returns a list of all folios.
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     private financeFoliosGetWithHttpInfo(params: financeFoliosGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};
@@ -328,7 +328,7 @@ export class FolioApi {
     /**
      * Returns number of folios
      * Returns number of folios matching the filter criteria
-     * @param propertyId Filter folio list by proprty id
+     * @param propertyId Filter folio list by property id
      */
     private financeFolioscountGetWithHttpInfo(params: financeFolioscountGetParams, $options?: IRequestOptions): Observable<Response> {
         params = params || {};
