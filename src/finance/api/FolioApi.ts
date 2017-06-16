@@ -1,6 +1,6 @@
 /**
  * Apaleo Finance API
- * Everything around the Folio, Invioces and Accounting.
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -10,49 +10,60 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface financeFoliosByIdGetParams {
-    /**
-     * The id of the folio.
-     */
-    id: string;
+export namespace financeFoliosByIdGet {
+    export interface Params {
+        /**
+        * The id of the folio.
+        */
+        id: string;
+    }
+    
 }
-export interface financeFoliosGetParams {
-    /**
-     * Filter folio list by property id
-     */
-    propertyId?: string;
+
+export namespace financeFoliosGet {
+    export interface Params {
+        /**
+        * Filter folio list by property id
+        */
+        propertyId?: string;
+    }
 }
-export interface financeFoliosPostParams {
-    /**
-     * The definition of the folio.
-     */
-    requestBody: models.CreateFolioModel;
+export namespace financeFoliosPost {
+    export interface Params {
+        /**
+        * The definition of the folio.
+        */
+        request: models.CreateFolioRequest;
+    }    
 }
-export interface financeFolioscountGetParams {
-    /**
-     * Filter folio list by property id
-     */
-    propertyId?: string;
+export namespace financeFolioscountGet {
+    export interface Params {
+        /**
+        * Filter folio list by property id
+        */
+        propertyId?: string;
+    }
 }
 
 @Injectable()
 export class FolioApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -68,7 +79,7 @@ export class FolioApi {
      * Get a folio by id.
      * @param id The id of the folio.
      */
-    public financeFoliosByIdGet(params: financeFoliosByIdGetParams, $options?: IRequestOptions)
+    public financeFoliosByIdGet(params: financeFoliosByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.FolioModel | undefined> {
         return this.financeFoliosByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -79,7 +90,7 @@ export class FolioApi {
      * Returns a list of all folios.
      * @param propertyId Filter folio list by property id
      */
-    public financeFoliosGet(params: financeFoliosGetParams, $options?: IRequestOptions)
+    public financeFoliosGet(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.FolioListModel | undefined> {
         return this.financeFoliosGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -88,20 +99,20 @@ export class FolioApi {
     /**
      * Creates a folio.
      * Creates a folio.
-     * @param requestBody The definition of the folio.
+     * @param request The definition of the folio.
      */
-    public financeFoliosPost(params: financeFoliosPostParams, $options?: IRequestOptions)
+    public financeFoliosPost(params: financeFoliosPost.Params, $options?: ApaleoRequestOptions)
         : Observable<models.FolioCreatedModel | undefined> {
         return this.financeFoliosPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
     /**
-     * Returns number of folios
+     * Returns number of folios.
      * Returns number of folios matching the filter criteria
      * @param propertyId Filter folio list by property id
      */
-    public financeFolioscountGet(params: financeFolioscountGetParams, $options?: IRequestOptions)
+    public financeFolioscountGet(params: financeFolioscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.CountModel | undefined> {
         return this.financeFolioscountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -113,7 +124,7 @@ export class FolioApi {
      * Get a folio by id.
      * @param id The id of the folio.
      */
-    public financeFoliosByIdGetWithRawHttp(params: financeFoliosByIdGetParams, $options?: IRequestOptions)
+    public financeFoliosByIdGetWithRawHttp(params: financeFoliosByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.FolioModel>> {
         return this.financeFoliosByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -124,7 +135,7 @@ export class FolioApi {
      * Returns a list of all folios.
      * @param propertyId Filter folio list by property id
      */
-    public financeFoliosGetWithRawHttp(params: financeFoliosGetParams, $options?: IRequestOptions)
+    public financeFoliosGetWithRawHttp(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.FolioListModel>> {
         return this.financeFoliosGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -133,20 +144,20 @@ export class FolioApi {
     /**
      * Creates a folio.
      * Creates a folio.
-     * @param requestBody The definition of the folio.
+     * @param request The definition of the folio.
      */
-    public financeFoliosPostWithRawHttp(params: financeFoliosPostParams, $options?: IRequestOptions)
+    public financeFoliosPostWithRawHttp(params: financeFoliosPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.FolioCreatedModel>> {
         return this.financeFoliosPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
     /**
-     * Returns number of folios
+     * Returns number of folios.
      * Returns number of folios matching the filter criteria
      * @param propertyId Filter folio list by property id
      */
-    public financeFolioscountGetWithRawHttp(params: financeFolioscountGetParams, $options?: IRequestOptions)
+    public financeFolioscountGetWithRawHttp(params: financeFolioscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
         return this.financeFolioscountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -158,7 +169,7 @@ export class FolioApi {
      * Get a folio by id.
      * @param id The id of the folio.
      */
-    private financeFoliosByIdGetWithHttpInfo(params: financeFoliosByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+    private financeFoliosByIdGetWithHttpInfo(params: financeFoliosByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/finance/folios/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -214,7 +225,7 @@ export class FolioApi {
      * Returns a list of all folios.
      * @param propertyId Filter folio list by property id
      */
-    private financeFoliosGetWithHttpInfo(params: financeFoliosGetParams, $options?: IRequestOptions): Observable<Response> {
+    private financeFoliosGetWithHttpInfo(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/finance/folios';
 
@@ -267,17 +278,17 @@ export class FolioApi {
     /**
      * Creates a folio.
      * Creates a folio.
-     * @param requestBody The definition of the folio.
+     * @param request The definition of the folio.
      */
-    private financeFoliosPostWithHttpInfo(params: financeFoliosPostParams, $options?: IRequestOptions): Observable<Response> {
+    private financeFoliosPostWithHttpInfo(params: financeFoliosPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/finance/folios';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'requestBody' is not null or undefined
-        if (params.requestBody === null || params.requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling financeFoliosPost.');
+        // verify required parameter 'request' is not null or undefined
+        if (params.request === null || params.request === undefined) {
+            throw new Error('Required parameter request was null or undefined when calling financeFoliosPost.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -311,7 +322,7 @@ export class FolioApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.request == null ? '' : JSON.stringify(params.request), // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -326,11 +337,11 @@ export class FolioApi {
     }
 
     /**
-     * Returns number of folios
+     * Returns number of folios.
      * Returns number of folios matching the filter criteria
      * @param propertyId Filter folio list by property id
      */
-    private financeFolioscountGetWithHttpInfo(params: financeFolioscountGetParams, $options?: IRequestOptions): Observable<Response> {
+    private financeFolioscountGetWithHttpInfo(params: financeFolioscountGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/finance/folios/$count';
 

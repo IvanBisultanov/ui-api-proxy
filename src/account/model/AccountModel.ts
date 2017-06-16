@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can create a new account
  */
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface AccountModel {
     /**
@@ -61,33 +61,33 @@ export namespace AccountModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         name: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         description: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         defaultLanguage: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         logoUrl: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
             type: 'models.LocationModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<AccountModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AccountModel>): FormGroup {
         const defaultControls = { 
             code: getControl($metaData.code, options, 'code'),
             name: getControl($metaData.name, options, 'name'),

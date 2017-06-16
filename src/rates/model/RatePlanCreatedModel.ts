@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface RatePlanCreatedModel {
     /**
@@ -33,10 +33,10 @@ export namespace RatePlanCreatedModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RatePlanCreatedModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<RatePlanCreatedModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
         };

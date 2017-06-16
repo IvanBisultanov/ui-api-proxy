@@ -10,87 +10,109 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface ratesRatePlansByIdDeleteParams {
-    /**
-     * The id of the rateplan.
-     */
-    id: string;
+export namespace ratesRatePlansByIdDelete {
+    export interface Params {
+        /**
+        * The id of the rateplan.
+        */
+        id: string;
+    }
+    
 }
-export interface ratesRatePlansByIdGetParams {
-    /**
-     * The id of the rateplan.
-     */
-    id: string;
-    /**
-     * 'all' or comma separated list of language codes
-     */
-    languages?: Array<string>;
-    /**
-     * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
-     */
-    expand?: string;
+export namespace ratesRatePlansByIdGet {
+    export interface Params {
+        /**
+        * The id of the rateplan.
+        */
+        id: string;
+        /**
+        * 'all' or comma separated list of language codes
+        */
+        languages?: Array<string>;
+        /**
+        * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
+        */
+        expand?: string;
+    }
+    
 }
-export interface ratesRatePlansByIdHeadParams {
-    /**
-     * The id of the rateplan.
-     */
-    id: string;
+export namespace ratesRatePlansByIdHead {
+    export interface Params {
+        /**
+        * The id of the rateplan.
+        */
+        id: string;
+    }
+    
 }
-export interface ratesRatePlansByIdPutParams {
-    /**
-     * The id of the rateplan.
-     */
-    id: string;
-    /**
-     * The definition of the rateplan.
-     */
-    requestBody: models.ReplaceRatePlanModel;
+export namespace ratesRatePlansByIdPut {
+    export interface Params {
+        /**
+        * The id of the rateplan.
+        */
+        id: string;
+        /**
+        * The definition of the rateplan.
+        */
+        requestBody: models.ReplaceRatePlanModel;
+    }
+    
 }
-export interface ratesRatePlansGetParams {
-    /**
-     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
-     */
-    pageNumber: number;
-    /**
-     * Page size
-     */
-    pageSize: number;
-    /**
-     * Return rate plans for specific property
-     */
-    propertyId?: string;
+export namespace ratesRatePlansGet {
+    export interface Params {
+        /**
+        * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+        */
+        pageNumber: number;
+        /**
+        * Page size
+        */
+        pageSize: number;
+        /**
+        * Return rate plans for specific property
+        */
+        propertyId?: string;
+    }
+    
 }
-export interface ratesRatePlansPostParams {
-    /**
-     * The definition of the rateplan.
-     */
-    requestBody: models.CreateRatePlanModel;
+export namespace ratesRatePlansPost {
+    export interface Params {
+        /**
+        * The definition of the rateplan.
+        */
+        requestBody: models.CreateRatePlanModel;
+    }
+    
 }
-export interface ratesRatePlanscountGetParams {
-    /**
-     * Return rate plans for specific property
-     */
-    propertyId?: string;
+export namespace ratesRatePlanscountGet {
+    export interface Params {
+        /**
+        * Return rate plans for specific property
+        */
+        propertyId?: string;
+    }
+    
 }
 
 @Injectable()
 export class RatePlanApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -106,7 +128,7 @@ export class RatePlanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    public ratesRatePlansByIdDelete(params: ratesRatePlansByIdDeleteParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdDelete(params: ratesRatePlansByIdDelete.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.ratesRatePlansByIdDeleteWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -119,7 +141,7 @@ export class RatePlanApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    public ratesRatePlansByIdGet(params: ratesRatePlansByIdGetParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdGet(params: ratesRatePlansByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.RatePlanModel | undefined> {
         return this.ratesRatePlansByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -130,7 +152,7 @@ export class RatePlanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    public ratesRatePlansByIdHead(params: ratesRatePlansByIdHeadParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdHead(params: ratesRatePlansByIdHead.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.ratesRatePlansByIdHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -142,7 +164,7 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesRatePlansByIdPut(params: ratesRatePlansByIdPutParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdPut(params: ratesRatePlansByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.ratesRatePlansByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -155,7 +177,7 @@ export class RatePlanApi {
      * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    public ratesRatePlansGet(params: ratesRatePlansGetParams, $options?: IRequestOptions)
+    public ratesRatePlansGet(params: ratesRatePlansGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.RatePlanListModel | undefined> {
         return this.ratesRatePlansGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -163,10 +185,10 @@ export class RatePlanApi {
 
     /**
      * Create a rateplan
-     * Use this call to create a new rateplan.
+     * Use this call to create a new rateplan. The rate plan will already contain empty rates, fill them later using PUT rates.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesRatePlansPost(params: ratesRatePlansPostParams, $options?: IRequestOptions)
+    public ratesRatePlansPost(params: ratesRatePlansPost.Params, $options?: ApaleoRequestOptions)
         : Observable<models.RatePlanCreatedModel | undefined> {
         return this.ratesRatePlansPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -177,7 +199,7 @@ export class RatePlanApi {
      * Returns number of rate plans matching the filter criteria
      * @param propertyId Return rate plans for specific property
      */
-    public ratesRatePlanscountGet(params: ratesRatePlanscountGetParams, $options?: IRequestOptions)
+    public ratesRatePlanscountGet(params: ratesRatePlanscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.CountModel | undefined> {
         return this.ratesRatePlanscountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -189,7 +211,7 @@ export class RatePlanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    public ratesRatePlansByIdDeleteWithRawHttp(params: ratesRatePlansByIdDeleteParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdDeleteWithRawHttp(params: ratesRatePlansByIdDelete.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.ratesRatePlansByIdDeleteWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -202,7 +224,7 @@ export class RatePlanApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    public ratesRatePlansByIdGetWithRawHttp(params: ratesRatePlansByIdGetParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdGetWithRawHttp(params: ratesRatePlansByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.RatePlanModel>> {
         return this.ratesRatePlansByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -213,7 +235,7 @@ export class RatePlanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    public ratesRatePlansByIdHeadWithRawHttp(params: ratesRatePlansByIdHeadParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdHeadWithRawHttp(params: ratesRatePlansByIdHead.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.ratesRatePlansByIdHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -225,7 +247,7 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesRatePlansByIdPutWithRawHttp(params: ratesRatePlansByIdPutParams, $options?: IRequestOptions)
+    public ratesRatePlansByIdPutWithRawHttp(params: ratesRatePlansByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.ratesRatePlansByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -238,7 +260,7 @@ export class RatePlanApi {
      * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    public ratesRatePlansGetWithRawHttp(params: ratesRatePlansGetParams, $options?: IRequestOptions)
+    public ratesRatePlansGetWithRawHttp(params: ratesRatePlansGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.RatePlanListModel>> {
         return this.ratesRatePlansGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -246,10 +268,10 @@ export class RatePlanApi {
 
     /**
      * Create a rateplan
-     * Use this call to create a new rateplan.
+     * Use this call to create a new rateplan. The rate plan will already contain empty rates, fill them later using PUT rates.
      * @param requestBody The definition of the rateplan.
      */
-    public ratesRatePlansPostWithRawHttp(params: ratesRatePlansPostParams, $options?: IRequestOptions)
+    public ratesRatePlansPostWithRawHttp(params: ratesRatePlansPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.RatePlanCreatedModel>> {
         return this.ratesRatePlansPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -260,7 +282,7 @@ export class RatePlanApi {
      * Returns number of rate plans matching the filter criteria
      * @param propertyId Return rate plans for specific property
      */
-    public ratesRatePlanscountGetWithRawHttp(params: ratesRatePlanscountGetParams, $options?: IRequestOptions)
+    public ratesRatePlanscountGetWithRawHttp(params: ratesRatePlanscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
         return this.ratesRatePlanscountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -272,7 +294,7 @@ export class RatePlanApi {
      * Use this call to delete a rateplan.
      * @param id The id of the rateplan.
      */
-    private ratesRatePlansByIdDeleteWithHttpInfo(params: ratesRatePlansByIdDeleteParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlansByIdDeleteWithHttpInfo(params: ratesRatePlansByIdDelete.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -327,7 +349,7 @@ export class RatePlanApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    private ratesRatePlansByIdGetWithHttpInfo(params: ratesRatePlansByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlansByIdGetWithHttpInfo(params: ratesRatePlansByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -391,7 +413,7 @@ export class RatePlanApi {
      * Check if a rateplan exists by id.
      * @param id The id of the rateplan.
      */
-    private ratesRatePlansByIdHeadWithHttpInfo(params: ratesRatePlansByIdHeadParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlansByIdHeadWithHttpInfo(params: ratesRatePlansByIdHead.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -445,7 +467,7 @@ export class RatePlanApi {
      * @param id The id of the rateplan.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesRatePlansByIdPutWithHttpInfo(params: ratesRatePlansByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlansByIdPutWithHttpInfo(params: ratesRatePlansByIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -510,7 +532,7 @@ export class RatePlanApi {
      * @param pageSize Page size
      * @param propertyId Return rate plans for specific property
      */
-    private ratesRatePlansGetWithHttpInfo(params: ratesRatePlansGetParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlansGetWithHttpInfo(params: ratesRatePlansGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans';
 
@@ -578,10 +600,10 @@ export class RatePlanApi {
 
     /**
      * Create a rateplan
-     * Use this call to create a new rateplan.
+     * Use this call to create a new rateplan. The rate plan will already contain empty rates, fill them later using PUT rates.
      * @param requestBody The definition of the rateplan.
      */
-    private ratesRatePlansPostWithHttpInfo(params: ratesRatePlansPostParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlansPostWithHttpInfo(params: ratesRatePlansPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans';
 
@@ -642,7 +664,7 @@ export class RatePlanApi {
      * Returns number of rate plans matching the filter criteria
      * @param propertyId Return rate plans for specific property
      */
-    private ratesRatePlanscountGetWithHttpInfo(params: ratesRatePlanscountGetParams, $options?: IRequestOptions): Observable<Response> {
+    private ratesRatePlanscountGetWithHttpInfo(params: ratesRatePlanscountGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/rates/rate-plans/$count';
 

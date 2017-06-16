@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify the language settings for the account
  */
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface LanguagesModel {
     /**
@@ -36,10 +36,10 @@ export namespace LanguagesModel {
             isRequired: true,
             type: 'Array<models.LanguageModel>',
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LanguagesModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<LanguagesModel>): FormGroup {
         const defaultControls = { 
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

@@ -1,6 +1,6 @@
 /**
  * Apaleo Finance API
- * Everything around the Folio, Invioces and Accounting.
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface FolioItemModel {
     /**
@@ -58,32 +58,32 @@ export namespace FolioItemModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         owner: Object.freeze({ 
             isRequired: true,
             type: 'models.FolioOwnerModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         reservationId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         propertyId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         charges: Object.freeze({ 
             type: 'Array<models.LineItemModel>',
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         links: Object.freeze({ 
             type: '{ [key: string]: models.Link; }',
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<FolioItemModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<FolioItemModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             owner: models.FolioOwnerModel.$buildForm(fb),

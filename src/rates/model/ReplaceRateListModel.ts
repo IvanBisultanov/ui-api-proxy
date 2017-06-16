@@ -12,12 +12,12 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface ReplaceRatesModel {
+export interface ReplaceRateListModel {
     /**
      * List of rates
      */
@@ -25,18 +25,18 @@ export interface ReplaceRatesModel {
 
 }
 
-export type ReplaceRatesModelWithRawHttp = ReplaceRatesModel & ResponseModel<ReplaceRatesModel>;
+export type ReplaceRateListModelWithRawHttp = ReplaceRateListModel & ResponseModel<ReplaceRateListModel>;
 
-export namespace ReplaceRatesModel {
+export namespace ReplaceRateListModel {
     export const $metaData = { 
         rates: Object.freeze({ 
             isRequired: true,
             type: 'Array<models.ReplaceRateModel>',
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceRatesModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceRateListModel>): FormGroup {
         const defaultControls = { 
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

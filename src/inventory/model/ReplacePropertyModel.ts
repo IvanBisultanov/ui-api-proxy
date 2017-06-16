@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify a property
  */
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface ReplacePropertyModel {
     /**
@@ -47,20 +47,20 @@ export namespace ReplacePropertyModel {
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         description: Object.freeze({ 
             isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
             type: 'models.ReplaceLocationModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplacePropertyModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplacePropertyModel>): FormGroup {
         const defaultControls = { 
             location: models.ReplaceLocationModel.$buildForm(fb),
         };

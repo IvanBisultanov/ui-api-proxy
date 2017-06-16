@@ -1,6 +1,6 @@
 import { RequestOptionsArgs, Response } from '@angular/http';
 
-export interface IRetryPolicy {
+export interface RetryPolicy {
     readonly defaultRetryTimes: number;
     readonly delayInMs: number;
 
@@ -13,6 +13,6 @@ export class Configuration {
     password: string;
     accessToken: string | (() => string);
     withCredentials: boolean;
-    retryPolicy: IRetryPolicy;
+    retryPolicy: RetryPolicy;
     responseInterceptor: (req: RequestOptionsArgs, res: Response) => Response;
 }

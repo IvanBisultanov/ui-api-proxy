@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface UnitModel {
     /**
@@ -63,38 +63,38 @@ export namespace UnitModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         name: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         description: Object.freeze({ 
             isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         property: Object.freeze({ 
             isRequired: true,
             type: 'models.EmbeddedPropertyModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         unitType: Object.freeze({ 
             type: 'models.EmbeddedUnitTypeModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         minPersons: Object.freeze({ 
             isRequired: true,
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         maxPersons: Object.freeze({ 
             isRequired: true,
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<UnitModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<UnitModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             name: getControl($metaData.name, options, 'name'),

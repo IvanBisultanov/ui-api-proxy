@@ -10,87 +10,109 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface inventoryUnitTypesByIdDeleteParams {
-    /**
-     * The id of the unit type.
-     */
-    id: string;
+export namespace inventoryUnitTypesByIdDelete {
+    export interface Params {
+        /**
+        * The id of the unit type.
+        */
+        id: string;
+    }
+    
 }
-export interface inventoryUnitTypesByIdGetParams {
-    /**
-     * The id of the unit type.
-     */
-    id: string;
-    /**
-     * 'all' or comma separated list of language codes
-     */
-    languages?: Array<string>;
-    /**
-     * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
-     */
-    expand?: string;
+export namespace inventoryUnitTypesByIdGet {
+    export interface Params {
+        /**
+        * The id of the unit type.
+        */
+        id: string;
+        /**
+        * 'all' or comma separated list of language codes
+        */
+        languages?: Array<string>;
+        /**
+        * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
+        */
+        expand?: string;
+    }
+    
 }
-export interface inventoryUnitTypesByIdHeadParams {
-    /**
-     * The id of the unit type.
-     */
-    id: string;
+export namespace inventoryUnitTypesByIdHead {
+    export interface Params {
+        /**
+        * The id of the unit type.
+        */
+        id: string;
+    }
+    
 }
-export interface inventoryUnitTypesByIdPutParams {
-    /**
-     * The id of the unit type.
-     */
-    id: string;
-    /**
-     * The definition of the unit type.
-     */
-    requestBody: models.ReplaceUnitTypeModel;
+export namespace inventoryUnitTypesByIdPut {
+    export interface Params {
+        /**
+        * The id of the unit type.
+        */
+        id: string;
+        /**
+        * The definition of the unit type.
+        */
+        requestBody: models.ReplaceUnitTypeModel;
+    }
+    
 }
-export interface inventoryUnitTypesGetParams {
-    /**
-     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
-     */
-    pageNumber: number;
-    /**
-     * Page size
-     */
-    pageSize: number;
-    /**
-     * Return unit types for specific property
-     */
-    propertyId?: string;
+export namespace inventoryUnitTypesGet {
+    export interface Params {
+        /**
+        * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+        */
+        pageNumber: number;
+        /**
+        * Page size
+        */
+        pageSize: number;
+        /**
+        * Return unit types for specific property
+        */
+        propertyId?: string;
+    }
+    
 }
-export interface inventoryUnitTypesPostParams {
-    /**
-     * The definition of the unit type.
-     */
-    requestBody: models.CreateUnitTypeModel;
+export namespace inventoryUnitTypesPost {
+    export interface Params {
+        /**
+        * The definition of the unit type.
+        */
+        requestBody: models.CreateUnitTypeModel;
+    }
+    
 }
-export interface inventoryUnitTypescountGetParams {
-    /**
-     * Return unit types for specific property
-     */
-    propertyId?: string;
+export namespace inventoryUnitTypescountGet {
+    export interface Params {
+        /**
+        * Return unit types for specific property
+        */
+        propertyId?: string;
+    }
+    
 }
 
 @Injectable()
 export class UnitTypeApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -106,7 +128,7 @@ export class UnitTypeApi {
      * Use this call to delete a unit type.
      * @param id The id of the unit type.
      */
-    public inventoryUnitTypesByIdDelete(params: inventoryUnitTypesByIdDeleteParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdDelete(params: inventoryUnitTypesByIdDelete.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.inventoryUnitTypesByIdDeleteWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -119,7 +141,7 @@ export class UnitTypeApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    public inventoryUnitTypesByIdGet(params: inventoryUnitTypesByIdGetParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdGet(params: inventoryUnitTypesByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.UnitTypeModel | undefined> {
         return this.inventoryUnitTypesByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -130,7 +152,7 @@ export class UnitTypeApi {
      * Check if a unit type exists by id.
      * @param id The id of the unit type.
      */
-    public inventoryUnitTypesByIdHead(params: inventoryUnitTypesByIdHeadParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdHead(params: inventoryUnitTypesByIdHead.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.inventoryUnitTypesByIdHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -142,7 +164,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryUnitTypesByIdPut(params: inventoryUnitTypesByIdPutParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdPut(params: inventoryUnitTypesByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.inventoryUnitTypesByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -155,7 +177,7 @@ export class UnitTypeApi {
      * @param pageSize Page size
      * @param propertyId Return unit types for specific property
      */
-    public inventoryUnitTypesGet(params: inventoryUnitTypesGetParams, $options?: IRequestOptions)
+    public inventoryUnitTypesGet(params: inventoryUnitTypesGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.UnitTypeListModel | undefined> {
         return this.inventoryUnitTypesGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -166,7 +188,7 @@ export class UnitTypeApi {
      * Use this call to create a new unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryUnitTypesPost(params: inventoryUnitTypesPostParams, $options?: IRequestOptions)
+    public inventoryUnitTypesPost(params: inventoryUnitTypesPost.Params, $options?: ApaleoRequestOptions)
         : Observable<models.UnitTypeCreatedModel | undefined> {
         return this.inventoryUnitTypesPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -177,7 +199,7 @@ export class UnitTypeApi {
      * Returns number of unit types matching the filter criteria
      * @param propertyId Return unit types for specific property
      */
-    public inventoryUnitTypescountGet(params: inventoryUnitTypescountGetParams, $options?: IRequestOptions)
+    public inventoryUnitTypescountGet(params: inventoryUnitTypescountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.CountModel | undefined> {
         return this.inventoryUnitTypescountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -189,7 +211,7 @@ export class UnitTypeApi {
      * Use this call to delete a unit type.
      * @param id The id of the unit type.
      */
-    public inventoryUnitTypesByIdDeleteWithRawHttp(params: inventoryUnitTypesByIdDeleteParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdDeleteWithRawHttp(params: inventoryUnitTypesByIdDelete.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryUnitTypesByIdDeleteWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -202,7 +224,7 @@ export class UnitTypeApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    public inventoryUnitTypesByIdGetWithRawHttp(params: inventoryUnitTypesByIdGetParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdGetWithRawHttp(params: inventoryUnitTypesByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.UnitTypeModel>> {
         return this.inventoryUnitTypesByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -213,7 +235,7 @@ export class UnitTypeApi {
      * Check if a unit type exists by id.
      * @param id The id of the unit type.
      */
-    public inventoryUnitTypesByIdHeadWithRawHttp(params: inventoryUnitTypesByIdHeadParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdHeadWithRawHttp(params: inventoryUnitTypesByIdHead.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryUnitTypesByIdHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -225,7 +247,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryUnitTypesByIdPutWithRawHttp(params: inventoryUnitTypesByIdPutParams, $options?: IRequestOptions)
+    public inventoryUnitTypesByIdPutWithRawHttp(params: inventoryUnitTypesByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryUnitTypesByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -238,7 +260,7 @@ export class UnitTypeApi {
      * @param pageSize Page size
      * @param propertyId Return unit types for specific property
      */
-    public inventoryUnitTypesGetWithRawHttp(params: inventoryUnitTypesGetParams, $options?: IRequestOptions)
+    public inventoryUnitTypesGetWithRawHttp(params: inventoryUnitTypesGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.UnitTypeListModel>> {
         return this.inventoryUnitTypesGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -249,7 +271,7 @@ export class UnitTypeApi {
      * Use this call to create a new unit type.
      * @param requestBody The definition of the unit type.
      */
-    public inventoryUnitTypesPostWithRawHttp(params: inventoryUnitTypesPostParams, $options?: IRequestOptions)
+    public inventoryUnitTypesPostWithRawHttp(params: inventoryUnitTypesPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.UnitTypeCreatedModel>> {
         return this.inventoryUnitTypesPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -260,7 +282,7 @@ export class UnitTypeApi {
      * Returns number of unit types matching the filter criteria
      * @param propertyId Return unit types for specific property
      */
-    public inventoryUnitTypescountGetWithRawHttp(params: inventoryUnitTypescountGetParams, $options?: IRequestOptions)
+    public inventoryUnitTypescountGetWithRawHttp(params: inventoryUnitTypescountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
         return this.inventoryUnitTypescountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -272,7 +294,7 @@ export class UnitTypeApi {
      * Use this call to delete a unit type.
      * @param id The id of the unit type.
      */
-    private inventoryUnitTypesByIdDeleteWithHttpInfo(params: inventoryUnitTypesByIdDeleteParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypesByIdDeleteWithHttpInfo(params: inventoryUnitTypesByIdDelete.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -327,7 +349,7 @@ export class UnitTypeApi {
      * @param languages &#39;all&#39; or comma separated list of language codes
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    private inventoryUnitTypesByIdGetWithHttpInfo(params: inventoryUnitTypesByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypesByIdGetWithHttpInfo(params: inventoryUnitTypesByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -391,7 +413,7 @@ export class UnitTypeApi {
      * Check if a unit type exists by id.
      * @param id The id of the unit type.
      */
-    private inventoryUnitTypesByIdHeadWithHttpInfo(params: inventoryUnitTypesByIdHeadParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypesByIdHeadWithHttpInfo(params: inventoryUnitTypesByIdHead.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -445,7 +467,7 @@ export class UnitTypeApi {
      * @param id The id of the unit type.
      * @param requestBody The definition of the unit type.
      */
-    private inventoryUnitTypesByIdPutWithHttpInfo(params: inventoryUnitTypesByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypesByIdPutWithHttpInfo(params: inventoryUnitTypesByIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -510,7 +532,7 @@ export class UnitTypeApi {
      * @param pageSize Page size
      * @param propertyId Return unit types for specific property
      */
-    private inventoryUnitTypesGetWithHttpInfo(params: inventoryUnitTypesGetParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypesGetWithHttpInfo(params: inventoryUnitTypesGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types';
 
@@ -581,7 +603,7 @@ export class UnitTypeApi {
      * Use this call to create a new unit type.
      * @param requestBody The definition of the unit type.
      */
-    private inventoryUnitTypesPostWithHttpInfo(params: inventoryUnitTypesPostParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypesPostWithHttpInfo(params: inventoryUnitTypesPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types';
 
@@ -642,7 +664,7 @@ export class UnitTypeApi {
      * Returns number of unit types matching the filter criteria
      * @param propertyId Return unit types for specific property
      */
-    private inventoryUnitTypescountGetWithHttpInfo(params: inventoryUnitTypescountGetParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryUnitTypescountGetWithHttpInfo(params: inventoryUnitTypescountGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/unit-types/$count';
 

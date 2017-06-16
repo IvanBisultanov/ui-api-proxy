@@ -20,7 +20,7 @@
     "@angular/compiler": "^4.2.0",
     "@angular/compiler-cli": "^4.2.0",
     "@angular/platform-server": "^4.2.0",
-    "typescript": "^2.3.0"
+    "typescript": "^2.4.0"
   },
   "scripts": {
     "postinstall": "ngc -p src"

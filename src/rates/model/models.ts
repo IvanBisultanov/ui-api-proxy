@@ -1,5 +1,6 @@
 export * from './CountModel';
 export * from './CreateRatePlanModel';
+export * from './DeleteRateListModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedUnitTypeModel';
 export * from './Link';
@@ -10,6 +11,6 @@ export * from './RatePlanCreatedModel';
 export * from './RatePlanItemModel';
 export * from './RatePlanListModel';
 export * from './RatePlanModel';
+export * from './ReplaceRateListModel';
 export * from './ReplaceRateModel';
 export * from './ReplaceRatePlanModel';
-export * from './ReplaceRatesModel';

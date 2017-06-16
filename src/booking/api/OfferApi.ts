@@ -10,43 +10,55 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface bookingOffersGetParams {
-    /**
-     * The property id
-     */
-    propertyId: string;
-    /**
-     * The arrival date and the optional time
-     */
-    arrival: string;
-    /**
-     * The departure date and the optional time
-     */
-    departure: string;
-    /**
-     * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
-     */
-    expand?: string;
+export namespace bookingOffersGet {
+    export interface Params {
+        /**
+        * The property id
+        */
+        propertyId: string;
+        /**
+        * The arrival date and the optional time
+        */
+        arrival: string;
+        /**
+        * The departure date and the optional time
+        */
+        departure: string;
+        /**
+        * Rate plan ids
+        */
+        ratePlanIds?: Array<string>;
+        /**
+        * Unit type ids
+        */
+        unitTypeIds?: Array<string>;
+        /**
+        * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
+        */
+        expand?: string;
+    }
+    
 }
 
 @Injectable()
 export class OfferApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -58,14 +70,16 @@ export class OfferApi {
     }
 
     /**
-     * Returns offers for one specifc stay.
+     * Returns offers for one specific stay.
      * Calculates and returns available offers for a specific property, arrival and departure date.
      * @param propertyId The property id
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
+     * @param ratePlanIds Rate plan ids
+     * @param unitTypeIds Unit type ids
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    public bookingOffersGet(params: bookingOffersGetParams, $options?: IRequestOptions)
+    public bookingOffersGet(params: bookingOffersGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.StayOffersModel | undefined> {
         return this.bookingOffersGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -73,14 +87,16 @@ export class OfferApi {
 
 
     /**
-     * Returns offers for one specifc stay.
+     * Returns offers for one specific stay.
      * Calculates and returns available offers for a specific property, arrival and departure date.
      * @param propertyId The property id
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
+     * @param ratePlanIds Rate plan ids
+     * @param unitTypeIds Unit type ids
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    public bookingOffersGetWithRawHttp(params: bookingOffersGetParams, $options?: IRequestOptions)
+    public bookingOffersGetWithRawHttp(params: bookingOffersGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.StayOffersModel>> {
         return this.bookingOffersGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -88,14 +104,16 @@ export class OfferApi {
 
 
     /**
-     * Returns offers for one specifc stay.
+     * Returns offers for one specific stay.
      * Calculates and returns available offers for a specific property, arrival and departure date.
      * @param propertyId The property id
      * @param arrival The arrival date and the optional time
      * @param departure The departure date and the optional time
+     * @param ratePlanIds Rate plan ids
+     * @param unitTypeIds Unit type ids
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
-    private bookingOffersGetWithHttpInfo(params: bookingOffersGetParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingOffersGetWithHttpInfo(params: bookingOffersGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/offers';
 
@@ -115,6 +133,14 @@ export class OfferApi {
         }
         if (params.propertyId !== undefined) {
             queryParameters.set('propertyId', <any>params.propertyId);
+        }
+
+        if (params.ratePlanIds) {
+            queryParameters.set('ratePlanIds', params.ratePlanIds.join(COLLECTION_FORMATS['csv']));
+        }
+
+        if (params.unitTypeIds) {
+            queryParameters.set('unitTypeIds', params.unitTypeIds.join(COLLECTION_FORMATS['csv']));
         }
 
         if (params.arrival !== undefined) {

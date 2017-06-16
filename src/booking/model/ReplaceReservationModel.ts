@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify a reservation
  */
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface ReplaceReservationModel {
     /**
@@ -86,66 +86,66 @@ export namespace ReplaceReservationModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         firstName: Object.freeze({ 
             isRequired: true,
             minLength: 1,
             maxLength: 25,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         middleInitial: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         lastName: Object.freeze({ 
             isRequired: true,
             minLength: 1,
             maxLength: 40,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         email: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         phone: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         street: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         number: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         city: Object.freeze({ 
             isRequired: true,
             minLength: 1,
             maxLength: 25,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         postalCode: Object.freeze({ 
             isRequired: true,
             minLength: 1,
             maxLength: 10,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         countryCode: Object.freeze({ 
             isRequired: true,
             minLength: 2,
             maxLength: 2,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceReservationModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceReservationModel>): FormGroup {
         const defaultControls = { 
             guestTitle: getControl($metaData.guestTitle, options, 'guestTitle'),
             firstName: getControl($metaData.firstName, options, 'firstName'),

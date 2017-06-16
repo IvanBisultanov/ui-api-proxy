@@ -1,4 +1,5 @@
 export * from './AmendReservationModel';
+export * from './AmountModel';
 export * from './AvailableUnitItemModel';
 export * from './AvailableUnitListModel';
 export * from './CountModel';

@@ -10,41 +10,48 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface settingsPropertiesByIdGetParams {
-    /**
-     * The id of the property.
-     */
-    id: string;
+export namespace settingsPropertiesByIdGet {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+    }
+    
 }
-export interface settingsPropertiesByIdPutParams {
-    /**
-     * The id of the property.
-     */
-    id: string;
-    /**
-     * The definition of the property settings.
-     */
-    requestBody: models.ReplacePropertySettingsModel;
+export namespace settingsPropertiesByIdPut {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+        /**
+        * The definition of the property settings.
+        */
+        requestBody: models.ReplacePropertySettingsModel;
+    }
+    
 }
 
 @Injectable()
 export class PropertySettingsApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -60,7 +67,7 @@ export class PropertySettingsApi {
      * Get base settings for a property
      * @param id The id of the property.
      */
-    public settingsPropertiesByIdGet(params: settingsPropertiesByIdGetParams, $options?: IRequestOptions)
+    public settingsPropertiesByIdGet(params: settingsPropertiesByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.PropertySettingsModel | undefined> {
         return this.settingsPropertiesByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -72,7 +79,7 @@ export class PropertySettingsApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property settings.
      */
-    public settingsPropertiesByIdPut(params: settingsPropertiesByIdPutParams, $options?: IRequestOptions)
+    public settingsPropertiesByIdPut(params: settingsPropertiesByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.settingsPropertiesByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -84,7 +91,7 @@ export class PropertySettingsApi {
      * Get base settings for a property
      * @param id The id of the property.
      */
-    public settingsPropertiesByIdGetWithRawHttp(params: settingsPropertiesByIdGetParams, $options?: IRequestOptions)
+    public settingsPropertiesByIdGetWithRawHttp(params: settingsPropertiesByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.PropertySettingsModel>> {
         return this.settingsPropertiesByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -96,7 +103,7 @@ export class PropertySettingsApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property settings.
      */
-    public settingsPropertiesByIdPutWithRawHttp(params: settingsPropertiesByIdPutParams, $options?: IRequestOptions)
+    public settingsPropertiesByIdPutWithRawHttp(params: settingsPropertiesByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.settingsPropertiesByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -108,7 +115,7 @@ export class PropertySettingsApi {
      * Get base settings for a property
      * @param id The id of the property.
      */
-    private settingsPropertiesByIdGetWithHttpInfo(params: settingsPropertiesByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+    private settingsPropertiesByIdGetWithHttpInfo(params: settingsPropertiesByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/settings/properties/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -165,7 +172,7 @@ export class PropertySettingsApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property settings.
      */
-    private settingsPropertiesByIdPutWithHttpInfo(params: settingsPropertiesByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+    private settingsPropertiesByIdPutWithHttpInfo(params: settingsPropertiesByIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/settings/properties/${id}'
                     .replace('${' + 'id' + '}', String(params.id));

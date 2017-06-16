@@ -1,6 +1,6 @@
 /**
  * Apaleo Finance API
- * Everything around the Folio, Invioces and Accounting.
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -10,31 +10,34 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface financeFolioActionsNightAuditPutParams {
-    /**
-     * Filter folio list by property id
-     */
-    propertyId?: string;
+export namespace financeFolioActionsNightAuditPut {
+    export interface Params {
+        /**
+        * Filter folio list by property id
+        */
+        propertyId?: string;
+    }
 }
 
 @Injectable()
 export class FolioActionsApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -50,7 +53,7 @@ export class FolioActionsApi {
      * The night audit will post all outstanding items in the folio.
      * @param propertyId Filter folio list by property id
      */
-    public financeFolioActionsNightAuditPut(params: financeFolioActionsNightAuditPutParams, $options?: IRequestOptions)
+    public financeFolioActionsNightAuditPut(params: financeFolioActionsNightAuditPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.financeFolioActionsNightAuditPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -62,7 +65,7 @@ export class FolioActionsApi {
      * The night audit will post all outstanding items in the folio.
      * @param propertyId Filter folio list by property id
      */
-    public financeFolioActionsNightAuditPutWithRawHttp(params: financeFolioActionsNightAuditPutParams, $options?: IRequestOptions)
+    public financeFolioActionsNightAuditPutWithRawHttp(params: financeFolioActionsNightAuditPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.financeFolioActionsNightAuditPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -74,7 +77,7 @@ export class FolioActionsApi {
      * The night audit will post all outstanding items in the folio.
      * @param propertyId Filter folio list by property id
      */
-    private financeFolioActionsNightAuditPutWithHttpInfo(params: financeFolioActionsNightAuditPutParams, $options?: IRequestOptions): Observable<Response> {
+    private financeFolioActionsNightAuditPutWithHttpInfo(params: financeFolioActionsNightAuditPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/finance/folio-actions/night-audit';
 

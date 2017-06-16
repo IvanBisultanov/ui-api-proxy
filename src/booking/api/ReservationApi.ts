@@ -10,137 +10,204 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface bookingReservationsByIdAmendPostParams {
-    /**
-     * Id of the reservation that should be modified
-     */
-    id: string;
-    /**
-     * See AmendReservationModel for details.
-     */
-    requestBody: models.AmendReservationModel;
+export namespace bookingReservationsByIdAmendPost {
+    export interface Params {
+        /**
+        * Id of the reservation that should be modified
+        */
+        id: string;
+        /**
+        * See AmendReservationModel for details.
+        */
+        requestBody: models.AmendReservationModel;
+    }
+    
 }
-export interface bookingReservationsByIdGetParams {
-    /**
-     * Id of the reservation to be retrieved.
-     */
-    id: string;
-    /**
-     * List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
-     */
-    expand?: string;
+export namespace bookingReservationsByIdGet {
+    export interface Params {
+        /**
+        * Id of the reservation to be retrieved.
+        */
+        id: string;
+        /**
+        * List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
+        */
+        expand?: string;
+    }
+    
 }
-export interface bookingReservationsByIdPutParams {
-    /**
-     * Id of the reservation that should be replaced.
-     */
-    id: string;
-    /**
-     * See ReplaceReservationModel for details.
-     */
-    requestBody: models.ReplaceReservationModel;
+export namespace bookingReservationsByIdPut {
+    export interface Params {
+        /**
+        * Id of the reservation that should be replaced.
+        */
+        id: string;
+        /**
+        * See ReplaceReservationModel for details.
+        */
+        requestBody: models.ReplaceReservationModel;
+    }
+    
 }
-export interface bookingReservationsGetParams {
-    /**
-     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
-     */
-    pageNumber: number;
-    /**
-     * Page size
-     */
-    pageSize: number;
-    /**
-     * Filter result by requested properties
-     */
-    propertyIds?: Array<string>;
-    /**
-     * Filter result by requested rate plans
-     */
-    ratePlanIds?: Array<string>;
-    /**
-     * Filter result by assigned units
-     */
-    unitIds?: Array<string>;
-    /**
-     * Filter result by requested unit types
-     */
-    unitTypeIds?: Array<string>;
-    /**
-     * Filter result by reservation status
-     */
-    status?: Array<string>;
-    /**
-     * Filter by date and time attributes of reservation. Use in combination with the 'To' and 'From' attributes
-     */
-    dateFilter?: string;
-    /**
-     * The start of the time interval.
-     */
-    from?: Date;
-    /**
-     * The end of the time interval.
-     */
-    to?: Date;
+export namespace bookingReservationsGet {
+    export interface Params {
+        /**
+        * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+        */
+        pageNumber: number;
+        /**
+        * Page size
+        */
+        pageSize: number;
+        /**
+        * Filter result by requested properties
+        */
+        propertyIds?: Array<string>;
+        /**
+        * Filter result by requested rate plans
+        */
+        ratePlanIds?: Array<string>;
+        /**
+        * Filter result by assigned units
+        */
+        unitIds?: Array<string>;
+        /**
+        * Filter result by requested unit types
+        */
+        unitTypeIds?: Array<string>;
+        /**
+        * Filter result by reservation status
+        */
+        status?: Array<StatusEnum>;
+        /**
+        * Filter by date and time attributes of reservation. Use in combination with the 'To' and 'From' attributes
+        */
+        dateFilter?: DateFilterEnum;
+        /**
+        * The start of the time interval.
+        */
+        from?: Date;
+        /**
+        * The end of the time interval.
+        */
+        to?: Date;
+    }
+    
+    export enum StatusEnumSet {
+        Confirmed = 'Confirmed',
+        InHouse = 'InHouse',
+        CheckedOut = 'CheckedOut'
+    }
+
+    export type StatusEnum = 'Confirmed' | 'InHouse' | 'CheckedOut';
+
+    export const StatusEnumValues = Object.freeze(
+        ['Confirmed', 'InHouse', 'CheckedOut'] as StatusEnum[]);
+    
+    export enum DateFilterEnumSet {
+        Arrival = 'Arrival',
+        Departure = 'Departure',
+        Stay = 'Stay',
+        Creation = 'Creation',
+        Modification = 'Modification'
+    }
+
+    export type DateFilterEnum = 'Arrival' | 'Departure' | 'Stay' | 'Creation' | 'Modification';
+
+    export const DateFilterEnumValues = Object.freeze(
+        ['Arrival', 'Departure', 'Stay', 'Creation', 'Modification'] as DateFilterEnum[]);
+    
 }
-export interface bookingReservationsPostParams {
-    /**
-     * See CreateReservationModel for details.
-     */
-    requestBody: models.CreateReservationModel;
+export namespace bookingReservationsPost {
+    export interface Params {
+        /**
+        * See CreateReservationModel for details.
+        */
+        requestBody: models.CreateReservationModel;
+    }
+    
 }
-export interface bookingReservationscountGetParams {
-    /**
-     * Filter result by requested properties
-     */
-    propertyIds?: Array<string>;
-    /**
-     * Filter result by requested rate plans
-     */
-    ratePlanIds?: Array<string>;
-    /**
-     * Filter result by assigned units
-     */
-    unitIds?: Array<string>;
-    /**
-     * Filter result by requested unit types
-     */
-    unitTypeIds?: Array<string>;
-    /**
-     * Filter result by reservation status
-     */
-    status?: Array<string>;
-    /**
-     * Filter by date and time attributes of reservation. Use in combination with the 'To' and 'From' attributes
-     */
-    dateFilter?: string;
-    /**
-     * The start of the time interval.
-     */
-    from?: Date;
-    /**
-     * The end of the time interval.
-     */
-    to?: Date;
+export namespace bookingReservationscountGet {
+    export interface Params {
+        /**
+        * Filter result by requested properties
+        */
+        propertyIds?: Array<string>;
+        /**
+        * Filter result by requested rate plans
+        */
+        ratePlanIds?: Array<string>;
+        /**
+        * Filter result by assigned units
+        */
+        unitIds?: Array<string>;
+        /**
+        * Filter result by requested unit types
+        */
+        unitTypeIds?: Array<string>;
+        /**
+        * Filter result by reservation status
+        */
+        status?: Array<StatusEnum>;
+        /**
+        * Filter by date and time attributes of reservation. Use in combination with the 'To' and 'From' attributes
+        */
+        dateFilter?: DateFilterEnum;
+        /**
+        * The start of the time interval.
+        */
+        from?: Date;
+        /**
+        * The end of the time interval.
+        */
+        to?: Date;
+    }
+    
+    export enum StatusEnumSet {
+        Confirmed = 'Confirmed',
+        InHouse = 'InHouse',
+        CheckedOut = 'CheckedOut'
+    }
+
+    export type StatusEnum = 'Confirmed' | 'InHouse' | 'CheckedOut';
+
+    export const StatusEnumValues = Object.freeze(
+        ['Confirmed', 'InHouse', 'CheckedOut'] as StatusEnum[]);
+    
+    export enum DateFilterEnumSet {
+        Arrival = 'Arrival',
+        Departure = 'Departure',
+        Stay = 'Stay',
+        Creation = 'Creation',
+        Modification = 'Modification'
+    }
+
+    export type DateFilterEnum = 'Arrival' | 'Departure' | 'Stay' | 'Creation' | 'Modification';
+
+    export const DateFilterEnumValues = Object.freeze(
+        ['Arrival', 'Departure', 'Stay', 'Creation', 'Modification'] as DateFilterEnum[]);
+    
 }
 
 @Injectable()
 export class ReservationApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -157,7 +224,7 @@ export class ReservationApi {
      * @param id Id of the reservation that should be modified
      * @param requestBody See AmendReservationModel for details.
      */
-    public bookingReservationsByIdAmendPost(params: bookingReservationsByIdAmendPostParams, $options?: IRequestOptions)
+    public bookingReservationsByIdAmendPost(params: bookingReservationsByIdAmendPost.Params, $options?: ApaleoRequestOptions)
         : Observable<models.ReservationAmendedModel | undefined> {
         return this.bookingReservationsByIdAmendPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -169,7 +236,7 @@ export class ReservationApi {
      * @param id Id of the reservation to be retrieved.
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
-    public bookingReservationsByIdGet(params: bookingReservationsByIdGetParams, $options?: IRequestOptions)
+    public bookingReservationsByIdGet(params: bookingReservationsByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.ReservationModel | undefined> {
         return this.bookingReservationsByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -181,7 +248,7 @@ export class ReservationApi {
      * @param id Id of the reservation that should be replaced.
      * @param requestBody See ReplaceReservationModel for details.
      */
-    public bookingReservationsByIdPut(params: bookingReservationsByIdPutParams, $options?: IRequestOptions)
+    public bookingReservationsByIdPut(params: bookingReservationsByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.bookingReservationsByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -201,7 +268,7 @@ export class ReservationApi {
      * @param from The start of the time interval.
      * @param to The end of the time interval.
      */
-    public bookingReservationsGet(params: bookingReservationsGetParams, $options?: IRequestOptions)
+    public bookingReservationsGet(params: bookingReservationsGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.ReservationListModel | undefined> {
         return this.bookingReservationsGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -212,7 +279,7 @@ export class ReservationApi {
      * Creates a reservation for a specific guest, unit type, and time frame.
      * @param requestBody See CreateReservationModel for details.
      */
-    public bookingReservationsPost(params: bookingReservationsPostParams, $options?: IRequestOptions)
+    public bookingReservationsPost(params: bookingReservationsPost.Params, $options?: ApaleoRequestOptions)
         : Observable<models.ReservationCreatedModel | undefined> {
         return this.bookingReservationsPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -230,7 +297,7 @@ export class ReservationApi {
      * @param from The start of the time interval.
      * @param to The end of the time interval.
      */
-    public bookingReservationscountGet(params: bookingReservationscountGetParams, $options?: IRequestOptions)
+    public bookingReservationscountGet(params: bookingReservationscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.CountModel | undefined> {
         return this.bookingReservationscountGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -243,7 +310,7 @@ export class ReservationApi {
      * @param id Id of the reservation that should be modified
      * @param requestBody See AmendReservationModel for details.
      */
-    public bookingReservationsByIdAmendPostWithRawHttp(params: bookingReservationsByIdAmendPostParams, $options?: IRequestOptions)
+    public bookingReservationsByIdAmendPostWithRawHttp(params: bookingReservationsByIdAmendPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.ReservationAmendedModel>> {
         return this.bookingReservationsByIdAmendPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -255,7 +322,7 @@ export class ReservationApi {
      * @param id Id of the reservation to be retrieved.
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
-    public bookingReservationsByIdGetWithRawHttp(params: bookingReservationsByIdGetParams, $options?: IRequestOptions)
+    public bookingReservationsByIdGetWithRawHttp(params: bookingReservationsByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.ReservationModel>> {
         return this.bookingReservationsByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -267,7 +334,7 @@ export class ReservationApi {
      * @param id Id of the reservation that should be replaced.
      * @param requestBody See ReplaceReservationModel for details.
      */
-    public bookingReservationsByIdPutWithRawHttp(params: bookingReservationsByIdPutParams, $options?: IRequestOptions)
+    public bookingReservationsByIdPutWithRawHttp(params: bookingReservationsByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingReservationsByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -287,7 +354,7 @@ export class ReservationApi {
      * @param from The start of the time interval.
      * @param to The end of the time interval.
      */
-    public bookingReservationsGetWithRawHttp(params: bookingReservationsGetParams, $options?: IRequestOptions)
+    public bookingReservationsGetWithRawHttp(params: bookingReservationsGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.ReservationListModel>> {
         return this.bookingReservationsGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -298,7 +365,7 @@ export class ReservationApi {
      * Creates a reservation for a specific guest, unit type, and time frame.
      * @param requestBody See CreateReservationModel for details.
      */
-    public bookingReservationsPostWithRawHttp(params: bookingReservationsPostParams, $options?: IRequestOptions)
+    public bookingReservationsPostWithRawHttp(params: bookingReservationsPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.ReservationCreatedModel>> {
         return this.bookingReservationsPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -316,7 +383,7 @@ export class ReservationApi {
      * @param from The start of the time interval.
      * @param to The end of the time interval.
      */
-    public bookingReservationscountGetWithRawHttp(params: bookingReservationscountGetParams, $options?: IRequestOptions)
+    public bookingReservationscountGetWithRawHttp(params: bookingReservationscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
         return this.bookingReservationscountGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -329,7 +396,7 @@ export class ReservationApi {
      * @param id Id of the reservation that should be modified
      * @param requestBody See AmendReservationModel for details.
      */
-    private bookingReservationsByIdAmendPostWithHttpInfo(params: bookingReservationsByIdAmendPostParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationsByIdAmendPostWithHttpInfo(params: bookingReservationsByIdAmendPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservations/${id}/amend'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -396,7 +463,7 @@ export class ReservationApi {
      * @param id Id of the reservation to be retrieved.
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, unit, unitType, ratePlan, timeSlices. All other values will be silently ignored.
      */
-    private bookingReservationsByIdGetWithHttpInfo(params: bookingReservationsByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationsByIdGetWithHttpInfo(params: bookingReservationsByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservations/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -457,7 +524,7 @@ export class ReservationApi {
      * @param id Id of the reservation that should be replaced.
      * @param requestBody See ReplaceReservationModel for details.
      */
-    private bookingReservationsByIdPutWithHttpInfo(params: bookingReservationsByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationsByIdPutWithHttpInfo(params: bookingReservationsByIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservations/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -529,7 +596,7 @@ export class ReservationApi {
      * @param from The start of the time interval.
      * @param to The end of the time interval.
      */
-    private bookingReservationsGetWithHttpInfo(params: bookingReservationsGetParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationsGetWithHttpInfo(params: bookingReservationsGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservations';
 
@@ -628,7 +695,7 @@ export class ReservationApi {
      * Creates a reservation for a specific guest, unit type, and time frame.
      * @param requestBody See CreateReservationModel for details.
      */
-    private bookingReservationsPostWithHttpInfo(params: bookingReservationsPostParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationsPostWithHttpInfo(params: bookingReservationsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservations';
 
@@ -696,7 +763,7 @@ export class ReservationApi {
      * @param from The start of the time interval.
      * @param to The end of the time interval.
      */
-    private bookingReservationscountGetWithHttpInfo(params: bookingReservationscountGetParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationscountGetWithHttpInfo(params: bookingReservationscountGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservations/$count';
 

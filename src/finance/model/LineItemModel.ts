@@ -1,6 +1,6 @@
 /**
  * Apaleo Finance API
- * Everything around the Folio, Invioces and Accounting.
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface LineItemModel {
     /**
@@ -29,6 +29,11 @@ export interface LineItemModel {
     isPosted: boolean;
 
     /**
+     * The day when the line item is (or was) due to be charged.
+     */
+    dueDate?: string;
+
+    /**
      * A link to the folio this item has been moved from. There always is a corresponding entry in the other folio.
      */
     movedFrom?: models.EmbeddedFolioModel;
@@ -39,14 +44,9 @@ export interface LineItemModel {
     movedTo?: models.EmbeddedFolioModel;
 
     /**
-     * Specifies the tax that applies to this line item. We only keep a link to the real thing here, as the actual numbers might change.
+     * The amount this line item costs, including gross and net, and the vat type.
      */
-    taxId?: string;
-
-    /**
-     * The net price of this line item. Use the information in the tax id to calculate the gross value.<br />  The folio also has some convenience functions for this.
-     */
-    netPrice?: number;
+    amount?: models.AmountModel;
 
 }
 
@@ -58,36 +58,35 @@ export namespace LineItemModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         isPosted: Object.freeze({ 
             isRequired: true,
             type: 'boolean',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        movedFrom: Object.freeze({ 
-            type: 'models.EmbeddedFolioModel',
-        } as IApaleoPropertyMetaData),
-        movedTo: Object.freeze({ 
-            type: 'models.EmbeddedFolioModel',
-        } as IApaleoPropertyMetaData),
-        taxId: Object.freeze({ 
+        } as ApaleoPropertyMetaData),
+        dueDate: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        netPrice: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
+        movedFrom: Object.freeze({ 
+            type: 'models.EmbeddedFolioModel',
+        } as ApaleoPropertyMetaData),
+        movedTo: Object.freeze({ 
+            type: 'models.EmbeddedFolioModel',
+        } as ApaleoPropertyMetaData),
+        amount: Object.freeze({ 
+            type: 'models.AmountModel',
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<LineItemModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<LineItemModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             isPosted: getControl($metaData.isPosted, options, 'isPosted'),
+            dueDate: getControl($metaData.dueDate, options, 'dueDate'),
             movedFrom: models.EmbeddedFolioModel.$buildForm(fb),
             movedTo: models.EmbeddedFolioModel.$buildForm(fb),
-            taxId: getControl($metaData.taxId, options, 'taxId'),
-            netPrice: getControl($metaData.netPrice, options, 'netPrice'),
+            amount: models.AmountModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

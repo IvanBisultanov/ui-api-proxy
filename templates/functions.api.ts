@@ -1,33 +1,35 @@
 /// <reference path="../typings/types.d.ts" />
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
 
-import { Configuration, IRetryPolicy } from 'configuration';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/publishReplay';
+import 'rxjs/add/observable/of';
+
+import { Configuration, RetryPolicy } from './configuration';
 import { 
     Http, 
     Headers, 
-    RequestOptionsArgs, 
     RequestOptions,
+    RequestOptionsArgs, 
     Response } from '@angular/http';
-import { IRequestOptions } from 'models';
-import { Observable } from 'rxjs/Rx';
+import { ApaleoRequestOptions } from './models';
 
 const defaultRetryPolicy = Object.freeze({
     defaultRetryTimes: 0,
     delayInMs: 0,
     shouldRetryOnStatusCode: () => false
-} as IRetryPolicy)
+} as RetryPolicy)
 
 export function callApiEndpoint(
     http: Http,
     path: string,
     headers: Headers, 
     requestOptionsArgs: RequestOptionsArgs, 
-    config: Configuration & IRequestOptions,
+    config: Configuration & ApaleoRequestOptions,
     retryMethod: (retryTimesToGo: number) => Observable<Response>
 ) {
     setHeaders(headers, config);
@@ -75,7 +77,7 @@ export function apaleoJsonStringify(value: {}) {
     return ret;
 }
 
-function getRequestConfig(config: Configuration & IRequestOptions) {
+function getRequestConfig(config: Configuration & ApaleoRequestOptions) {
     const retryPolicy = config.retryPolicy || defaultRetryPolicy;
 
     let retryTimes = retryPolicy.defaultRetryTimes;
@@ -105,7 +107,7 @@ function getRequestConfig(config: Configuration & IRequestOptions) {
     }
 }
 
-function setHeaders(headers: Headers, config: Configuration & IRequestOptions) {
+function setHeaders(headers: Headers, config: Configuration & ApaleoRequestOptions) {
     if (config.ifMatch && config.ifNoneMatch) {
         throw Error('You cannot specify ifMatch AND ifNoneMatch on one request.')
     } else if (config.ifMatch) {

@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface OfferTimeSliceModel {
     /**
@@ -31,7 +31,7 @@ export interface OfferTimeSliceModel {
     /**
      * The price for this time slice
      */
-    amount: number;
+    amount: models.AmountModel;
 
 }
 
@@ -43,24 +43,23 @@ export namespace OfferTimeSliceModel {
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         to: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         amount: Object.freeze({ 
             isRequired: true,
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+            type: 'models.AmountModel',
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferTimeSliceModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<OfferTimeSliceModel>): FormGroup {
         const defaultControls = { 
             from: getControl($metaData.from, options, 'from'),
             to: getControl($metaData.to, options, 'to'),
-            amount: getControl($metaData.amount, options, 'amount'),
+            amount: models.AmountModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

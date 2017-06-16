@@ -7,31 +7,38 @@ import {
 } from '@angular/forms';
 import {
     FormGroupControls,
-    IBuildFormOptions,
+    BuildFormOptions,
     Control,
-    IApaleoAbstractControl,
-    IApaleoPropertyMetaData,
+    ApaleoAbstractControl,
+    ApaleoPropertyMetaData,
     ApaleoFormGroupMetaData,
     FullyOptional,
+    ApaleoAbstractBaseControl,
+    ApaleoEnumPropertyMetaData,
+    ApaleoBasePropertyMetaData,
     PossibleAdditionalControlWithOptionalMetaData,
     PossibleAdditionalControl,
     PossibleAdditionalControlWithMetaData
 } from './types';
 
-export function getControl<T, K extends keyof T>(metaData: IApaleoPropertyMetaData, options: IBuildFormOptions<T> | undefined, property: K): Control<T[K]> {
+export function getControl<T, K extends keyof T>(
+    metaData: ApaleoPropertyMetaData | ApaleoEnumPropertyMetaData<T[K]>, 
+    options: BuildFormOptions<T> | undefined, 
+    property: K
+): Control<T[K]> {
     const validators = getValidators(metaData, getAdditionalValidators(options, property));
 
     return [undefined, Validators.compose(validators)];
 }
 
-export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, options?: IBuildFormOptions<T>) {
+export function adjustDefaultControls<T>(defaultControls: FormGroupControls<T>, options?: BuildFormOptions<T>) {
     if (!options) { return defaultControls; }
 
     defaultControls = cleanUpDefaultControls(defaultControls, options);
     return Object.assign(defaultControls, options.overwriteControls, convertAdditionalControls(options.additionalControls));
 }
 
-export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroupMetaData<T>, options?: IBuildFormOptions<T>) {
+export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroupMetaData<T>, options?: BuildFormOptions<T>) {
     options = options || {};
 
     if (metaData) {
@@ -43,11 +50,11 @@ export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroup
     disableFilteredControls(group, options);
 }
 
-export function isApaleoAbstractControl(ctrl: IApaleoAbstractControl | AbstractControl): ctrl is IApaleoAbstractControl {
-    return !!(<IApaleoAbstractControl>ctrl).apaleoMetaData;
+export function isApaleoAbstractControl(ctrl: ApaleoAbstractBaseControl | AbstractControl): ctrl is ApaleoAbstractBaseControl {
+    return !!(<ApaleoAbstractBaseControl>ctrl).apaleoMetaData;
 }
 
-export function getValidators(metaData: IApaleoPropertyMetaData, additionalValidators?: ValidatorFn[]) {
+export function getValidators(metaData: ApaleoBasePropertyMetaData, additionalValidators?: ValidatorFn[]) {
     const validators = [] as ValidatorFn[];
 
     if (metaData.isRequired) {
@@ -65,23 +72,23 @@ export function getValidators(metaData: IApaleoPropertyMetaData, additionalValid
     return validators;
 }
 
-function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>, options?: IBuildFormOptions<T>) {
+function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>, options?: BuildFormOptions<T>) {
     options = options || {};
     options.additionalControls = options.additionalControls || {};
 
     for (const key of Object.keys(group.controls) as [string | keyof T]) {
         if (metaData[key]) {
-            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key]!;
+            (<ApaleoAbstractBaseControl>group.controls[key]).apaleoMetaData = metaData[key]!;
         }
 
         const ac = options.additionalControls[key];
         if (ac && hasMetaData(ac)) {
-            (<IApaleoAbstractControl>group.controls[key]).apaleoMetaData = ac.metaData;            
+            (<ApaleoAbstractControl>group.controls[key]).apaleoMetaData = ac.metaData;            
         }
     }
 }
 
-function getAdditionalValidators<T, K extends keyof T>(options: IBuildFormOptions<T> | undefined, property: K) {
+function getAdditionalValidators<T, K extends keyof T>(options: BuildFormOptions<T> | undefined, property: K) {
     options = options || {};
 
     if (options.additionalValidators) {
@@ -90,10 +97,10 @@ function getAdditionalValidators<T, K extends keyof T>(options: IBuildFormOption
     return undefined;
 }
 
-function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, options: IBuildFormOptions<T>) {
+function cleanUpDefaultControls<T>(defaultControls: FormGroupControls<T>, options: BuildFormOptions<T>) {
     if (options.onlyInclude || options.skipControls) {
         if (options.onlyInclude && options.skipControls) {
-            throw Error('You can either define "onlyInclude" or "skipControls" in IBuildFormOptions but never both.')
+            throw Error('You can either define "onlyInclude" or "skipControls" in BuildFormOptions but never both.')
         }
 
         if (options.onlyInclude) {
@@ -132,7 +139,7 @@ function convertAdditionalControls(additionalControls?: { [name: string]: Possib
     return ret;
 }
 
-function disableFilteredControls<T>(group: FormGroup, options: IBuildFormOptions<T>) {
+function disableFilteredControls<T>(group: FormGroup, options: BuildFormOptions<T>) {
     if (!options.disabledControls) { return; }
     let disabledControls = options.disabledControls;
 

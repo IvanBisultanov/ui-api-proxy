@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface MessageItemCollection {
     messages?: Array<string>;
@@ -30,10 +30,10 @@ export namespace MessageItemCollection {
             type: 'Array<string>',
             isPrimitiveType: true,
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<MessageItemCollection>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<MessageItemCollection>): FormGroup {
         const defaultControls = { 
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

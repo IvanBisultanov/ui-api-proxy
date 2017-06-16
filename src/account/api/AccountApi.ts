@@ -10,53 +10,66 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface accountAccountsByCodeGetParams {
-    /**
-     * The code of the account.
-     */
-    code: string;
+export namespace accountAccountsByCodeGet {
+    export interface Params {
+        /**
+        * The code of the account.
+        */
+        code: string;
+    }
+    
 }
-export interface accountAccountsByCodeHeadParams {
-    /**
-     * The code of the account.
-     */
-    code: string;
+export namespace accountAccountsByCodeHead {
+    export interface Params {
+        /**
+        * The code of the account.
+        */
+        code: string;
+    }
+    
 }
-export interface accountAccountsByCodePutParams {
-    /**
-     * The code of the account.
-     */
-    code: string;
-    /**
-     * The definition of the account.
-     */
-    requestBody: models.ReplaceAccountModel;
+export namespace accountAccountsByCodePut {
+    export interface Params {
+        /**
+        * The code of the account.
+        */
+        code: string;
+        /**
+        * The definition of the account.
+        */
+        requestBody: models.ReplaceAccountModel;
+    }
+    
 }
-export interface accountAccountsPostParams {
-    /**
-     * The definition of the account.
-     */
-    requestBody: models.CreateAccountModel;
+export namespace accountAccountsPost {
+    export interface Params {
+        /**
+        * The definition of the account.
+        */
+        requestBody: models.CreateAccountModel;
+    }
+    
 }
 
 @Injectable()
 export class AccountApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -68,11 +81,11 @@ export class AccountApi {
     }
 
     /**
-     * Returns a spcific account.
+     * Returns a specific account.
      * Retrieves an account, specified by its code.
      * @param code The code of the account.
      */
-    public accountAccountsByCodeGet(params: accountAccountsByCodeGetParams, $options?: IRequestOptions)
+    public accountAccountsByCodeGet(params: accountAccountsByCodeGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.AccountModel | undefined> {
         return this.accountAccountsByCodeGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -83,7 +96,7 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    public accountAccountsByCodeHead(params: accountAccountsByCodeHeadParams, $options?: IRequestOptions)
+    public accountAccountsByCodeHead(params: accountAccountsByCodeHead.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.accountAccountsByCodeHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -95,7 +108,7 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountAccountsByCodePut(params: accountAccountsByCodePutParams, $options?: IRequestOptions)
+    public accountAccountsByCodePut(params: accountAccountsByCodePut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.accountAccountsByCodePutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -106,7 +119,7 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountAccountsPost(params: accountAccountsPostParams, $options?: IRequestOptions)
+    public accountAccountsPost(params: accountAccountsPost.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.accountAccountsPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -114,11 +127,11 @@ export class AccountApi {
 
 
     /**
-     * Returns a spcific account.
+     * Returns a specific account.
      * Retrieves an account, specified by its code.
      * @param code The code of the account.
      */
-    public accountAccountsByCodeGetWithRawHttp(params: accountAccountsByCodeGetParams, $options?: IRequestOptions)
+    public accountAccountsByCodeGetWithRawHttp(params: accountAccountsByCodeGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.AccountModel>> {
         return this.accountAccountsByCodeGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -129,7 +142,7 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    public accountAccountsByCodeHeadWithRawHttp(params: accountAccountsByCodeHeadParams, $options?: IRequestOptions)
+    public accountAccountsByCodeHeadWithRawHttp(params: accountAccountsByCodeHead.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.accountAccountsByCodeHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -141,7 +154,7 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    public accountAccountsByCodePutWithRawHttp(params: accountAccountsByCodePutParams, $options?: IRequestOptions)
+    public accountAccountsByCodePutWithRawHttp(params: accountAccountsByCodePut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.accountAccountsByCodePutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -152,7 +165,7 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    public accountAccountsPostWithRawHttp(params: accountAccountsPostParams, $options?: IRequestOptions)
+    public accountAccountsPostWithRawHttp(params: accountAccountsPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.accountAccountsPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -160,11 +173,11 @@ export class AccountApi {
 
 
     /**
-     * Returns a spcific account.
+     * Returns a specific account.
      * Retrieves an account, specified by its code.
      * @param code The code of the account.
      */
-    private accountAccountsByCodeGetWithHttpInfo(params: accountAccountsByCodeGetParams, $options?: IRequestOptions): Observable<Response> {
+    private accountAccountsByCodeGetWithHttpInfo(params: accountAccountsByCodeGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/account/accounts/${code}'
                     .replace('${' + 'code' + '}', String(params.code));
@@ -220,7 +233,7 @@ export class AccountApi {
      * Check if an account exists by code.
      * @param code The code of the account.
      */
-    private accountAccountsByCodeHeadWithHttpInfo(params: accountAccountsByCodeHeadParams, $options?: IRequestOptions): Observable<Response> {
+    private accountAccountsByCodeHeadWithHttpInfo(params: accountAccountsByCodeHead.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/account/accounts/${code}'
                     .replace('${' + 'code' + '}', String(params.code));
@@ -274,7 +287,7 @@ export class AccountApi {
      * @param code The code of the account.
      * @param requestBody The definition of the account.
      */
-    private accountAccountsByCodePutWithHttpInfo(params: accountAccountsByCodePutParams, $options?: IRequestOptions): Observable<Response> {
+    private accountAccountsByCodePutWithHttpInfo(params: accountAccountsByCodePut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/account/accounts/${code}'
                     .replace('${' + 'code' + '}', String(params.code));
@@ -337,7 +350,7 @@ export class AccountApi {
      * Use this call to create a new account.
      * @param requestBody The definition of the account.
      */
-    private accountAccountsPostWithHttpInfo(params: accountAccountsPostParams, $options?: IRequestOptions): Observable<Response> {
+    private accountAccountsPostWithHttpInfo(params: accountAccountsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/account/accounts';
 

@@ -1,6 +1,6 @@
 import { Response, RequestOptionsArgs } from '@angular/http';
 
-export interface IRequestOptions {
+export interface ApaleoRequestOptions {
     allowResponseCodes?: number[] | ((status: number) => boolean);
     retryTimes?: number;
     ifMatch?: string;

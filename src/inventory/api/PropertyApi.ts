@@ -10,67 +10,83 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface inventoryPropertiesByIdGetParams {
-    /**
-     * The id of the property.
-     */
-    id: string;
-    /**
-     * 'all' or comma separated list of language codes
-     */
-    languages?: Array<string>;
+export namespace inventoryPropertiesByIdGet {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+        /**
+        * 'all' or comma separated list of language codes
+        */
+        languages?: Array<string>;
+    }
+    
 }
-export interface inventoryPropertiesByIdHeadParams {
-    /**
-     * The id of the property.
-     */
-    id: string;
+export namespace inventoryPropertiesByIdHead {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+    }
+    
 }
-export interface inventoryPropertiesByIdPutParams {
-    /**
-     * The id of the property.
-     */
-    id: string;
-    /**
-     * The definition of the property.
-     */
-    requestBody: models.ReplacePropertyModel;
+export namespace inventoryPropertiesByIdPut {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+        /**
+        * The definition of the property.
+        */
+        requestBody: models.ReplacePropertyModel;
+    }
+    
 }
-export interface inventoryPropertiesGetParams {
-    /**
-     * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
-     */
-    pageNumber: number;
-    /**
-     * Page size
-     */
-    pageSize: number;
+export namespace inventoryPropertiesGet {
+    export interface Params {
+        /**
+        * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+        */
+        pageNumber: number;
+        /**
+        * Page size
+        */
+        pageSize: number;
+    }
+    
 }
-export interface inventoryPropertiesPostParams {
-    /**
-     * The definition of the property.
-     */
-    requestBody: models.CreatePropertyModel;
+export namespace inventoryPropertiesPost {
+    export interface Params {
+        /**
+        * The definition of the property.
+        */
+        requestBody: models.CreatePropertyModel;
+    }
+    
 }
 
 @Injectable()
 export class PropertyApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -87,7 +103,7 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryPropertiesByIdGet(params: inventoryPropertiesByIdGetParams, $options?: IRequestOptions)
+    public inventoryPropertiesByIdGet(params: inventoryPropertiesByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.PropertyModel | undefined> {
         return this.inventoryPropertiesByIdGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -98,7 +114,7 @@ export class PropertyApi {
      * Check if a property exists by id.
      * @param id The id of the property.
      */
-    public inventoryPropertiesByIdHead(params: inventoryPropertiesByIdHeadParams, $options?: IRequestOptions)
+    public inventoryPropertiesByIdHead(params: inventoryPropertiesByIdHead.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.inventoryPropertiesByIdHeadWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -110,7 +126,7 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryPropertiesByIdPut(params: inventoryPropertiesByIdPutParams, $options?: IRequestOptions)
+    public inventoryPropertiesByIdPut(params: inventoryPropertiesByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.inventoryPropertiesByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -122,7 +138,7 @@ export class PropertyApi {
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
      */
-    public inventoryPropertiesGet(params: inventoryPropertiesGetParams, $options?: IRequestOptions)
+    public inventoryPropertiesGet(params: inventoryPropertiesGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.PropertyListModel | undefined> {
         return this.inventoryPropertiesGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -133,7 +149,7 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    public inventoryPropertiesPost(params: inventoryPropertiesPostParams, $options?: IRequestOptions)
+    public inventoryPropertiesPost(params: inventoryPropertiesPost.Params, $options?: ApaleoRequestOptions)
         : Observable<models.PropertyCreatedModel | undefined> {
         return this.inventoryPropertiesPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -143,7 +159,7 @@ export class PropertyApi {
      * Return total count of properties
      * Return total count of properties
      */
-    public inventoryPropertiescountGet($options?: IRequestOptions)
+    public inventoryPropertiescountGet($options?: ApaleoRequestOptions)
         : Observable<models.CountModel | undefined> {
         return this.inventoryPropertiescountGetWithRawHttp($options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -156,7 +172,7 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    public inventoryPropertiesByIdGetWithRawHttp(params: inventoryPropertiesByIdGetParams, $options?: IRequestOptions)
+    public inventoryPropertiesByIdGetWithRawHttp(params: inventoryPropertiesByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.PropertyModel>> {
         return this.inventoryPropertiesByIdGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -167,7 +183,7 @@ export class PropertyApi {
      * Check if a property exists by id.
      * @param id The id of the property.
      */
-    public inventoryPropertiesByIdHeadWithRawHttp(params: inventoryPropertiesByIdHeadParams, $options?: IRequestOptions)
+    public inventoryPropertiesByIdHeadWithRawHttp(params: inventoryPropertiesByIdHead.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryPropertiesByIdHeadWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -179,7 +195,7 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    public inventoryPropertiesByIdPutWithRawHttp(params: inventoryPropertiesByIdPutParams, $options?: IRequestOptions)
+    public inventoryPropertiesByIdPutWithRawHttp(params: inventoryPropertiesByIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.inventoryPropertiesByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -191,7 +207,7 @@ export class PropertyApi {
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
      */
-    public inventoryPropertiesGetWithRawHttp(params: inventoryPropertiesGetParams, $options?: IRequestOptions)
+    public inventoryPropertiesGetWithRawHttp(params: inventoryPropertiesGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.PropertyListModel>> {
         return this.inventoryPropertiesGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -202,7 +218,7 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    public inventoryPropertiesPostWithRawHttp(params: inventoryPropertiesPostParams, $options?: IRequestOptions)
+    public inventoryPropertiesPostWithRawHttp(params: inventoryPropertiesPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.PropertyCreatedModel>> {
         return this.inventoryPropertiesPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -212,7 +228,7 @@ export class PropertyApi {
      * Return total count of properties
      * Return total count of properties
      */
-    public inventoryPropertiescountGetWithRawHttp($options?: IRequestOptions)
+    public inventoryPropertiescountGetWithRawHttp($options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
         return this.inventoryPropertiescountGetWithHttpInfo($options)
             .map((response: Response) => new ResponseModel(response));
@@ -225,7 +241,7 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param languages &#39;all&#39; or comma separated list of language codes
      */
-    private inventoryPropertiesByIdGetWithHttpInfo(params: inventoryPropertiesByIdGetParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryPropertiesByIdGetWithHttpInfo(params: inventoryPropertiesByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/properties/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -285,7 +301,7 @@ export class PropertyApi {
      * Check if a property exists by id.
      * @param id The id of the property.
      */
-    private inventoryPropertiesByIdHeadWithHttpInfo(params: inventoryPropertiesByIdHeadParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryPropertiesByIdHeadWithHttpInfo(params: inventoryPropertiesByIdHead.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/properties/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -339,7 +355,7 @@ export class PropertyApi {
      * @param id The id of the property.
      * @param requestBody The definition of the property.
      */
-    private inventoryPropertiesByIdPutWithHttpInfo(params: inventoryPropertiesByIdPutParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryPropertiesByIdPutWithHttpInfo(params: inventoryPropertiesByIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/properties/${id}'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -403,7 +419,7 @@ export class PropertyApi {
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
      */
-    private inventoryPropertiesGetWithHttpInfo(params: inventoryPropertiesGetParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryPropertiesGetWithHttpInfo(params: inventoryPropertiesGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/properties';
 
@@ -470,7 +486,7 @@ export class PropertyApi {
      * Use this call to create a new property.
      * @param requestBody The definition of the property.
      */
-    private inventoryPropertiesPostWithHttpInfo(params: inventoryPropertiesPostParams, $options?: IRequestOptions): Observable<Response> {
+    private inventoryPropertiesPostWithHttpInfo(params: inventoryPropertiesPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/inventory/properties';
 
@@ -530,7 +546,7 @@ export class PropertyApi {
      * Return total count of properties
      * Return total count of properties
      */
-    private inventoryPropertiescountGetWithHttpInfo($options?: IRequestOptions): Observable<Response> {
+    private inventoryPropertiescountGetWithHttpInfo($options?: ApaleoRequestOptions): Observable<Response> {
 
         const path = this.basePath + '/inventory/properties/$count';
 

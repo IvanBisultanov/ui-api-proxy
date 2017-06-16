@@ -6,7 +6,7 @@ export type FullyOptional<T> = {
     [P in keyof T]?: T[P] | FullyOptional<T[P]>;
 };
 
-export interface IBuildFormOptions<T> {
+export interface BuildFormOptions<T> {
     overwriteControls?: {[P in keyof T]?: Control<T[P]> | FormGroup};
     additionalControls?: { [name: string]: PossibleAdditionalControlWithOptionalMetaData }
     defaultValues?: FullyOptional<T>;
@@ -20,11 +20,19 @@ export type FormGroupControls<T> = {
     [P in keyof T]?: Control<T[P]> | FormGroup | FormArray
 }
 
-export interface IApaleoAbstractControl extends AbstractControl {
-    apaleoMetaData: IApaleoPropertyMetaData;
+export interface ApaleoAbstractBaseControl extends AbstractControl {
+    apaleoMetaData: ApaleoBasePropertyMetaData;
 }
 
-export interface IApaleoPropertyMetaData {
+export interface ApaleoAbstractControl extends AbstractControl {
+    apaleoMetaData: ApaleoPropertyMetaData;
+}
+
+export interface ApaleoAbstractEnumControl<T> extends AbstractControl {
+    apaleoMetaData: ApaleoEnumPropertyMetaData<T>;
+}
+
+export interface ApaleoBasePropertyMetaData {
     isRequired?: boolean;
     minLength?: number;
     maxLength?: number;
@@ -32,15 +40,24 @@ export interface IApaleoPropertyMetaData {
     isEnum?: boolean;
     isPrimitiveType?: boolean;
     isListContainer?: boolean;
-    isMapContainer?: boolean;
+    isMapContainer?: boolean;    
+}
+
+export interface ApaleoPropertyMetaData extends ApaleoBasePropertyMetaData {
+    isEnum?: false;
+}
+
+export interface ApaleoEnumPropertyMetaData<T> extends ApaleoBasePropertyMetaData {
+    isEnum: true;
+    allowedEnumValues: ReadonlyArray<T>;
 }
 
 export type ApaleoFormGroupMetaData<T> = {
-    [P in keyof T]?: IApaleoPropertyMetaData;
-}
+    [P in keyof T]?: ApaleoPropertyMetaData | ApaleoEnumPropertyMetaData<T[P]>;
+};
 
 export type PossibleAdditionalControl = Control<any> | FormGroup | FormArray;
-export type PossibleAdditionalControlWithMetaData = { metaData: IApaleoPropertyMetaData; control?: PossibleAdditionalControl; };
+export type PossibleAdditionalControlWithMetaData = { metaData: ApaleoPropertyMetaData; control?: PossibleAdditionalControl; };
 export type PossibleAdditionalControlWithOptionalMetaData =
     PossibleAdditionalControl | 
     boolean | 

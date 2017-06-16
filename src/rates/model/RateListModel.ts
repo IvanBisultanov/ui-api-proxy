@@ -12,16 +12,26 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface RateListModel {
     /**
      * List of rates
      */
     rates: Array<models.RateItemModel>;
+
+    /**
+     * Total count of items
+     */
+    count: number;
+
+    /**
+     * Collection of links to related resources
+     */
+    links?: { [key: string]: models.Link; };
 
 }
 
@@ -33,11 +43,21 @@ export namespace RateListModel {
             isRequired: true,
             type: 'Array<models.RateItemModel>',
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
+        count: Object.freeze({ 
+            isRequired: true,
+            type: 'number',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        links: Object.freeze({ 
+            type: '{ [key: string]: models.Link; }',
+            isMapContainer: true,
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<RateListModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<RateListModel>): FormGroup {
         const defaultControls = { 
+            count: getControl($metaData.count, options, 'count'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

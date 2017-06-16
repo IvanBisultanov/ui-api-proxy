@@ -15,10 +15,10 @@ import * as models from './models';
 /**
  * With this request you can modify a reservation
  */
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface AmendReservationModel {
     /**
@@ -61,31 +61,31 @@ export namespace AmendReservationModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         unitTypeId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         arrival: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         departure: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         adults: Object.freeze({ 
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         children: Object.freeze({ 
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<AmendReservationModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AmendReservationModel>): FormGroup {
         const defaultControls = { 
             rateplanId: getControl($metaData.rateplanId, options, 'rateplanId'),
             unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),

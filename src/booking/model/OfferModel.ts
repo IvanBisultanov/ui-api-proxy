@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface OfferModel {
     /**
@@ -46,7 +46,7 @@ export interface OfferModel {
     /**
      * The price for the whole stay
      */
-    totalAmount: number;
+    totalAmount: models.AmountModel;
 
     /**
      * The breakdown for each time slice for this offer
@@ -63,45 +63,44 @@ export namespace OfferModel {
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         departure: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         unitType: Object.freeze({ 
             isRequired: true,
             type: 'models.EmbeddedUnitTypeModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         availableUnits: Object.freeze({ 
             isRequired: true,
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         ratePlan: Object.freeze({ 
             isRequired: true,
             type: 'models.EmbeddedRatePlanModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         totalAmount: Object.freeze({ 
             isRequired: true,
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+            type: 'models.AmountModel',
+        } as ApaleoPropertyMetaData),
         timeSlices: Object.freeze({ 
             isRequired: true,
             type: 'Array<models.OfferTimeSliceModel>',
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<OfferModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<OfferModel>): FormGroup {
         const defaultControls = { 
             arrival: getControl($metaData.arrival, options, 'arrival'),
             departure: getControl($metaData.departure, options, 'departure'),
             unitType: models.EmbeddedUnitTypeModel.$buildForm(fb),
             availableUnits: getControl($metaData.availableUnits, options, 'availableUnits'),
             ratePlan: models.EmbeddedRatePlanModel.$buildForm(fb),
-            totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
+            totalAmount: models.AmountModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

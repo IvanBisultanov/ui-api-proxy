@@ -12,55 +12,55 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface ReplaceRateModel {
     /**
-     * The day of the week
+     * Date and time the rate begins
      */
-    weekday?: ReplaceRateModel.WeekdayEnum;
+    from: Date;
 
     /**
-     * The price of the rate
+     * Date and time the rate ends
      */
-    price?: number;
+    to: Date;
 
-}
-export namespace ReplaceRateModel {
-    export enum WeekdayEnum {
-        None = <any> 'None',
-        Monday = <any> 'Monday',
-        Tuesday = <any> 'Tuesday',
-        Wednesday = <any> 'Wednesday',
-        Thursday = <any> 'Thursday',
-        Friday = <any> 'Friday',
-        Saturday = <any> 'Saturday',
-        Sunday = <any> 'Sunday'
-    }
+    /**
+     * The rate amount
+     */
+    amount: number;
+
 }
 
 export type ReplaceRateModelWithRawHttp = ReplaceRateModel & ResponseModel<ReplaceRateModel>;
 
 export namespace ReplaceRateModel {
     export const $metaData = { 
-        weekday: Object.freeze({ 
-            type: 'string',
-            isEnum: true,
+        from: Object.freeze({ 
+            isRequired: true,
+            type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        price: Object.freeze({ 
+        } as ApaleoPropertyMetaData),
+        to: Object.freeze({ 
+            isRequired: true,
+            type: 'Date',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        amount: Object.freeze({ 
+            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReplaceRateModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceRateModel>): FormGroup {
         const defaultControls = { 
-            weekday: getControl($metaData.weekday, options, 'weekday'),
-            price: getControl($metaData.price, options, 'price'),
+            from: getControl($metaData.from, options, 'from'),
+            to: getControl($metaData.to, options, 'to'),
+            amount: getControl($metaData.amount, options, 'amount'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

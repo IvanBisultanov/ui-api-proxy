@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface CreateRatePlanModel {
     /**
@@ -44,21 +44,21 @@ export interface CreateRatePlanModel {
     sellingUnit: CreateRatePlanModel.SellingUnitEnum;
 
     /**
-     * The default price for the rateplan
-     */
-    defaultPrice?: number;
-
-    /**
      * The unit types ids to link to the rateplan
      */
     unitTypeIds?: Array<string>;
 
 }
 export namespace CreateRatePlanModel {
-    export enum SellingUnitEnum {
-        Night = <any> 'Night',
-        Day = <any> 'Day'
+    export enum SellingUnitEnumSet {
+        Night = 'Night',
+        Day = 'Day'
     }
+
+    export type SellingUnitEnum = 'Night' | 'Day';
+
+    export const SellingUnitEnumValues = Object.freeze(
+        ['Night', 'Day'] as SellingUnitEnum[]);
 }
 
 export type CreateRatePlanModelWithRawHttp = CreateRatePlanModel & ResponseModel<CreateRatePlanModel>;
@@ -71,47 +71,43 @@ export namespace CreateRatePlanModel {
             maxLength: 10,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         propertyId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         name: Object.freeze({ 
             isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         description: Object.freeze({ 
             isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         sellingUnit: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isEnum: true,
+            allowedEnumValues: SellingUnitEnumValues,
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
-        defaultPrice: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
         unitTypeIds: Object.freeze({ 
             type: 'Array<string>',
             isPrimitiveType: true,
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateRatePlanModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<CreateRatePlanModel>): FormGroup {
         const defaultControls = { 
             code: getControl($metaData.code, options, 'code'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
             sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
-            defaultPrice: getControl($metaData.defaultPrice, options, 'defaultPrice'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

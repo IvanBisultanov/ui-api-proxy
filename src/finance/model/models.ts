@@ -1,5 +1,6 @@
+export * from './AmountModel';
 export * from './CountModel';
-export * from './CreateFolioModel';
+export * from './CreateFolioRequest';
 export * from './EmbeddedFolioModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedReservationModel';

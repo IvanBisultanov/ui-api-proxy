@@ -17,57 +17,52 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface EmbeddedUnitModel {
-    /**
-     * The unit id
-     */
-    id: string;
+export interface AmountModel {
+    grossAmount?: number;
 
-    /**
-     * The name for the unit
-     */
-    name?: string;
+    netAmount?: number;
 
-    /**
-     * The description for the unit
-     */
-    description?: string;
-
-    /**
-     * Collection of links to related resources
-     */
-    links?: { [key: string]: models.Link; };
+    vatType?: AmountModel.VatTypeEnum;
 
 }
+export namespace AmountModel {
+    export enum VatTypeEnumSet {
+        Free = 'Free',
+        Reduced = 'Reduced',
+        Normal = 'Normal'
+    }
 
-export type EmbeddedUnitModelWithRawHttp = EmbeddedUnitModel & ResponseModel<EmbeddedUnitModel>;
+    export type VatTypeEnum = 'Free' | 'Reduced' | 'Normal';
 
-export namespace EmbeddedUnitModel {
+    export const VatTypeEnumValues = Object.freeze(
+        ['Free', 'Reduced', 'Normal'] as VatTypeEnum[]);
+}
+
+export type AmountModelWithRawHttp = AmountModel & ResponseModel<AmountModel>;
+
+export namespace AmountModel {
     export const $metaData = { 
-        id: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
+        grossAmount: Object.freeze({ 
+            type: 'number',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        name: Object.freeze({ 
-            type: 'string',
+        netAmount: Object.freeze({ 
+            type: 'number',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        description: Object.freeze({ 
+        vatType: Object.freeze({ 
             type: 'string',
+            isEnum: true,
+            allowedEnumValues: VatTypeEnumValues,
             isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        links: Object.freeze({ 
-            type: '{ [key: string]: models.Link; }',
-            isMapContainer: true,
-        } as ApaleoPropertyMetaData),
+        } as ApaleoEnumPropertyMetaData<VatTypeEnum>),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<EmbeddedUnitModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AmountModel>): FormGroup {
         const defaultControls = { 
-            id: getControl($metaData.id, options, 'id'),
-            name: getControl($metaData.name, options, 'name'),
-            description: getControl($metaData.description, options, 'description'),
+            grossAmount: getControl($metaData.grossAmount, options, 'grossAmount'),
+            netAmount: getControl($metaData.netAmount, options, 'netAmount'),
+            vatType: getControl($metaData.vatType, options, 'vatType'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

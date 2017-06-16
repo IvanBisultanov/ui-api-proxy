@@ -10,53 +10,66 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface bookingReservationActionsByIdAssignUnitByUnitIdPutParams {
-    /**
-     * Id of the reservation the unit should be assigend to.
-     */
-    id: string;
-    /**
-     * The id of the unit to be assigned.
-     */
-    unitId: string;
+export namespace bookingReservationActionsByIdAssignUnitByUnitIdPut {
+    export interface Params {
+        /**
+        * Id of the reservation the unit should be assigned to.
+        */
+        id: string;
+        /**
+        * The id of the unit to be assigned.
+        */
+        unitId: string;
+    }
+    
 }
-export interface bookingReservationActionsByIdAssignUnitPutParams {
-    /**
-     * Id of the reservation a unit should be assigend to.
-     */
-    id: string;
+export namespace bookingReservationActionsByIdAssignUnitPut {
+    export interface Params {
+        /**
+        * Id of the reservation a unit should be assigned to.
+        */
+        id: string;
+    }
+    
 }
-export interface bookingReservationActionsByIdCheckinPutParams {
-    /**
-     * Id of the reservation that should be processed.
-     */
-    id: string;
+export namespace bookingReservationActionsByIdCheckinPut {
+    export interface Params {
+        /**
+        * Id of the reservation that should be processed.
+        */
+        id: string;
+    }
+    
 }
-export interface bookingReservationActionsByIdCheckoutPutParams {
-    /**
-     * Id of the reservation that should be processed.
-     */
-    id: string;
+export namespace bookingReservationActionsByIdCheckoutPut {
+    export interface Params {
+        /**
+        * Id of the reservation that should be processed.
+        */
+        id: string;
+    }
+    
 }
 
 @Injectable()
 export class ReservationActionsApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -70,10 +83,10 @@ export class ReservationActionsApi {
     /**
      * Assign a specific unit to a reservation.
      * Assigns a specific unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.&lt;br /&gt;If the unit is not available, the call will return an error, and no unit will be assigned.
-     * @param id Id of the reservation the unit should be assigend to.
+     * @param id Id of the reservation the unit should be assigned to.
      * @param unitId The id of the unit to be assigned.
      */
-    public bookingReservationActionsByIdAssignUnitByUnitIdPut(params: bookingReservationActionsByIdAssignUnitByUnitIdPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdAssignUnitByUnitIdPut(params: bookingReservationActionsByIdAssignUnitByUnitIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.bookingReservationActionsByIdAssignUnitByUnitIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -82,9 +95,9 @@ export class ReservationActionsApi {
     /**
      * Assign a unit to a reservation.
      * Assigns one of the available units to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
-     * @param id Id of the reservation a unit should be assigend to.
+     * @param id Id of the reservation a unit should be assigned to.
      */
-    public bookingReservationActionsByIdAssignUnitPut(params: bookingReservationActionsByIdAssignUnitPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdAssignUnitPut(params: bookingReservationActionsByIdAssignUnitPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.bookingReservationActionsByIdAssignUnitPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -95,7 +108,7 @@ export class ReservationActionsApi {
      * Check-in a specific reservation which is in status &#39;Confirmed&#39;, and has a unit assigned. This changes the status to &#39;InHouse&#39;, and sets the check-in date and time.
      * @param id Id of the reservation that should be processed.
      */
-    public bookingReservationActionsByIdCheckinPut(params: bookingReservationActionsByIdCheckinPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdCheckinPut(params: bookingReservationActionsByIdCheckinPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.bookingReservationActionsByIdCheckinPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -106,7 +119,7 @@ export class ReservationActionsApi {
      * Check-out a specific reservation which is in status &#39;InHouse&#39;. This changes the status to &#39;CheckedOut&#39;, and sets the check-out date and time.
      * @param id Id of the reservation that should be processed.
      */
-    public bookingReservationActionsByIdCheckoutPut(params: bookingReservationActionsByIdCheckoutPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdCheckoutPut(params: bookingReservationActionsByIdCheckoutPut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.bookingReservationActionsByIdCheckoutPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -116,10 +129,10 @@ export class ReservationActionsApi {
     /**
      * Assign a specific unit to a reservation.
      * Assigns a specific unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.&lt;br /&gt;If the unit is not available, the call will return an error, and no unit will be assigned.
-     * @param id Id of the reservation the unit should be assigend to.
+     * @param id Id of the reservation the unit should be assigned to.
      * @param unitId The id of the unit to be assigned.
      */
-    public bookingReservationActionsByIdAssignUnitByUnitIdPutWithRawHttp(params: bookingReservationActionsByIdAssignUnitByUnitIdPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdAssignUnitByUnitIdPutWithRawHttp(params: bookingReservationActionsByIdAssignUnitByUnitIdPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingReservationActionsByIdAssignUnitByUnitIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -128,9 +141,9 @@ export class ReservationActionsApi {
     /**
      * Assign a unit to a reservation.
      * Assigns one of the available units to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
-     * @param id Id of the reservation a unit should be assigend to.
+     * @param id Id of the reservation a unit should be assigned to.
      */
-    public bookingReservationActionsByIdAssignUnitPutWithRawHttp(params: bookingReservationActionsByIdAssignUnitPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdAssignUnitPutWithRawHttp(params: bookingReservationActionsByIdAssignUnitPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingReservationActionsByIdAssignUnitPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -141,7 +154,7 @@ export class ReservationActionsApi {
      * Check-in a specific reservation which is in status &#39;Confirmed&#39;, and has a unit assigned. This changes the status to &#39;InHouse&#39;, and sets the check-in date and time.
      * @param id Id of the reservation that should be processed.
      */
-    public bookingReservationActionsByIdCheckinPutWithRawHttp(params: bookingReservationActionsByIdCheckinPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdCheckinPutWithRawHttp(params: bookingReservationActionsByIdCheckinPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingReservationActionsByIdCheckinPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -152,7 +165,7 @@ export class ReservationActionsApi {
      * Check-out a specific reservation which is in status &#39;InHouse&#39;. This changes the status to &#39;CheckedOut&#39;, and sets the check-out date and time.
      * @param id Id of the reservation that should be processed.
      */
-    public bookingReservationActionsByIdCheckoutPutWithRawHttp(params: bookingReservationActionsByIdCheckoutPutParams, $options?: IRequestOptions)
+    public bookingReservationActionsByIdCheckoutPutWithRawHttp(params: bookingReservationActionsByIdCheckoutPut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.bookingReservationActionsByIdCheckoutPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -162,10 +175,10 @@ export class ReservationActionsApi {
     /**
      * Assign a specific unit to a reservation.
      * Assigns a specific unit to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.&lt;br /&gt;If the unit is not available, the call will return an error, and no unit will be assigned.
-     * @param id Id of the reservation the unit should be assigend to.
+     * @param id Id of the reservation the unit should be assigned to.
      * @param unitId The id of the unit to be assigned.
      */
-    private bookingReservationActionsByIdAssignUnitByUnitIdPutWithHttpInfo(params: bookingReservationActionsByIdAssignUnitByUnitIdPutParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationActionsByIdAssignUnitByUnitIdPutWithHttpInfo(params: bookingReservationActionsByIdAssignUnitByUnitIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservation-actions/${id}/assign-unit/${unitId}'
                     .replace('${' + 'id' + '}', String(params.id))
@@ -224,9 +237,9 @@ export class ReservationActionsApi {
     /**
      * Assign a unit to a reservation.
      * Assigns one of the available units to a reservation which is in state &#39;Confirmed&#39; or &#39;InHouse&#39;.
-     * @param id Id of the reservation a unit should be assigend to.
+     * @param id Id of the reservation a unit should be assigned to.
      */
-    private bookingReservationActionsByIdAssignUnitPutWithHttpInfo(params: bookingReservationActionsByIdAssignUnitPutParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationActionsByIdAssignUnitPutWithHttpInfo(params: bookingReservationActionsByIdAssignUnitPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservation-actions/${id}/assign-unit'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -282,7 +295,7 @@ export class ReservationActionsApi {
      * Check-in a specific reservation which is in status &#39;Confirmed&#39;, and has a unit assigned. This changes the status to &#39;InHouse&#39;, and sets the check-in date and time.
      * @param id Id of the reservation that should be processed.
      */
-    private bookingReservationActionsByIdCheckinPutWithHttpInfo(params: bookingReservationActionsByIdCheckinPutParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationActionsByIdCheckinPutWithHttpInfo(params: bookingReservationActionsByIdCheckinPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservation-actions/${id}/checkin'
                     .replace('${' + 'id' + '}', String(params.id));
@@ -335,7 +348,7 @@ export class ReservationActionsApi {
      * Check-out a specific reservation which is in status &#39;InHouse&#39;. This changes the status to &#39;CheckedOut&#39;, and sets the check-out date and time.
      * @param id Id of the reservation that should be processed.
      */
-    private bookingReservationActionsByIdCheckoutPutWithHttpInfo(params: bookingReservationActionsByIdCheckoutPutParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingReservationActionsByIdCheckoutPutWithHttpInfo(params: bookingReservationActionsByIdCheckoutPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/reservation-actions/${id}/checkout'
                     .replace('${' + 'id' + '}', String(params.id));

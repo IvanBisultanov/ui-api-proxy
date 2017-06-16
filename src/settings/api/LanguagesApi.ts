@@ -10,41 +10,48 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface settingsLanguagesByAccountCodeGetParams {
-    /**
-     * The code of the account.
-     */
-    accountCode: string;
+export namespace settingsLanguagesByAccountCodeGet {
+    export interface Params {
+        /**
+        * The code of the account.
+        */
+        accountCode: string;
+    }
+    
 }
-export interface settingsLanguagesByAccountCodePutParams {
-    /**
-     * The code of the account.
-     */
-    accountCode: string;
-    /**
-     * The definition of the language settings.
-     */
-    requestBody: models.ReplaceLanguagesModel;
+export namespace settingsLanguagesByAccountCodePut {
+    export interface Params {
+        /**
+        * The code of the account.
+        */
+        accountCode: string;
+        /**
+        * The definition of the language settings.
+        */
+        requestBody: models.ReplaceLanguagesModel;
+    }
+    
 }
 
 @Injectable()
 export class LanguagesApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -60,7 +67,7 @@ export class LanguagesApi {
      * Get the language settings
      * @param accountCode The code of the account.
      */
-    public settingsLanguagesByAccountCodeGet(params: settingsLanguagesByAccountCodeGetParams, $options?: IRequestOptions)
+    public settingsLanguagesByAccountCodeGet(params: settingsLanguagesByAccountCodeGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.LanguagesModel | undefined> {
         return this.settingsLanguagesByAccountCodeGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -72,7 +79,7 @@ export class LanguagesApi {
      * @param accountCode The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public settingsLanguagesByAccountCodePut(params: settingsLanguagesByAccountCodePutParams, $options?: IRequestOptions)
+    public settingsLanguagesByAccountCodePut(params: settingsLanguagesByAccountCodePut.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
         return this.settingsLanguagesByAccountCodePutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -84,7 +91,7 @@ export class LanguagesApi {
      * Get the language settings
      * @param accountCode The code of the account.
      */
-    public settingsLanguagesByAccountCodeGetWithRawHttp(params: settingsLanguagesByAccountCodeGetParams, $options?: IRequestOptions)
+    public settingsLanguagesByAccountCodeGetWithRawHttp(params: settingsLanguagesByAccountCodeGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.LanguagesModel>> {
         return this.settingsLanguagesByAccountCodeGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -96,7 +103,7 @@ export class LanguagesApi {
      * @param accountCode The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    public settingsLanguagesByAccountCodePutWithRawHttp(params: settingsLanguagesByAccountCodePutParams, $options?: IRequestOptions)
+    public settingsLanguagesByAccountCodePutWithRawHttp(params: settingsLanguagesByAccountCodePut.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
         return this.settingsLanguagesByAccountCodePutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -108,7 +115,7 @@ export class LanguagesApi {
      * Get the language settings
      * @param accountCode The code of the account.
      */
-    private settingsLanguagesByAccountCodeGetWithHttpInfo(params: settingsLanguagesByAccountCodeGetParams, $options?: IRequestOptions): Observable<Response> {
+    private settingsLanguagesByAccountCodeGetWithHttpInfo(params: settingsLanguagesByAccountCodeGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/settings/languages/${accountCode}'
                     .replace('${' + 'accountCode' + '}', String(params.accountCode));
@@ -165,7 +172,7 @@ export class LanguagesApi {
      * @param accountCode The code of the account.
      * @param requestBody The definition of the language settings.
      */
-    private settingsLanguagesByAccountCodePutWithHttpInfo(params: settingsLanguagesByAccountCodePutParams, $options?: IRequestOptions): Observable<Response> {
+    private settingsLanguagesByAccountCodePutWithHttpInfo(params: settingsLanguagesByAccountCodePut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/settings/languages/${accountCode}'
                     .replace('${' + 'accountCode' + '}', String(params.accountCode));

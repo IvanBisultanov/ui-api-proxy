@@ -10,43 +10,47 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Inject, Injectable, LOCALE_ID }                           from '@angular/core';
 import { Http, Headers, URLSearchParams, Response, RequestMethod } from '@angular/http';
 
-import { Observable }                                              from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
 import * as models                                                 from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                           from '../../variables';
-import { IRequestOptions, ResponseModel }                          from '../../models';
+import { ApaleoRequestOptions, ResponseModel }                     from '../../models';
 import { Configuration }                                           from '../../configuration';
 import { callApiEndpoint }                                         from '../../functions.api';
 
-/* tslint:disable:no-unused-variable member-ordering */
 
 
-export interface bookingAvailableUnitsGetParams {
-    /**
-     * The property id
-     */
-    propertyId: string;
-    /**
-     * The from date and the optional time
-     */
-    from: string;
-    /**
-     * The to date and the optional time
-     */
-    to: string;
-    /**
-     * The unit type id
-     */
-    unitTypeId?: string;
+export namespace bookingAvailableUnitsGet {
+    export interface Params {
+        /**
+        * The property id
+        */
+        propertyId: string;
+        /**
+        * The from date and the optional time
+        */
+        from: string;
+        /**
+        * The to date and the optional time
+        */
+        to: string;
+        /**
+        * The unit type id
+        */
+        unitTypeId?: string;
+    }
+    
 }
 
 @Injectable()
 export class UnitAvailabilityApi {
-    public defaultHeaders: Headers = new Headers();
+    public readonly defaultHeaders: Headers = new Headers();
 
     constructor(
         protected readonly http: Http, 
@@ -59,13 +63,13 @@ export class UnitAvailabilityApi {
 
     /**
      * Get a list of all available units in a property
-     * Get the list of available units for a property, and a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
+     * Get the list of available units for a property, and a specified time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
      * @param from The from date and the optional time
      * @param to The to date and the optional time
      * @param unitTypeId The unit type id
      */
-    public bookingAvailableUnitsGet(params: bookingAvailableUnitsGetParams, $options?: IRequestOptions)
+    public bookingAvailableUnitsGet(params: bookingAvailableUnitsGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.AvailableUnitListModel | undefined> {
         return this.bookingAvailableUnitsGetWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
@@ -74,13 +78,13 @@ export class UnitAvailabilityApi {
 
     /**
      * Get a list of all available units in a property
-     * Get the list of available units for a property, and a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
+     * Get the list of available units for a property, and a specified time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
      * @param from The from date and the optional time
      * @param to The to date and the optional time
      * @param unitTypeId The unit type id
      */
-    public bookingAvailableUnitsGetWithRawHttp(params: bookingAvailableUnitsGetParams, $options?: IRequestOptions)
+    public bookingAvailableUnitsGetWithRawHttp(params: bookingAvailableUnitsGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.AvailableUnitListModel>> {
         return this.bookingAvailableUnitsGetWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
@@ -89,13 +93,13 @@ export class UnitAvailabilityApi {
 
     /**
      * Get a list of all available units in a property
-     * Get the list of available units for a property, and a specifed time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
+     * Get the list of available units for a property, and a specified time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
      * @param from The from date and the optional time
      * @param to The to date and the optional time
      * @param unitTypeId The unit type id
      */
-    private bookingAvailableUnitsGetWithHttpInfo(params: bookingAvailableUnitsGetParams, $options?: IRequestOptions): Observable<Response> {
+    private bookingAvailableUnitsGetWithHttpInfo(params: bookingAvailableUnitsGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
         const path = this.basePath + '/booking/available-units';
 

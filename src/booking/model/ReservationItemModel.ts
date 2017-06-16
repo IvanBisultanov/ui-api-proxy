@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface ReservationItemModel {
     /**
@@ -61,7 +61,7 @@ export interface ReservationItemModel {
     /**
      * Total amount
      */
-    totalAmount: number;
+    totalAmount: models.AmountModel;
 
     /**
      * Date of arrival
@@ -155,11 +155,16 @@ export interface ReservationItemModel {
 
 }
 export namespace ReservationItemModel {
-    export enum StatusEnum {
-        Confirmed = <any> 'Confirmed',
-        InHouse = <any> 'InHouse',
-        CheckedOut = <any> 'CheckedOut'
+    export enum StatusEnumSet {
+        Confirmed = 'Confirmed',
+        InHouse = 'InHouse',
+        CheckedOut = 'CheckedOut'
     }
+
+    export type StatusEnum = 'Confirmed' | 'InHouse' | 'CheckedOut';
+
+    export const StatusEnumValues = Object.freeze(
+        ['Confirmed', 'InHouse', 'CheckedOut'] as StatusEnum[]);
 }
 
 export type ReservationItemModelWithRawHttp = ReservationItemModel & ResponseModel<ReservationItemModel>;
@@ -170,133 +175,133 @@ export namespace ReservationItemModel {
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         status: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isEnum: true,
+            allowedEnumValues: StatusEnumValues,
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoEnumPropertyMetaData<StatusEnum>),
         checkInTime: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         checkOutTime: Object.freeze({ 
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         propertyId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         ratePlanId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         unitTypeId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         unitId: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         totalAmount: Object.freeze({ 
             isRequired: true,
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+            type: 'models.AmountModel',
+        } as ApaleoPropertyMetaData),
         arrival: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         departure: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         created: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         modified: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         adults: Object.freeze({ 
             isRequired: true,
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         children: Object.freeze({ 
             isRequired: true,
             type: 'number',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         guestTitle: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         firstName: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         middleInitial: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         lastName: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         email: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         phone: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         street: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         number: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         city: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         postalCode: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         countryCode: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         links: Object.freeze({ 
             type: '{ [key: string]: models.Link; }',
             isMapContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationItemModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReservationItemModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             status: getControl($metaData.status, options, 'status'),
@@ -306,7 +311,7 @@ export namespace ReservationItemModel {
             ratePlanId: getControl($metaData.ratePlanId, options, 'ratePlanId'),
             unitTypeId: getControl($metaData.unitTypeId, options, 'unitTypeId'),
             unitId: getControl($metaData.unitId, options, 'unitId'),
-            totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
+            totalAmount: models.AmountModel.$buildForm(fb),
             arrival: getControl($metaData.arrival, options, 'arrival'),
             departure: getControl($metaData.departure, options, 'departure'),
             created: getControl($metaData.created, options, 'created'),

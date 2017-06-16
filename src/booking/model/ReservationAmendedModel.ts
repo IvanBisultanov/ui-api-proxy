@@ -12,16 +12,16 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface ReservationAmendedModel {
     /**
      * Total amount for the whole stay
      */
-    totalAmount: number;
+    totalAmount: models.AmountModel;
 
 }
 
@@ -31,14 +31,13 @@ export namespace ReservationAmendedModel {
     export const $metaData = { 
         totalAmount: Object.freeze({ 
             isRequired: true,
-            type: 'number',
-            isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+            type: 'models.AmountModel',
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<ReservationAmendedModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReservationAmendedModel>): FormGroup {
         const defaultControls = { 
-            totalAmount: getControl($metaData.totalAmount, options, 'totalAmount'),
+            totalAmount: models.AmountModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

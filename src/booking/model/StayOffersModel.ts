@@ -12,10 +12,10 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface StayOffersModel {
     /**
@@ -47,25 +47,25 @@ export namespace StayOffersModel {
         property: Object.freeze({ 
             isRequired: true,
             type: 'models.EmbeddedPropertyModel',
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         arrivalRequested: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         departureRequested: Object.freeze({ 
             isRequired: true,
             type: 'Date',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
         offers: Object.freeze({ 
             isRequired: true,
             type: 'Array<models.OfferModel>',
             isListContainer: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<StayOffersModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<StayOffersModel>): FormGroup {
         const defaultControls = { 
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             arrivalRequested: getControl($metaData.arrivalRequested, options, 'arrivalRequested'),

@@ -1,6 +1,6 @@
 /**
- * Inventory Management
- * Setup and manage the account’s properties and all the units to rent out: rooms, parking lots, beds, meeting rooms, etc.
+ * Rates Management
+ * Manage the rate plans and rates to rent out your inventory at the best price.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -17,24 +17,39 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface MessageItemCollection {
-    messages?: Array<string>;
+export interface DeleteRateListModel {
+    /**
+     * The start date for the deletion
+     */
+    from: Date;
+
+    /**
+     * The end date for the deletion
+     */
+    to: Date;
 
 }
 
-export type MessageItemCollectionWithRawHttp = MessageItemCollection & ResponseModel<MessageItemCollection>;
+export type DeleteRateListModelWithRawHttp = DeleteRateListModel & ResponseModel<DeleteRateListModel>;
 
-export namespace MessageItemCollection {
+export namespace DeleteRateListModel {
     export const $metaData = { 
-        messages: Object.freeze({ 
-            type: 'Array<string>',
+        from: Object.freeze({ 
+            isRequired: true,
+            type: 'Date',
             isPrimitiveType: true,
-            isListContainer: true,
+        } as ApaleoPropertyMetaData),
+        to: Object.freeze({ 
+            isRequired: true,
+            type: 'Date',
+            isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<MessageItemCollection>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<DeleteRateListModel>): FormGroup {
         const defaultControls = { 
+            from: getControl($metaData.from, options, 'from'),
+            to: getControl($metaData.to, options, 'to'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

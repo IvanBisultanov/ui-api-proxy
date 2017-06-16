@@ -1,6 +1,6 @@
 /**
  * Apaleo Finance API
- * Everything around the Folio, Invioces and Accounting.
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -12,12 +12,12 @@
 
 import * as models from './models';
 
-import { FormBuilder, FormGroup }                              from '@angular/forms';
-import { IBuildFormOptions, IApaleoPropertyMetaData }          from '../../types';
-import { ResponseModel }                                       from '../../models';
-import { getControl, adjustDefaultControls, prepareFormGroup } from '../../functions.model';
+import { FormBuilder, FormGroup }                                               from '@angular/forms';
+import { ResponseModel }                                                        from '../../models';
+import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
+import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface CreateFolioModel {
+export interface CreateFolioRequest {
     /**
      * The id of the reservation for which a folio should be created.
      */
@@ -25,17 +25,17 @@ export interface CreateFolioModel {
 
 }
 
-export type CreateFolioModelWithRawHttp = CreateFolioModel & ResponseModel<CreateFolioModel>;
+export type CreateFolioRequestWithRawHttp = CreateFolioRequest & ResponseModel<CreateFolioRequest>;
 
-export namespace CreateFolioModel {
+export namespace CreateFolioRequest {
     export const $metaData = { 
         reservationId: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
-        } as IApaleoPropertyMetaData),
+        } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: IBuildFormOptions<CreateFolioModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<CreateFolioRequest>): FormGroup {
         const defaultControls = { 
             reservationId: getControl($metaData.reservationId, options, 'reservationId'),
         };
