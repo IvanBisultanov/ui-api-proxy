@@ -13,7 +13,6 @@ import {
     ApaleoPropertyMetaData,
     ApaleoFormGroupMetaData,
     FullyOptional,
-    ApaleoAbstractBaseControl,
     ApaleoEnumPropertyMetaData,
     ApaleoBasePropertyMetaData,
     PossibleAdditionalControlWithOptionalMetaData,
@@ -50,8 +49,8 @@ export function prepareFormGroup<T>(group: FormGroup, metaData?: ApaleoFormGroup
     disableFilteredControls(group, options);
 }
 
-export function isApaleoAbstractControl(ctrl: ApaleoAbstractBaseControl | AbstractControl): ctrl is ApaleoAbstractBaseControl {
-    return !!(<ApaleoAbstractBaseControl>ctrl).apaleoMetaData;
+export function isApaleoAbstractControl(ctrl: ApaleoAbstractControl | AbstractControl): ctrl is ApaleoAbstractControl {
+    return !!(<ApaleoAbstractControl>ctrl).apaleoMetaData;
 }
 
 export function getValidators(metaData: ApaleoBasePropertyMetaData, additionalValidators?: ValidatorFn[]) {
@@ -78,7 +77,7 @@ function setMetaData<T>(group: FormGroup, metaData: ApaleoFormGroupMetaData<T>, 
 
     for (const key of Object.keys(group.controls) as [string | keyof T]) {
         if (metaData[key]) {
-            (<ApaleoAbstractBaseControl>group.controls[key]).apaleoMetaData = metaData[key]!;
+            (<ApaleoAbstractControl>group.controls[key]).apaleoMetaData = metaData[key]!;
         }
 
         const ac = options.additionalControls[key];

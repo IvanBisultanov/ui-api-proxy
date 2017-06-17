@@ -20,16 +20,8 @@ export type FormGroupControls<T> = {
     [P in keyof T]?: Control<T[P]> | FormGroup | FormArray
 }
 
-export interface ApaleoAbstractBaseControl extends AbstractControl {
-    apaleoMetaData: ApaleoBasePropertyMetaData;
-}
-
-export interface ApaleoAbstractControl extends AbstractControl {
-    apaleoMetaData: ApaleoPropertyMetaData;
-}
-
-export interface ApaleoAbstractEnumControl<T> extends AbstractControl {
-    apaleoMetaData: ApaleoEnumPropertyMetaData<T>;
+export interface ApaleoAbstractControl<T extends ApaleoBasePropertyMetaData = ApaleoBasePropertyMetaData> extends AbstractControl {
+    apaleoMetaData: T;
 }
 
 export interface ApaleoBasePropertyMetaData {
