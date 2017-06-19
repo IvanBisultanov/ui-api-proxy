@@ -19,11 +19,6 @@ import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } 
 
 export interface ReplacePropertySettingsModel {
     /**
-     * The time zone name of the property from the IANA Time Zone Database.  (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-     */
-    timeZone: string;
-
-    /**
      * The default check-in time
      */
     defaultCheckInTime: string;
@@ -39,11 +34,6 @@ export type ReplacePropertySettingsModelWithRawHttp = ReplacePropertySettingsMod
 
 export namespace ReplacePropertySettingsModel {
     export const $metaData = { 
-        timeZone: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
         defaultCheckInTime: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -58,7 +48,6 @@ export namespace ReplacePropertySettingsModel {
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplacePropertySettingsModel>): FormGroup {
         const defaultControls = { 
-            timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
         };
