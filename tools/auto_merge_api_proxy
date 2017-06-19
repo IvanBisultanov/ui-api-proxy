@@ -24,9 +24,11 @@ node('nodejs') {
               -d '{ \"merge_method\": \"squash\" }'").trim()
           
         if (statusCode == '200') {
-          // rebuild ui/master after new proxy is out there
+          // rebuild ui/master and ibe/master after new proxy is out there
           build job: '/apaleo/ui/master', quietPeriod: 30, wait: false
+          build job: '/apaleo/ibe/master', quietPeriod: 30, wait: false
           slackSend (color: '#8bc34a', message: "Danone - don't forget to update node_modules :wink:", channel: '#dev-front-end')
+          slackSend (color: '#8bc34a', message: "New UI-API-Proxy merged, if you don't hear anything else, it means the IBE master still works :wink:", channel: '#ibe')
         } else  {
           sh "curl 'https://api.github.com/repos/apaleo/ui-api-proxy/pulls/${prId}/merge' \
               -XPUT \
