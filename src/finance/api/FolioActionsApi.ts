@@ -33,6 +33,7 @@ export namespace financeFolioActionsNightAuditPut {
         */
         propertyId?: string;
     }
+    
 }
 
 @Injectable()

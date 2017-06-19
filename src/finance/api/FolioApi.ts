@@ -35,7 +35,6 @@ export namespace financeFoliosByIdGet {
     }
     
 }
-
 export namespace financeFoliosGet {
     export interface Params {
         /**
@@ -43,6 +42,7 @@ export namespace financeFoliosGet {
         */
         propertyId?: string;
     }
+    
 }
 export namespace financeFoliosPost {
     export interface Params {
@@ -50,7 +50,8 @@ export namespace financeFoliosPost {
         * The definition of the folio.
         */
         request: models.CreateFolioRequest;
-    }    
+    }
+    
 }
 export namespace financeFolioscountGet {
     export interface Params {
@@ -59,6 +60,7 @@ export namespace financeFolioscountGet {
         */
         propertyId?: string;
     }
+    
 }
 
 @Injectable()
