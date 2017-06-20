@@ -43,6 +43,11 @@ export interface FolioModel {
      */
     charges?: Array<models.LineItemModel>;
 
+    /**
+     * The list of payments
+     */
+    payments?: Array<models.PaymentModel>;
+
 }
 
 export type FolioModelWithRawHttp = FolioModel & ResponseModel<FolioModel>;
@@ -68,6 +73,10 @@ export namespace FolioModel {
         } as ApaleoPropertyMetaData),
         charges: Object.freeze({ 
             type: 'Array<models.LineItemModel>',
+            isListContainer: true,
+        } as ApaleoPropertyMetaData),
+        payments: Object.freeze({ 
+            type: 'Array<models.PaymentModel>',
             isListContainer: true,
         } as ApaleoPropertyMetaData),
     };

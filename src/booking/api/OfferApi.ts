@@ -161,8 +161,8 @@ export class OfferApi {
 
         // to determine the Accept header
         let produces: string[] = [
-            'text/plain', 
-            'application/json', 
+            'text/plain',
+            'application/json',
             'text/json'
         ];
 

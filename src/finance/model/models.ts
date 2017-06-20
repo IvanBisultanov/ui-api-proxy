@@ -1,6 +1,7 @@
 export * from './AmountModel';
 export * from './CountModel';
 export * from './CreateFolioRequest';
+export * from './CreatePaymentModel';
 export * from './EmbeddedFolioModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedReservationModel';
@@ -12,3 +13,5 @@ export * from './FolioOwnerModel';
 export * from './LineItemModel';
 export * from './Link';
 export * from './MessageItemCollection';
+export * from './PaymentAmountModel';
+export * from './PaymentModel';

@@ -1,3 +1,4 @@
+export * from './AmountModel';
 export * from './CountModel';
 export * from './CreateRatePlanModel';
 export * from './DeleteRateListModel';

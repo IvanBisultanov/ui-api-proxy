@@ -24,8 +24,6 @@ export interface ApaleoAbstractControl<T extends ApaleoBasePropertyMetaData = Ap
     apaleoMetaData: T;
 }
 
-export interface ApiModule {}
-
 export interface ApaleoBasePropertyMetaData {
     isRequired?: boolean;
     minLength?: number;

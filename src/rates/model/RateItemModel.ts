@@ -31,7 +31,7 @@ export interface RateItemModel {
     /**
      * The rate amount
      */
-    amount?: number;
+    amount?: models.AmountModel;
 
 }
 
@@ -50,8 +50,7 @@ export namespace RateItemModel {
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         amount: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
+            type: 'models.AmountModel',
         } as ApaleoPropertyMetaData),
     };
 
@@ -59,7 +58,7 @@ export namespace RateItemModel {
         const defaultControls = { 
             from: getControl($metaData.from, options, 'from'),
             to: getControl($metaData.to, options, 'to'),
-            amount: getControl($metaData.amount, options, 'amount'),
+            amount: models.AmountModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

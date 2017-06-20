@@ -22,20 +22,23 @@ export interface AmountModel {
 
     netAmount?: number;
 
-    vatType?: AmountModel.VatTypeEnum;
+    vatType: AmountModel.VatTypeEnum;
+
+    currency: string;
 
 }
 export namespace AmountModel {
     export enum VatTypeEnumSet {
         Free = 'Free',
         Reduced = 'Reduced',
-        Normal = 'Normal'
+        Normal = 'Normal',
+        Mixed = 'Mixed'
     }
 
-    export type VatTypeEnum = 'Free' | 'Reduced' | 'Normal';
+    export type VatTypeEnum = 'Free' | 'Reduced' | 'Normal' | 'Mixed';
 
     export const VatTypeEnumValues = Object.freeze(
-        ['Free', 'Reduced', 'Normal'] as VatTypeEnum[]);
+        ['Free', 'Reduced', 'Normal', 'Mixed'] as VatTypeEnum[]);
 }
 
 export type AmountModelWithRawHttp = AmountModel & ResponseModel<AmountModel>;
@@ -51,11 +54,17 @@ export namespace AmountModel {
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         vatType: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isEnum: true,
             allowedEnumValues: VatTypeEnumValues,
             isPrimitiveType: true,
         } as ApaleoEnumPropertyMetaData<VatTypeEnum>),
+        currency: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AmountModel>): FormGroup {
@@ -63,6 +72,7 @@ export namespace AmountModel {
             grossAmount: getControl($metaData.grossAmount, options, 'grossAmount'),
             netAmount: getControl($metaData.netAmount, options, 'netAmount'),
             vatType: getControl($metaData.vatType, options, 'vatType'),
+            currency: getControl($metaData.currency, options, 'currency'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

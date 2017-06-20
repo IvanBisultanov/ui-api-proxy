@@ -26,6 +26,19 @@ import { callApiEndpoint }                                         from '../../f
 
 
 
+export namespace financeFolioActionsByIdPaymentsPost {
+    export interface Params {
+        /**
+        * 
+        */
+        id: string;
+        /**
+        * 
+        */
+        payment: models.CreatePaymentModel;
+    }
+    
+}
 export namespace financeFolioActionsNightAuditPut {
     export interface Params {
         /**
@@ -50,6 +63,18 @@ export class FolioActionsApi {
     }
 
     /**
+     * 
+     * 
+     * @param id 
+     * @param payment 
+     */
+    public financeFolioActionsByIdPaymentsPost(params: financeFolioActionsByIdPaymentsPost.Params, $options?: ApaleoRequestOptions)
+        : Observable<void> {
+        return this.financeFolioActionsByIdPaymentsPostWithRawHttp(params, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
      * Performs the night audit for one property.
      * The night audit will post all outstanding items in the folio.
      * @param propertyId Filter folio list by property id
@@ -62,6 +87,18 @@ export class FolioActionsApi {
 
 
     /**
+     * 
+     * 
+     * @param id 
+     * @param payment 
+     */
+    public financeFolioActionsByIdPaymentsPostWithRawHttp(params: financeFolioActionsByIdPaymentsPost.Params, $options?: ApaleoRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.financeFolioActionsByIdPaymentsPostWithHttpInfo(params, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
      * Performs the night audit for one property.
      * The night audit will post all outstanding items in the folio.
      * @param propertyId Filter folio list by property id
@@ -72,6 +109,70 @@ export class FolioActionsApi {
             .map((response: Response) => new ResponseModel(response));
     }
 
+
+    /**
+     * 
+     * 
+     * @param id 
+     * @param payment 
+     */
+    private financeFolioActionsByIdPaymentsPostWithHttpInfo(params: financeFolioActionsByIdPaymentsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
+        params = params || {};
+        const path = this.basePath + '/finance/folio-actions/${id}/payments'
+                    .replace('${' + 'id' + '}', String(params.id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (params.id === null || params.id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling financeFolioActionsByIdPaymentsPost.');
+        }
+        // verify required parameter 'payment' is not null or undefined
+        if (params.payment === null || params.payment === undefined) {
+            throw new Error('Required parameter payment was null or undefined when calling financeFolioActionsByIdPaymentsPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                body: params.payment == null ? '' : params.payment, // https://github.com/angular/angular/issues/10612
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.financeFolioActionsByIdPaymentsPostWithHttpInfo(params, $options);
+            }
+        )
+    }
 
     /**
      * Performs the night audit for one property.

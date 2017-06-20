@@ -10,7 +10,6 @@ import { RatePlanApi } from './RatePlanApi';
 
 import { Configuration } from '../../configuration';
 import { BASE_PATH } from '../../variables';
-import { ApiModule } from '../../types';
 
 export const APIS = [
     RateApi, RatePlanApi
@@ -61,5 +60,5 @@ export const API_PROVIDERS: Provider[] = [
         ...API_PROVIDERS
     ]
 })
-export class Module implements ApiModule {}
+export class Module {}
 

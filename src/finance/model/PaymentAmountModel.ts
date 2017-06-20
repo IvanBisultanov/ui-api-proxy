@@ -1,6 +1,6 @@
 /**
- * Settings
- * Set up and change global account and property settings.
+ * Apaleo Finance API
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -17,48 +17,32 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface ReplacePropertySettingsModel {
-    /**
-     * The default check-in time
-     */
-    defaultCheckInTime: string;
+export interface PaymentAmountModel {
+    amount: number;
 
-    /**
-     * The default check-out time
-     */
-    defaultCheckOutTime: string;
-
-    /**
-     * The currency a property works with.
-     */
-    currency?: string;
+    currency: string;
 
 }
 
-export type ReplacePropertySettingsModelWithRawHttp = ReplacePropertySettingsModel & ResponseModel<ReplacePropertySettingsModel>;
+export type PaymentAmountModelWithRawHttp = PaymentAmountModel & ResponseModel<PaymentAmountModel>;
 
-export namespace ReplacePropertySettingsModel {
+export namespace PaymentAmountModel {
     export const $metaData = { 
-        defaultCheckInTime: Object.freeze({ 
+        amount: Object.freeze({ 
             isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        defaultCheckOutTime: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
+            type: 'number',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         currency: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplacePropertySettingsModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<PaymentAmountModel>): FormGroup {
         const defaultControls = { 
-            defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
-            defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
+            amount: getControl($metaData.amount, options, 'amount'),
             currency: getControl($metaData.currency, options, 'currency'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

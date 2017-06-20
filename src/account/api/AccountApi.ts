@@ -194,8 +194,8 @@ export class AccountApi {
 
         // to determine the Accept header
         let produces: string[] = [
-            'text/plain', 
-            'application/json', 
+            'text/plain',
+            'application/json',
             'text/json'
         ];
 
@@ -304,8 +304,8 @@ export class AccountApi {
         }
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json', 
-            'text/json', 
+            'application/json',
+            'text/json',
             'application/json-patch+json'
         ];
 
@@ -362,8 +362,8 @@ export class AccountApi {
         }
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json', 
-            'text/json', 
+            'application/json',
+            'text/json',
             'application/json-patch+json'
         ];
 

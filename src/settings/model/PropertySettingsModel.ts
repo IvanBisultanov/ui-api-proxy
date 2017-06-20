@@ -33,6 +33,11 @@ export interface PropertySettingsModel {
      */
     defaultCheckOutTime: string;
 
+    /**
+     * The currency a property works with.
+     */
+    currency?: string;
+
 }
 
 export type PropertySettingsModelWithRawHttp = PropertySettingsModel & ResponseModel<PropertySettingsModel>;
@@ -54,6 +59,10 @@ export namespace PropertySettingsModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
+        currency: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<PropertySettingsModel>): FormGroup {
@@ -61,6 +70,7 @@ export namespace PropertySettingsModel {
             timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),
+            currency: getControl($metaData.currency, options, 'currency'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

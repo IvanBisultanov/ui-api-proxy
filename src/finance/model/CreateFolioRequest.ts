@@ -21,7 +21,7 @@ export interface CreateFolioRequest {
     /**
      * The id of the reservation for which a folio should be created.
      */
-    reservationId?: string;
+    reservationId: string;
 
 }
 
@@ -30,6 +30,7 @@ export type CreateFolioRequestWithRawHttp = CreateFolioRequest & ResponseModel<C
 export namespace CreateFolioRequest {
     export const $metaData = { 
         reservationId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),

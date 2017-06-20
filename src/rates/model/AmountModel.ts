@@ -1,6 +1,6 @@
 /**
- * Apaleo Finance API
- * Everything around the Folio, Invoices and Accounting.
+ * Rates Management
+ * Manage the rate plans and rates to rent out your inventory at the best price.
  *
  * OpenAPI spec version: 1.0.0
  * 

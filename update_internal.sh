@@ -14,9 +14,6 @@ if [ "$1" == "localhost" ]; then
     baseUrl="http://localhost:50000/"
 fi
 
-echo "import { Type } from '@angular/core';" >> src/index.ts
-echo "import { ApiModule } from './types';" >> src/index.ts
-echo "" >> src/index.ts
 echo "export * from './configuration';" >> src/index.ts
 echo "export * from './variables';" >> src/index.ts
 echo "" >> src/index.ts
@@ -32,8 +29,6 @@ do
 
     echo "import * as _$name from './$name';" >> src/index.ts
     echo "export const $name = _$name;" >> src/index.ts
-    echo "export const $name""ApiModule: Type<ApiModule> = _account.Module;" >> src/index.ts
-
     echo "" >> src/index.ts
 
 done < swaggers.txt
