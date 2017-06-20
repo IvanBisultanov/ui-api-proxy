@@ -31,7 +31,8 @@ do
 
     echo "import * as _$name from './$name';" >> src/index.ts
     echo "export const $name = _$name;" >> src/index.ts
-    echo "export const $name""Module: ApiModule = _account.Module;" >> src/index.ts
+    echo "export const $name""ApiModule: ApiModule = _account.Module;" >> src/index.ts
+
     echo "" >> src/index.ts
 
 done < swaggers.txt
