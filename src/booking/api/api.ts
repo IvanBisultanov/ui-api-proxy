@@ -1,3 +1,5 @@
+export * from './BookingApi';
+import { BookingApi } from './BookingApi';
 export * from './OfferApi';
 import { OfferApi } from './OfferApi';
 export * from './ReservationApi';
@@ -6,4 +8,4 @@ export * from './ReservationActionsApi';
 import { ReservationActionsApi } from './ReservationActionsApi';
 export * from './UnitAvailabilityApi';
 import { UnitAvailabilityApi } from './UnitAvailabilityApi';
-export const APIS = [OfferApi, ReservationApi, ReservationActionsApi, UnitAvailabilityApi];
+export const APIS = [BookingApi, OfferApi, ReservationApi, ReservationActionsApi, UnitAvailabilityApi];

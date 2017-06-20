@@ -76,6 +76,10 @@ export namespace bookingReservationsGet {
         */
         pageSize: number;
         /**
+        * Filter result by booking id
+        */
+        bookingId?: string;
+        /**
         * Filter result by requested properties
         */
         propertyIds?: Array<string>;
@@ -100,11 +104,11 @@ export namespace bookingReservationsGet {
         */
         dateFilter?: DateFilterEnum;
         /**
-        * The start of the time interval.
+        * The start of the time interval
         */
         from?: Date;
         /**
-        * The end of the time interval.
+        * The end of the time interval
         */
         to?: Date;
     }
@@ -134,17 +138,12 @@ export namespace bookingReservationsGet {
         ['Arrival', 'Departure', 'Stay', 'Creation', 'Modification'] as DateFilterEnum[]);
     
 }
-export namespace bookingReservationsPost {
-    export interface Params {
-        /**
-        * See CreateReservationModel for details.
-        */
-        requestBody: models.CreateReservationModel;
-    }
-    
-}
 export namespace bookingReservationscountGet {
     export interface Params {
+        /**
+        * Filter result by booking id
+        */
+        bookingId?: string;
         /**
         * Filter result by requested properties
         */
@@ -170,11 +169,11 @@ export namespace bookingReservationscountGet {
         */
         dateFilter?: DateFilterEnum;
         /**
-        * The start of the time interval.
+        * The start of the time interval
         */
         from?: Date;
         /**
-        * The end of the time interval.
+        * The end of the time interval
         */
         to?: Date;
     }
@@ -259,14 +258,15 @@ export class ReservationApi {
      * Returns a list of all reservations, filtered by the specified parameters. If no parameters are set, returns the entire list.
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
+     * @param bookingId Filter result by booking id
      * @param propertyIds Filter result by requested properties
      * @param ratePlanIds Filter result by requested rate plans
      * @param unitIds Filter result by assigned units
      * @param unitTypeIds Filter result by requested unit types
      * @param status Filter result by reservation status
      * @param dateFilter Filter by date and time attributes of reservation. Use in combination with the &#39;To&#39; and &#39;From&#39; attributes
-     * @param from The start of the time interval.
-     * @param to The end of the time interval.
+     * @param from The start of the time interval
+     * @param to The end of the time interval
      */
     public bookingReservationsGet(params: bookingReservationsGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.ReservationListModel | undefined> {
@@ -275,27 +275,17 @@ export class ReservationApi {
     }
 
     /**
-     * Creates a reservation.
-     * Creates a reservation for a specific guest, unit type, and time frame.
-     * @param requestBody See CreateReservationModel for details.
-     */
-    public bookingReservationsPost(params: bookingReservationsPost.Params, $options?: ApaleoRequestOptions)
-        : Observable<models.ReservationCreatedModel | undefined> {
-        return this.bookingReservationsPostWithRawHttp(params, $options)
-            .map(response => response.$hasValue(response) ? response : undefined);
-    }
-
-    /**
      * Returns the number of reservations fulfilling the criteria specified in the parameters.
      * If no parameters are set, returns the total count of reservations.
+     * @param bookingId Filter result by booking id
      * @param propertyIds Filter result by requested properties
      * @param ratePlanIds Filter result by requested rate plans
      * @param unitIds Filter result by assigned units
      * @param unitTypeIds Filter result by requested unit types
      * @param status Filter result by reservation status
      * @param dateFilter Filter by date and time attributes of reservation. Use in combination with the &#39;To&#39; and &#39;From&#39; attributes
-     * @param from The start of the time interval.
-     * @param to The end of the time interval.
+     * @param from The start of the time interval
+     * @param to The end of the time interval
      */
     public bookingReservationscountGet(params: bookingReservationscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.CountModel | undefined> {
@@ -345,14 +335,15 @@ export class ReservationApi {
      * Returns a list of all reservations, filtered by the specified parameters. If no parameters are set, returns the entire list.
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
+     * @param bookingId Filter result by booking id
      * @param propertyIds Filter result by requested properties
      * @param ratePlanIds Filter result by requested rate plans
      * @param unitIds Filter result by assigned units
      * @param unitTypeIds Filter result by requested unit types
      * @param status Filter result by reservation status
      * @param dateFilter Filter by date and time attributes of reservation. Use in combination with the &#39;To&#39; and &#39;From&#39; attributes
-     * @param from The start of the time interval.
-     * @param to The end of the time interval.
+     * @param from The start of the time interval
+     * @param to The end of the time interval
      */
     public bookingReservationsGetWithRawHttp(params: bookingReservationsGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.ReservationListModel>> {
@@ -361,27 +352,17 @@ export class ReservationApi {
     }
 
     /**
-     * Creates a reservation.
-     * Creates a reservation for a specific guest, unit type, and time frame.
-     * @param requestBody See CreateReservationModel for details.
-     */
-    public bookingReservationsPostWithRawHttp(params: bookingReservationsPost.Params, $options?: ApaleoRequestOptions)
-        : Observable<ResponseModel<models.ReservationCreatedModel>> {
-        return this.bookingReservationsPostWithHttpInfo(params, $options)
-            .map((response: Response) => new ResponseModel(response));
-    }
-
-    /**
      * Returns the number of reservations fulfilling the criteria specified in the parameters.
      * If no parameters are set, returns the total count of reservations.
+     * @param bookingId Filter result by booking id
      * @param propertyIds Filter result by requested properties
      * @param ratePlanIds Filter result by requested rate plans
      * @param unitIds Filter result by assigned units
      * @param unitTypeIds Filter result by requested unit types
      * @param status Filter result by reservation status
      * @param dateFilter Filter by date and time attributes of reservation. Use in combination with the &#39;To&#39; and &#39;From&#39; attributes
-     * @param from The start of the time interval.
-     * @param to The end of the time interval.
+     * @param from The start of the time interval
+     * @param to The end of the time interval
      */
     public bookingReservationscountGetWithRawHttp(params: bookingReservationscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
@@ -587,14 +568,15 @@ export class ReservationApi {
      * Returns a list of all reservations, filtered by the specified parameters. If no parameters are set, returns the entire list.
      * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
      * @param pageSize Page size
+     * @param bookingId Filter result by booking id
      * @param propertyIds Filter result by requested properties
      * @param ratePlanIds Filter result by requested rate plans
      * @param unitIds Filter result by assigned units
      * @param unitTypeIds Filter result by requested unit types
      * @param status Filter result by reservation status
      * @param dateFilter Filter by date and time attributes of reservation. Use in combination with the &#39;To&#39; and &#39;From&#39; attributes
-     * @param from The start of the time interval.
-     * @param to The end of the time interval.
+     * @param from The start of the time interval
+     * @param to The end of the time interval
      */
     private bookingReservationsGetWithHttpInfo(params: bookingReservationsGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
@@ -610,6 +592,10 @@ export class ReservationApi {
         if (params.pageSize === null || params.pageSize === undefined) {
             throw new Error('Required parameter pageSize was null or undefined when calling bookingReservationsGet.');
         }
+        if (params.bookingId !== undefined) {
+            queryParameters.set('bookingId', <any>params.bookingId);
+        }
+
         if (params.propertyIds) {
             queryParameters.set('propertyIds', params.propertyIds.join(COLLECTION_FORMATS['csv']));
         }
@@ -691,77 +677,17 @@ export class ReservationApi {
     }
 
     /**
-     * Creates a reservation.
-     * Creates a reservation for a specific guest, unit type, and time frame.
-     * @param requestBody See CreateReservationModel for details.
-     */
-    private bookingReservationsPostWithHttpInfo(params: bookingReservationsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
-        params = params || {};
-        const path = this.basePath + '/booking/reservations';
-
-        let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'requestBody' is not null or undefined
-        if (params.requestBody === null || params.requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling bookingReservationsPost.');
-        }
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json', 
-            'text/json', 
-            'application/json-patch+json'
-        ];
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'text/plain', 
-            'application/json', 
-            'text/json'
-        ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-        headers.set('Content-Type', 'application/json');
-
-        return callApiEndpoint(
-            this.http, 
-            path,
-            headers,
-            {
-                method: RequestMethod.Post,
-                headers: headers,
-                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
-                search: queryParameters,
-                withCredentials: this.configuration.withCredentials
-            },
-            Object.assign({}, this.configuration, $options),
-            retryTimesToGo => {
-                $options = $options || {};
-                $options.retryTimes = retryTimesToGo;
-
-                return this.bookingReservationsPostWithHttpInfo(params, $options);
-            }
-        )
-    }
-
-    /**
      * Returns the number of reservations fulfilling the criteria specified in the parameters.
      * If no parameters are set, returns the total count of reservations.
+     * @param bookingId Filter result by booking id
      * @param propertyIds Filter result by requested properties
      * @param ratePlanIds Filter result by requested rate plans
      * @param unitIds Filter result by assigned units
      * @param unitTypeIds Filter result by requested unit types
      * @param status Filter result by reservation status
      * @param dateFilter Filter by date and time attributes of reservation. Use in combination with the &#39;To&#39; and &#39;From&#39; attributes
-     * @param from The start of the time interval.
-     * @param to The end of the time interval.
+     * @param from The start of the time interval
+     * @param to The end of the time interval
      */
     private bookingReservationscountGetWithHttpInfo(params: bookingReservationscountGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
@@ -769,6 +695,10 @@ export class ReservationApi {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        if (params.bookingId !== undefined) {
+            queryParameters.set('bookingId', <any>params.bookingId);
+        }
+
         if (params.propertyIds) {
             queryParameters.set('propertyIds', params.propertyIds.join(COLLECTION_FORMATS['csv']));
         }

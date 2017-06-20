@@ -24,6 +24,11 @@ export interface ReservationModel {
     id: string;
 
     /**
+     * Reservation id
+     */
+    bookingId: string;
+
+    /**
      * Status of the reservation
      */
     status: ReservationModel.StatusEnum;
@@ -176,6 +181,11 @@ export namespace ReservationModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
+        bookingId: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
         status: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -300,6 +310,7 @@ export namespace ReservationModel {
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReservationModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
+            bookingId: getControl($metaData.bookingId, options, 'bookingId'),
             status: getControl($metaData.status, options, 'status'),
             checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),
             checkOutTime: getControl($metaData.checkOutTime, options, 'checkOutTime'),
