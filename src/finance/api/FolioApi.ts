@@ -324,7 +324,7 @@ export class FolioApi {
             {
                 method: RequestMethod.Post,
                 headers: headers,
-                body: params.request == null ? '' : JSON.stringify(params.request), // https://github.com/angular/angular/issues/10612
+                body: params.request == null ? '' : params.request, // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },

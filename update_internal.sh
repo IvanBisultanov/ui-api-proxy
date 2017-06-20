@@ -14,6 +14,12 @@ if [ "$1" == "localhost" ]; then
     baseUrl="http://localhost:50000/"
 fi
 
+echo "import { ApiModule } from './types';" >> src/index.ts
+echo "" >> src/index.ts
+echo "export * from './configuration';" >> src/index.ts
+echo "export * from './variables';" >> src/index.ts
+echo "" >> src/index.ts
+
 IFS='|'
 while read -r name url
 do
@@ -25,10 +31,9 @@ do
 
     echo "import * as _$name from './$name';" >> src/index.ts
     echo "export const $name = _$name;" >> src/index.ts
+    echo "export const $name""Module: ApiModule = _account.Module;" >> src/index.ts
+    echo "" >> src/index.ts
 
 done < swaggers.txt
-
-echo "export * from './configuration';" >> src/index.ts
-echo "export * from './variables';" >> src/index.ts
 
 cp -rf templates/* src

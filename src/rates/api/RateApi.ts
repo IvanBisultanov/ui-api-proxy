@@ -264,7 +264,7 @@ export class RateApi {
             {
                 method: RequestMethod.Delete,
                 headers: headers,
-                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : params.requestBody, // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
@@ -420,7 +420,7 @@ export class RateApi {
             {
                 method: RequestMethod.Put,
                 headers: headers,
-                body: params.requestBody == null ? '' : JSON.stringify(params.requestBody), // https://github.com/angular/angular/issues/10612
+                body: params.requestBody == null ? '' : params.requestBody, // https://github.com/angular/angular/issues/10612
                 search: queryParameters,
                 withCredentials: this.configuration.withCredentials
             },
