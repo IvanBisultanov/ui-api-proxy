@@ -8,11 +8,14 @@ import { FolioApi } from './FolioApi';
 export * from './FolioActionsApi';
 import { FolioActionsApi } from './FolioActionsApi';
 
+export * from './TypesApi';
+import { TypesApi } from './TypesApi';
+
 import { Configuration } from '../../configuration';
 import { BASE_PATH } from '../../variables';
 
 export const APIS = [
-    FolioApi, FolioActionsApi
+    FolioApi, FolioActionsApi, TypesApi
 ];
 
 export function FolioApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: FolioApi) {
@@ -47,8 +50,24 @@ export const FolioActionsApiProvider: Provider = {
     useFactory: FolioActionsApiFactory
 }
 
+export function TypesApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: TypesApi) {
+    return parent || new TypesApi(http, config, locale, basePath);
+}
+
+export const TypesApiProvider: Provider = {
+    provide: TypesApi,
+    deps: [
+        Http,
+        Configuration,
+        LOCALE_ID,
+        BASE_PATH,
+        [new Optional(), new SkipSelf(), TypesApi]
+    ],
+    useFactory: TypesApiFactory
+}
+
 export const API_PROVIDERS: Provider[] = [
-    FolioApiProvider, FolioActionsApiProvider
+    FolioApiProvider, FolioActionsApiProvider, TypesApiProvider
 ];
 
 @NgModule({

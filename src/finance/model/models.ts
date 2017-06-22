@@ -2,6 +2,7 @@ export * from './AmountModel';
 export * from './CountModel';
 export * from './CreateFolioRequest';
 export * from './CreatePaymentModel';
+export * from './CurrencyListModel';
 export * from './EmbeddedFolioModel';
 export * from './EmbeddedPropertyModel';
 export * from './EmbeddedReservationModel';
