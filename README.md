@@ -1,5 +1,7 @@
 # ui-api-proxy - API Proxy for SPA UI
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/apaleo/ui-api-proxy.svg)](https://greenkeeper.io/)
+
 To start using it, you need to define a configuraiton provider and `BASAE_PATH` provider something like this:
 
 ````
