@@ -70,8 +70,8 @@ export class BookingApi {
     }
 
     /**
-     * Creates a booking for multiple reservations.
-     * Creates a booking taking multiple reservations as input
+     * Creates a booking for one or more reservations.
+     * Creates a booking taking a list of reservations as input
      * @param requestBody The list of reservations you want to create.
      */
     public bookingBookingsPost(params: bookingBookingsPost.Params, $options?: ApaleoRequestOptions)
@@ -93,8 +93,8 @@ export class BookingApi {
     }
 
     /**
-     * Creates a booking for multiple reservations.
-     * Creates a booking taking multiple reservations as input
+     * Creates a booking for one or more reservations.
+     * Creates a booking taking a list of reservations as input
      * @param requestBody The list of reservations you want to create.
      */
     public bookingBookingsPostWithRawHttp(params: bookingBookingsPost.Params, $options?: ApaleoRequestOptions)
@@ -161,8 +161,8 @@ export class BookingApi {
     }
 
     /**
-     * Creates a booking for multiple reservations.
-     * Creates a booking taking multiple reservations as input
+     * Creates a booking for one or more reservations.
+     * Creates a booking taking a list of reservations as input
      * @param requestBody The list of reservations you want to create.
      */
     private bookingBookingsPostWithHttpInfo(params: bookingBookingsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {

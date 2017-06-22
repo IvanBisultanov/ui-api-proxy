@@ -44,15 +44,6 @@ export namespace financeFoliosGet {
     }
     
 }
-export namespace financeFoliosPost {
-    export interface Params {
-        /**
-        * The definition of the folio.
-        */
-        request: models.CreateFolioRequest;
-    }
-    
-}
 export namespace financeFolioscountGet {
     export interface Params {
         /**
@@ -99,17 +90,6 @@ export class FolioApi {
     }
 
     /**
-     * Creates a folio.
-     * Creates a folio.
-     * @param request The definition of the folio.
-     */
-    public financeFoliosPost(params: financeFoliosPost.Params, $options?: ApaleoRequestOptions)
-        : Observable<models.FolioCreatedModel | undefined> {
-        return this.financeFoliosPostWithRawHttp(params, $options)
-            .map(response => response.$hasValue(response) ? response : undefined);
-    }
-
-    /**
      * Returns number of folios.
      * Returns number of folios matching the filter criteria
      * @param propertyId Filter folio list by property id
@@ -140,17 +120,6 @@ export class FolioApi {
     public financeFoliosGetWithRawHttp(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.FolioListModel>> {
         return this.financeFoliosGetWithHttpInfo(params, $options)
-            .map((response: Response) => new ResponseModel(response));
-    }
-
-    /**
-     * Creates a folio.
-     * Creates a folio.
-     * @param request The definition of the folio.
-     */
-    public financeFoliosPostWithRawHttp(params: financeFoliosPost.Params, $options?: ApaleoRequestOptions)
-        : Observable<ResponseModel<models.FolioCreatedModel>> {
-        return this.financeFoliosPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -273,67 +242,6 @@ export class FolioApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.financeFoliosGetWithHttpInfo(params, $options);
-            }
-        )
-    }
-
-    /**
-     * Creates a folio.
-     * Creates a folio.
-     * @param request The definition of the folio.
-     */
-    private financeFoliosPostWithHttpInfo(params: financeFoliosPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
-        params = params || {};
-        const path = this.basePath + '/finance/folios';
-
-        let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'request' is not null or undefined
-        if (params.request === null || params.request === undefined) {
-            throw new Error('Required parameter request was null or undefined when calling financeFoliosPost.');
-        }
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json',
-            'text/json',
-            'application/json-patch+json'
-        ];
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'text/plain',
-            'application/json',
-            'text/json'
-        ];
-
-        // authentication (oauth2) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-        headers.set('Content-Type', 'application/json');
-
-        return callApiEndpoint(
-            this.http, 
-            path,
-            headers,
-            {
-                method: RequestMethod.Post,
-                headers: headers,
-                body: params.request == null ? '' : params.request, // https://github.com/angular/angular/issues/10612
-                search: queryParameters,
-                withCredentials: this.configuration.withCredentials
-            },
-            Object.assign({}, this.configuration, $options),
-            retryTimesToGo => {
-                $options = $options || {};
-                $options.retryTimes = retryTimesToGo;
-
-                return this.financeFoliosPostWithHttpInfo(params, $options);
             }
         )
     }
