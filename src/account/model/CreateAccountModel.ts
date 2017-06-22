@@ -46,7 +46,7 @@ export interface CreateAccountModel {
     /**
      * The location of the account
      */
-    location: models.ReplaceLocationModel;
+    location: models.ReplaceAddressModel;
 
 }
 
@@ -86,7 +86,7 @@ export namespace CreateAccountModel {
         } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
-            type: 'models.ReplaceLocationModel',
+            type: 'models.ReplaceAddressModel',
         } as ApaleoPropertyMetaData),
     };
 
@@ -97,7 +97,7 @@ export namespace CreateAccountModel {
             description: getControl($metaData.description, options, 'description'),
             defaultLanguage: getControl($metaData.defaultLanguage, options, 'defaultLanguage'),
             logoUrl: getControl($metaData.logoUrl, options, 'logoUrl'),
-            location: models.ReplaceLocationModel.$buildForm(fb),
+            location: models.ReplaceAddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

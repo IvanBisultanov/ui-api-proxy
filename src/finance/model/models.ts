@@ -1,3 +1,4 @@
+export * from './AddressModel';
 export * from './AmountModel';
 export * from './CountModel';
 export * from './CreatePaymentModel';

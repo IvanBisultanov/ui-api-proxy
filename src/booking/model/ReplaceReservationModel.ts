@@ -52,29 +52,9 @@ export interface ReplaceReservationModel {
     phone?: string;
 
     /**
-     * Street of the guest
+     * Address of the guest
      */
-    street?: string;
-
-    /**
-     * Street number of the guest
-     */
-    number?: string;
-
-    /**
-     * City of the guest
-     */
-    city: string;
-
-    /**
-     * Postal code of the guest
-     */
-    postalCode: string;
-
-    /**
-     * Country code of the guest
-     */
-    countryCode: string;
+    address: models.ReplaceAddressModel;
 
 }
 
@@ -114,34 +94,9 @@ export namespace ReplaceReservationModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        street: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        number: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        city: Object.freeze({ 
+        address: Object.freeze({ 
             isRequired: true,
-            minLength: 1,
-            maxLength: 25,
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        postalCode: Object.freeze({ 
-            isRequired: true,
-            minLength: 1,
-            maxLength: 10,
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        countryCode: Object.freeze({ 
-            isRequired: true,
-            minLength: 2,
-            maxLength: 2,
-            type: 'string',
-            isPrimitiveType: true,
+            type: 'models.ReplaceAddressModel',
         } as ApaleoPropertyMetaData),
     };
 
@@ -153,11 +108,7 @@ export namespace ReplaceReservationModel {
             lastName: getControl($metaData.lastName, options, 'lastName'),
             email: getControl($metaData.email, options, 'email'),
             phone: getControl($metaData.phone, options, 'phone'),
-            street: getControl($metaData.street, options, 'street'),
-            number: getControl($metaData.number, options, 'number'),
-            city: getControl($metaData.city, options, 'city'),
-            postalCode: getControl($metaData.postalCode, options, 'postalCode'),
-            countryCode: getControl($metaData.countryCode, options, 'countryCode'),
+            address: models.ReplaceAddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

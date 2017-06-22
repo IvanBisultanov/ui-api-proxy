@@ -44,7 +44,7 @@ export interface PropertyModel {
     /**
      * The location of the property
      */
-    location: models.LocationModel;
+    location: models.AddressModel;
 
     /**
      * The time zone
@@ -96,7 +96,7 @@ export namespace PropertyModel {
         } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
-            type: 'models.LocationModel',
+            type: 'models.AddressModel',
         } as ApaleoPropertyMetaData),
         timeZone: Object.freeze({ 
             isRequired: true,
@@ -123,7 +123,7 @@ export namespace PropertyModel {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
-            location: models.LocationModel.$buildForm(fb),
+            location: models.AddressModel.$buildForm(fb),
             timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),

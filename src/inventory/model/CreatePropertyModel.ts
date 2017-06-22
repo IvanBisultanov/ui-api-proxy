@@ -36,7 +36,7 @@ export interface CreatePropertyModel {
     /**
      * The location of the property
      */
-    location: models.ReplaceLocationModel;
+    location: models.ReplaceAddressModel;
 
     /**
      * The time zone name of the property from the IANA Time Zone Database.  (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
@@ -85,7 +85,7 @@ export namespace CreatePropertyModel {
         } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
-            type: 'models.ReplaceLocationModel',
+            type: 'models.ReplaceAddressModel',
         } as ApaleoPropertyMetaData),
         timeZone: Object.freeze({ 
             isRequired: true,
@@ -111,7 +111,7 @@ export namespace CreatePropertyModel {
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<CreatePropertyModel>): FormGroup {
         const defaultControls = { 
             code: getControl($metaData.code, options, 'code'),
-            location: models.ReplaceLocationModel.$buildForm(fb),
+            location: models.ReplaceAddressModel.$buildForm(fb),
             timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),

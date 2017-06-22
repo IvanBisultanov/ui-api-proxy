@@ -12,69 +12,61 @@
 
 import * as models from './models';
 
-/**
- * With this request you can modify an account
- */
 import { FormBuilder, FormGroup }                                               from '@angular/forms';
 import { ResponseModel }                                                        from '../../models';
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface ReplaceAccountModel {
-    /**
-     * The name for the account, which usually should be the company name
-     */
-    name: string;
+export interface AddressModel {
+    addressline1: string;
 
-    /**
-     * The description for the account
-     */
-    description: string;
+    addressline2?: string;
 
-    /**
-     * The URL of the account logo
-     */
-    logoUrl?: string;
+    postalCode: string;
 
-    /**
-     * The location of the account
-     */
-    location: models.ReplaceAddressModel;
+    city: string;
+
+    countryCode: string;
 
 }
 
-export type ReplaceAccountModelWithRawHttp = ReplaceAccountModel & ResponseModel<ReplaceAccountModel>;
+export type AddressModelWithRawHttp = AddressModel & ResponseModel<AddressModel>;
 
-export namespace ReplaceAccountModel {
+export namespace AddressModel {
     export const $metaData = { 
-        name: Object.freeze({ 
-            isRequired: true,
-            minLength: 1,
-            maxLength: 40,
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        description: Object.freeze({ 
+        addressline1: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        logoUrl: Object.freeze({ 
+        addressline2: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        location: Object.freeze({ 
+        postalCode: Object.freeze({ 
             isRequired: true,
-            type: 'models.ReplaceAddressModel',
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        city: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        countryCode: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceAccountModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AddressModel>): FormGroup {
         const defaultControls = { 
-            name: getControl($metaData.name, options, 'name'),
-            description: getControl($metaData.description, options, 'description'),
-            logoUrl: getControl($metaData.logoUrl, options, 'logoUrl'),
-            location: models.ReplaceAddressModel.$buildForm(fb),
+            addressline1: getControl($metaData.addressline1, options, 'addressline1'),
+            addressline2: getControl($metaData.addressline2, options, 'addressline2'),
+            postalCode: getControl($metaData.postalCode, options, 'postalCode'),
+            city: getControl($metaData.city, options, 'city'),
+            countryCode: getControl($metaData.countryCode, options, 'countryCode'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

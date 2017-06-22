@@ -17,80 +17,58 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface PropertyItemModel {
-    /**
-     * The property id
-     */
-    id: string;
+export interface ReplaceAddressModel {
+    addressline1: string;
 
-    /**
-     * The code for the property that can be shown in reports and table views
-     */
-    code: string;
+    addressline2?: string;
 
-    /**
-     * The name for the property
-     */
-    name: string;
+    postalCode: string;
 
-    /**
-     * The description for the property
-     */
-    description: string;
+    city: string;
 
-    /**
-     * The location of the property
-     */
-    location: models.AddressModel;
-
-    /**
-     * Collection of links to related resources
-     */
-    links?: { [key: string]: models.Link; };
+    countryCode: string;
 
 }
 
-export type PropertyItemModelWithRawHttp = PropertyItemModel & ResponseModel<PropertyItemModel>;
+export type ReplaceAddressModelWithRawHttp = ReplaceAddressModel & ResponseModel<ReplaceAddressModel>;
 
-export namespace PropertyItemModel {
+export namespace ReplaceAddressModel {
     export const $metaData = { 
-        id: Object.freeze({ 
+        addressline1: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        code: Object.freeze({ 
+        addressline2: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        postalCode: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        name: Object.freeze({ 
+        city: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        description: Object.freeze({ 
+        countryCode: Object.freeze({ 
             isRequired: true,
+            minLength: 2,
+            maxLength: 2,
             type: 'string',
             isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        location: Object.freeze({ 
-            isRequired: true,
-            type: 'models.AddressModel',
-        } as ApaleoPropertyMetaData),
-        links: Object.freeze({ 
-            type: '{ [key: string]: models.Link; }',
-            isMapContainer: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<PropertyItemModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceAddressModel>): FormGroup {
         const defaultControls = { 
-            id: getControl($metaData.id, options, 'id'),
-            code: getControl($metaData.code, options, 'code'),
-            name: getControl($metaData.name, options, 'name'),
-            description: getControl($metaData.description, options, 'description'),
-            location: models.AddressModel.$buildForm(fb),
+            addressline1: getControl($metaData.addressline1, options, 'addressline1'),
+            addressline2: getControl($metaData.addressline2, options, 'addressline2'),
+            postalCode: getControl($metaData.postalCode, options, 'postalCode'),
+            city: getControl($metaData.city, options, 'city'),
+            countryCode: getControl($metaData.countryCode, options, 'countryCode'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

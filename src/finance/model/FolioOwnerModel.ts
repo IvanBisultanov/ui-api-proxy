@@ -19,59 +19,39 @@ import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } 
 
 export interface FolioOwnerModel {
     /**
-     * The guest title
+     * Title
      */
     title?: string;
 
     /**
-     * First name of the guest
+     * First name
      */
     firstName?: string;
 
     /**
-     * Middle initial of the guest
+     * Middle initial
      */
     middleInitial?: string;
 
     /**
-     * Last name of the guest
+     * Last name
      */
     lastName: string;
 
     /**
-     * Email address number of the guest
+     * Email address
      */
     email?: string;
 
     /**
-     * Phone number of the guest
+     * Phone number
      */
     phone?: string;
 
     /**
-     * Street of the guest
+     * Address
      */
-    street?: string;
-
-    /**
-     * Street number of the guest
-     */
-    number?: string;
-
-    /**
-     * City of the guest
-     */
-    city?: string;
-
-    /**
-     * Postal code of the guest
-     */
-    postalCode?: string;
-
-    /**
-     * Country code of the guest
-     */
-    countryCode?: string;
+    address?: models.AddressModel;
 
 }
 
@@ -104,25 +84,8 @@ export namespace FolioOwnerModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        street: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        number: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        city: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        postalCode: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        countryCode: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
+        address: Object.freeze({ 
+            type: 'models.AddressModel',
         } as ApaleoPropertyMetaData),
     };
 
@@ -134,11 +97,7 @@ export namespace FolioOwnerModel {
             lastName: getControl($metaData.lastName, options, 'lastName'),
             email: getControl($metaData.email, options, 'email'),
             phone: getControl($metaData.phone, options, 'phone'),
-            street: getControl($metaData.street, options, 'street'),
-            number: getControl($metaData.number, options, 'number'),
-            city: getControl($metaData.city, options, 'city'),
-            postalCode: getControl($metaData.postalCode, options, 'postalCode'),
-            countryCode: getControl($metaData.countryCode, options, 'countryCode'),
+            address: models.AddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

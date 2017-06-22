@@ -49,7 +49,7 @@ export interface AccountModel {
     /**
      * The location of the account
      */
-    location: models.LocationModel;
+    location: models.AddressModel;
 
 }
 
@@ -83,7 +83,7 @@ export namespace AccountModel {
         } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
-            type: 'models.LocationModel',
+            type: 'models.AddressModel',
         } as ApaleoPropertyMetaData),
     };
 
@@ -94,7 +94,7 @@ export namespace AccountModel {
             description: getControl($metaData.description, options, 'description'),
             defaultLanguage: getControl($metaData.defaultLanguage, options, 'defaultLanguage'),
             logoUrl: getControl($metaData.logoUrl, options, 'logoUrl'),
-            location: models.LocationModel.$buildForm(fb),
+            location: models.AddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

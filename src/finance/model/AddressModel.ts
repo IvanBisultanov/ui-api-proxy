@@ -1,6 +1,6 @@
 /**
- * Inventory Management
- * Setup and manage the account’s properties and all the units to rent out: rooms, parking lots, beds, meeting rooms, etc.
+ * Apaleo Finance API
+ * Everything around the Folio, Invoices and Accounting.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -17,8 +17,10 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface LocationModel {
-    street: string;
+export interface AddressModel {
+    addressline1: string;
+
+    addressline2?: string;
 
     postalCode: string;
 
@@ -28,12 +30,16 @@ export interface LocationModel {
 
 }
 
-export type LocationModelWithRawHttp = LocationModel & ResponseModel<LocationModel>;
+export type AddressModelWithRawHttp = AddressModel & ResponseModel<AddressModel>;
 
-export namespace LocationModel {
+export namespace AddressModel {
     export const $metaData = { 
-        street: Object.freeze({ 
+        addressline1: Object.freeze({ 
             isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        addressline2: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
@@ -54,9 +60,10 @@ export namespace LocationModel {
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<LocationModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AddressModel>): FormGroup {
         const defaultControls = { 
-            street: getControl($metaData.street, options, 'street'),
+            addressline1: getControl($metaData.addressline1, options, 'addressline1'),
+            addressline2: getControl($metaData.addressline2, options, 'addressline2'),
             postalCode: getControl($metaData.postalCode, options, 'postalCode'),
             city: getControl($metaData.city, options, 'city'),
             countryCode: getControl($metaData.countryCode, options, 'countryCode'),

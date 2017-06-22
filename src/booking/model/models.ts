@@ -1,3 +1,4 @@
+export * from './AddressModel';
 export * from './AmendReservationModel';
 export * from './AmountModel';
 export * from './AvailableUnitItemModel';
@@ -15,6 +16,7 @@ export * from './Link';
 export * from './MessageItemCollection';
 export * from './OfferModel';
 export * from './OfferTimeSliceModel';
+export * from './ReplaceAddressModel';
 export * from './ReplaceReservationModel';
 export * from './ReservationAmendedModel';
 export * from './ReservationAssignedUnitModel';

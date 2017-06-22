@@ -34,7 +34,7 @@ export interface ReplacePropertyModel {
     /**
      * The location of the property
      */
-    location: models.ReplaceLocationModel;
+    location: models.ReplaceAddressModel;
 
 }
 
@@ -56,13 +56,13 @@ export namespace ReplacePropertyModel {
         } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
-            type: 'models.ReplaceLocationModel',
+            type: 'models.ReplaceAddressModel',
         } as ApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplacePropertyModel>): FormGroup {
         const defaultControls = { 
-            location: models.ReplaceLocationModel.$buildForm(fb),
+            location: models.ReplaceAddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

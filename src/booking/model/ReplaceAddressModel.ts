@@ -1,6 +1,6 @@
 /**
- * Account
- * Manage accounts, subscriptions and more.
+ * Booking
+ * Resources and methods to manage guest journeys.
  *
  * OpenAPI spec version: 1.0.0
  * 
@@ -17,8 +17,10 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface LocationModel {
-    street: string;
+export interface ReplaceAddressModel {
+    addressline1: string;
+
+    addressline2?: string;
 
     postalCode: string;
 
@@ -28,12 +30,16 @@ export interface LocationModel {
 
 }
 
-export type LocationModelWithRawHttp = LocationModel & ResponseModel<LocationModel>;
+export type ReplaceAddressModelWithRawHttp = ReplaceAddressModel & ResponseModel<ReplaceAddressModel>;
 
-export namespace LocationModel {
+export namespace ReplaceAddressModel {
     export const $metaData = { 
-        street: Object.freeze({ 
+        addressline1: Object.freeze({ 
             isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        addressline2: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
@@ -49,14 +55,17 @@ export namespace LocationModel {
         } as ApaleoPropertyMetaData),
         countryCode: Object.freeze({ 
             isRequired: true,
+            minLength: 2,
+            maxLength: 2,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<LocationModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceAddressModel>): FormGroup {
         const defaultControls = { 
-            street: getControl($metaData.street, options, 'street'),
+            addressline1: getControl($metaData.addressline1, options, 'addressline1'),
+            addressline2: getControl($metaData.addressline2, options, 'addressline2'),
             postalCode: getControl($metaData.postalCode, options, 'postalCode'),
             city: getControl($metaData.city, options, 'city'),
             countryCode: getControl($metaData.countryCode, options, 'countryCode'),
