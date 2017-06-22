@@ -8,6 +8,5 @@ node_modules
 *.ngsummary.ts
 npm-debug.log
 npm-debug.log.*
-package-lock.json
 .vscode
 api.ngfactory.ts
