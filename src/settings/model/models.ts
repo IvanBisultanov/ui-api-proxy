@@ -5,3 +5,7 @@ export * from './PropertySettingsModel';
 export * from './ReplaceLanguageModel';
 export * from './ReplaceLanguagesModel';
 export * from './ReplacePropertySettingsModel';
+export * from './ReplaceTimeSliceDefinitionListModel';
+export * from './ReplaceTimeSliceDefinitionModel';
+export * from './TimeSliceDefinitionItemModel';
+export * from './TimeSliceDefinitionListModel';

@@ -48,6 +48,28 @@ export namespace settingsPropertiesByIdPut {
     }
     
 }
+export namespace settingsPropertiesByIdTimeSliceDefinitionsGet {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+    }
+    
+}
+export namespace settingsPropertiesByIdTimeSliceDefinitionsPut {
+    export interface Params {
+        /**
+        * The id of the property.
+        */
+        id: string;
+        /**
+        * The time slice definitions.
+        */
+        requestBody: models.ReplaceTimeSliceDefinitionListModel;
+    }
+    
+}
 
 @Injectable()
 export class PropertySettingsApi {
@@ -64,7 +86,7 @@ export class PropertySettingsApi {
 
     /**
      * Get property settings
-     * Get base settings for a property
+     * Get base settings for a property.
      * @param id The id of the property.
      */
     public settingsPropertiesByIdGet(params: settingsPropertiesByIdGet.Params, $options?: ApaleoRequestOptions)
@@ -85,10 +107,33 @@ export class PropertySettingsApi {
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
+    /**
+     * Get time slice definitions
+     * Get time slice definitions for a property. A time slice definition specifies in which individual time ranges  inventory can be sold. They are used when setting up a rate plan.
+     * @param id The id of the property.
+     */
+    public settingsPropertiesByIdTimeSliceDefinitionsGet(params: settingsPropertiesByIdTimeSliceDefinitionsGet.Params, $options?: ApaleoRequestOptions)
+        : Observable<models.TimeSliceDefinitionListModel | undefined> {
+        return this.settingsPropertiesByIdTimeSliceDefinitionsGetWithRawHttp(params, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Replaces time slice definitions for the property
+     * Use this call to repace the time slice definitions of the property.
+     * @param id The id of the property.
+     * @param requestBody The time slice definitions.
+     */
+    public settingsPropertiesByIdTimeSliceDefinitionsPut(params: settingsPropertiesByIdTimeSliceDefinitionsPut.Params, $options?: ApaleoRequestOptions)
+        : Observable<void> {
+        return this.settingsPropertiesByIdTimeSliceDefinitionsPutWithRawHttp(params, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
 
     /**
      * Get property settings
-     * Get base settings for a property
+     * Get base settings for a property.
      * @param id The id of the property.
      */
     public settingsPropertiesByIdGetWithRawHttp(params: settingsPropertiesByIdGet.Params, $options?: ApaleoRequestOptions)
@@ -109,10 +154,33 @@ export class PropertySettingsApi {
             .map((response: Response) => new ResponseModel(response));
     }
 
+    /**
+     * Get time slice definitions
+     * Get time slice definitions for a property. A time slice definition specifies in which individual time ranges  inventory can be sold. They are used when setting up a rate plan.
+     * @param id The id of the property.
+     */
+    public settingsPropertiesByIdTimeSliceDefinitionsGetWithRawHttp(params: settingsPropertiesByIdTimeSliceDefinitionsGet.Params, $options?: ApaleoRequestOptions)
+        : Observable<ResponseModel<models.TimeSliceDefinitionListModel>> {
+        return this.settingsPropertiesByIdTimeSliceDefinitionsGetWithHttpInfo(params, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Replaces time slice definitions for the property
+     * Use this call to repace the time slice definitions of the property.
+     * @param id The id of the property.
+     * @param requestBody The time slice definitions.
+     */
+    public settingsPropertiesByIdTimeSliceDefinitionsPutWithRawHttp(params: settingsPropertiesByIdTimeSliceDefinitionsPut.Params, $options?: ApaleoRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.settingsPropertiesByIdTimeSliceDefinitionsPutWithHttpInfo(params, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
 
     /**
      * Get property settings
-     * Get base settings for a property
+     * Get base settings for a property.
      * @param id The id of the property.
      */
     private settingsPropertiesByIdGetWithHttpInfo(params: settingsPropertiesByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
@@ -226,6 +294,126 @@ export class PropertySettingsApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.settingsPropertiesByIdPutWithHttpInfo(params, $options);
+            }
+        )
+    }
+
+    /**
+     * Get time slice definitions
+     * Get time slice definitions for a property. A time slice definition specifies in which individual time ranges  inventory can be sold. They are used when setting up a rate plan.
+     * @param id The id of the property.
+     */
+    private settingsPropertiesByIdTimeSliceDefinitionsGetWithHttpInfo(params: settingsPropertiesByIdTimeSliceDefinitionsGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
+        params = params || {};
+        const path = this.basePath + '/settings/properties/${id}/time-slice-definitions'
+                    .replace('${' + 'id' + '}', String(params.id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (params.id === null || params.id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling settingsPropertiesByIdTimeSliceDefinitionsGet.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Get,
+                headers: headers,
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.settingsPropertiesByIdTimeSliceDefinitionsGetWithHttpInfo(params, $options);
+            }
+        )
+    }
+
+    /**
+     * Replaces time slice definitions for the property
+     * Use this call to repace the time slice definitions of the property.
+     * @param id The id of the property.
+     * @param requestBody The time slice definitions.
+     */
+    private settingsPropertiesByIdTimeSliceDefinitionsPutWithHttpInfo(params: settingsPropertiesByIdTimeSliceDefinitionsPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
+        params = params || {};
+        const path = this.basePath + '/settings/properties/${id}/time-slice-definitions'
+                    .replace('${' + 'id' + '}', String(params.id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (params.id === null || params.id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling settingsPropertiesByIdTimeSliceDefinitionsPut.');
+        }
+        // verify required parameter 'requestBody' is not null or undefined
+        if (params.requestBody === null || params.requestBody === undefined) {
+            throw new Error('Required parameter requestBody was null or undefined when calling settingsPropertiesByIdTimeSliceDefinitionsPut.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Put,
+                headers: headers,
+                body: params.requestBody == null ? '' : params.requestBody, // https://github.com/angular/angular/issues/10612
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.settingsPropertiesByIdTimeSliceDefinitionsPutWithHttpInfo(params, $options);
             }
         )
     }
