@@ -24,6 +24,11 @@ export interface FolioItemModel {
     id: string;
 
     /**
+     * The folio type.
+     */
+    type?: FolioItemModel.TypeEnum;
+
+    /**
      * The person the folio is assigned to (that is, the one who comsumes and pays for everything).
      */
     owner: models.FolioOwnerModel;
@@ -44,10 +49,26 @@ export interface FolioItemModel {
     charges?: Array<models.LineItemModel>;
 
     /**
+     * The list of payments
+     */
+    payments?: Array<models.PaymentModel>;
+
+    /**
      * Collection of links to related resources
      */
     links?: { [key: string]: models.Link; };
 
+}
+export namespace FolioItemModel {
+    export enum TypeEnumSet {
+        House = 'House',
+        Guest = 'Guest'
+    }
+
+    export type TypeEnum = 'House' | 'Guest';
+
+    export const TypeEnumValues = Object.freeze(
+        ['House', 'Guest'] as TypeEnum[]);
 }
 
 export type FolioItemModelWithRawHttp = FolioItemModel & ResponseModel<FolioItemModel>;
@@ -59,6 +80,12 @@ export namespace FolioItemModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
+        type: Object.freeze({ 
+            type: 'string',
+            isEnum: true,
+            allowedEnumValues: TypeEnumValues,
+            isPrimitiveType: true,
+        } as ApaleoEnumPropertyMetaData<TypeEnum>),
         owner: Object.freeze({ 
             isRequired: true,
             type: 'models.FolioOwnerModel',
@@ -77,6 +104,10 @@ export namespace FolioItemModel {
             type: 'Array<models.LineItemModel>',
             isListContainer: true,
         } as ApaleoPropertyMetaData),
+        payments: Object.freeze({ 
+            type: 'Array<models.PaymentModel>',
+            isListContainer: true,
+        } as ApaleoPropertyMetaData),
         links: Object.freeze({ 
             type: '{ [key: string]: models.Link; }',
             isMapContainer: true,
@@ -86,6 +117,7 @@ export namespace FolioItemModel {
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<FolioItemModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
+            type: getControl($metaData.type, options, 'type'),
             owner: models.FolioOwnerModel.$buildForm(fb),
             reservationId: getControl($metaData.reservationId, options, 'reservationId'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),

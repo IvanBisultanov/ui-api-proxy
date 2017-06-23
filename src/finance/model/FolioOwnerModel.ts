@@ -36,7 +36,7 @@ export interface FolioOwnerModel {
     /**
      * Last name
      */
-    lastName: string;
+    name: string;
 
     /**
      * Email address
@@ -71,7 +71,7 @@ export namespace FolioOwnerModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        lastName: Object.freeze({ 
+        name: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
@@ -94,7 +94,7 @@ export namespace FolioOwnerModel {
             title: getControl($metaData.title, options, 'title'),
             firstName: getControl($metaData.firstName, options, 'firstName'),
             middleInitial: getControl($metaData.middleInitial, options, 'middleInitial'),
-            lastName: getControl($metaData.lastName, options, 'lastName'),
+            name: getControl($metaData.name, options, 'name'),
             email: getControl($metaData.email, options, 'email'),
             phone: getControl($metaData.phone, options, 'phone'),
             address: models.AddressModel.$buildForm(fb),

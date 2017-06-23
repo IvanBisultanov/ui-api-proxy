@@ -53,6 +53,15 @@ export namespace financeFolioscountGet {
     }
     
 }
+export namespace propertyPost {
+    export interface Params {
+        /**
+        * The property id.
+        */
+        request: models.CreateFolioRequest;
+    }
+    
+}
 
 @Injectable()
 export class FolioApi {
@@ -100,6 +109,17 @@ export class FolioApi {
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
+    /**
+     * Creates a folio from a property (temporary method)
+     * Creates a folio. Set the CreateFolioRequest&#39;s reservationId to the propertyId
+     * @param request The property id.
+     */
+    public propertyPost(params: propertyPost.Params, $options?: ApaleoRequestOptions)
+        : Observable<models.FolioCreatedModel | undefined> {
+        return this.propertyPostWithRawHttp(params, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
 
     /**
      * Returns one folio.
@@ -131,6 +151,17 @@ export class FolioApi {
     public financeFolioscountGetWithRawHttp(params: financeFolioscountGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.CountModel>> {
         return this.financeFolioscountGetWithHttpInfo(params, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Creates a folio from a property (temporary method)
+     * Creates a folio. Set the CreateFolioRequest&#39;s reservationId to the propertyId
+     * @param request The property id.
+     */
+    public propertyPostWithRawHttp(params: propertyPost.Params, $options?: ApaleoRequestOptions)
+        : Observable<ResponseModel<models.FolioCreatedModel>> {
+        return this.propertyPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -297,6 +328,67 @@ export class FolioApi {
                 $options.retryTimes = retryTimesToGo;
 
                 return this.financeFolioscountGetWithHttpInfo(params, $options);
+            }
+        )
+    }
+
+    /**
+     * Creates a folio from a property (temporary method)
+     * Creates a folio. Set the CreateFolioRequest&#39;s reservationId to the propertyId
+     * @param request The property id.
+     */
+    private propertyPostWithHttpInfo(params: propertyPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
+        params = params || {};
+        const path = this.basePath + '/property';
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'request' is not null or undefined
+        if (params.request === null || params.request === undefined) {
+            throw new Error('Required parameter request was null or undefined when calling propertyPost.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Post,
+                headers: headers,
+                body: params.request == null ? '' : params.request, // https://github.com/angular/angular/issues/10612
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.propertyPostWithHttpInfo(params, $options);
             }
         )
     }

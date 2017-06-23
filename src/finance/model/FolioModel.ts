@@ -24,7 +24,12 @@ export interface FolioModel {
     id: string;
 
     /**
-     * The person the folio is assigned to (that is, the one who comsumes and pays for everything).
+     * The folio type.
+     */
+    type?: FolioModel.TypeEnum;
+
+    /**
+     * The person or company the folio is assigned to (that is, the one who comsumes and pays for everything).
      */
     owner: models.FolioOwnerModel;
 
@@ -49,6 +54,17 @@ export interface FolioModel {
     payments?: Array<models.PaymentModel>;
 
 }
+export namespace FolioModel {
+    export enum TypeEnumSet {
+        House = 'House',
+        Guest = 'Guest'
+    }
+
+    export type TypeEnum = 'House' | 'Guest';
+
+    export const TypeEnumValues = Object.freeze(
+        ['House', 'Guest'] as TypeEnum[]);
+}
 
 export type FolioModelWithRawHttp = FolioModel & ResponseModel<FolioModel>;
 
@@ -59,6 +75,12 @@ export namespace FolioModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
+        type: Object.freeze({ 
+            type: 'string',
+            isEnum: true,
+            allowedEnumValues: TypeEnumValues,
+            isPrimitiveType: true,
+        } as ApaleoEnumPropertyMetaData<TypeEnum>),
         owner: Object.freeze({ 
             isRequired: true,
             type: 'models.FolioOwnerModel',
@@ -84,6 +106,7 @@ export namespace FolioModel {
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<FolioModel>): FormGroup {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
+            type: getControl($metaData.type, options, 'type'),
             owner: models.FolioOwnerModel.$buildForm(fb),
             reservation: models.EmbeddedReservationModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
