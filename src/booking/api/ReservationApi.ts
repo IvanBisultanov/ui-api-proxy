@@ -224,7 +224,7 @@ export class ReservationApi {
      * @param requestBody See AmendReservationModel for details.
      */
     public bookingReservationsByIdAmendPost(params: bookingReservationsByIdAmendPost.Params, $options?: ApaleoRequestOptions)
-        : Observable<models.ReservationAmendedModel | undefined> {
+        : Observable<void> {
         return this.bookingReservationsByIdAmendPostWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
@@ -301,7 +301,7 @@ export class ReservationApi {
      * @param requestBody See AmendReservationModel for details.
      */
     public bookingReservationsByIdAmendPostWithRawHttp(params: bookingReservationsByIdAmendPost.Params, $options?: ApaleoRequestOptions)
-        : Observable<ResponseModel<models.ReservationAmendedModel>> {
+        : Observable<ResponseModel<void>> {
         return this.bookingReservationsByIdAmendPostWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
@@ -401,9 +401,6 @@ export class ReservationApi {
 
         // to determine the Accept header
         let produces: string[] = [
-            'text/plain',
-            'application/json',
-            'text/json'
         ];
 
         // authentication (oauth2) required

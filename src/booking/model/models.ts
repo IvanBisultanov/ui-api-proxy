@@ -18,7 +18,6 @@ export * from './OfferModel';
 export * from './OfferTimeSliceModel';
 export * from './ReplaceAddressModel';
 export * from './ReplaceReservationModel';
-export * from './ReservationAmendedModel';
 export * from './ReservationAssignedUnitModel';
 export * from './ReservationCreatedModel';
 export * from './ReservationItemModel';
