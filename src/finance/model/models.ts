@@ -15,5 +15,6 @@ export * from './FolioOwnerModel';
 export * from './LineItemModel';
 export * from './Link';
 export * from './MessageItemCollection';
+export * from './MoveLineItemModel';
 export * from './PaymentAmountModel';
 export * from './PaymentModel';

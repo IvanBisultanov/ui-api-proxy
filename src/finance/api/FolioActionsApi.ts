@@ -26,16 +26,29 @@ import { callApiEndpoint }                                         from '../../f
 
 
 
-export namespace financeFolioActionsByIdPaymentsPost {
+export namespace financeFolioActionsByFolioIdPaymentsPost {
     export interface Params {
         /**
-        * 
+        * The folio id.
+        */
+        folioId: string;
+        /**
+        * The payment to be added.
+        */
+        payment: models.CreatePaymentModel;
+    }
+    
+}
+export namespace financeFolioActionsChargesByIdPut {
+    export interface Params {
+        /**
+        * The id of the line item to move.
         */
         id: string;
         /**
-        * 
+        * Specifies the source and target folios.
         */
-        payment: models.CreatePaymentModel;
+        moveInstruction: models.MoveLineItemModel;
     }
     
 }
@@ -63,14 +76,26 @@ export class FolioActionsApi {
     }
 
     /**
-     * 
-     * 
-     * @param id 
-     * @param payment 
+     * Adds a payment to a folio.
+     * Call this, when a new payment is made.
+     * @param folioId The folio id.
+     * @param payment The payment to be added.
      */
-    public financeFolioActionsByIdPaymentsPost(params: financeFolioActionsByIdPaymentsPost.Params, $options?: ApaleoRequestOptions)
+    public financeFolioActionsByFolioIdPaymentsPost(params: financeFolioActionsByFolioIdPaymentsPost.Params, $options?: ApaleoRequestOptions)
         : Observable<void> {
-        return this.financeFolioActionsByIdPaymentsPostWithRawHttp(params, $options)
+        return this.financeFolioActionsByFolioIdPaymentsPostWithRawHttp(params, $options)
+            .map(response => response.$hasValue(response) ? response : undefined);
+    }
+
+    /**
+     * Move a charge from one folio to another.
+     * Move a charge from one folio to another.
+     * @param id The id of the line item to move.
+     * @param moveInstruction Specifies the source and target folios.
+     */
+    public financeFolioActionsChargesByIdPut(params: financeFolioActionsChargesByIdPut.Params, $options?: ApaleoRequestOptions)
+        : Observable<void> {
+        return this.financeFolioActionsChargesByIdPutWithRawHttp(params, $options)
             .map(response => response.$hasValue(response) ? response : undefined);
     }
 
@@ -87,14 +112,26 @@ export class FolioActionsApi {
 
 
     /**
-     * 
-     * 
-     * @param id 
-     * @param payment 
+     * Adds a payment to a folio.
+     * Call this, when a new payment is made.
+     * @param folioId The folio id.
+     * @param payment The payment to be added.
      */
-    public financeFolioActionsByIdPaymentsPostWithRawHttp(params: financeFolioActionsByIdPaymentsPost.Params, $options?: ApaleoRequestOptions)
+    public financeFolioActionsByFolioIdPaymentsPostWithRawHttp(params: financeFolioActionsByFolioIdPaymentsPost.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<void>> {
-        return this.financeFolioActionsByIdPaymentsPostWithHttpInfo(params, $options)
+        return this.financeFolioActionsByFolioIdPaymentsPostWithHttpInfo(params, $options)
+            .map((response: Response) => new ResponseModel(response));
+    }
+
+    /**
+     * Move a charge from one folio to another.
+     * Move a charge from one folio to another.
+     * @param id The id of the line item to move.
+     * @param moveInstruction Specifies the source and target folios.
+     */
+    public financeFolioActionsChargesByIdPutWithRawHttp(params: financeFolioActionsChargesByIdPut.Params, $options?: ApaleoRequestOptions)
+        : Observable<ResponseModel<void>> {
+        return this.financeFolioActionsChargesByIdPutWithHttpInfo(params, $options)
             .map((response: Response) => new ResponseModel(response));
     }
 
@@ -111,25 +148,25 @@ export class FolioActionsApi {
 
 
     /**
-     * 
-     * 
-     * @param id 
-     * @param payment 
+     * Adds a payment to a folio.
+     * Call this, when a new payment is made.
+     * @param folioId The folio id.
+     * @param payment The payment to be added.
      */
-    private financeFolioActionsByIdPaymentsPostWithHttpInfo(params: financeFolioActionsByIdPaymentsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
+    private financeFolioActionsByFolioIdPaymentsPostWithHttpInfo(params: financeFolioActionsByFolioIdPaymentsPost.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
-        const path = this.basePath + '/finance/folio-actions/${id}/payments'
-                    .replace('${' + 'id' + '}', String(params.id));
+        const path = this.basePath + '/finance/folio-actions/${folioId}/payments'
+                    .replace('${' + 'folioId' + '}', String(params.folioId));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'id' is not null or undefined
-        if (params.id === null || params.id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling financeFolioActionsByIdPaymentsPost.');
+        // verify required parameter 'folioId' is not null or undefined
+        if (params.folioId === null || params.folioId === undefined) {
+            throw new Error('Required parameter folioId was null or undefined when calling financeFolioActionsByFolioIdPaymentsPost.');
         }
         // verify required parameter 'payment' is not null or undefined
         if (params.payment === null || params.payment === undefined) {
-            throw new Error('Required parameter payment was null or undefined when calling financeFolioActionsByIdPaymentsPost.');
+            throw new Error('Required parameter payment was null or undefined when calling financeFolioActionsByFolioIdPaymentsPost.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -169,7 +206,71 @@ export class FolioActionsApi {
                 $options = $options || {};
                 $options.retryTimes = retryTimesToGo;
 
-                return this.financeFolioActionsByIdPaymentsPostWithHttpInfo(params, $options);
+                return this.financeFolioActionsByFolioIdPaymentsPostWithHttpInfo(params, $options);
+            }
+        )
+    }
+
+    /**
+     * Move a charge from one folio to another.
+     * Move a charge from one folio to another.
+     * @param id The id of the line item to move.
+     * @param moveInstruction Specifies the source and target folios.
+     */
+    private financeFolioActionsChargesByIdPutWithHttpInfo(params: financeFolioActionsChargesByIdPut.Params, $options?: ApaleoRequestOptions): Observable<Response> {
+        params = params || {};
+        const path = this.basePath + '/finance/folio-actions/charges/${id}'
+                    .replace('${' + 'id' + '}', String(params.id));
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'id' is not null or undefined
+        if (params.id === null || params.id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling financeFolioActionsChargesByIdPut.');
+        }
+        // verify required parameter 'moveInstruction' is not null or undefined
+        if (params.moveInstruction === null || params.moveInstruction === undefined) {
+            throw new Error('Required parameter moveInstruction was null or undefined when calling financeFolioActionsChargesByIdPut.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/json-patch+json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (oauth2) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        return callApiEndpoint(
+            this.http, 
+            path,
+            headers,
+            {
+                method: RequestMethod.Put,
+                headers: headers,
+                body: params.moveInstruction == null ? '' : params.moveInstruction, // https://github.com/angular/angular/issues/10612
+                search: queryParameters,
+                withCredentials: this.configuration.withCredentials
+            },
+            Object.assign({}, this.configuration, $options),
+            retryTimesToGo => {
+                $options = $options || {};
+                $options.retryTimes = retryTimesToGo;
+
+                return this.financeFolioActionsChargesByIdPutWithHttpInfo(params, $options);
             }
         )
     }
