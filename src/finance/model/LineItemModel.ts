@@ -31,7 +31,7 @@ export interface LineItemModel {
     /**
      * The day when the line item is (or was) due to be charged.
      */
-    dueDate?: string;
+    serviceDate?: string;
 
     /**
      * A link to the folio this item has been moved from. There always is a corresponding entry in the other folio.
@@ -64,7 +64,7 @@ export namespace LineItemModel {
             type: 'boolean',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        dueDate: Object.freeze({ 
+        serviceDate: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
@@ -83,7 +83,7 @@ export namespace LineItemModel {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             isPosted: getControl($metaData.isPosted, options, 'isPosted'),
-            dueDate: getControl($metaData.dueDate, options, 'dueDate'),
+            serviceDate: getControl($metaData.serviceDate, options, 'serviceDate'),
             movedFrom: models.EmbeddedFolioModel.$buildForm(fb),
             movedTo: models.EmbeddedFolioModel.$buildForm(fb),
             amount: models.AmountModel.$buildForm(fb),

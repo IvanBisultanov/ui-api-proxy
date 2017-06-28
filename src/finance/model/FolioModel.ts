@@ -36,7 +36,7 @@ export interface FolioModel {
     /**
      * The reservation linked to this folio.
      */
-    reservation: models.EmbeddedReservationModel;
+    reservation?: models.EmbeddedReservationModel;
 
     /**
      * The property linked to this folio.
@@ -44,14 +44,19 @@ export interface FolioModel {
     property: models.EmbeddedPropertyModel;
 
     /**
-     * The list of charges
+     * The list of charges.
      */
     charges?: Array<models.LineItemModel>;
 
     /**
-     * The list of payments
+     * The list of payments.
      */
     payments?: Array<models.PaymentModel>;
+
+    /**
+     * The total balance of the folio.
+     */
+    balance?: models.PaymentAmountModel;
 
 }
 export namespace FolioModel {
@@ -86,7 +91,6 @@ export namespace FolioModel {
             type: 'models.FolioOwnerModel',
         } as ApaleoPropertyMetaData),
         reservation: Object.freeze({ 
-            isRequired: true,
             type: 'models.EmbeddedReservationModel',
         } as ApaleoPropertyMetaData),
         property: Object.freeze({ 
@@ -101,6 +105,9 @@ export namespace FolioModel {
             type: 'Array<models.PaymentModel>',
             isListContainer: true,
         } as ApaleoPropertyMetaData),
+        balance: Object.freeze({ 
+            type: 'models.PaymentAmountModel',
+        } as ApaleoPropertyMetaData),
     };
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<FolioModel>): FormGroup {
@@ -110,6 +117,7 @@ export namespace FolioModel {
             owner: models.FolioOwnerModel.$buildForm(fb),
             reservation: models.EmbeddedReservationModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
+            balance: models.PaymentAmountModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

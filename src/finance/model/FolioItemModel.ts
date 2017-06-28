@@ -36,7 +36,17 @@ export interface FolioItemModel {
     /**
      * The reservation linked to this folio.
      */
-    reservationId: string;
+    reservationId?: string;
+
+    /**
+     * The property linked to this folio.
+     */
+    propertyId: string;
+
+    /**
+     * The total balance of the folio.
+     */
+    balance?: models.Amount;
 
     /**
      * Collection of links to related resources
@@ -76,9 +86,16 @@ export namespace FolioItemModel {
             type: 'models.FolioOwnerModel',
         } as ApaleoPropertyMetaData),
         reservationId: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        propertyId: Object.freeze({ 
             isRequired: true,
             type: 'string',
             isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        balance: Object.freeze({ 
+            type: 'models.Amount',
         } as ApaleoPropertyMetaData),
         links: Object.freeze({ 
             type: '{ [key: string]: models.Link; }',
@@ -92,6 +109,8 @@ export namespace FolioItemModel {
             type: getControl($metaData.type, options, 'type'),
             owner: models.FolioOwnerModel.$buildForm(fb),
             reservationId: getControl($metaData.reservationId, options, 'reservationId'),
+            propertyId: getControl($metaData.propertyId, options, 'propertyId'),
+            balance: models.Amount.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

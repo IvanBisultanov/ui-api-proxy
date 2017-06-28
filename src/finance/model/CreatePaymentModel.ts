@@ -19,7 +19,7 @@ import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } 
 
 export interface CreatePaymentModel {
     /**
-     * The Payment Method. Right now, only cash, invoice and bank transfer are supported.
+     * The payment method.
      */
     method: CreatePaymentModel.MethodEnum;
 
@@ -29,14 +29,14 @@ export interface CreatePaymentModel {
     amount: models.PaymentAmountModel;
 
     /**
-     * A reference number to the payment's represenation in other systems (bank statement, or similar).
+     * A reference to the payment's representation in other systems (masked CC, or similar).
      */
-    referenceNumber?: string;
+    reference?: string;
 
     /**
-     * A freetext field to store informational data related to this payment.
+     * The date and time (with UTC offset), when the payment was done. Defaults to the current date and time, if not set.
      */
-    comment?: string;
+    paymentDate?: Date;
 
 }
 export namespace CreatePaymentModel {
@@ -67,12 +67,12 @@ export namespace CreatePaymentModel {
             isRequired: true,
             type: 'models.PaymentAmountModel',
         } as ApaleoPropertyMetaData),
-        referenceNumber: Object.freeze({ 
+        reference: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        comment: Object.freeze({ 
-            type: 'string',
+        paymentDate: Object.freeze({ 
+            type: 'Date',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
@@ -81,8 +81,8 @@ export namespace CreatePaymentModel {
         const defaultControls = { 
             method: getControl($metaData.method, options, 'method'),
             amount: models.PaymentAmountModel.$buildForm(fb),
-            referenceNumber: getControl($metaData.referenceNumber, options, 'referenceNumber'),
-            comment: getControl($metaData.comment, options, 'comment'),
+            reference: getControl($metaData.reference, options, 'reference'),
+            paymentDate: getControl($metaData.paymentDate, options, 'paymentDate'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

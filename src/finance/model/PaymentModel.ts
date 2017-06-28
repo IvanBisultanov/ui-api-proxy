@@ -24,7 +24,7 @@ export interface PaymentModel {
     id: string;
 
     /**
-     * The Payment Method. Right now, only cash, invoice and bank transfer are supported.
+     * The Payment Method.
      */
     method: PaymentModel.MethodEnum;
 
@@ -36,12 +36,12 @@ export interface PaymentModel {
     /**
      * A reference number to the payment's represenation in other systems (bank statement, or similar).
      */
-    referenceNumber?: string;
+    reference?: string;
 
     /**
-     * A free text field to store informational data related to this payment.
+     * The date when the payment was done
      */
-    comment?: string;
+    paymentDate?: Date;
 
 }
 export namespace PaymentModel {
@@ -77,12 +77,12 @@ export namespace PaymentModel {
             isRequired: true,
             type: 'models.PaymentAmountModel',
         } as ApaleoPropertyMetaData),
-        referenceNumber: Object.freeze({ 
+        reference: Object.freeze({ 
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        comment: Object.freeze({ 
-            type: 'string',
+        paymentDate: Object.freeze({ 
+            type: 'Date',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
@@ -92,8 +92,8 @@ export namespace PaymentModel {
             id: getControl($metaData.id, options, 'id'),
             method: getControl($metaData.method, options, 'method'),
             amount: models.PaymentAmountModel.$buildForm(fb),
-            referenceNumber: getControl($metaData.referenceNumber, options, 'referenceNumber'),
-            comment: getControl($metaData.comment, options, 'comment'),
+            reference: getControl($metaData.reference, options, 'reference'),
+            paymentDate: getControl($metaData.paymentDate, options, 'paymentDate'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);
