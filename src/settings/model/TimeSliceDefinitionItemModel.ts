@@ -18,6 +18,8 @@ import { getControl, adjustDefaultControls, prepareFormGroup }                  
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
 export interface TimeSliceDefinitionItemModel {
+    id: string;
+
     name: string;
 
     template: TimeSliceDefinitionItemModel.TemplateEnum;
@@ -43,6 +45,11 @@ export type TimeSliceDefinitionItemModelWithRawHttp = TimeSliceDefinitionItemMod
 
 export namespace TimeSliceDefinitionItemModel {
     export const $metaData = { 
+        id: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
         name: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -69,6 +76,7 @@ export namespace TimeSliceDefinitionItemModel {
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<TimeSliceDefinitionItemModel>): FormGroup {
         const defaultControls = { 
+            id: getControl($metaData.id, options, 'id'),
             name: getControl($metaData.name, options, 'name'),
             template: getControl($metaData.template, options, 'template'),
             checkInTime: getControl($metaData.checkInTime, options, 'checkInTime'),

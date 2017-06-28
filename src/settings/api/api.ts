@@ -8,11 +8,14 @@ import { LanguagesApi } from './LanguagesApi';
 export * from './PropertySettingsApi';
 import { PropertySettingsApi } from './PropertySettingsApi';
 
+export * from './TimeSliceDefinitionsApi';
+import { TimeSliceDefinitionsApi } from './TimeSliceDefinitionsApi';
+
 import { Configuration } from '../../configuration';
 import { BASE_PATH } from '../../variables';
 
 export const APIS = [
-    LanguagesApi, PropertySettingsApi
+    LanguagesApi, PropertySettingsApi, TimeSliceDefinitionsApi
 ];
 
 export function LanguagesApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: LanguagesApi) {
@@ -47,8 +50,24 @@ export const PropertySettingsApiProvider: Provider = {
     useFactory: PropertySettingsApiFactory
 }
 
+export function TimeSliceDefinitionsApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: TimeSliceDefinitionsApi) {
+    return parent || new TimeSliceDefinitionsApi(http, config, locale, basePath);
+}
+
+export const TimeSliceDefinitionsApiProvider: Provider = {
+    provide: TimeSliceDefinitionsApi,
+    deps: [
+        Http,
+        Configuration,
+        LOCALE_ID,
+        BASE_PATH,
+        [new Optional(), new SkipSelf(), TimeSliceDefinitionsApi]
+    ],
+    useFactory: TimeSliceDefinitionsApiFactory
+}
+
 export const API_PROVIDERS: Provider[] = [
-    LanguagesApiProvider, PropertySettingsApiProvider
+    LanguagesApiProvider, PropertySettingsApiProvider, TimeSliceDefinitionsApiProvider
 ];
 
 @NgModule({
