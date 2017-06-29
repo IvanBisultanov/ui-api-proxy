@@ -37,14 +37,36 @@ export interface PropertyModel {
     name: { [key: string]: string; };
 
     /**
+     * The legal name of the company running the property.
+     */
+    companyName: string;
+
+    /**
+     * The managing director(s) of the company, as they should appear on invoices
+     */
+    managingDirectors?: string;
+
+    /**
+     * The entry in the Commercial Reigster of the company running the property, as it should appear on invoices
+     */
+    commercialRegisterEntry?: string;
+
+    /**
+     * The Tax-ID of the company running the property, as it should appear on invoices
+     */
+    taxId: string;
+
+    /**
      * The description for the property
      */
-    description: { [key: string]: string; };
+    description?: { [key: string]: string; };
 
     /**
      * The location of the property
      */
     location: models.AddressModel;
+
+    bankAccount?: models.BankAccountModel;
 
     /**
      * The time zone
@@ -88,8 +110,25 @@ export namespace PropertyModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
-        description: Object.freeze({ 
+        companyName: Object.freeze({ 
             isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        managingDirectors: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        commercialRegisterEntry: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        taxId: Object.freeze({ 
+            isRequired: true,
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        description: Object.freeze({ 
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
@@ -97,6 +136,9 @@ export namespace PropertyModel {
         location: Object.freeze({ 
             isRequired: true,
             type: 'models.AddressModel',
+        } as ApaleoPropertyMetaData),
+        bankAccount: Object.freeze({ 
+            type: 'models.BankAccountModel',
         } as ApaleoPropertyMetaData),
         timeZone: Object.freeze({ 
             isRequired: true,
@@ -123,7 +165,12 @@ export namespace PropertyModel {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
+            companyName: getControl($metaData.companyName, options, 'companyName'),
+            managingDirectors: getControl($metaData.managingDirectors, options, 'managingDirectors'),
+            commercialRegisterEntry: getControl($metaData.commercialRegisterEntry, options, 'commercialRegisterEntry'),
+            taxId: getControl($metaData.taxId, options, 'taxId'),
             location: models.AddressModel.$buildForm(fb),
+            bankAccount: models.BankAccountModel.$buildForm(fb),
             timeZone: getControl($metaData.timeZone, options, 'timeZone'),
             defaultCheckInTime: getControl($metaData.defaultCheckInTime, options, 'defaultCheckInTime'),
             defaultCheckOutTime: getControl($metaData.defaultCheckOutTime, options, 'defaultCheckOutTime'),

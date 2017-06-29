@@ -17,17 +17,17 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface Amount {
+export interface AmountDto {
     grossAmount?: number;
 
     netAmount?: number;
 
-    vatType?: Amount.VatTypeEnum;
+    vatType?: AmountDto.VatTypeEnum;
 
     currency?: string;
 
 }
-export namespace Amount {
+export namespace AmountDto {
     export enum VatTypeEnumSet {
         Free = 'Free',
         Reduced = 'Reduced',
@@ -41,9 +41,9 @@ export namespace Amount {
         ['Free', 'Reduced', 'Normal', 'Mixed'] as VatTypeEnum[]);
 }
 
-export type AmountWithRawHttp = Amount & ResponseModel<Amount>;
+export type AmountDtoWithRawHttp = AmountDto & ResponseModel<AmountDto>;
 
-export namespace Amount {
+export namespace AmountDto {
     export const $metaData = { 
         grossAmount: Object.freeze({ 
             type: 'number',
@@ -65,7 +65,7 @@ export namespace Amount {
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<Amount>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AmountDto>): FormGroup {
         const defaultControls = { 
             grossAmount: getControl($metaData.grossAmount, options, 'grossAmount'),
             netAmount: getControl($metaData.netAmount, options, 'netAmount'),

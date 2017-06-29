@@ -1,5 +1,5 @@
 export * from './AddressModel';
-export * from './Amount';
+export * from './AmountDto';
 export * from './AmountModel';
 export * from './CountModel';
 export * from './CreatePaymentModel';

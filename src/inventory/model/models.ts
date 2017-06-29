@@ -1,4 +1,5 @@
 export * from './AddressModel';
+export * from './BankAccountModel';
 export * from './CountModel';
 export * from './CreatePropertyModel';
 export * from './CreateUnitModel';

@@ -46,7 +46,7 @@ export interface FolioItemModel {
     /**
      * The total balance of the folio.
      */
-    balance?: models.Amount;
+    balance?: models.AmountDto;
 
     /**
      * Collection of links to related resources
@@ -95,7 +95,7 @@ export namespace FolioItemModel {
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         balance: Object.freeze({ 
-            type: 'models.Amount',
+            type: 'models.AmountDto',
         } as ApaleoPropertyMetaData),
         links: Object.freeze({ 
             type: '{ [key: string]: models.Link; }',
@@ -110,7 +110,7 @@ export namespace FolioItemModel {
             owner: models.FolioOwnerModel.$buildForm(fb),
             reservationId: getControl($metaData.reservationId, options, 'reservationId'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
-            balance: models.Amount.$buildForm(fb),
+            balance: models.AmountDto.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

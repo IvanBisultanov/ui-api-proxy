@@ -32,6 +32,31 @@ export interface ReplacePropertyModel {
     description: { [key: string]: string; };
 
     /**
+     * The legal name of the company running the property.
+     */
+    companyName?: string;
+
+    /**
+     * The managing director(s) of the company, as they should appear on invoices
+     */
+    managingDirectors?: string;
+
+    /**
+     * The entry in the Commercial Reigster of the company running the property, as it should appear on invoices
+     */
+    commercialRegisterEntry?: string;
+
+    /**
+     * The Tax-ID of the company running the property, as it should appear on invoices
+     */
+    taxId?: string;
+
+    /**
+     * Bank account information of the company running the property
+     */
+    bankAccount?: models.BankAccountModel;
+
+    /**
      * The location of the property
      */
     location: models.ReplaceAddressModel;
@@ -54,6 +79,25 @@ export namespace ReplacePropertyModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
+        companyName: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        managingDirectors: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        commercialRegisterEntry: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        taxId: Object.freeze({ 
+            type: 'string',
+            isPrimitiveType: true,
+        } as ApaleoPropertyMetaData),
+        bankAccount: Object.freeze({ 
+            type: 'models.BankAccountModel',
+        } as ApaleoPropertyMetaData),
         location: Object.freeze({ 
             isRequired: true,
             type: 'models.ReplaceAddressModel',
@@ -62,6 +106,11 @@ export namespace ReplacePropertyModel {
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplacePropertyModel>): FormGroup {
         const defaultControls = { 
+            companyName: getControl($metaData.companyName, options, 'companyName'),
+            managingDirectors: getControl($metaData.managingDirectors, options, 'managingDirectors'),
+            commercialRegisterEntry: getControl($metaData.commercialRegisterEntry, options, 'commercialRegisterEntry'),
+            taxId: getControl($metaData.taxId, options, 'taxId'),
+            bankAccount: models.BankAccountModel.$buildForm(fb),
             location: models.ReplaceAddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
