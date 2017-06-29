@@ -44,7 +44,7 @@ export namespace settingsPropertiesByIdTimeSliceDefinitionsPatch {
         /**
         * The operations to apply to the time slice definitions.
         */
-        requestBody: models.JsonPatchDocumentReplaceTimeSliceDefinitionListModel;
+        requestBody: models.JsonPatchDocumentModifyTimeSliceDefinitionListModel;
     }
     
 }

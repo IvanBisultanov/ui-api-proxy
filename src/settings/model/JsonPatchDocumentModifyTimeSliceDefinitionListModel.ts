@@ -17,23 +17,23 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface JsonPatchDocumentReplaceTimeSliceDefinitionListModel {
-    operations: Array<models.OperationReplaceTimeSliceDefinitionListModel>;
+export interface JsonPatchDocumentModifyTimeSliceDefinitionListModel {
+    operations: Array<models.OperationModifyTimeSliceDefinitionListModel>;
 
 }
 
-export type JsonPatchDocumentReplaceTimeSliceDefinitionListModelWithRawHttp = JsonPatchDocumentReplaceTimeSliceDefinitionListModel & ResponseModel<JsonPatchDocumentReplaceTimeSliceDefinitionListModel>;
+export type JsonPatchDocumentModifyTimeSliceDefinitionListModelWithRawHttp = JsonPatchDocumentModifyTimeSliceDefinitionListModel & ResponseModel<JsonPatchDocumentModifyTimeSliceDefinitionListModel>;
 
-export namespace JsonPatchDocumentReplaceTimeSliceDefinitionListModel {
+export namespace JsonPatchDocumentModifyTimeSliceDefinitionListModel {
     export const $metaData = { 
         operations: Object.freeze({ 
             isRequired: true,
-            type: 'Array<models.OperationReplaceTimeSliceDefinitionListModel>',
+            type: 'Array<models.OperationModifyTimeSliceDefinitionListModel>',
             isListContainer: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<JsonPatchDocumentReplaceTimeSliceDefinitionListModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<JsonPatchDocumentModifyTimeSliceDefinitionListModel>): FormGroup {
         const defaultControls = { 
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

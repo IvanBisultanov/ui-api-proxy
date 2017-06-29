@@ -17,7 +17,7 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface OperationReplaceTimeSliceDefinitionListModel {
+export interface OperationModifyTimeSliceDefinitionListModel {
     value?: any;
 
     path?: string;
@@ -28,9 +28,9 @@ export interface OperationReplaceTimeSliceDefinitionListModel {
 
 }
 
-export type OperationReplaceTimeSliceDefinitionListModelWithRawHttp = OperationReplaceTimeSliceDefinitionListModel & ResponseModel<OperationReplaceTimeSliceDefinitionListModel>;
+export type OperationModifyTimeSliceDefinitionListModelWithRawHttp = OperationModifyTimeSliceDefinitionListModel & ResponseModel<OperationModifyTimeSliceDefinitionListModel>;
 
-export namespace OperationReplaceTimeSliceDefinitionListModel {
+export namespace OperationModifyTimeSliceDefinitionListModel {
     export const $metaData = { 
         value: Object.freeze({ 
             type: 'any',
@@ -50,7 +50,7 @@ export namespace OperationReplaceTimeSliceDefinitionListModel {
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<OperationReplaceTimeSliceDefinitionListModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<OperationModifyTimeSliceDefinitionListModel>): FormGroup {
         const defaultControls = { 
             value: getControl($metaData.value, options, 'value'),
             path: getControl($metaData.path, options, 'path'),
