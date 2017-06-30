@@ -8,6 +8,9 @@ import { FolioApi } from './FolioApi';
 export * from './FolioActionsApi';
 import { FolioActionsApi } from './FolioActionsApi';
 
+export * from './SubLedgerApi';
+import { SubLedgerApi } from './SubLedgerApi';
+
 export * from './TypesApi';
 import { TypesApi } from './TypesApi';
 
@@ -15,7 +18,7 @@ import { Configuration } from '../../configuration';
 import { BASE_PATH } from '../../variables';
 
 export const APIS = [
-    FolioApi, FolioActionsApi, TypesApi
+    FolioApi, FolioActionsApi, SubLedgerApi, TypesApi
 ];
 
 export function FolioApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: FolioApi) {
@@ -50,6 +53,22 @@ export const FolioActionsApiProvider: Provider = {
     useFactory: FolioActionsApiFactory
 }
 
+export function SubLedgerApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: SubLedgerApi) {
+    return parent || new SubLedgerApi(http, config, locale, basePath);
+}
+
+export const SubLedgerApiProvider: Provider = {
+    provide: SubLedgerApi,
+    deps: [
+        Http,
+        Configuration,
+        LOCALE_ID,
+        BASE_PATH,
+        [new Optional(), new SkipSelf(), SubLedgerApi]
+    ],
+    useFactory: SubLedgerApiFactory
+}
+
 export function TypesApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: TypesApi) {
     return parent || new TypesApi(http, config, locale, basePath);
 }
@@ -67,7 +86,7 @@ export const TypesApiProvider: Provider = {
 }
 
 export const API_PROVIDERS: Provider[] = [
-    FolioApiProvider, FolioActionsApiProvider, TypesApiProvider
+    FolioApiProvider, FolioActionsApiProvider, SubLedgerApiProvider, TypesApiProvider
 ];
 
 @NgModule({
