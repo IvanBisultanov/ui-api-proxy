@@ -31,7 +31,7 @@ export interface FolioModel {
     /**
      * The person or company the folio is assigned to (that is, the one who comsumes and pays for everything).
      */
-    owner: models.FolioOwnerModel;
+    debitor: models.FolioDebitorModel;
 
     /**
      * The reservation linked to this folio.
@@ -86,9 +86,9 @@ export namespace FolioModel {
             allowedEnumValues: TypeEnumValues,
             isPrimitiveType: true,
         } as ApaleoEnumPropertyMetaData<TypeEnum>),
-        owner: Object.freeze({ 
+        debitor: Object.freeze({ 
             isRequired: true,
-            type: 'models.FolioOwnerModel',
+            type: 'models.FolioDebitorModel',
         } as ApaleoPropertyMetaData),
         reservation: Object.freeze({ 
             type: 'models.EmbeddedReservationModel',
@@ -114,7 +114,7 @@ export namespace FolioModel {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             type: getControl($metaData.type, options, 'type'),
-            owner: models.FolioOwnerModel.$buildForm(fb),
+            debitor: models.FolioDebitorModel.$buildForm(fb),
             reservation: models.EmbeddedReservationModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
             balance: models.PaymentAmountModel.$buildForm(fb),

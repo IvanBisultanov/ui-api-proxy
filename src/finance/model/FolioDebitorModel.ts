@@ -17,7 +17,7 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface FolioOwnerModel {
+export interface FolioDebitorModel {
     /**
      * Title
      */
@@ -55,9 +55,9 @@ export interface FolioOwnerModel {
 
 }
 
-export type FolioOwnerModelWithRawHttp = FolioOwnerModel & ResponseModel<FolioOwnerModel>;
+export type FolioDebitorModelWithRawHttp = FolioDebitorModel & ResponseModel<FolioDebitorModel>;
 
-export namespace FolioOwnerModel {
+export namespace FolioDebitorModel {
     export const $metaData = { 
         title: Object.freeze({ 
             type: 'string',
@@ -89,7 +89,7 @@ export namespace FolioOwnerModel {
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<FolioOwnerModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<FolioDebitorModel>): FormGroup {
         const defaultControls = { 
             title: getControl($metaData.title, options, 'title'),
             firstName: getControl($metaData.firstName, options, 'firstName'),
