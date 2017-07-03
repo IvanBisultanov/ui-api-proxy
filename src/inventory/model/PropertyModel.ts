@@ -69,6 +69,11 @@ export interface PropertyModel {
     bankAccount?: models.BankAccountModel;
 
     /**
+     * The payment terms used for all rate plans
+     */
+    paymentTerms: { [key: string]: string; };
+
+    /**
      * The time zone
      */
     timeZone: string;
@@ -139,6 +144,12 @@ export namespace PropertyModel {
         } as ApaleoPropertyMetaData),
         bankAccount: Object.freeze({ 
             type: 'models.BankAccountModel',
+        } as ApaleoPropertyMetaData),
+        paymentTerms: Object.freeze({ 
+            isRequired: true,
+            type: '{ [key: string]: string; }',
+            isPrimitiveType: true,
+            isMapContainer: true,
         } as ApaleoPropertyMetaData),
         timeZone: Object.freeze({ 
             isRequired: true,

@@ -31,7 +31,7 @@ export interface CreatePropertyModel {
     /**
      * The legal name of the company running the property.
      */
-    companyName?: string;
+    companyName: string;
 
     /**
      * The managing director(s) of the company, as they should appear on invoices
@@ -46,12 +46,12 @@ export interface CreatePropertyModel {
     /**
      * The Tax-ID of the company running the property, as it should appear on invoices
      */
-    taxId?: string;
+    taxId: string;
 
     /**
      * The description for the property
      */
-    description: { [key: string]: string; };
+    description?: { [key: string]: string; };
 
     /**
      * The location of the property
@@ -62,6 +62,11 @@ export interface CreatePropertyModel {
      * Bank account information of the company running the property
      */
     bankAccount?: models.BankAccountModel;
+
+    /**
+     * The payment terms used for all rate plans
+     */
+    paymentTerms: { [key: string]: string; };
 
     /**
      * The time zone name of the property from the IANA Time Zone Database.  (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
@@ -103,6 +108,7 @@ export namespace CreatePropertyModel {
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
         companyName: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
@@ -115,11 +121,11 @@ export namespace CreatePropertyModel {
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         taxId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         description: Object.freeze({ 
-            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
@@ -130,6 +136,12 @@ export namespace CreatePropertyModel {
         } as ApaleoPropertyMetaData),
         bankAccount: Object.freeze({ 
             type: 'models.BankAccountModel',
+        } as ApaleoPropertyMetaData),
+        paymentTerms: Object.freeze({ 
+            isRequired: true,
+            type: '{ [key: string]: string; }',
+            isPrimitiveType: true,
+            isMapContainer: true,
         } as ApaleoPropertyMetaData),
         timeZone: Object.freeze({ 
             isRequired: true,

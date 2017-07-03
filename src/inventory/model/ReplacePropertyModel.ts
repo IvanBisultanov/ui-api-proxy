@@ -29,12 +29,12 @@ export interface ReplacePropertyModel {
     /**
      * The description for the property
      */
-    description: { [key: string]: string; };
+    description?: { [key: string]: string; };
 
     /**
      * The legal name of the company running the property.
      */
-    companyName?: string;
+    companyName: string;
 
     /**
      * The managing director(s) of the company, as they should appear on invoices
@@ -49,7 +49,7 @@ export interface ReplacePropertyModel {
     /**
      * The Tax-ID of the company running the property, as it should appear on invoices
      */
-    taxId?: string;
+    taxId: string;
 
     /**
      * Bank account information of the company running the property
@@ -57,9 +57,9 @@ export interface ReplacePropertyModel {
     bankAccount?: models.BankAccountModel;
 
     /**
-     * The location of the property
+     * The payment terms used for all rate plans
      */
-    location: models.ReplaceAddressModel;
+    paymentTerms: { [key: string]: string; };
 
 }
 
@@ -74,12 +74,12 @@ export namespace ReplacePropertyModel {
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
         description: Object.freeze({ 
-            isRequired: true,
             type: '{ [key: string]: string; }',
             isPrimitiveType: true,
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
         companyName: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
@@ -92,15 +92,18 @@ export namespace ReplacePropertyModel {
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         taxId: Object.freeze({ 
+            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         bankAccount: Object.freeze({ 
             type: 'models.BankAccountModel',
         } as ApaleoPropertyMetaData),
-        location: Object.freeze({ 
+        paymentTerms: Object.freeze({ 
             isRequired: true,
-            type: 'models.ReplaceAddressModel',
+            type: '{ [key: string]: string; }',
+            isPrimitiveType: true,
+            isMapContainer: true,
         } as ApaleoPropertyMetaData),
     };
 
@@ -111,7 +114,6 @@ export namespace ReplacePropertyModel {
             commercialRegisterEntry: getControl($metaData.commercialRegisterEntry, options, 'commercialRegisterEntry'),
             taxId: getControl($metaData.taxId, options, 'taxId'),
             bankAccount: models.BankAccountModel.$buildForm(fb),
-            location: models.ReplaceAddressModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);
