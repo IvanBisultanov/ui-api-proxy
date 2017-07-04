@@ -38,6 +38,14 @@ export namespace financeFoliosByIdGet {
 export namespace financeFoliosGet {
     export interface Params {
         /**
+        * Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+        */
+        pageNumber: number;
+        /**
+        * Page size
+        */
+        pageSize: number;
+        /**
         * Filter folio list by property id
         */
         propertyId?: string;
@@ -81,6 +89,8 @@ export class FolioApi {
     /**
      * Returns a list of all folios.
      * Returns a list of all folios.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Filter folio list by property id
      */
     public financeFoliosGet(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions)
@@ -115,6 +125,8 @@ export class FolioApi {
     /**
      * Returns a list of all folios.
      * Returns a list of all folios.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Filter folio list by property id
      */
     public financeFoliosGetWithRawHttp(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions)
@@ -194,6 +206,8 @@ export class FolioApi {
     /**
      * Returns a list of all folios.
      * Returns a list of all folios.
+     * @param pageNumber Page number, starting from 1. Results in 204 if there are no items on that page. If the value is lower than 1, will be set to 1
+     * @param pageSize Page size
      * @param propertyId Filter folio list by property id
      */
     private financeFoliosGetWithHttpInfo(params: financeFoliosGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
@@ -202,8 +216,24 @@ export class FolioApi {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'pageNumber' is not null or undefined
+        if (params.pageNumber === null || params.pageNumber === undefined) {
+            throw new Error('Required parameter pageNumber was null or undefined when calling financeFoliosGet.');
+        }
+        // verify required parameter 'pageSize' is not null or undefined
+        if (params.pageSize === null || params.pageSize === undefined) {
+            throw new Error('Required parameter pageSize was null or undefined when calling financeFoliosGet.');
+        }
         if (params.propertyId !== undefined) {
             queryParameters.set('propertyId', <any>params.propertyId);
+        }
+
+        if (params.pageNumber !== undefined) {
+            queryParameters.set('pageNumber', <any>params.pageNumber);
+        }
+
+        if (params.pageSize !== undefined) {
+            queryParameters.set('pageSize', <any>params.pageSize);
         }
 
         // to determine the Content-Type header
