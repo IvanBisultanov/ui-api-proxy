@@ -44,6 +44,11 @@ export interface RatePlanModel {
     sellingUnit: RatePlanModel.SellingUnitEnum;
 
     /**
+     * The time slice definition for the rate plan
+     */
+    timeSliceDefinition: models.EmbeddedTimeSliceDefinitionModel;
+
+    /**
      * The property to which the rateplan belongs to
      */
     property: models.EmbeddedPropertyModel;
@@ -99,6 +104,10 @@ export namespace RatePlanModel {
             allowedEnumValues: SellingUnitEnumValues,
             isPrimitiveType: true,
         } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
+        timeSliceDefinition: Object.freeze({ 
+            isRequired: true,
+            type: 'models.EmbeddedTimeSliceDefinitionModel',
+        } as ApaleoPropertyMetaData),
         property: Object.freeze({ 
             isRequired: true,
             type: 'models.EmbeddedPropertyModel',
@@ -114,6 +123,7 @@ export namespace RatePlanModel {
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
             sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
+            timeSliceDefinition: models.EmbeddedTimeSliceDefinitionModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
