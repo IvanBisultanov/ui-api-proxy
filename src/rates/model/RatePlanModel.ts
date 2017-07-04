@@ -53,6 +53,11 @@ export interface RatePlanModel {
      */
     unitTypes?: Array<models.EmbeddedUnitTypeModel>;
 
+    /**
+     * Time periods when the rateplan is sold
+     */
+    bookingPeriods?: Array<models.BookingPeriodModel>;
+
 }
 
 export type RatePlanModelWithRawHttp = RatePlanModel & ResponseModel<RatePlanModel>;
@@ -91,6 +96,10 @@ export namespace RatePlanModel {
         } as ApaleoPropertyMetaData),
         unitTypes: Object.freeze({ 
             type: 'Array<models.EmbeddedUnitTypeModel>',
+            isListContainer: true,
+        } as ApaleoPropertyMetaData),
+        bookingPeriods: Object.freeze({ 
+            type: 'Array<models.BookingPeriodModel>',
             isListContainer: true,
         } as ApaleoPropertyMetaData),
     };

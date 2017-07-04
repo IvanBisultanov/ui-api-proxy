@@ -17,58 +17,39 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface ReplaceRatePlanModel {
+export interface BookingPeriodModel {
     /**
-     * The name for the rateplan
+     * Start of booking period
      */
-    name: { [key: string]: string; };
+    from: Date;
 
     /**
-     * The description for the rateplan
+     * End of booking period
      */
-    description: { [key: string]: string; };
-
-    /**
-     * The unit types ids to link to the rateplan
-     */
-    unitTypeIds?: Array<string>;
-
-    /**
-     * Time periods when the rateplan is sold
-     */
-    bookingPeriods?: Array<models.BookingPeriodModel>;
+    to: Date;
 
 }
 
-export type ReplaceRatePlanModelWithRawHttp = ReplaceRatePlanModel & ResponseModel<ReplaceRatePlanModel>;
+export type BookingPeriodModelWithRawHttp = BookingPeriodModel & ResponseModel<BookingPeriodModel>;
 
-export namespace ReplaceRatePlanModel {
+export namespace BookingPeriodModel {
     export const $metaData = { 
-        name: Object.freeze({ 
+        from: Object.freeze({ 
             isRequired: true,
-            type: '{ [key: string]: string; }',
+            type: 'Date',
             isPrimitiveType: true,
-            isMapContainer: true,
         } as ApaleoPropertyMetaData),
-        description: Object.freeze({ 
+        to: Object.freeze({ 
             isRequired: true,
-            type: '{ [key: string]: string; }',
+            type: 'Date',
             isPrimitiveType: true,
-            isMapContainer: true,
-        } as ApaleoPropertyMetaData),
-        unitTypeIds: Object.freeze({ 
-            type: 'Array<string>',
-            isPrimitiveType: true,
-            isListContainer: true,
-        } as ApaleoPropertyMetaData),
-        bookingPeriods: Object.freeze({ 
-            type: 'Array<models.BookingPeriodModel>',
-            isListContainer: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceRatePlanModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<BookingPeriodModel>): FormGroup {
         const defaultControls = { 
+            from: getControl($metaData.from, options, 'from'),
+            to: getControl($metaData.to, options, 'to'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

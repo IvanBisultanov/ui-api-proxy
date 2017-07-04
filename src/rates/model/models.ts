@@ -1,4 +1,5 @@
 export * from './AmountModel';
+export * from './BookingPeriodModel';
 export * from './CountModel';
 export * from './CreateRatePlanModel';
 export * from './DeleteRateListModel';

@@ -48,6 +48,11 @@ export interface CreateRatePlanModel {
      */
     unitTypeIds?: Array<string>;
 
+    /**
+     * Time periods when the rateplan is sold
+     */
+    bookingPeriods?: Array<models.BookingPeriodModel>;
+
 }
 
 export type CreateRatePlanModelWithRawHttp = CreateRatePlanModel & ResponseModel<CreateRatePlanModel>;
@@ -86,6 +91,10 @@ export namespace CreateRatePlanModel {
         unitTypeIds: Object.freeze({ 
             type: 'Array<string>',
             isPrimitiveType: true,
+            isListContainer: true,
+        } as ApaleoPropertyMetaData),
+        bookingPeriods: Object.freeze({ 
+            type: 'Array<models.BookingPeriodModel>',
             isListContainer: true,
         } as ApaleoPropertyMetaData),
     };
