@@ -19,22 +19,22 @@ import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } 
 
 export interface CreateRatePlanModel {
     /**
-     * The code for the rate plan that can be shown in reports and table views
+     * The code for the rateplan that can be shown in reports and table views
      */
     code: string;
 
     /**
-     * The id of the property where the rate plan will be created
+     * The id of the property where the rateplan will be created
      */
     propertyId: string;
 
     /**
-     * The name for the rate plan
+     * The name for the rateplan
      */
     name: { [key: string]: string; };
 
     /**
-     * The description for the rate plan
+     * The description for the rateplan
      */
     description: { [key: string]: string; };
 
@@ -44,12 +44,7 @@ export interface CreateRatePlanModel {
     sellingUnit: CreateRatePlanModel.SellingUnitEnum;
 
     /**
-     * The id of the time slice definition for the rate plan
-     */
-    timeSliceDefinitionId: string;
-
-    /**
-     * The unit types ids to link to the rate plan
+     * The unit types ids to link to the rateplan
      */
     unitTypeIds?: Array<string>;
 
@@ -101,11 +96,6 @@ export namespace CreateRatePlanModel {
             allowedEnumValues: SellingUnitEnumValues,
             isPrimitiveType: true,
         } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
-        timeSliceDefinitionId: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
         unitTypeIds: Object.freeze({ 
             type: 'Array<string>',
             isPrimitiveType: true,
@@ -118,7 +108,6 @@ export namespace CreateRatePlanModel {
             code: getControl($metaData.code, options, 'code'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
             sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
-            timeSliceDefinitionId: getControl($metaData.timeSliceDefinitionId, options, 'timeSliceDefinitionId'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);
