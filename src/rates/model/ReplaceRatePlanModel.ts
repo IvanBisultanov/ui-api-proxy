@@ -29,26 +29,10 @@ export interface ReplaceRatePlanModel {
     description: { [key: string]: string; };
 
     /**
-     * Select the way the defined rates are applied when an offer is calculated for this rate plan
-     */
-    sellingUnit: ReplaceRatePlanModel.SellingUnitEnum;
-
-    /**
      * The unit types ids to link to the rateplan
      */
     unitTypeIds?: Array<string>;
 
-}
-export namespace ReplaceRatePlanModel {
-    export enum SellingUnitEnumSet {
-        Night = 'Night',
-        Day = 'Day'
-    }
-
-    export type SellingUnitEnum = 'Night' | 'Day';
-
-    export const SellingUnitEnumValues = Object.freeze(
-        ['Night', 'Day'] as SellingUnitEnum[]);
 }
 
 export type ReplaceRatePlanModelWithRawHttp = ReplaceRatePlanModel & ResponseModel<ReplaceRatePlanModel>;
@@ -67,13 +51,6 @@ export namespace ReplaceRatePlanModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
-        sellingUnit: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isEnum: true,
-            allowedEnumValues: SellingUnitEnumValues,
-            isPrimitiveType: true,
-        } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
         unitTypeIds: Object.freeze({ 
             type: 'Array<string>',
             isPrimitiveType: true,
@@ -83,7 +60,6 @@ export namespace ReplaceRatePlanModel {
 
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<ReplaceRatePlanModel>): FormGroup {
         const defaultControls = { 
-            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

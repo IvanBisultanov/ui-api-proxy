@@ -39,11 +39,6 @@ export interface CreateRatePlanModel {
     description: { [key: string]: string; };
 
     /**
-     * Select the way the defined rates are applied when an offer is calculated for this rate plan
-     */
-    sellingUnit: CreateRatePlanModel.SellingUnitEnum;
-
-    /**
      * The id of the time slice definition for the rate plan
      */
     timeSliceDefinitionId: string;
@@ -53,17 +48,6 @@ export interface CreateRatePlanModel {
      */
     unitTypeIds?: Array<string>;
 
-}
-export namespace CreateRatePlanModel {
-    export enum SellingUnitEnumSet {
-        Night = 'Night',
-        Day = 'Day'
-    }
-
-    export type SellingUnitEnum = 'Night' | 'Day';
-
-    export const SellingUnitEnumValues = Object.freeze(
-        ['Night', 'Day'] as SellingUnitEnum[]);
 }
 
 export type CreateRatePlanModelWithRawHttp = CreateRatePlanModel & ResponseModel<CreateRatePlanModel>;
@@ -94,13 +78,6 @@ export namespace CreateRatePlanModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
-        sellingUnit: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isEnum: true,
-            allowedEnumValues: SellingUnitEnumValues,
-            isPrimitiveType: true,
-        } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
         timeSliceDefinitionId: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -117,7 +94,6 @@ export namespace CreateRatePlanModel {
         const defaultControls = { 
             code: getControl($metaData.code, options, 'code'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
-            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
             timeSliceDefinitionId: getControl($metaData.timeSliceDefinitionId, options, 'timeSliceDefinitionId'),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));

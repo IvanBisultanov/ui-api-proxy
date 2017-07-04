@@ -39,11 +39,6 @@ export interface RatePlanItemModel {
     description: string;
 
     /**
-     * The way the defined rates are applied when an offer is calculated for this rate plan
-     */
-    sellingUnit: RatePlanItemModel.SellingUnitEnum;
-
-    /**
      * The id of the time slice definition for the rate plan
      */
     timeSliceDefinitionId: string;
@@ -63,17 +58,6 @@ export interface RatePlanItemModel {
      */
     links?: { [key: string]: models.Link; };
 
-}
-export namespace RatePlanItemModel {
-    export enum SellingUnitEnumSet {
-        Night = 'Night',
-        Day = 'Day'
-    }
-
-    export type SellingUnitEnum = 'Night' | 'Day';
-
-    export const SellingUnitEnumValues = Object.freeze(
-        ['Night', 'Day'] as SellingUnitEnum[]);
 }
 
 export type RatePlanItemModelWithRawHttp = RatePlanItemModel & ResponseModel<RatePlanItemModel>;
@@ -100,13 +84,6 @@ export namespace RatePlanItemModel {
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
-        sellingUnit: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isEnum: true,
-            allowedEnumValues: SellingUnitEnumValues,
-            isPrimitiveType: true,
-        } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
         timeSliceDefinitionId: Object.freeze({ 
             isRequired: true,
             type: 'string',
@@ -134,7 +111,6 @@ export namespace RatePlanItemModel {
             code: getControl($metaData.code, options, 'code'),
             name: getControl($metaData.name, options, 'name'),
             description: getControl($metaData.description, options, 'description'),
-            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
             timeSliceDefinitionId: getControl($metaData.timeSliceDefinitionId, options, 'timeSliceDefinitionId'),
             propertyId: getControl($metaData.propertyId, options, 'propertyId'),
         };

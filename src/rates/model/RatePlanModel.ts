@@ -39,11 +39,6 @@ export interface RatePlanModel {
     description: { [key: string]: string; };
 
     /**
-     * The way the defined rates are applied when an offer is calculated for this rate plan
-     */
-    sellingUnit: RatePlanModel.SellingUnitEnum;
-
-    /**
      * The time slice definition for the rate plan
      */
     timeSliceDefinition: models.EmbeddedTimeSliceDefinitionModel;
@@ -58,17 +53,6 @@ export interface RatePlanModel {
      */
     unitTypes?: Array<models.EmbeddedUnitTypeModel>;
 
-}
-export namespace RatePlanModel {
-    export enum SellingUnitEnumSet {
-        Night = 'Night',
-        Day = 'Day'
-    }
-
-    export type SellingUnitEnum = 'Night' | 'Day';
-
-    export const SellingUnitEnumValues = Object.freeze(
-        ['Night', 'Day'] as SellingUnitEnum[]);
 }
 
 export type RatePlanModelWithRawHttp = RatePlanModel & ResponseModel<RatePlanModel>;
@@ -97,13 +81,6 @@ export namespace RatePlanModel {
             isPrimitiveType: true,
             isMapContainer: true,
         } as ApaleoPropertyMetaData),
-        sellingUnit: Object.freeze({ 
-            isRequired: true,
-            type: 'string',
-            isEnum: true,
-            allowedEnumValues: SellingUnitEnumValues,
-            isPrimitiveType: true,
-        } as ApaleoEnumPropertyMetaData<SellingUnitEnum>),
         timeSliceDefinition: Object.freeze({ 
             isRequired: true,
             type: 'models.EmbeddedTimeSliceDefinitionModel',
@@ -122,7 +99,6 @@ export namespace RatePlanModel {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             code: getControl($metaData.code, options, 'code'),
-            sellingUnit: getControl($metaData.sellingUnit, options, 'sellingUnit'),
             timeSliceDefinition: models.EmbeddedTimeSliceDefinitionModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
         };
