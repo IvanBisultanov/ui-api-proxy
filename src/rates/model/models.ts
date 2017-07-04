@@ -3,6 +3,7 @@ export * from './CountModel';
 export * from './CreateRatePlanModel';
 export * from './DeleteRateListModel';
 export * from './EmbeddedPropertyModel';
+export * from './EmbeddedTimeSliceDefinitionModel';
 export * from './EmbeddedUnitTypeModel';
 export * from './Link';
 export * from './MessageItemCollection';
