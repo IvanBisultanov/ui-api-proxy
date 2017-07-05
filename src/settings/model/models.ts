@@ -9,3 +9,4 @@ export * from './ReplaceLanguagesModel';
 export * from './ReplacePropertySettingsModel';
 export * from './TimeSliceDefinitionItemModel';
 export * from './TimeSliceDefinitionListModel';
+export * from './TimeSliceDefinitionModel';
