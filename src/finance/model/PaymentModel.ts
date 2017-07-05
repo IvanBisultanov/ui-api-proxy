@@ -31,7 +31,7 @@ export interface PaymentModel {
     /**
      * The amount of the payment.
      */
-    amount: models.PaymentAmountModel;
+    amount: models.MonetaryValueModel;
 
     /**
      * A reference number to the payment's represenation in other systems (bank statement, or similar).
@@ -75,7 +75,7 @@ export namespace PaymentModel {
         } as ApaleoEnumPropertyMetaData<MethodEnum>),
         amount: Object.freeze({ 
             isRequired: true,
-            type: 'models.PaymentAmountModel',
+            type: 'models.MonetaryValueModel',
         } as ApaleoPropertyMetaData),
         reference: Object.freeze({ 
             type: 'string',
@@ -91,7 +91,7 @@ export namespace PaymentModel {
         const defaultControls = { 
             id: getControl($metaData.id, options, 'id'),
             method: getControl($metaData.method, options, 'method'),
-            amount: models.PaymentAmountModel.$buildForm(fb),
+            amount: models.MonetaryValueModel.$buildForm(fb),
             reference: getControl($metaData.reference, options, 'reference'),
             paymentDate: getControl($metaData.paymentDate, options, 'paymentDate'),
         };

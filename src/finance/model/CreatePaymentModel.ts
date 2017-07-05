@@ -26,7 +26,7 @@ export interface CreatePaymentModel {
     /**
      * The amount of the payment.
      */
-    amount: models.PaymentAmountModel;
+    amount: models.MonetaryValueModel;
 
     /**
      * A reference to the payment's representation in other systems (masked CC, or similar).
@@ -65,7 +65,7 @@ export namespace CreatePaymentModel {
         } as ApaleoEnumPropertyMetaData<MethodEnum>),
         amount: Object.freeze({ 
             isRequired: true,
-            type: 'models.PaymentAmountModel',
+            type: 'models.MonetaryValueModel',
         } as ApaleoPropertyMetaData),
         reference: Object.freeze({ 
             type: 'string',
@@ -80,7 +80,7 @@ export namespace CreatePaymentModel {
     export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<CreatePaymentModel>): FormGroup {
         const defaultControls = { 
             method: getControl($metaData.method, options, 'method'),
-            amount: models.PaymentAmountModel.$buildForm(fb),
+            amount: models.MonetaryValueModel.$buildForm(fb),
             reference: getControl($metaData.reference, options, 'reference'),
             paymentDate: getControl($metaData.paymentDate, options, 'paymentDate'),
         };

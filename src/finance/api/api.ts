@@ -8,6 +8,9 @@ import { FolioApi } from './FolioApi';
 export * from './FolioActionsApi';
 import { FolioActionsApi } from './FolioActionsApi';
 
+export * from './InvoiceApi';
+import { InvoiceApi } from './InvoiceApi';
+
 export * from './SubLedgerApi';
 import { SubLedgerApi } from './SubLedgerApi';
 
@@ -18,7 +21,7 @@ import { Configuration } from '../../configuration';
 import { BASE_PATH } from '../../variables';
 
 export const APIS = [
-    FolioApi, FolioActionsApi, SubLedgerApi, TypesApi
+    FolioApi, FolioActionsApi, InvoiceApi, SubLedgerApi, TypesApi
 ];
 
 export function FolioApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: FolioApi) {
@@ -51,6 +54,22 @@ export const FolioActionsApiProvider: Provider = {
         [new Optional(), new SkipSelf(), FolioActionsApi]
     ],
     useFactory: FolioActionsApiFactory
+}
+
+export function InvoiceApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: InvoiceApi) {
+    return parent || new InvoiceApi(http, config, locale, basePath);
+}
+
+export const InvoiceApiProvider: Provider = {
+    provide: InvoiceApi,
+    deps: [
+        Http,
+        Configuration,
+        LOCALE_ID,
+        BASE_PATH,
+        [new Optional(), new SkipSelf(), InvoiceApi]
+    ],
+    useFactory: InvoiceApiFactory
 }
 
 export function SubLedgerApiFactory(http: Http, config: Configuration, locale: string, basePath: string, parent?: SubLedgerApi) {
@@ -86,7 +105,7 @@ export const TypesApiProvider: Provider = {
 }
 
 export const API_PROVIDERS: Provider[] = [
-    FolioApiProvider, FolioActionsApiProvider, SubLedgerApiProvider, TypesApiProvider
+    FolioApiProvider, FolioActionsApiProvider, InvoiceApiProvider, SubLedgerApiProvider, TypesApiProvider
 ];
 
 @NgModule({
