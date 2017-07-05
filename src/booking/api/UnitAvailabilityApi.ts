@@ -33,13 +33,13 @@ export namespace bookingAvailableUnitsGet {
         */
         propertyId: string;
         /**
-        * The from date and the optional time
+        * The from date and time
         */
-        from: string;
+        from: Date;
         /**
-        * The to date and the optional time
+        * The to date and time
         */
-        to: string;
+        to: Date;
         /**
         * The unit type id
         */
@@ -65,8 +65,8 @@ export class UnitAvailabilityApi {
      * Get a list of all available units in a property
      * Get the list of available units for a property, and a specified time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
-     * @param from The from date and the optional time
-     * @param to The to date and the optional time
+     * @param from The from date and time
+     * @param to The to date and time
      * @param unitTypeId The unit type id
      */
     public bookingAvailableUnitsGet(params: bookingAvailableUnitsGet.Params, $options?: ApaleoRequestOptions)
@@ -80,8 +80,8 @@ export class UnitAvailabilityApi {
      * Get a list of all available units in a property
      * Get the list of available units for a property, and a specified time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
-     * @param from The from date and the optional time
-     * @param to The to date and the optional time
+     * @param from The from date and time
+     * @param to The to date and time
      * @param unitTypeId The unit type id
      */
     public bookingAvailableUnitsGetWithRawHttp(params: bookingAvailableUnitsGet.Params, $options?: ApaleoRequestOptions)
@@ -95,8 +95,8 @@ export class UnitAvailabilityApi {
      * Get a list of all available units in a property
      * Get the list of available units for a property, and a specified time period in the future.&lt;br /&gt;  The time for the from and to filters are optional. If no time for &#39;from&#39; is specified, it will be set to  the default check-in time of the property, or the current time (whichever is later).&lt;br /&gt;  If no time for &#39;to&#39; is specified, the default check-out time of the property will be used.
      * @param propertyId The property id
-     * @param from The from date and the optional time
-     * @param to The to date and the optional time
+     * @param from The from date and time
+     * @param to The to date and time
      * @param unitTypeId The unit type id
      */
     private bookingAvailableUnitsGetWithHttpInfo(params: bookingAvailableUnitsGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
@@ -126,11 +126,11 @@ export class UnitAvailabilityApi {
         }
 
         if (params.from !== undefined) {
-            queryParameters.set('from', <any>params.from);
+            queryParameters.set('from', <any>params.from.toApaleoIso());
         }
 
         if (params.to !== undefined) {
-            queryParameters.set('to', <any>params.to);
+            queryParameters.set('to', <any>params.to.toApaleoIso());
         }
 
         // to determine the Content-Type header
