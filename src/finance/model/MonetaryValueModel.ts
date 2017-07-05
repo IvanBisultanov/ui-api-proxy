@@ -17,30 +17,28 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface PaymentAmountModel {
-    amount: number;
+export interface MonetaryValueModel {
+    amount?: number;
 
-    currency: string;
+    currency?: string;
 
 }
 
-export type PaymentAmountModelWithRawHttp = PaymentAmountModel & ResponseModel<PaymentAmountModel>;
+export type MonetaryValueModelWithRawHttp = MonetaryValueModel & ResponseModel<MonetaryValueModel>;
 
-export namespace PaymentAmountModel {
+export namespace MonetaryValueModel {
     export const $metaData = { 
         amount: Object.freeze({ 
-            isRequired: true,
             type: 'number',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
         currency: Object.freeze({ 
-            isRequired: true,
             type: 'string',
             isPrimitiveType: true,
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<PaymentAmountModel>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<MonetaryValueModel>): FormGroup {
         const defaultControls = { 
             amount: getControl($metaData.amount, options, 'amount'),
             currency: getControl($metaData.currency, options, 'currency'),

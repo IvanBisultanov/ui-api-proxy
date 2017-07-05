@@ -17,17 +17,15 @@ import { ResponseModel }                                                        
 import { getControl, adjustDefaultControls, prepareFormGroup }                  from '../../functions.model';
 import { BuildFormOptions, ApaleoPropertyMetaData, ApaleoEnumPropertyMetaData } from '../../types';
 
-export interface AmountDto {
-    grossAmount?: number;
+export interface TaxDetailModel {
+    vatType?: TaxDetailModel.VatTypeEnum;
 
-    netAmount?: number;
+    net?: models.MonetaryValueModel;
 
-    vatType?: AmountDto.VatTypeEnum;
-
-    currency?: string;
+    tax?: models.MonetaryValueModel;
 
 }
-export namespace AmountDto {
+export namespace TaxDetailModel {
     export enum VatTypeEnumSet {
         Free = 'Free',
         Reduced = 'Reduced',
@@ -41,36 +39,29 @@ export namespace AmountDto {
         ['Free', 'Reduced', 'Normal', 'Mixed'] as VatTypeEnum[]);
 }
 
-export type AmountDtoWithRawHttp = AmountDto & ResponseModel<AmountDto>;
+export type TaxDetailModelWithRawHttp = TaxDetailModel & ResponseModel<TaxDetailModel>;
 
-export namespace AmountDto {
+export namespace TaxDetailModel {
     export const $metaData = { 
-        grossAmount: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
-        netAmount: Object.freeze({ 
-            type: 'number',
-            isPrimitiveType: true,
-        } as ApaleoPropertyMetaData),
         vatType: Object.freeze({ 
             type: 'string',
             isEnum: true,
             allowedEnumValues: VatTypeEnumValues,
             isPrimitiveType: true,
         } as ApaleoEnumPropertyMetaData<VatTypeEnum>),
-        currency: Object.freeze({ 
-            type: 'string',
-            isPrimitiveType: true,
+        net: Object.freeze({ 
+            type: 'models.MonetaryValueModel',
+        } as ApaleoPropertyMetaData),
+        tax: Object.freeze({ 
+            type: 'models.MonetaryValueModel',
         } as ApaleoPropertyMetaData),
     };
 
-    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<AmountDto>): FormGroup {
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<TaxDetailModel>): FormGroup {
         const defaultControls = { 
-            grossAmount: getControl($metaData.grossAmount, options, 'grossAmount'),
-            netAmount: getControl($metaData.netAmount, options, 'netAmount'),
             vatType: getControl($metaData.vatType, options, 'vatType'),
-            currency: getControl($metaData.currency, options, 'currency'),
+            net: models.MonetaryValueModel.$buildForm(fb),
+            tax: models.MonetaryValueModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);

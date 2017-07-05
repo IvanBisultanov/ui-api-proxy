@@ -24,7 +24,7 @@ export interface ReservationModel {
     id: string;
 
     /**
-     * Reservation id
+     * Booking id
      */
     bookingId: string;
 

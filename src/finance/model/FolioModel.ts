@@ -56,7 +56,7 @@ export interface FolioModel {
     /**
      * The total balance of the folio.
      */
-    balance?: models.PaymentAmountModel;
+    balance?: models.MonetaryValueModel;
 
 }
 export namespace FolioModel {
@@ -106,7 +106,7 @@ export namespace FolioModel {
             isListContainer: true,
         } as ApaleoPropertyMetaData),
         balance: Object.freeze({ 
-            type: 'models.PaymentAmountModel',
+            type: 'models.MonetaryValueModel',
         } as ApaleoPropertyMetaData),
     };
 
@@ -117,7 +117,7 @@ export namespace FolioModel {
             debitor: models.FolioDebitorModel.$buildForm(fb),
             reservation: models.EmbeddedReservationModel.$buildForm(fb),
             property: models.EmbeddedPropertyModel.$buildForm(fb),
-            balance: models.PaymentAmountModel.$buildForm(fb),
+            balance: models.MonetaryValueModel.$buildForm(fb),
         };
         const group = fb.group(adjustDefaultControls(defaultControls, options));
         prepareFormGroup(group, $metaData, options);
