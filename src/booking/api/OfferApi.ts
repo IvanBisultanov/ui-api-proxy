@@ -49,10 +49,24 @@ export namespace bookingOffersGet {
         */
         unitTypeIds?: Array<string>;
         /**
+        * The time slice template used to filter the rate plans.
+        */
+        timeSliceTemplate?: TimeSliceTemplateEnum;
+        /**
         * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
         */
         expand?: string;
     }
+    
+    export enum TimeSliceTemplateEnumSet {
+        DayUse = 'DayUse',
+        OverNight = 'OverNight'
+    }
+
+    export type TimeSliceTemplateEnum = 'DayUse' | 'OverNight';
+
+    export const TimeSliceTemplateEnumValues = Object.freeze(
+        ['DayUse', 'OverNight'] as TimeSliceTemplateEnum[]);
     
 }
 
@@ -77,6 +91,7 @@ export class OfferApi {
      * @param departure The departure date and the optional time
      * @param ratePlanIds Rate plan ids
      * @param unitTypeIds Unit type ids
+     * @param timeSliceTemplate The time slice template used to filter the rate plans.
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     public bookingOffersGet(params: bookingOffersGet.Params, $options?: ApaleoRequestOptions)
@@ -94,6 +109,7 @@ export class OfferApi {
      * @param departure The departure date and the optional time
      * @param ratePlanIds Rate plan ids
      * @param unitTypeIds Unit type ids
+     * @param timeSliceTemplate The time slice template used to filter the rate plans.
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     public bookingOffersGetWithRawHttp(params: bookingOffersGet.Params, $options?: ApaleoRequestOptions)
@@ -111,6 +127,7 @@ export class OfferApi {
      * @param departure The departure date and the optional time
      * @param ratePlanIds Rate plan ids
      * @param unitTypeIds Unit type ids
+     * @param timeSliceTemplate The time slice template used to filter the rate plans.
      * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     private bookingOffersGetWithHttpInfo(params: bookingOffersGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
@@ -149,6 +166,10 @@ export class OfferApi {
 
         if (params.departure !== undefined) {
             queryParameters.set('departure', <any>params.departure);
+        }
+
+        if (params.timeSliceTemplate !== undefined) {
+            queryParameters.set('timeSliceTemplate', <any>params.timeSliceTemplate);
         }
 
         if (params.expand !== undefined) {
