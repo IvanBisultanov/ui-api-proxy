@@ -46,7 +46,7 @@ export namespace ratesRatePlansByIdGet {
         */
         languages?: Array<string>;
         /**
-        * List of all embedded resources that should be expanded in the response. Possible values are: property, timeSliceDefinition. All other values will be silently ignored.
+        * List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
         */
         expand?: string;
     }
@@ -139,7 +139,7 @@ export class RatePlanApi {
      * Get a rateplan by id.
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
-     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, timeSliceDefinition. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     public ratesRatePlansByIdGet(params: ratesRatePlansByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<models.RatePlanModel | undefined> {
@@ -222,7 +222,7 @@ export class RatePlanApi {
      * Get a rateplan by id.
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
-     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, timeSliceDefinition. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     public ratesRatePlansByIdGetWithRawHttp(params: ratesRatePlansByIdGet.Params, $options?: ApaleoRequestOptions)
         : Observable<ResponseModel<models.RatePlanModel>> {
@@ -347,7 +347,7 @@ export class RatePlanApi {
      * Get a rateplan by id.
      * @param id The id of the rateplan.
      * @param languages &#39;all&#39; or comma separated list of language codes
-     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property, timeSliceDefinition. All other values will be silently ignored.
+     * @param expand List of all embedded resources that should be expanded in the response. Possible values are: property. All other values will be silently ignored.
      */
     private ratesRatePlansByIdGetWithHttpInfo(params: ratesRatePlansByIdGet.Params, $options?: ApaleoRequestOptions): Observable<Response> {
         params = params || {};
